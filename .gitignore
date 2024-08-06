@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 #ssl
-.pem
+cert1.pem
+privkey1.pem
