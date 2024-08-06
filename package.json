@@ -19,12 +19,14 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^5.16.6",
     "@mui/material": "^5.16.6"
+
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "local": "set PORT=443&&set HTTPS=true&&set SSL_CRT_FILE=cert1.pem&&set SSL_KEY_FILE=privkey1.pem&&react-scripts start"
   },
   "eslintConfig": {
     "extends": [
@@ -44,4 +46,5 @@
       "last 1 safari version"
     ]
   }
+  ,"proxy":"https://urcarcher-local.kro.kr:8443"
 }
