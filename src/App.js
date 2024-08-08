@@ -1,16 +1,21 @@
+import React, { useEffect, useState } from 'react'
 import './App.css';
-import MapComponent from './kimjuvid/MapComponent';
-import MapEmbed from './kimjuvid/MapEmbed';
-
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './pages/auth/Login';
+import Test from './pages/auth/Test';
+import Card from './pages/card/Card';
 
 function App() {
 
   return (
     <div className="App">
-        <header className="App-header">
-            <h1>길찾기 기능</h1>
-        </header>
-        <MapComponent />
+      <BrowserRouter>
+      <Routes>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/test' element={<Test/>}/>
+        <Route path='/card' element={<Card/>}/>
+      </Routes>
+    </BrowserRouter>
     </div>
   );
 }
