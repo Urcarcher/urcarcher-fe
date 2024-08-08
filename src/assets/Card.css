@@ -6,7 +6,12 @@
 .header {
     height: 10%;
     width: 100%;
-    background-color: aqua;
+    border: 1px solid black;
+}
+
+.header > div{
+    margin-top: 20px;
+    display: flex;
 }
 
 .content {
@@ -17,7 +22,7 @@
 .menubar {
     height: 10%;
     width: 100%;
-    background-color: aqua;
+    border: 1px solid black;
 }
 
 
