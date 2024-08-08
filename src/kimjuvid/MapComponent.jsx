@@ -1,58 +1,119 @@
-import React, { useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
+import { GoogleMap, LoadScript, DirectionsService, DirectionsRenderer, Autocomplete } from '@react-google-maps/api';
+
+const containerStyle = {
+  width: '100%',
+  height: '500px'
+};
+
+const center = {
+  lat: 37.5665,
+  lng: 126.9780
+};
 
 const MapComponent = () => {
-  useEffect(() => {
-    const mapContainer = document.getElementById('map');
-    const mapOption = {
-      center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-      level: 3
-    };
+  const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [origin, setOrigin] = useState('');
+  const [destination, setDestination] = useState('');
+  const [travelMode, setTravelMode] = useState('DRIVING');
+  const [autocompleteStart, setAutocompleteStart] = useState(null);
+  const [autocompleteEnd, setAutocompleteEnd] = useState(null);
 
-    const map = new window.kakao.maps.Map(mapContainer, mapOption);
+  const handleLoad = useCallback((map) => {
+    const autocompleteStart = new window.google.maps.places.Autocomplete(
+      document.getElementById('start'),
+      { types: ['geocode'] }
+    );
+    const autocompleteEnd = new window.google.maps.places.Autocomplete(
+      document.getElementById('end'),
+      { types: ['geocode'] }
+    );
 
-    const ps = new window.kakao.maps.services.Places(); 
-    const directionsService = new window.kakao.maps.services.Directions();
+    autocompleteStart.addListener('place_changed', () => {
+      setOrigin(autocompleteStart.getPlace().place_id);
+    });
 
-    const searchPlaces = (start, end) => {
-      ps.keywordSearch(start, (startResult) => {
-        if (startResult.length > 0) {
-          ps.keywordSearch(end, (endResult) => {
-            if (endResult.length > 0) {
-              const startCoords = new window.kakao.maps.LatLng(startResult[0].y, startResult[0].x);
-              const endCoords = new window.kakao.maps.LatLng(endResult[0].y, endResult[0].x);
+    autocompleteEnd.addListener('place_changed', () => {
+      setDestination(autocompleteEnd.getPlace().place_id);
+    });
 
-              directionsService.route({
-                origin: startCoords,
-                destination: endCoords,
-                travelMode: window.kakao.maps.services.TravelMode.DRIVING
-              }, (result, status) => {
-                if (status === window.kakao.maps.services.Status.OK) {
-                  const linePath = result.routes[0].legs[0].steps.map(step => new window.kakao.maps.LatLng(step.end_location.lat, step.end_location.lng));
-
-                  const polyline = new window.kakao.maps.Polyline({
-                    path: linePath,
-                    strokeWeight: 5,
-                    strokeColor: '#FFAE00',
-                    strokeOpacity: 0.8,
-                    strokeStyle: 'solid'
-                  });
-
-                  polyline.setMap(map);
-                }
-              });
-            }
-          });
-        }
-      });
-    };
-
-    searchPlaces('출발지 주소', '도착지 주소');
+    setAutocompleteStart(autocompleteStart);
+    setAutocompleteEnd(autocompleteEnd);
   }, []);
 
+  const handleDirectionResponse = (response) => {
+    if (response.status === 'OK') {
+      setDirectionsResponse(response);
+    } else {
+      console.error('Directions request failed due to', response.status);
+      console.error('Error details:', response);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (origin && destination) {
+      const directionsService = new window.google.maps.DirectionsService();
+      directionsService.route(
+        {
+          origin: { placeId: origin },
+          destination: { placeId: destination },
+          travelMode: window.google.maps.TravelMode[travelMode],
+        },
+        handleDirectionResponse
+      );
+    } else {
+      console.error('Please provide both origin and destination.');
+    }
+  };
+
   return (
-    <div>
-      <div id="map" style={{ width: '100%', height: '500px' }}></div>
-    </div>
+    <LoadScript
+      googleMapsApiKey="AIzaSyB-rzhcUXcmRCulCzY1S3Hphp3BrT4NLNU"  // 여기에 발급받은 API Key를 입력합니다.
+      libraries={['places']}
+    >
+      <div>
+        <div>
+          <Autocomplete
+            onLoad={autocomplete => setAutocompleteStart(autocomplete)}
+          >
+            <input
+              id="start"
+              type="text"
+              placeholder="출발지"
+              onChange={(e) => setOrigin(e.target.value)}
+            />
+          </Autocomplete>
+          <Autocomplete
+            onLoad={autocomplete => setAutocompleteEnd(autocomplete)}
+          >
+            <input
+              id="end"
+              type="text"
+              placeholder="도착지"
+              onChange={(e) => setDestination(e.target.value)}
+            />
+          </Autocomplete>
+          <select onChange={(e) => setTravelMode(e.target.value)} value={travelMode}>
+            <option value="DRIVING">자동차</option>
+            <option value="WALKING">도보</option>
+            <option value="BICYCLING">자전거</option>
+            <option value="TRANSIT">대중교통</option>
+            <option value="TAXI">택시</option>
+          </select>
+          <button onClick={handleSubmit}>길찾기</button>
+        </div>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={13}
+          onLoad={handleLoad}
+        >
+          {directionsResponse && (
+            <DirectionsRenderer directions={directionsResponse} />
+          )}
+        </GoogleMap>
+      </div>
+    </LoadScript>
   );
 };
 
