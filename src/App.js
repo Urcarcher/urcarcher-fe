@@ -2,6 +2,8 @@ import logo from './logo.svg';
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import MapAPP from './kakaoMapTest/MapAPP';
 
 function App() {
   const [testStr, setTestStr] = useState('');
@@ -20,7 +22,12 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+       <BrowserRouter wserRouter>
+          <Routes>
+            <Route  path='/map' element={<MapAPP />}></Route>
+          </Routes>
+      </BrowserRouter>
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -34,7 +41,7 @@ function App() {
           Learn React
         </a>
         <p> api test {'==>'} {testStr} </p>
-      </header>
+      </header> */}
     </div>
   );
 }
