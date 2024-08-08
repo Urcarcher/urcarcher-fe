@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../assets/Card.css';
+import '../../assets/Card.css';
 import Flickity from 'react-flickity-component';
 import axios from 'axios';
 
