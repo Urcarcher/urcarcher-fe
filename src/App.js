@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/auth/Login';
 import Test from './pages/auth/Test';
 import Card from './pages/card/Card';
+import MapComponent from './pages/location/MapComponent';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Route path='/login' element={<Login/>}/>
         <Route path='/test' element={<Test/>}/>
         <Route path='/card' element={<Card/>}/>
+        <Route path='/MapComponent' element={<MapComponent/>}/>
       </Routes>
     </BrowserRouter>
     </div>
