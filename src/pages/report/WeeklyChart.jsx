@@ -72,10 +72,6 @@ const WeeklyChart = () => {
       .then(response => {
         console.log(response.data);
         setUsage(response.data);
-
-        // 총금액 계산
-        const total = response.data.reduce((acc, curr) => acc + curr.paymentPrice, 0);
-        setTotalPrice(total);
       })
       .catch(error => {
         console.log('에러에러', error);
@@ -118,6 +114,10 @@ const WeeklyChart = () => {
 
     setData(newData);
     setFilteredUsage(filteredData); // 필터링된 데이터를 설정
+
+    // 주간 총 소비 금액 계산
+    const totalWeekPrice = filteredData.reduce((acc, curr) => acc + curr.paymentPrice, 0);
+    setTotalPrice(totalWeekPrice);
   }, [selectedMonth, selectedWeek, usage]);
 
   // 2024년 1월부터 현재 월까지의 옵션 생성
