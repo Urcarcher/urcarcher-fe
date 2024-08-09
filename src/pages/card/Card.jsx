@@ -19,7 +19,7 @@ function Card() {
     useEffect(() => {
         axios.get('/api/cards')
             .then(response => {
-                // console.log('Fetched cards:', response.data);
+                console.log('Fetched cards:', response.data);
                 setCards(response.data);
                 if (response.data.length > 0) {
                     setSelectedCard(response.data[0]);
