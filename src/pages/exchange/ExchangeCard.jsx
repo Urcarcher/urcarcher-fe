@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function ExchangeCard(props) {
@@ -8,6 +8,7 @@ function ExchangeCard(props) {
     // console.log("선택한 충전 버튼 종류", btn);
     
     const navi = useNavigate();
+    const [isChoice, setIsChoice] = useState(false);
 
     // 사용자의 카드 목록 임시 data
     const userCard = [
@@ -23,6 +24,8 @@ function ExchangeCard(props) {
     const cardSelecthandle = (card) => {
         console.log("선택한 카드 정보", card);
         setSelectedCard(card);
+        setIsChoice(!isChoice);
+        console.log(!isChoice);
     };
 
     // 취소 버튼
@@ -32,17 +35,17 @@ function ExchangeCard(props) {
 
     // 다음 버튼 => 선택한 버튼 종류 별 페이지 이동
     const nextHandle = () => {
-        if (selectedCard) {
-            let nextPage = "";
+        if (selectedCard !== null) {
+            let location = "";
             
             if (btn === "currency") {
                 // 바로충전
-                nextPage = "/exchange/currency";
+                location = "/exchange/currency";
             } else if (btn === "set") {
                 // 자동충전
-                nextPage = "/exchange/set";
+                location = "/exchange/set";
             }
-            navi(nextPage, { state: { selectedCard } });
+            navi(location, { state: { selectedCard } });
         } else {
             alert("카드를 선택해주세요");
         }
