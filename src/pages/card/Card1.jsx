@@ -3,7 +3,7 @@ import '../../assets/Card.css';
 import Flickity from 'react-flickity-component';
 import axios from 'axios';
 
-function Card() {
+function Card1() {
     const [selectedCard, setSelectedCard] = useState(null);
     const [cards, setCards] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -48,12 +48,6 @@ function Card() {
             </div>
 
             <div className='content'>
-                <ul className="progressbar">
-                    <li className="complete"></li>
-                    <li className="complete"></li>
-                    <li className="active"></li>
-                    <li className="half-complete"></li>
-                </ul>
 
                 <div className='carousel-container'>
                     {isLoading ? (
@@ -99,4 +93,4 @@ function Card() {
     );
 }
 
-export default Card;
+export default Card1;
