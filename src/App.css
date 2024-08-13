@@ -1,10 +1,41 @@
+/* Light */
+@font-face {
+  font-family: 'NanumSquareNeoLight';
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-aLt.eot);
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-aLt.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-aLt.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-aLt.ttf) format("truetype");
+}
+/* 기본 */
+@font-face { 
+  font-family: 'NanumSquareNeo';
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.eot);
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.ttf) format("truetype");
+}
+/* bold */
+@font-face {
+  font-family: 'NanumSquareNeoBold';
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-cBd.eot);
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-cBd.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-cBd.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-cBd.ttf) format("truetype");
+}
+/* ExtraBold */
+@font-face {
+  font-family: 'NanumSquareNeoExtraBold';
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-dEb.eot);
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-dEb.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-dEb.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-dEb.ttf) format("truetype");
+}
+/* Heavy */
+@font-face {
+  font-family: 'NanumSquareNeoHeavy';
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.eot);
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.ttf) format("truetype");
+}
+
 .App {
-  text-align: center;
-  width: 430px; height: 932px;
-    justify-content: center;
-    display: flex;
-    margin: auto;
+    text-align: center;
+    width: 430px; 
+    height: 932px;
+    margin: 0 auto;
     border: 1px solid black;
+    font-family: 'NanumSquareNeo', sans-serif;
 }
 
 .App-logo {
@@ -41,4 +72,62 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* 공통css */
+.contents{   /* 페이지컴포넌트 최상위div calssName에 넣어주세요 */
+  padding-top: 77px;
+}
+ul{
+  padding: 0;
+}
+li{
+  list-style: none;
+}
+/* Header */
+header{
+  z-index: 1000;
+  position: fixed;
+  width: 100%;
+  height: 77px;
+  box-sizing: border-box;
+  line-height: 77px;
+  background-color: #fff;
+  padding-left: 20px;
+  margin-bottom: 77px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+.header-wrap{
+  display: flex;
+}
+
+.header-wrap > button{
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.header-wrap > h3{
+  margin: 0;
+}
+
+/* Footer */
+.footer-wrap {
+  width: 100%;
+  height: 90px;
+  box-sizing: border-box;
+  box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+}
+.menu-list{
+  display: flex;
+  justify-content: space-evenly;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0;
+  margin: 0;
+}
+.menu-list > li{
+  list-style: none;
 }
