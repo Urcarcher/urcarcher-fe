@@ -9,9 +9,14 @@ import Card from './pages/card/Card';
 
 import './pages/tourcourse/RegionList.css';
 import CourseList from './pages/tourcourse/CourseList';
+import ExchangeSelect from './pages/exchange/ExchangeSelect';
+import ExchangeCard from './pages/exchange/ExchangeCard';
+import ExchangeCurrency from './pages/exchange/ExchangeCurrency';
+import ExchangeSet from './pages/exchange/ExchangeSet';
 import OAuthNew from './pages/auth/OAuthNew';
 import OAuthLoading from './pages/auth/OAuthLoading';
 import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
+
 function App() {
 
   return (
@@ -26,6 +31,10 @@ function App() {
         <Route path='/card' element={<Card/>}/>
         <Route path='/CourseList' element={<CourseList/>}/>
         <Route  path='/map' element={<MapAPP />}></Route>
+        <Route path='/exchange' element={<ExchangeSelect/>}></Route>
+        <Route path='/exchange/card' element={<ExchangeCard/>}></Route>
+        <Route path='/exchange/currency' element={<ExchangeCurrency/>}></Route>
+        <Route path='/exchange/set' element={<ExchangeSet/>}></Route>
       </Routes>
     </BrowserRouter>
     </div>
