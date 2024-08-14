@@ -3,13 +3,16 @@ import { signin } from "../../services/AuthService";
 import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 
 function Login() {
+  const googleOauth2Handler = () => {
+    window.location.href = process.env.REACT_APP_GOOGLE_OAUTH2_HANDLING;
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.target);
     const username = data.get("username");
     const password = data.get("password");
-    console.log({ username: username, password: password });
-    // ApiService의 signin 메서드를 사용 해 로그인.
+    
     signin({ memberId: username, password: password });
   };
 
@@ -54,6 +57,11 @@ function Login() {
           </Grid>
         </Grid>
       </form>
+          <Grid item xs={12}>
+            <Button fullWidth variant="contained" color="primary" onClick={googleOauth2Handler}>
+              Google 로그인
+            </Button>
+          </Grid>
     </Container>
   );
 }

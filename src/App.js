@@ -1,50 +1,81 @@
-import React from 'react'
-
-import './App.css';
+import React from 'react';
+import {Status, Wrapper} from "@googlemaps/react-wrapper";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import MapAPP from './pages/kakaomap/MapAPP';
+import './App.css';
 import Login from './pages/auth/Login';
 import Test from './pages/auth/Test';
 import Card1 from './pages/card/Card1';
-
-import './pages/tourcourse/RegionList.css';
-import CourseList from './pages/tourcourse/CourseList';
-import MonthlyChart from './pages/report/MonthlyChart';
-import WeeklyChart from './pages/report/WeeklyChart';
-import UsageHistory from './pages/report/UsageHistory';
 import Card2 from './pages/card/Card2';
 import Card3 from './pages/card/Card3';
 import Card4 from './pages/card/Card4';
 import Card5 from './pages/card/Card5';
 import Card6 from './pages/card/Card6';
+import Signup from './pages/signup/Signup';
+import './pages/tourcourse/RegionList.css';
+import MyMapApp from './pages/mymap/MyMapApp';
+import MyMapHome from './pages/mymap/MyMapHome';
+import CourseList from './pages/tourcourse/CourseList';
+import MonthlyChart from './pages/report/MonthlyChart';
+import WeeklyChart from './pages/report/WeeklyChart';
+import UsageHistory from './pages/report/UsageHistory';
 import { CardProvider } from './pages/card/CardContext'; 
+import MapComponent_G from './pages/location/MapComponent_G';
+import TourGuide from './pages/tourguide/TourGuide';
+import DetailPage from './pages/tourguide/DetailPage';
+import Home from './pages/Home';
+import MyCategoryRank from './pages/mymap/MyCategoryRank';
+import BestStoreList from './pages/mymap/BestStoreList';
+import ExchangeSelect from './pages/exchange/ExchangeSelect';
+import ExchangeCard from './pages/exchange/ExchangeCard';
+import ExchangeCurrency from './pages/exchange/ExchangeCurrency';
+import ExchangeSet from './pages/exchange/ExchangeSet';
+import OAuthNew from './pages/auth/OAuthNew';
+import OAuthLoading from './pages/auth/OAuthLoading';
+import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
+import CourseDetail from './pages/tourcourse/CourseDetail';
+
 function App() {
-
-
   return (
     <CardProvider>
     <div className="App">
       <BrowserRouter>
-      <Routes>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/test' element={<Test/>}/>
-        
-        <Route path='/card1' element={<Card1/>}/>
-        <Route path='/card2' element={<Card2/>}/>
-        <Route path='/card3' element={<Card3 />}/>
-        <Route path='/card4' element={<Card4 />}/>
-        <Route path='/card5' element={<Card5 />}/>
-        <Route path='/card6' element={<Card6 />}/>
-        
-        <Route path='/usage' element={<UsageHistory/>}/>
-        <Route path='/chart1' element={<MonthlyChart/>}/>
-        <Route path='/chart2' element={<WeeklyChart/>}/>
-        <Route path='/CourseList' element={<CourseList/>}/>
-        <Route  path='/map' element={<MapAPP />}></Route>
-      </Routes>
+        <Routes>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/login/loading' element={<OAuthLoading/>}/>
+          <Route path='/login/new' element={<OAuthNew/>}/>
+          <Route path='/exchangeRate' element={<ExchangeRateList/>}/>
+          <Route path='/test' element={<Test/>}/>
+          <Route path='/card1' element={<Card1/>}/>
+          <Route path='/card2' element={<Card2/>}/>
+          <Route path='/card3' element={<Card3 />}/>
+          <Route path='/card4' element={<Card4 />}/>
+          <Route path='/card5' element={<Card5 />}/>
+          <Route path='/card6' element={<Card6 />}/>
+          <Route path='/usage' element={<UsageHistory/>}/>
+          <Route path='/chart1' element={<MonthlyChart/>}/>
+          <Route path='/chart2' element={<WeeklyChart/>}/>
+          <Route path='/courseList' element={<CourseList/>}/>
+          <Route path="/course/:courseId" element={<CourseDetail />} />
+          <Route  path='/map' element={<MapAPP />}></Route>
+          <Route path='/signup/*' element={<Signup/>}/>
+          <Route  path='/maphome' element={<MyMapHome />}></Route>
+          <Route  path='/maphome/map' element={<MyMapApp />}></Route>
+          <Route  path='/maphome/categoryRank' element={<MyCategoryRank />}></Route>
+          <Route  path='/maphome/beststorelist' element={<BestStoreList />}></Route>        
+          <Route path='/exchange' element={<ExchangeSelect/>}></Route>
+          <Route path='/exchange/card' element={<ExchangeCard/>}></Route>
+          <Route path='/exchange/currency' element={<ExchangeCurrency/>}></Route>
+          <Route path='/exchange/set' element={<ExchangeSet/>}></Route>
+          <Route path='/MapComponent_G' element={<MapComponent_G/>}></Route>
+          <Route path='/MapComponent_G/:detailDestination' element={<MapComponent_G/>}/>
+          <Route path='/TourGuide' element={<TourGuide/>}/>
+          <Route path='/detail/:type/:id' element={<DetailPage/>}/>
+          <Route path='/phone' element={<Phone/>}/>
+        </Routes>
     </BrowserRouter>
-    </div>
-    </CardProvider>
+   </div>
+  </CardProvider>
   );
 }
 export default App;
