@@ -5,6 +5,8 @@ import './App.css';
 import Login from './pages/auth/Login';
 import Test from './pages/auth/Test';
 import Card from './pages/card/Card';
+import Signup from './pages/signup/Signup';
+import './pages/tourcourse/RegionList.css';
 import MyMapApp from './pages/mymap/MyMapApp';
 import MyMapHome from './pages/mymap/MyMapHome';
 import CourseList from './pages/tourcourse/CourseList';
@@ -37,10 +39,12 @@ function App() {
           <Route path='/card' element={<Card/>}/>
           <Route path='/courseList' element={<CourseList/>}/>
           <Route path="/course/:courseId" element={<CourseDetail />} />
+          <Route  path='/map' element={<MapAPP />}></Route>
+          <Route path='/signup/*' element={<Signup/>}/>
           <Route  path='/maphome' element={<MyMapHome />}></Route>
           <Route  path='/maphome/map' element={<MyMapApp />}></Route>
           <Route  path='/maphome/categoryRank' element={<MyCategoryRank />}></Route>
-          <Route  path='/maphome/beststorelist' element={<BestStoreList />}></Route>
+          <Route  path='/maphome/beststorelist' element={<BestStoreList />}></Route>        
           <Route path='/exchange' element={<ExchangeSelect/>}></Route>
           <Route path='/exchange/card' element={<ExchangeCard/>}></Route>
           <Route path='/exchange/currency' element={<ExchangeCurrency/>}></Route>

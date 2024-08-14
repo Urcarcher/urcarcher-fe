@@ -26,7 +26,7 @@ function ExchangeRateList(props) {
     }, [socketData]);
 
     const wsLogin = useCallback(()=>{
-        wss.current = new WebSocket("wss://urcarcher-local.kro.kr:8443/realtime/rate");
+        wss.current = new WebSocket(process.env.REACT_APP_WEBSOCKET_SERVICE_URL);
 
         wss.current.onmessage = (message) => {
             const dataSet = JSON.parse(message.data);

@@ -4,7 +4,7 @@ import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 
 function Login() {
   const googleOauth2Handler = () => {
-    window.location.href = "https://urcarcher-local.kro.kr:8443/oauth2/authorization/google"
+    window.location.href = process.env.REACT_APP_GOOGLE_OAUTH2_HANDLING;
   }
 
   const handleSubmit = (event) => {

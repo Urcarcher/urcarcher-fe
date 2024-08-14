@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import Header from '../../components/Header';
+import React from 'react';
 import Footer from '../../components/Footer';
+import Header from '../../components/Header';
 import StoreInfoList from '../../components/mymap/StoreInfoList';
 
-function BestStoreList(props) {
 
-    
-    //전체 결제 내역 중 건수가 많은 가맹점 정보 저장
-    const [storeList , setStoreList] = useState([]);
+
+function BestStoreList(props) {
 
     return (
         <div>
