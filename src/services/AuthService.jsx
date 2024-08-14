@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import cookie from 'react-cookies';
 
-const ACCESS_TOKEN = "ACCESS_TOKEN";
+const ACCESS_TOKEN = "URCARCHER_ACCESS_TOKEN";
 
 export function getOptions(api, method, request) {
   let headers = new Headers({
@@ -9,7 +10,7 @@ export function getOptions(api, method, request) {
   });
 
   // 로컬 스토리지에서 ACCESS TOKEN 가져오기
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const accessToken = cookie.load(ACCESS_TOKEN);
 
   if (accessToken && accessToken !== null) {
     headers.append("Authorization", "Bearer " + accessToken);
@@ -33,11 +34,12 @@ export function signin(userDTO) {
   return axios(getOptions("/api/auth/login", "POST", userDTO))
           .then(resp=>{
             if(resp.data.accessToken) {
-              localStorage.setItem(ACCESS_TOKEN, resp.data.accessToken);
+              cookie.save(ACCESS_TOKEN, resp.data.accessToken);
               window.location.href = "/test";
             }
           })
           .catch(err=>{
+            console.log(err);
             window.location.href = "/login";
           });
 }
