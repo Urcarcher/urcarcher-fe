@@ -7,24 +7,58 @@ export const useCardContext = () => {
     return useContext(CardContext);
 };
 
+// 16자리의 랜덤 카드 번호를 생성하는 함수
+const generateRandomCardNumber = () => {
+    let cardNumber = '';
+    for(let i = 0; i < 4; i++) {
+        cardNumber += Math.floor(1000 + Math.random() * 9000).toString() + ' ';
+    }
+    return cardNumber.trim();
+}
+
+// 3자리의 랜덤 CVV 코드를 생성하는 함수
+const generateRandomCVVCode = () => {
+    return Math.floor(Math.random() * 900 + 100).toString().padStart(3, '0');
+};
+
+// 현재 날짜를 'YYYY-MM-DD' 형식으로 반환하는 함수
+const getCurrentDate = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
+
+// 현재 날짜로부터 5년 후의 날짜를 'YYYY-MM-DD' 형식으로 반환하는 함수
+const getExpirationDate = () => {
+    const date = new Date();
+    const year = date.getFullYear() + 5;
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
+
+
+
 export const CardProvider = ({children}) => {
     const [produceCardOffer, setProduceCardOffer] = useState({
-        "card_id":"",
-        "card_account":"",
-        "card_balance" : "",
-        "card_number":"",
-        "card_password":"",
-        "card_pickup":"",
-        "card_status":"",
-        "cvv_code":"",
-        "expiration_date":"",
-        "issue_date":"",
-        "payment_bank":"",
-        "payment_date":"",
-        "pickup_date":"",
-        "transportation":"",
-        "card_type_id":"",
-        "member_id":""
+        "card_id": null,
+        "card_account":null,
+        "card_balance" : null, 
+        "card_number":generateRandomCardNumber(),
+        "card_password":null,
+        "card_pickup":null,
+        "card_status":true,
+        "cvv_code":generateRandomCVVCode(),
+        "expiration_date":getExpirationDate(),
+        "issue_date":getCurrentDate(),
+        "payment_bank":null,
+        "payment_date":null,
+        "pickup_date":null,
+        "transportation":null,
+        "card_type_id":null,
+        "member_id":null  // member T
     });
 
     return (
