@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { Input, Switch, FormControlLabel } from '@mui/material';
+import { Input, Switch, FormControlLabel,Button } from '@mui/material';
+import { useCardContext } from './CardContext';
+import { useNavigate } from 'react-router-dom';
 
 function Card2() {
     const [idNum, setIdNum] = useState('');
     const [maskingNum, setMaskingNum] = useState(''); 
-    const [postPaidTransport, setPostPaidTransport] = useState(false);
+    const [postPaidTransport, setPostPaidTransport] = useState(false); // 교통기능신청상태 
+    const {produceCardOffer, setProduceCardOffer} = useCardContext(); 
+
+    let navigate = useNavigate();
 
     const handleIdNumChange = (event) => {
         const originalValue = event.target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
@@ -23,13 +28,25 @@ function Card2() {
         }
     };
 
-    const handlePayment = (method) => {
-        console.log(`Pay with ${method}`);
-    };
-
     const handleSwitchChange = (event) => {
         setPostPaidTransport(event.target.checked);
     };
+
+    const handleSubmit = () => {
+        const cardData = {
+            idNum,
+            postPaidTransport,
+        };
+
+        setProduceCardOffer(prevState => ({
+            ...prevState,
+            member_id:"test임시id",
+            transportation:postPaidTransport // 선택된 교통 신청 여부 반영
+        }));
+
+        setTimeout(() => navigate('/card3'), 300);
+
+    }
 
 
     return (
@@ -68,7 +85,13 @@ function Card2() {
                     />
                 </div>
 
-                <button id="regist-btn" className="btn-green" disabled>다음</button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                >
+                    다음
+                </Button>
             </div>
         </div>
     );

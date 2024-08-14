@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
+import { useCardContext } from './CardContext';
+import { useNavigate } from 'react-router-dom';
+
 
 function Card5(props) {
-  const [accountNumber, setAccountNumber] = useState('');
-  const [bank, setBank] = useState('');
-  const [paymentDate, setPaymentDate] = useState('');
-  const [cardPassword, setCardPassword] = useState('');
-  const [cardPasswordConfirm, setCardPasswordConfirm] = useState('');
+  const [accountNumber, setAccountNumber] = useState(''); // 계좌번호
+  const [bank, setBank] = useState(''); // 결제은행
+  const [paymentDate, setPaymentDate] = useState(''); // 결제날짜
+  const [cardPassword, setCardPassword] = useState(''); // 카드 비밀번호 
+  const {produceCardOffer, setProduceCardOffer} = useCardContext();
+
+  let navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,7 +20,6 @@ function Card5(props) {
       bank,
       paymentDate,
       cardPassword,
-      cardPasswordConfirm,
     });
   };
 
@@ -100,7 +104,19 @@ function Card5(props) {
             borderRadius: '4px',
             fontSize: '16px',
           }}
-        >
+        onClick={()=>{
+
+          setProduceCardOffer(prevState => ({
+            ...prevState,
+            payment_bank:bank,
+            payment_date:paymentDate,
+            card_account:accountNumber,
+            card_password:cardPassword
+        }));
+        
+        setTimeout(()=>navigate('/card6'),300);
+
+        }}>
           다음
         </button>
       </form>

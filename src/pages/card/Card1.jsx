@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import '../../assets/Card.css';
 import Flickity from 'react-flickity-component';
 import axios from 'axios';
+import { useCardContext } from './CardContext';
+import { useNavigate } from 'react-router-dom';
 
 function Card1() {
     const [selectedCard, setSelectedCard] = useState(null);
     const [cards, setCards] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    const {produceCardOffer, setProduceCardOffer} = useCardContext();
+
+    let navigate = useNavigate();
 
     const flickityOptions = {
         cellAlign: 'right',
@@ -87,7 +93,17 @@ function Card1() {
                 )}
             </div>
             
-            <button onClick={() => { console.log('선택한 카드이름:', selectedCard ? selectedCard.cardName : '카드가 선택되지 않았습니다') }}>신청하기</button>
+            <button onClick={() => {
+                if(selectedCard) {
+                    setProduceCardOffer(prevState => ({
+                        ...prevState,
+                        card_type_id:selectedCard.cardTypeId // 선택된 카드 타입 
+                    }));
+                    setTimeout(() => navigate('/card2'), 300);
+                }else{
+                    console.log('카드가 선택되지 않았습니다.');
+                }
+                 }}>신청하기</button>
             <div className='menubar'></div>
         </div>
     );

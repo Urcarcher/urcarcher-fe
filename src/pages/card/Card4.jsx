@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import { useCardContext } from './CardContext';
+import { useNavigate } from 'react-router-dom';
+
 
 const CardForm = () => {
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState(''); // 카드 수령처
+  const [date, setDate] = useState(''); // 카드 수령 날짜 
+  const {produceCardOffer, setProduceCardOffer} = useCardContext();
 
-  const [date, setDate] = useState('');
+  let navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 여기에 폼 제출 로직을 추가하세요
     console.log({
       address,
       date,
@@ -43,7 +47,17 @@ const CardForm = () => {
             />
           </label>
         </div>
-        <button type="submit" style={{ width: '100%', padding: '12px', backgroundColor: '#007BFF', color: 'white', border: 'none', borderRadius: '4px', fontSize: '16px' }}>
+        <button type="submit" style={{ width: '100%', padding: '12px', backgroundColor: '#007BFF', color: 'white', border: 'none', borderRadius: '4px', fontSize: '16px' }}
+        onClick={()=>{
+
+          setProduceCardOffer(prevState => ({
+            ...prevState,
+            pickup_date:address,
+            card_pickup:date
+        }));
+        setTimeout(()=>navigate('/card5'),300);
+
+        }}>
           다음
         </button>
       </form>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../assets/Card3.css';
+import { useNavigate } from 'react-router-dom';
 
 function Card3() {
     const [formData, setFormData] = useState({
@@ -11,7 +12,9 @@ function Card3() {
 
     const [buttonEnabled, setButtonEnabled] = useState(false);
     const [modalContent, setModalContent] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열기 상태 추가
+    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열기 상태 
+
+    let navigate = useNavigate();
 
     useEffect(() => {
         updateButtonState(); // 초기 상태에서 버튼 상태 설정
@@ -34,7 +37,6 @@ function Card3() {
         e.preventDefault();
         if (formData.serviceTOS && formData.personalTOS) {
             alert('폼이 제출되었습니다!');
-            // 폼 데이터 제출 로직 추가
         } else {
             alert('동의하지 않으면 회원가입이 불가능합니다.');
         }
@@ -150,7 +152,13 @@ function Card3() {
                     </div>
                 </div>
                 <div className="btn-container">
-                    <button type="submit" className={`btn ${buttonEnabled ? 'active' : ''}`} disabled={!buttonEnabled}>
+                    <button type="submit" 
+                    className={`btn ${buttonEnabled ? 'active' : ''}`} 
+                    disabled={!buttonEnabled}
+                    onClick={() => {
+                        setTimeout(() => navigate('/card4'), 300);
+                    }}
+                    >
                         동의하고 계속하기
                     </button>
                 </div>
