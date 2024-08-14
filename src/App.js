@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Status, Wrapper} from "@googlemaps/react-wrapper";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Login from './pages/auth/Login';
@@ -20,6 +20,10 @@ import ExchangeSet from './pages/exchange/ExchangeSet';
 import OAuthNew from './pages/auth/OAuthNew';
 import OAuthLoading from './pages/auth/OAuthLoading';
 import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
+import CourseDetail from './pages/tourcourse/CourseDetail';
+
+
+
 
 function App() {
   return (
@@ -33,7 +37,8 @@ function App() {
           <Route path='/exchangeRate' element={<ExchangeRateList/>}/>
           <Route path='/test' element={<Test/>}/>
           <Route path='/card' element={<Card/>}/>
-          <Route path='/CourseList' element={<CourseList/>}/>
+          <Route path='/courseList' element={<CourseList/>}/>
+          <Route path="/course/:courseId" element={<CourseDetail />} />
           <Route  path='/map' element={<MapAPP />}></Route>
           <Route path='/signup/*' element={<Signup/>}/>
           <Route  path='/maphome' element={<MyMapHome />}></Route>
@@ -46,7 +51,11 @@ function App() {
           <Route path='/exchange/set' element={<ExchangeSet/>}></Route>
         </Routes>
     </BrowserRouter>
+
+   
     </div>
+
+    
   );
 }
 export default App;
