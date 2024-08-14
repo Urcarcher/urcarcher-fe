@@ -135,6 +135,8 @@ const MyMapApp = () => {  //카테고리 넘겨받기
       options,
     );
   };
+
+  //검색된 장소 표시
   const displayPlaces = (data) => {
     //map이 null일 때
     if (!map) return;
