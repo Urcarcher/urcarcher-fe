@@ -6,6 +6,7 @@ import MapAPP from './pages/kakaomap/MapAPP';
 import Login from './pages/auth/Login';
 import Test from './pages/auth/Test';
 import Card from './pages/card/Card';
+import Signup from './pages/signup/Signup';
 
 import './pages/tourcourse/RegionList.css';
 import CourseList from './pages/tourcourse/CourseList';
@@ -21,6 +22,8 @@ function App() {
         <Route path='/card' element={<Card/>}/>
         <Route path='/CourseList' element={<CourseList/>}/>
         <Route  path='/map' element={<MapAPP />}></Route>
+        <Route path='/signup/*' element={<Signup/>}/>
+        
       </Routes>
     </BrowserRouter>
     </div>
