@@ -12,6 +12,7 @@ import CourseList from './pages/tourcourse/CourseList';
 import './pages/tourcourse/RegionList.css';
 import MyCategoryRank from './pages/mymap/MyCategoryRank';
 import BestStoreList from './pages/mymap/BestStoreList';
+import Home from './pages/Home';
 function App() {
 
 
@@ -19,6 +20,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/test' element={<Test/>}/>
           <Route path='/card' element={<Card/>}/>

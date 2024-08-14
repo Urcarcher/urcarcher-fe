@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 function Footer(props) {
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const menuItems = [
-        { src: "/icon/menu/home.png", alt: "홈", activeSrc: "/icon/menu/home-active.png", path: '' },
+    const menuItems = [ //path 경로 추가하기 
+        { src: "/icon/menu/home.png", alt: "홈", activeSrc: "/icon/menu/home-active.png", path: '/' },
         { src: "/icon/menu/graph.png", alt: "소비리포트", activeSrc: "/icon/menu/graph-active.png", path: '' },
         { src: "/icon/menu/card.png", alt: "카드", activeSrc: "/icon/menu/card-active.png", path: '' },
         { src: "/icon/menu/menu.png", alt: "메뉴", activeSrc: "/icon/menu/menu-active.png", path: '' }

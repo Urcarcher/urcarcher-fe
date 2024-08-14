@@ -88,7 +88,7 @@ li{
 header{
   z-index: 1000;
   position: fixed;
-  width: 100%;
+  width: 430px;
   height: 77px;
   box-sizing: border-box;
   line-height: 77px;
@@ -114,10 +114,13 @@ header{
 
 /* Footer */
 .footer-wrap {
-  width: 100%;
+  width: 430px;
   height: 90px;
   box-sizing: border-box;
   box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  background-color: #fff;
 }
 .menu-list{
   display: flex;
