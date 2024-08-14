@@ -1,0 +1,11 @@
+.chart-container svg rect {
+    rx: 10; /* x축 반경 */
+    ry: 10; /* y축 반경 */
+  }
+
+  .chart-container{
+    justify-content: center;
+    max-width: 900px;
+    margin: auto;
+  }
+  

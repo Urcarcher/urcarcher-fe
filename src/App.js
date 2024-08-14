@@ -4,16 +4,24 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Login from './pages/auth/Login';
 import Test from './pages/auth/Test';
-import Card from './pages/card/Card';
+import Card1 from './pages/card/Card1';
+import Card2 from './pages/card/Card2';
+import Card3 from './pages/card/Card3';
+import Card4 from './pages/card/Card4';
+import Card5 from './pages/card/Card5';
+import Card6 from './pages/card/Card6';
 import Signup from './pages/signup/Signup';
 import './pages/tourcourse/RegionList.css';
 import MyMapApp from './pages/mymap/MyMapApp';
 import MyMapHome from './pages/mymap/MyMapHome';
 import CourseList from './pages/tourcourse/CourseList';
+import MonthlyChart from './pages/report/MonthlyChart';
+import WeeklyChart from './pages/report/WeeklyChart';
+import UsageHistory from './pages/report/UsageHistory';
+import { CardProvider } from './pages/card/CardContext'; 
 import MapComponent_G from './pages/location/MapComponent_G';
 import TourGuide from './pages/tourguide/TourGuide';
 import DetailPage from './pages/tourguide/DetailPage';
-import Phone from './pages/유리다/Phone';
 import Home from './pages/Home';
 import MyCategoryRank from './pages/mymap/MyCategoryRank';
 import BestStoreList from './pages/mymap/BestStoreList';
@@ -28,6 +36,7 @@ import CourseDetail from './pages/tourcourse/CourseDetail';
 
 function App() {
   return (
+    <CardProvider>
     <div className="App">
       <BrowserRouter>
         <Routes>
@@ -37,7 +46,15 @@ function App() {
           <Route path='/login/new' element={<OAuthNew/>}/>
           <Route path='/exchangeRate' element={<ExchangeRateList/>}/>
           <Route path='/test' element={<Test/>}/>
-          <Route path='/card' element={<Card/>}/>
+          <Route path='/card1' element={<Card1/>}/>
+          <Route path='/card2' element={<Card2/>}/>
+          <Route path='/card3' element={<Card3 />}/>
+          <Route path='/card4' element={<Card4 />}/>
+          <Route path='/card5' element={<Card5 />}/>
+          <Route path='/card6' element={<Card6 />}/>
+          <Route path='/usage' element={<UsageHistory/>}/>
+          <Route path='/chart1' element={<MonthlyChart/>}/>
+          <Route path='/chart2' element={<WeeklyChart/>}/>
           <Route path='/courseList' element={<CourseList/>}/>
           <Route path="/course/:courseId" element={<CourseDetail />} />
           <Route  path='/map' element={<MapAPP />}></Route>
@@ -57,11 +74,8 @@ function App() {
           <Route path='/phone' element={<Phone/>}/>
         </Routes>
     </BrowserRouter>
-
-   
-    </div>
-
-    
+   </div>
+  </CardProvider>
   );
 }
 export default App;
