@@ -10,6 +10,10 @@ import './pages/tourcourse/RegionList.css';
 import MyMapApp from './pages/mymap/MyMapApp';
 import MyMapHome from './pages/mymap/MyMapHome';
 import CourseList from './pages/tourcourse/CourseList';
+import MapComponent_G from './pages/location/MapComponent_G';
+import TourGuide from './pages/tourguide/TourGuide';
+import DetailPage from './pages/tourguide/DetailPage';
+import Phone from './pages/유리다/Phone';
 import Home from './pages/Home';
 import MyCategoryRank from './pages/mymap/MyCategoryRank';
 import BestStoreList from './pages/mymap/BestStoreList';
@@ -21,9 +25,6 @@ import OAuthNew from './pages/auth/OAuthNew';
 import OAuthLoading from './pages/auth/OAuthLoading';
 import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
 import CourseDetail from './pages/tourcourse/CourseDetail';
-
-
-
 
 function App() {
   return (
@@ -49,6 +50,11 @@ function App() {
           <Route path='/exchange/card' element={<ExchangeCard/>}></Route>
           <Route path='/exchange/currency' element={<ExchangeCurrency/>}></Route>
           <Route path='/exchange/set' element={<ExchangeSet/>}></Route>
+          <Route path='/MapComponent_G' element={<MapComponent_G/>}></Route>
+          <Route path='/MapComponent_G/:detailDestination' element={<MapComponent_G/>}/>
+          <Route path='/TourGuide' element={<TourGuide/>}/>
+          <Route path='/detail/:type/:id' element={<DetailPage/>}/>
+          <Route path='/phone' element={<Phone/>}/>
         </Routes>
     </BrowserRouter>
 
