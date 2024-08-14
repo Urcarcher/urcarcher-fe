@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../../assets/exchangeCurrency.css';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 function ExchangeCurrency(props) {
     const [exchangeCurInfo, setExchangeCurInfo] = useState({});
@@ -77,22 +79,25 @@ function ExchangeCurrency(props) {
         setCurrency(numCur.toLocaleString());
         setInputWidth(inputVal.length * 10); // 동적으로 input 길이 변경
 
-        // && => null, undefined 등의 falsy 값 확인
-        /*
         if (exchangeCurInfo[nation] && exchangeCurInfo[nation].rate && exchangeCurInfo[nation].buy) {
-            const nationRate = exchangeCurInfo[nation].rate; // 매매기준율
-            const buyRate = exchangeCurInfo[nation].buy; // 현찰 살 때
+            // 쉼표 제거 후 문자열을 숫자로 변환 (NaN 발생)
+            const nationRate = parseFloat(exchangeCurInfo[nation].rate.replace(/,/g, "")); // 매매기준율
+            const buyRate = parseFloat(exchangeCurInfo[nation].buy.replace(/,/g, "")); // 현찰 살 때
 
-            // 환율 우대 90% 적용
-            const discountRate = 0.9;
-            const appliedRate = nationRate + (buyRate - nationRate) * (1 - discountRate);
-            const calculated = (numCur / appliedRate).toFixed(2);
+            // 환율 우대 90% 적용된 예상 원화 계산
+            // => 매매기준율 + (현찰 살 때 - 매매기준율) * (1 - 환율 우대율)
+            if (!isNaN(nationRate) && !isNaN(buyRate)) {
+                const discountRate = 0.9;
+                const appliedRate = nationRate + (buyRate - nationRate) * (1 - discountRate);
+                const calculatAmt = (numCur / appliedRate).toFixed(2); // 소수점 두 자리까지
 
-            setCalculateAmount(calculated); // 계산된 예상 원화
+                setCalculateAmount(calculatAmt); // 계산된 예상 원화
+            } else {
+                setCalculateAmount(0); // 환율 정보 없음
+            }
         } else {
             setCalculateAmount(0); // 환율 정보 없음
         }
-        */
     };
 
     // 환율 우대 90% 적용해서 계산
@@ -108,44 +113,48 @@ function ExchangeCurrency(props) {
     */
 
     return (
-        <div>
-            <h2>얼마를 충전할까요?</h2>
-            <h3>대한민국 KRW</h3>
-            <div className="inputDiv">
-                <input
-                    type="text"
-                    value={currency}
-                    onKeyDown={keyDownHandle}
-                    onChange={numberHandle}
-                    onFocus={focusHandle}
-                    style={{ width: `${inputWidth}px` }}
-                />원
-            </div>
+        <>
+            <Header/>
+            <div className="contents">
+                <h2>얼마를 충전할까요?</h2>
+                <h3>대한민국 KRW</h3>
+                <div className="inputDiv">
+                    <input
+                        type="text"
+                        value={currency}
+                        onKeyDown={keyDownHandle}
+                        onChange={numberHandle}
+                        onFocus={focusHandle}
+                        style={{ width: `${inputWidth}px` }}
+                        />원
+                </div>
 
-            <h3>{nation} (사용자의 국적)</h3>
-            <p>{calculateAmount}달러</p>
-            {exchangeCurInfo[nation] ? 
-            (<p>1달러 = {exchangeCurInfo[nation].rate}원</p>) : (<p>환율 정보를 조회하는 중입니다</p>)}
-
-            <p>환율우대</p>
-            <div>
-                <span>적용환율</span>
+                <h3>{nation} (사용자의 국적)</h3>
+                <p>{calculateAmount}달러</p>
                 {exchangeCurInfo[nation] ? 
-                (<span>KRW = {exchangeCurInfo[nation].rate} = 1달러</span>) : (<span>환율 정보를 조회하는 중입니다</span>)}
+                (<p>1달러 = {exchangeCurInfo[nation].rate}원</p>) : (<p>환율 정보를 조회하는 중입니다</p>)}
+
+                <p>환율우대</p>
+                <div>
+                    <span>적용환율</span>
+                    {exchangeCurInfo[nation] ? 
+                    (<span>KRW {exchangeCurInfo[nation].rate} = 1달러</span>) : (<span>환율 정보를 조회하는 중입니다</span>)}
+                </div>
+                <br/>
+                <div>
+                    <span>우대사항</span>
+                    <span>환율우대 90%</span>
+                </div>
+                <br/>
+                <div>
+                    <span>원화 예상 금액</span>
+                    <span>{calculateAmount}달러</span>
+                </div>
+                <br/>
+                <button>충전하기</button>
             </div>
-            <br/>
-            <div>
-                <span>우대사항</span>
-                <span>환율우대 90%</span>
-            </div>
-            <br/>
-            <div>
-                <span>원화 예상 금액</span>
-                <span>{calculateAmount}달러</span>
-            </div>
-            <br/>
-            <button>충전하기</button>
-        </div>
+            <Footer/>
+        </>
     );
 }
 

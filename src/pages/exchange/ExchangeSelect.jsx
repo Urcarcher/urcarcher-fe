@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 function ExchangeSelect(props) {
     const navi = useNavigate();
@@ -14,13 +16,17 @@ function ExchangeSelect(props) {
     };
 
     return (
-        <div>
-            <h2>어카처에서 편하게 환전하고 원할 때 바로 사용하세요!</h2>
-            <button id="currency" onClick={exchangeHandle}>충전하기</button>
+        <>
+            <Header/>
+            <div className="contents">
+                <h2>어카처에서 편하게 환전하고 원할 때 바로 사용하세요!</h2>
+                <button id="currency" onClick={exchangeHandle}>충전하기</button>
 
-            <h2>이런 환전 방법은 어떠세요?</h2>
-            <button id="set" onClick={exchangeHandle}>목표환율 자동충전</button>
-        </div>
+                <h2>이런 환전 방법은 어떠세요?</h2>
+                <button id="set" onClick={exchangeHandle}>목표환율 자동충전</button>
+            </div>
+            <Footer/>
+        </>
     );
 }
 
