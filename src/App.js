@@ -5,6 +5,8 @@ import './App.css';
 import Login from './pages/auth/Login';
 import Test from './pages/auth/Test';
 import Card from './pages/card/Card';
+import Signup from './pages/signup/Signup';
+import './pages/tourcourse/RegionList.css';
 import MyMapApp from './pages/mymap/MyMapApp';
 import MyMapHome from './pages/mymap/MyMapHome';
 import CourseList from './pages/tourcourse/CourseList';
@@ -32,6 +34,8 @@ function App() {
           <Route path='/test' element={<Test/>}/>
           <Route path='/card' element={<Card/>}/>
           <Route path='/CourseList' element={<CourseList/>}/>
+          <Route  path='/map' element={<MapAPP />}></Route>
+          <Route path='/signup/*' element={<Signup/>}/>
           <Route  path='/maphome' element={<MyMapHome />}></Route>
           <Route  path='/maphome/map' element={<MyMapApp />}></Route>
           <Route  path='/maphome/categoryRank' element={<MyCategoryRank />}></Route>
