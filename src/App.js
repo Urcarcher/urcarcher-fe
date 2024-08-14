@@ -39,7 +39,7 @@ function App() {
           <Route  path='/maphome' element={<MyMapHome />}></Route>
           <Route  path='/maphome/map' element={<MyMapApp />}></Route>
           <Route  path='/maphome/categoryRank' element={<MyCategoryRank />}></Route>
-          <Route  path='/maphome/beststorelist' element={<BestStoreList />}></Route>
+          <Route  path='/maphome/beststorelist' element={<BestStoreList />}></Route>        
           <Route path='/exchange' element={<ExchangeSelect/>}></Route>
           <Route path='/exchange/card' element={<ExchangeCard/>}></Route>
           <Route path='/exchange/currency' element={<ExchangeCurrency/>}></Route>

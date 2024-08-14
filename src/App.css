@@ -84,6 +84,10 @@ ul{
 li{
   list-style: none;
 }
+::-webkit-scrollbar {
+  display: none;
+}
+
 /* Header */
 header{
   z-index: 1000;
@@ -121,6 +125,7 @@ header{
   position: fixed;
   bottom: 0;
   background-color: #fff;
+  z-index: 100;
 }
 .menu-list{
   display: flex;
