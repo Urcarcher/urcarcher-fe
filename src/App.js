@@ -1,40 +1,67 @@
-import React, { useEffect, useState } from 'react'
-
-import './App.css';
+import React from 'react';
+import {Status, Wrapper} from "@googlemaps/react-wrapper";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import MapAPP from './pages/kakaomap/MapAPP';
+import './App.css';
 import Login from './pages/auth/Login';
 import Test from './pages/auth/Test';
 import Card from './pages/card/Card';
-
+import Signup from './pages/signup/Signup';
 import './pages/tourcourse/RegionList.css';
+import MyMapApp from './pages/mymap/MyMapApp';
+import MyMapHome from './pages/mymap/MyMapHome';
 import CourseList from './pages/tourcourse/CourseList';
 import MapComponent_G from './pages/location/MapComponent_G';
 import TourGuide from './pages/tourguide/TourGuide';
 import DetailPage from './pages/tourguide/DetailPage';
 import Phone from './pages/유리다/Phone';
-
+import Home from './pages/Home';
+import MyCategoryRank from './pages/mymap/MyCategoryRank';
+import BestStoreList from './pages/mymap/BestStoreList';
+import ExchangeSelect from './pages/exchange/ExchangeSelect';
+import ExchangeCard from './pages/exchange/ExchangeCard';
+import ExchangeCurrency from './pages/exchange/ExchangeCurrency';
+import ExchangeSet from './pages/exchange/ExchangeSet';
+import OAuthNew from './pages/auth/OAuthNew';
+import OAuthLoading from './pages/auth/OAuthLoading';
+import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
+import CourseDetail from './pages/tourcourse/CourseDetail';
 
 function App() {
-
-
   return (
     <div className="App">
       <BrowserRouter>
-      <Routes>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/test' element={<Test/>}/>
-        <Route path='/card' element={<Card/>}/>
-        <Route path='/CourseList' element={<CourseList/>}/>
-        <Route  path='/map' element={<MapAPP />}></Route>
-        <Route path='/MapComponent_G' element={<MapComponent_G/>}></Route>
-        <Route path='/MapComponent_G/:detailDestination' element={<MapComponent_G/>}/>
-        <Route path='/TourGuide' element={<TourGuide/>}/>
-        <Route path='/detail/:type/:id' element={<DetailPage/>}/>
-        <Route path='/phone' element={<Phone/>}/>
-      </Routes>
+        <Routes>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/login/loading' element={<OAuthLoading/>}/>
+          <Route path='/login/new' element={<OAuthNew/>}/>
+          <Route path='/exchangeRate' element={<ExchangeRateList/>}/>
+          <Route path='/test' element={<Test/>}/>
+          <Route path='/card' element={<Card/>}/>
+          <Route path='/courseList' element={<CourseList/>}/>
+          <Route path="/course/:courseId" element={<CourseDetail />} />
+          <Route  path='/map' element={<MapAPP />}></Route>
+          <Route path='/signup/*' element={<Signup/>}/>
+          <Route  path='/maphome' element={<MyMapHome />}></Route>
+          <Route  path='/maphome/map' element={<MyMapApp />}></Route>
+          <Route  path='/maphome/categoryRank' element={<MyCategoryRank />}></Route>
+          <Route  path='/maphome/beststorelist' element={<BestStoreList />}></Route>        
+          <Route path='/exchange' element={<ExchangeSelect/>}></Route>
+          <Route path='/exchange/card' element={<ExchangeCard/>}></Route>
+          <Route path='/exchange/currency' element={<ExchangeCurrency/>}></Route>
+          <Route path='/exchange/set' element={<ExchangeSet/>}></Route>
+          <Route path='/MapComponent_G' element={<MapComponent_G/>}></Route>
+          <Route path='/MapComponent_G/:detailDestination' element={<MapComponent_G/>}/>
+          <Route path='/TourGuide' element={<TourGuide/>}/>
+          <Route path='/detail/:type/:id' element={<DetailPage/>}/>
+          <Route path='/phone' element={<Phone/>}/>
+        </Routes>
     </BrowserRouter>
+
+   
     </div>
+
+    
   );
 }
 export default App;
