@@ -1,0 +1,10 @@
+.divStyle1 {
+    width: 100%;
+    text-align: left;
+    line-height: 1.5;
+    font-size: 25px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 20px 0;
+    padding: 20px 0;
+}
