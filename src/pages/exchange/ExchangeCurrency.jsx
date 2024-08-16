@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../../assets/exchangeCurrency.css';
-import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import Header from '../../components/Header';
+import { ExchangeContext } from './exportContext';
 
 function ExchangeCurrency(props) {
     const [exchangeCurInfo, setExchangeCurInfo] = useState({});
@@ -10,9 +12,15 @@ function ExchangeCurrency(props) {
     const cwsc = useRef(null);
 
     // 이전 페이지에서 보낸 선택한 카드 정보
+    /*
     const location = useLocation();
-    const selectedCard = { ...location.state };
-    // console.log("선택한 카드 정보 받기", selectedCard);
+    const exCard = { ...location.state };
+    console.log("선택한 카드 정보 받기", exCard);
+    console.log(typeof selectCard); 
+    */
+    
+    const { cardId } = useContext(ExchangeContext); // 공유 공간에서 필요한 값만 빼오기
+    console.log("선택한 카드 아이디", cardId);
 
     const [nation, setNation] = useState("USD"); // 사용자 국적 임시 data
 
@@ -85,7 +93,7 @@ function ExchangeCurrency(props) {
             const buyRate = parseFloat(exchangeCurInfo[nation].buy.replace(/,/g, "")); // 현찰 살 때
 
             // 환율 우대 90% 적용된 예상 원화 계산
-            // => 매매기준율 + (현찰 살 때 - 매매기준율) * (1 - 환율 우대율)
+            // 매매기준율 + (현찰 살 때 - 매매기준율) * (1 - 환율 우대율)
             if (!isNaN(nationRate) && !isNaN(buyRate)) {
                 const discountRate = 0.9;
                 const appliedRate = nationRate + (buyRate - nationRate) * (1 - discountRate);
@@ -112,6 +120,29 @@ function ExchangeCurrency(props) {
     };
     */
 
+    // 환전 내역에 insert
+    const insertHandle = () => {
+        const data = {
+            // cardId: cardId, // 사용자가 선택한 카드 ID
+            exRate: parseFloat(exchangeCurInfo[nation].rate.replace(/,/g, "")), // 적용환율
+            exCur: parseFloat(currency.replace(/,/g, "")), // 환전금액
+            exPay: parseFloat(calculateAmount) // 결제금액
+        };
+    
+        axios.post('https://urcarcher-local.kro.kr:8443/api/exchange/insert', data, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
+            console.log("바로 충전 성공", response.data);
+            setExchangeCurInfo(response.data);
+        })
+        .catch(error => {
+            console.error("바로 충전 실패", error);
+        });
+    };
+
     return (
         <>
             <Header/>
@@ -120,13 +151,14 @@ function ExchangeCurrency(props) {
                 <h3>대한민국 KRW</h3>
                 <div className="inputDiv">
                     <input
+                        name="exCur"
                         type="text"
                         value={currency}
                         onKeyDown={keyDownHandle}
                         onChange={numberHandle}
                         onFocus={focusHandle}
                         style={{ width: `${inputWidth}px` }}
-                        />원
+                    />원
                 </div>
 
                 <h3>{nation} (사용자의 국적)</h3>
@@ -151,7 +183,7 @@ function ExchangeCurrency(props) {
                     <span>{calculateAmount}달러</span>
                 </div>
                 <br/>
-                <button>충전하기</button>
+                <button onClick={insertHandle}>충전하기</button>
             </div>
             <Footer/>
         </>
