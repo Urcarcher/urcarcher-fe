@@ -4,8 +4,9 @@ import Footer from '../components/Footer';
 function Home(props) {
     return (
         <div>
-            <div className='contents'>
+            <div className='container'>
                 <h1>메인 홈</h1>
+                <p>dfsdaffffffffffffffffffffffffffffffa</p>
             </div>
             <Footer />
         </div>

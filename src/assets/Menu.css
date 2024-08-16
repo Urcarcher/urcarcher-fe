@@ -1,0 +1,82 @@
+.menu-wrap{
+    z-index: 120; /* 최상위 표시 - 헤더보다 높게 */
+    position: absolute; 
+    top: 0;
+    right: -100%;
+    width: 430px; /* 초기 너비를 0으로 설정 */
+    height: 100%;
+    background-color: #fff;
+    color: white;
+    text-align: left;
+    transition: right 0.3s ease-in-out; 
+  
+}
+/* Menu 컴포넌트가 활성화될 때 */
+.menu-wrap.active {
+    right: 0;
+}
+.close-button {
+    position: absolute;
+    top: 33px;
+    right: 35px;
+    background: none;
+    border: none;
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    cursor: pointer;
+}
+.menu{
+    width: 100%;
+    padding-top: 20px;
+}
+.login-prompt{
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;  
+}
+.login-prompt > h3{
+    font-size: 25px;
+}
+.menu-category-list{
+    margin: 0;
+}
+.menu-category-list > a > li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+}
+.menu-name{
+    font-weight: bold;
+}
+.menu-category-list li:hover .menu-name{
+    color: #064AFF;
+}
+.menu-banner{
+    background-color: #F4F7FC;
+    height: 134px;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 15px;
+    display: flex;
+}
+.menu-banner p {
+    color: #333;
+    font-weight: bold;
+    margin: 15px 0 0;
+}
+.menu-section{
+    overflow-y: scroll;
+    height: 600px;
+}
+.menu-category-wrap > p {
+    color: #333;
+    font-weight: bold;
+    border-top: 1px solid #eee;
+    padding: 20px 0 0;
+    color: #476EFF;
+    font-size: 15px;
+}
+.menu-category-wrap:first-child > p {
+    border-top: none;
+    padding: 10px 0 0;
+}
