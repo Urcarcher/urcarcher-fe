@@ -36,7 +36,9 @@
     margin: 0 auto;
     border: 1px solid black;
     font-family: 'NanumSquareNeo', sans-serif;
-}
+    overflow: hidden;  /* 크기 바깥 숨김 */
+    position: relative; /* .menu-wrap의 기준 위치 */
+  }
 
 .App-logo {
   height: 40vmin;
@@ -78,6 +80,9 @@
 .contents{   /* 페이지컴포넌트 최상위div calssName에 넣어주세요 */
   padding-top: 77px;
 }
+.inner{
+  max-width: 360px;
+}
 ul{
   padding: 0;
 }
@@ -87,10 +92,13 @@ li{
 ::-webkit-scrollbar {
   display: none;
 }
-
+a{
+  color: black;
+  text-decoration: none;
+}
 /* Header */
 header{
-  z-index: 1000;
+  z-index: 100;
   position: fixed;
   width: 430px;
   height: 77px;
@@ -125,7 +133,7 @@ header{
   position: fixed;
   bottom: 0;
   background-color: #fff;
-  z-index: 100;
+  z-index: 200;
 }
 .menu-list{
   display: flex;
