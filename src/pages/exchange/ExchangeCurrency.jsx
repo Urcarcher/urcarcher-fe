@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../../assets/exchangeCurrency.css';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
@@ -22,11 +22,13 @@ function ExchangeCurrency(props) {
     console.log(typeof exCard);
     
     const [nation, setNation] = useState("USD"); // 사용자 국적 임시 data
-    
+
     const [focused, setFocused] = useState(false);
     const [inputWidth, setInputWidth] = useState(15); // 글자 너비 기본값 (15px)
     const [currency, setCurrency] = useState(0); // 사용자가 입력한 KRW
     const [calculateAmount, setCalculateAmount] = useState(0); // 예상 원화
+
+    const navi = useNavigate();
 
     // 처음 렌더링 될 때만 웹소켓 연결
     useEffect(()=>{
@@ -135,7 +137,15 @@ function ExchangeCurrency(props) {
         })
         .then(response => {
             console.log("바로 충전 성공", response.data);
+            
             setExchangeCurInfo(response.data);
+            navi("/exchange/success", {
+                state: {
+                    successMsg: response.data,
+                    successData: data,
+                    successPlus: exCard.balance + (parseFloat(currency.replace(/,/g, "")))
+                }
+            });
         })
         .catch(error => {
             console.error("바로 충전 실패", error);

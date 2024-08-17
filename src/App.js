@@ -33,6 +33,7 @@ import OAuthNew from './pages/auth/OAuthNew';
 import OAuthLoading from './pages/auth/OAuthLoading';
 import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
 import CourseDetail from './pages/tourcourse/CourseDetail';
+import ExchangeSuccess from './pages/exchange/ExchangeSuccess';
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
           <Route path='/exchange' element={<ExchangeSelect/>}></Route>
           <Route path='/exchange/card' element={<ExchangeCard/>}></Route>
           <Route path='/exchange/currency' element={<ExchangeCurrency/>}></Route>
+          <Route path='/exchange/success' element={<ExchangeSuccess/>}></Route>
           <Route path='/exchange/set' element={<ExchangeSet/>}></Route>
           <Route path='/MapComponent_G' element={<MapComponent_G/>}></Route>
           <Route path='/MapComponent_G/:detailDestination' element={<MapComponent_G/>}/>
