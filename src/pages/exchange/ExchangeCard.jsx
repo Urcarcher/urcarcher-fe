@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import '../../assets/exchangeCard.css';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
-import { ExchangeContext } from './exportContext';
 
 function ExchangeCard(props) {
     // 이전 페이지에서 보낸 버튼 정보
@@ -22,14 +21,11 @@ function ExchangeCard(props) {
 
     const [cardList, setCardList] = useState(userCard);
     const [selectCard, setSelectCard] = useState(null);
-    const [cardId, setCardId] = useState(userCard.id);
 
     // 카드 선택
     const cardSelectHandle = (card) => {
         console.log("선택한 카드 정보", card);
-        console.log("선택한 카드 아이디", card.id);
         setSelectCard(card);
-        setCardId(card.id);
     };
 
     // 취소 버튼
@@ -39,7 +35,7 @@ function ExchangeCard(props) {
 
     // 다음 버튼 => 선택한 버튼 종류 별 페이지 이동
     const nextHandle = () => {
-        if (selectCard !== null) {
+        if (selectCard) {
             let location = "";
             
             if (btn === "currency") {
@@ -58,23 +54,21 @@ function ExchangeCard(props) {
     return (
         <>
             <Header/>
-            <ExchangeContext.Provider value={{ cardId, setCardId }}>
-                <div className="contents">
-                    <h2>어떤 카드에 충전할까요?</h2>
-                    <div>
-                        {/* null, undefined 아닌지 확인 후 id 비교 */}
-                        {cardList.map((card) => (
-                            <div key={card.id} className={selectCard?.id === card.id ? "choice" : "unChoice"}>
-                                <p>{card.type}</p>
-                                <p>잔액 {card.balance.toLocaleString()}원</p>
-                                <button onClick={() => cardSelectHandle(card)}>선택</button>
-                            </div>
-                        ))}
-                    </div>
-                    <button onClick={backHandle}>취소</button>
-                    <button onClick={nextHandle}>다음</button>
+            <div className="contents">
+                <h2>어떤 카드에 충전할까요?</h2>
+                <div>
+                    {/* null, undefined 아닌지 확인 후 id 비교 */}
+                    {cardList.map((card) => (
+                        <div key={card.id} className={selectCard?.id === card.id ? "choice" : "unChoice"}>
+                            <p>{card.type}</p>
+                            <p>잔액 {card.balance.toLocaleString()}원</p>
+                            <button onClick={() => cardSelectHandle(card)}>선택</button>
+                        </div>
+                    ))}
                 </div>
-            </ExchangeContext.Provider>
+                <button onClick={backHandle}>취소</button>
+                <button onClick={nextHandle}>다음</button>
+            </div>
             <Footer/>
         </>
     );

@@ -12,18 +12,17 @@ function ExchangeCurrency(props) {
     const cwsc = useRef(null);
 
     // 이전 페이지에서 보낸 선택한 카드 정보
-    /*
     const location = useLocation();
-    const exCard = { ...location.state };
+    // const exCard = { ...location.state };
+    const cardId = location.state.selectCard;
+    const [exCard, setExCard] = useState(cardId);
+
     console.log("선택한 카드 정보 받기", exCard);
-    console.log(typeof selectCard); 
-    */
+    console.log("선택한 카드 아이디 받기", exCard.id);
+    console.log(typeof exCard);
     
-    const { cardId } = useContext(ExchangeContext); // 공유 공간에서 필요한 값만 빼오기
-    console.log("선택한 카드 아이디", cardId);
-
     const [nation, setNation] = useState("USD"); // 사용자 국적 임시 data
-
+    
     const [focused, setFocused] = useState(false);
     const [inputWidth, setInputWidth] = useState(15); // 글자 너비 기본값 (15px)
     const [currency, setCurrency] = useState(0); // 사용자가 입력한 KRW
@@ -123,7 +122,7 @@ function ExchangeCurrency(props) {
     // 환전 내역에 insert
     const insertHandle = () => {
         const data = {
-            // cardId: cardId, // 사용자가 선택한 카드 ID
+            cardId: exCard.id,
             exRate: parseFloat(exchangeCurInfo[nation].rate.replace(/,/g, "")), // 적용환율
             exCur: parseFloat(currency.replace(/,/g, "")), // 환전금액
             exPay: parseFloat(calculateAmount) // 결제금액
