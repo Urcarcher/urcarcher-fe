@@ -12,7 +12,7 @@ function BestStoreList(props) {
             <Header />
             <div className='contents'>
                 <div className='categoryRank-title inner'>
-                    <h3>이번 달 다른 사람이 많이 방문한 곳은?</h3>
+                    <h3>이번 달 다른 사람이 많이 방문한 곳은 어디일까요?</h3>
                 </div>
                 <StoreInfoList />
             </div>

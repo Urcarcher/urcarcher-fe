@@ -6,35 +6,40 @@ import CategoryRankList from '../../components/mymap/CategoryRankList';
 import RandomImage from '../../components/mymap/RandomImage';
 import './Map.css';
 import NoResult from '../../components/mymap/NoResult';
+import axios from 'axios';
+//import { useData } from './DataContext';
 
 function MyCategoryRank(props) {
+
     const navigator = new useNavigate();
     
     const [categoryList, setCategoryList] = useState([]);
+    //const { categoryList ,setCategoryList } = useData();  // use setCategoryList from DataContext.js
 
+    const [memberId, setMemberId] = useState('bleakwinter');  // 테스트할 회원 ID
+
+
+    //서버로 부터 결제 내역의 카테고리 데이터 호출
     useEffect(() => {
-        // 여기에 서버에서 데이터를 받아오는 로직 추가
-        // 예시:
-        // fetch('/api/categoryList')
-        //     .then(response => response.json())
-        //     .then(data => setCategoryList(data));
+        // 데이터 호출
+        axios.get(`https://urcarcher-local.kro.kr:8443/api/paymentPlace/categories`, {
+            params: {
+                memberId: memberId
+            }
+        })
+        .then(response => {
+            setCategoryList(response.data); // 데이터를 상태에 저장
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+    }, [memberId]);
 
-        // 지금은 예시로 일정 시간 후에 데이터를 설정
-        setTimeout(() => {  //나중에setTimeout은 삭제
-            // 서버에서 데이터를 받아왔다고 가정
-            setCategoryList([
-                { name: "카테고리명1", count: "0" },
-                { name: "카테고리명2", count: "0" },
-                { name: "카테고리명3", count: "0" },
-                { name: "카테고리명4", count: "0" },
-                { name: "카테고리명5", count: "0" },
-            ]);
-        }, 500);
-    }, []);
+
 
     //버튼 클릭이벤트 - 페이지 이동
     const goMapAppPage = () => {
-        navigator("/maphome/map");
+        navigator("/maphome/map" , { state: { categoryList } });
     }
 
     //나의 결제 내역이 없을 경우
@@ -58,7 +63,7 @@ function MyCategoryRank(props) {
                     <NoResult />
                 )}
             </div>
-            {/* CategoryRankList가 null인 경우 버튼 다르게 */}
+            {/* CategoryRankList가 null인 경우 홈 버튼으로 변경 */}
             <div className='ranklist-btn inner'>
                 <button 
                     className={`mymap-btn ${categoryList.length > 0 ? '' : 'home-btn'}`} 

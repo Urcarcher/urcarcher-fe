@@ -106,9 +106,9 @@
     transition: 0.3s;
   }
 
-.maphome-btn > button:hover{
-  background-color: #064AFF;
-}
+  .maphome-btn > button:hover{
+    background-color: #064AFF;
+  }
   .maphome-btn > span{
     font-size: 14px;
     color: #656565;
@@ -133,6 +133,28 @@
     top: 45%;
     transform: translateY(-50%);
     margin-bottom: -30px;
+  }
+
+  .current-location-btn{
+    position: absolute;
+    right: 10px;
+    bottom: 100px;
+    width: 58px;
+    height: 58px;
+    background-color: #fff;
+    z-index: 100;
+    border-radius: 50%;
+    line-height: 58px;
+  }
+  .current-location-btn>button{
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+  .current-location-btn>button > img{
+    height: 100%;
   }
 
   /* MyCategoryRank.jsx */
