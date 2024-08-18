@@ -51,9 +51,12 @@ const CardForm = () => {
         onClick={()=>{
 
           setProduceCardOffer(prevState => ({
+            // ...prevState,
+            // pickup_date:address,
+            // card_pickup:date
             ...prevState,
-            pickup_date:address,
-            card_pickup:date
+            card_pickup: address,  // 주소를 card_pickup에 할당
+            pickup_date: date  // 날짜를 pickup_date에 할당
         }));
         setTimeout(()=>navigate('/card5'),300);
 
