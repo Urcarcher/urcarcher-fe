@@ -17,10 +17,26 @@ function ExchangeCard(props) {
         { id: 1, balance: 10000, type: "선불카드" },
         { id: 2, balance: 50000, type: "선불카드" },
         { id: 3, balance: 0, type: "신용카드" },
+        { id: 4, balance: 0, type: "선불카드" },
     ];
 
     const [cardList, setCardList] = useState(userCard);
     const [selectCard, setSelectCard] = useState(null);
+
+    // 카드 리스트 조회
+    // const [cardList, setCardList] = useState([]);
+
+    /*
+    useEffect(() => {
+        axios.get("https://urcarcher-local.kro.kr:8443/api/exchange/list")
+            .then((response) => {
+                setCardList(response.data);
+            })
+            .catch((error) => {
+                console.error("카드 조회 실패", error);
+            });
+    }, []);
+    */
 
     // 카드 선택
     const cardSelectHandle = (card) => {
@@ -47,7 +63,7 @@ function ExchangeCard(props) {
             }
             navi(location, { state: { selectCard } });
         } else {
-            alert("카드를 선택해주세요");
+            alert("충전하실 카드를 선택해 주세요");
         }
     };
 
@@ -59,7 +75,10 @@ function ExchangeCard(props) {
                 <div>
                     {/* null, undefined 아닌지 확인 후 id 비교 */}
                     {cardList.map((card) => (
-                        <div key={card.id} className={selectCard?.id === card.id ? "choice" : "unChoice"}>
+                        <div key={card.id} 
+                            className={selectCard?.id === card.id ? "choice" : "unChoice"}
+                            style={{ display: card.type === "선불카드" ? "block" : "none" }}
+                        >
                             <p>{card.type}</p>
                             <p>잔액 {card.balance.toLocaleString()}원</p>
                             <button onClick={() => cardSelectHandle(card)}>선택</button>

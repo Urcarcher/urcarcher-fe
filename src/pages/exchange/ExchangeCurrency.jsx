@@ -123,6 +123,21 @@ function ExchangeCurrency(props) {
 
     // 환전 내역에 insert
     const insertHandle = () => {
+        if (!currency || parseFloat(currency.replace(/,/g, "")) <= 0) {
+            alert("0원 이상의 충전하실 금액을 입력해 주세요");
+            return;
+        }
+
+        if (!exchangeCurInfo || !exchangeCurInfo[nation] || !exchangeCurInfo[nation].rate) {
+            alert("환율 정보를 조회하는 중입니다. 다시 시도해 주세요");
+            return;
+        }
+    
+        if (!calculateAmount || parseFloat(calculateAmount) <= 0) {
+            alert("예상 원화 금액을 계산할 수 없습니다. 다시 시도해 주세요");
+            return;
+        }
+
         const data = {
             cardId: exCard.id,
             exRate: parseFloat(exchangeCurInfo[nation].rate.replace(/,/g, "")), // 적용환율
@@ -130,7 +145,7 @@ function ExchangeCurrency(props) {
             exPay: parseFloat(calculateAmount) // 결제금액
         };
     
-        axios.post('https://urcarcher-local.kro.kr:8443/api/exchange/insert', data, {
+        axios.post("https://urcarcher-local.kro.kr:8443/api/exchange/insert", data, {
             headers: {
                 "Content-Type": "application/json"
             }
