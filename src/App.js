@@ -57,7 +57,6 @@ function App() {
           <Route path='/chart2' element={<WeeklyChart/>}/>
           <Route path='/courseList' element={<CourseList/>}/>
           <Route path="/course/:courseId" element={<CourseDetail />} />
-          <Route  path='/map' element={<MapAPP />}></Route>
           <Route path='/signup/*' element={<Signup/>}/>
           <Route  path='/maphome' element={<MyMapHome />}></Route>
           <Route  path='/maphome/map' element={<MyMapApp />}></Route>
@@ -71,7 +70,6 @@ function App() {
           <Route path='/MapComponent_G/:detailDestination' element={<MapComponent_G/>}/>
           <Route path='/TourGuide' element={<TourGuide/>}/>
           <Route path='/detail/:type/:id' element={<DetailPage/>}/>
-          <Route path='/phone' element={<Phone/>}/>
         </Routes>
     </BrowserRouter>
    </div>

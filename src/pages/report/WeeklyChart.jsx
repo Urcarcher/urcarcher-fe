@@ -188,7 +188,7 @@ const WeeklyChart = () => {
         getFilteredUsageByFilter().map((usage, index) => {
           return (
             <div key={index}>
-              <div>가맹점이름: {usage.storeName}</div>
+              <div>가맹점이름: {usage.store_name}</div>
               <div>결제금액 : {usage.paymentPrice}</div>
               <div>결제날짜 : {new Date(usage.paymentDate).toLocaleString()}</div>
               <p></p>
