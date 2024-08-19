@@ -10,6 +10,7 @@ const MonthlyChart = () => {
     const [usage, setUsage] = useState([]);
     const [filteredUsage, setFilteredUsage] = useState([]);
     const [chartData, setChartData] = useState([['Category', 'Amount']]);
+    const [categoryStats, setCategoryStats] = useState([]);
 
     const categoryMapping = {
         "MT1": "생활편의",
@@ -17,10 +18,10 @@ const MonthlyChart = () => {
         "PK6": "생활편의",
         "OL7": "생활편의",
         "AD5": "생활편의",
-        "PS3": "교육 및 문화",
-        "SC4": "교육 및 문화",
-        "AC5": "교육 및 문화",
-        "CT1": "교육 및 문화",
+        "PS3": "교육/문화",
+        "SC4": "교육/문화",
+        "AC5": "교육/문화",
+        "CT1": "교육/문화",
         "SW8": "교통",
         "BK9": "금융 및 공공서비스",
         "AG2": "금융 및 공공서비스",
@@ -49,45 +50,40 @@ const MonthlyChart = () => {
         }
     }, [selectedMonth, usage]);
 
-    useEffect(() => {
-        updateChartData(filteredUsage);
-    }, [filteredUsage]);
-
     const filterDataByMonth = (month) => {
-        const filteredData = usage.filter(item => {
-            const date = new Date(item.paymentDate);
-            const itemMonth = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
-            console.log(`Filtering: itemMonth=${itemMonth}, selectedMonth=${month}`);
+        const filtered = usage.filter(item => {
+            const itemMonth = new Date(item.paymentDate).toISOString().split('T')[0].substring(0, 7);
             return itemMonth === month;
         });
-        console.log('Filtered Data:', filteredData);
-        setFilteredUsage(filteredData);
+        setFilteredUsage(filtered);
+        generateChartData(filtered);
     };
 
-    const updateChartData = (data) => {
-        const categoryTotals = data.reduce((acc, curr) => {
-            const categoryCode = curr.categoryCode.trim().toUpperCase(); // 공백 제거 및 대문자로 변환
-            const category = categoryMapping[categoryCode];
-            console.log(`Processing item with categoryCode=${categoryCode}, mapped category=${category}`);
-            if (category) {
-                if (!acc[category]) {
-                    acc[category] = 0;
-                }
-                acc[category] += Math.abs(curr.paymentPrice); // 절대값으로 변환
+    const generateChartData = (data) => {
+        const categoryTotals = {};
+        let totalAmount = 0;
+
+        data.forEach(item => {
+            const category = categoryMapping[item.category_code] || '기타';
+            if (categoryTotals[category]) {
+                categoryTotals[category] += item.paymentPrice;
             } else {
-                console.log(`Category code ${categoryCode} is not defined in categoryMapping`);
+                categoryTotals[category] = item.paymentPrice;
             }
-            return acc;
-        }, {});
+            totalAmount += item.paymentPrice;
+        });
 
-        console.log('Grouped Data:', categoryTotals);
+        const formattedChartData = [['Category', 'Amount']];
+        const stats = [];
 
-        // 객체를 배열로 변환하여 차트 데이터에 사용
-        const groupedData = Object.entries(categoryTotals).map(([category, total]) => [category, total]);
-        console.log('Chart Data:', groupedData);
+        for (const [category, amount] of Object.entries(categoryTotals)) {
+            const percentage = Math.round((amount / totalAmount) * 100);  // 반올림하여 소숫점 제거
+            formattedChartData.push([category, amount]);
+            stats.push({ category, amount, percentage });
+        }
 
-        // 기본 데이터 구조에 맞추어 반환
-        setChartData([['Category', 'Amount'], ...groupedData]);
+        setChartData(formattedChartData);
+        setCategoryStats(stats);
     };
 
     const handleMonthChange = (event) => {
@@ -131,20 +127,35 @@ const MonthlyChart = () => {
                 />
             </div>
 
-            <div>
+            {/* <div>
                 {filteredUsage.length > 0 ? (
                     filteredUsage.map((usage, index) => (
                         <div key={index}>
-                            <div>가맹점이름: {usage.storeName}</div>
+                            <div>가맹점이름: {usage.store_name}</div>
                             <div>결제금액 : {usage.paymentPrice}</div>
                             <div>결제날짜 : {new Date(usage.paymentDate).toLocaleString()}</div>
-                            <div>카테고리 코드: {usage.categoryCode}</div>
+                            <div>카테고리 코드: {usage.category_code}</div>
                             <p></p>
                             <br/>
                         </div>
                     ))
                 ) : (
                     <div>선택된 월에 대한 결제 내역이 없습니다.</div>
+                )}
+            </div> */}
+
+            <div>
+                <h3>카테고리별 소비 비율 및 금액</h3>
+                {categoryStats.length > 0 ? (
+                    categoryStats.map((stat, index) => (
+                        <div key={index} style={{ marginBottom: '10px' }}>
+                            <div><strong>{stat.category}</strong></div>
+                            <div>금액: {stat.amount.toLocaleString()}원</div>
+                            <div>비율: {stat.percentage}%</div>
+                        </div>
+                    ))
+                ) : (
+                    <div>카테고리 정보가 없습니다.</div>
                 )}
             </div>
         </div>
