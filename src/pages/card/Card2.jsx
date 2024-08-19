@@ -3,6 +3,7 @@ import { Input, Switch, FormControlLabel,Button } from '@mui/material';
 import { useCardContext } from './CardContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Footer from '../../components/Footer';
 
 function Card2() {
     const [idNum, setIdNum] = useState('');

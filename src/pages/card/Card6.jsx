@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useCardContext } from './CardContext';
 import axios from 'axios';
+import Footer from '../../components/Footer';
 
 function Card6(props) {
     const { produceCardOffer } = useCardContext();
