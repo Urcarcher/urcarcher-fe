@@ -1,0 +1,146 @@
+{
+  "name": "Nathan Andrews",
+  "img": "/img/avatar-7.jpg",
+  "backgroundImg": "/img/photos/paul-morris-116514-unsplash.jpg",
+  "description": "One morning, when Gregor Samsa woke from troubled",
+  "position": "Coder",
+  "social": [
+    {
+      "content": "Nathan's Facebook",
+      "type": "facebook",
+      "link": "#"
+    },
+    {
+      "content": "@nathan_andrews",
+      "type": "twitter",
+      "link": "#"
+    },
+    {
+      "content": "+420777555987",
+      "type": "phone",
+      "link": "#"
+    },
+    {
+      "content": "@nathan",
+      "type": "skype",
+      "link": "#"
+    }
+  ],
+  "messages": [
+    {
+      "time": "10 mins ago",
+      "text": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections",
+      "replies": [
+        {
+          "author": "Serenity Mitchelle",
+          "text": "The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. 'What's happened to me?' he thought. It wasn't a dream.",
+          "img": "/img/avatar-3.jpg"
+        },
+        {
+          "author": "Tony O'Brian",
+          "text": "His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table.",
+          "img": "/img/avatar-1.jpg"
+        }
+      ]
+    },
+    {
+      "time": "12 mins ago",
+      "text": "Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame."
+    },
+    {
+      "time": "34 mins ago",
+      "text": "He must have tried it a hundred times, shut his eyes so that he wouldn't have to look at the floundering legs, and only stopped when he began to feel a mild, dull pain there that he had never felt before.",
+      "replies": [
+        {
+          "author": "Javier Gregory",
+          "text": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections",
+          "img": "/img/avatar-6.jpg"
+        }
+      ]
+    }
+  ],
+  "editProfile": {
+    "name": "Edit Profile",
+    "inputs": [
+      {
+        "label": "Company",
+        "placeholder": "Company",
+        "type": "text",
+        "defaultValue": "Nathan & Nathan",
+        "size": {
+          "md": 5
+        }
+      },
+      {
+        "label": "Username",
+        "placeholder": "Username",
+        "type": "text",
+        "defaultValue": "nathan",
+        "size": {
+          "md": 3
+        }
+      },
+      {
+        "label": "Email address",
+        "placeholder": "Email",
+        "type": "email",
+        "size": {
+          "md": 4
+        }
+      },
+      {
+        "label": "First Name",
+        "placeholder": "First Name",
+        "type": "text",
+        "size": {
+          "md": 6
+        }
+      },
+      {
+        "label": "Last Name",
+        "placeholder": "Last Name",
+        "type": "text",
+        "size": {
+          "md": 6
+        }
+      },
+      {
+        "label": "Address",
+        "placeholder": "Home Address",
+        "type": "text",
+        "size": {
+          "md": 12
+        }
+      },
+      {
+        "label": "City",
+        "placeholder": "City",
+        "type": "text",
+        "size": {
+          "md": 4
+        }
+      },
+      {
+        "label": "ZIP",
+        "placeholder": "ZIP",
+        "type": "number",
+        "size": {
+          "md": 3
+        }
+      },
+      {
+        "label": "Country",
+        "type": "select",
+        "options": ["UK", "US"],
+        "size": {
+          "md": 5
+        }
+      }
+    ],
+    "aboutMe": {
+      "name": "About me",
+      "text": "The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. 'What's happened to me?' he thought. It wasn't a dream.",
+      "placeholder": "Here can be your description"
+    }
+  }
+}
