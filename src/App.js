@@ -33,6 +33,7 @@ import OAuthNew from './pages/auth/OAuthNew';
 import OAuthLoading from './pages/auth/OAuthLoading';
 import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
 import CourseDetail from './pages/tourcourse/CourseDetail';
+import TestReservation from './pages/reservation/TestReservation';
 
 function App() {
   return (
@@ -57,7 +58,6 @@ function App() {
           <Route path='/chart2' element={<WeeklyChart/>}/>
           <Route path='/courseList' element={<CourseList/>}/>
           <Route path="/course/:courseId" element={<CourseDetail />} />
-          <Route  path='/map' element={<MapAPP />}></Route>
           <Route path='/signup/*' element={<Signup/>}/>
           <Route  path='/maphome' element={<MyMapHome />}></Route>
           <Route  path='/maphome/map' element={<MyMapApp />}></Route>
@@ -71,7 +71,7 @@ function App() {
           <Route path='/MapComponent_G/:detailDestination' element={<MapComponent_G/>}/>
           <Route path='/TourGuide' element={<TourGuide/>}/>
           <Route path='/detail/:type/:id' element={<DetailPage/>}/>
-          <Route path='/phone' element={<Phone/>}/>
+          <Route path='/reservation' element={<TestReservation/>}/>
         </Routes>
     </BrowserRouter>
    </div>
