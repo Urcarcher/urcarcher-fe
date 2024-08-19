@@ -1,0 +1,91 @@
+[
+  {
+    "new": true,
+    "img": "/img/product/product-1.jpg",
+    "price": "$22.00",
+    "title": "Round grey hanging decor",
+    "variant": "Size: M"
+  },
+  {
+    "img": "/img/product/product-2.jpg",
+    "price": "$22.00",
+    "title": "silver black round Ipod"
+  },
+  {
+    "trending": true,
+    "img": "/img/product/product-3.jpg",
+    "price": "$22.00",
+    "title": "White USB cable"
+  },
+  {
+    "img": "/img/product/product-4.jpg",
+    "price": "$22.00",
+    "title": "Sony PS 4 game controller"
+  },
+  {
+    "img": "/img/product/product-5.jpg",
+    "price": "$22.00",
+    "title": "Kui Ye Chen’s AirPods"
+  },
+  {
+    "hot": true,
+    "img": "/img/product/product-6.jpg",
+    "price": "$22.00",
+    "title": "Black camera lens"
+  },
+  {
+    "img": "/img/product/product-7.jpg",
+    "price": "$22.00",
+    "title": "Apple wireless keyboard"
+  },
+  {
+    "soldout": true,
+    "img": "/img/product/product-8.jpg",
+    "price": "$22.00",
+    "title": "Black Canon EOS camera"
+  },
+  {
+    "new": true,
+    "img": "/img/product/product-9.jpg",
+    "price": "$22.00",
+    "title": "Silver round analog watch"
+  },
+  {
+    "img": "/img/product/product-10.jpg",
+    "price": "$22.00",
+    "title": "Apple Watch"
+  },
+  {
+    "trending": true,
+    "img": "/img/product/product-11.jpg",
+    "price": "$22.00",
+    "title": "Joemalone Women prefume"
+  },
+  {
+    "img": "/img/product/product-12.jpg",
+    "price": "$22.00",
+    "title": "Nike air max 95"
+  },
+  {
+    "soldout": true,
+    "img": "/img/product/product-13.jpg",
+    "price": "$22.00",
+    "title": "Red digital smartwatch"
+  },
+  {
+    "img": "/img/product/product-14.jpg",
+    "price": "$22.00",
+    "title": "Air Jordan 12 gym red"
+  },
+  {
+    "hot": true,
+    "img": "/img/product/product-15.jpg",
+    "price": "$22.00",
+    "title": "Kui Ye Chen’s AirPods"
+  },
+  {
+    "img": "/img/product/product-10.jpg",
+    "price": "$22.00",
+    "title": "Apple watch"
+  }
+]

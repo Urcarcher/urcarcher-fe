@@ -1,5 +1,4 @@
 import React from 'react';
-import {Status, Wrapper} from "@googlemaps/react-wrapper";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Login from './pages/auth/Login';
@@ -19,7 +18,6 @@ import MonthlyChart from './pages/report/MonthlyChart';
 import WeeklyChart from './pages/report/WeeklyChart';
 import UsageHistory from './pages/report/UsageHistory';
 import { CardProvider } from './pages/card/CardContext'; 
-import MapComponent_G from './pages/location/MapComponent_G';
 import TourGuide from './pages/tourguide/TourGuide';
 import DetailPage from './pages/tourguide/DetailPage';
 import Home from './pages/Home';
@@ -33,6 +31,9 @@ import OAuthNew from './pages/auth/OAuthNew';
 import OAuthLoading from './pages/auth/OAuthLoading';
 import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
 import CourseDetail from './pages/tourcourse/CourseDetail';
+import MapComponent from './pages/location/MapComponent';
+import TestCard from './pages/tourguide/TestCard';
+import SearchTour from './pages/tourguide/SearchTour';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
@@ -69,10 +70,12 @@ function App() {
           <Route path='/exchange/card' element={<ExchangeCard/>}></Route>
           <Route path='/exchange/currency' element={<ExchangeCurrency/>}></Route>
           <Route path='/exchange/set' element={<ExchangeSet/>}></Route>
-          <Route path='/MapComponent_G' element={<MapComponent_G/>}></Route>
-          <Route path='/MapComponent_G/:detailDestination' element={<MapComponent_G/>}/>
-          <Route path='/TourGuide' element={<TourGuide/>}/>
+          <Route path='/MapComponent' element={<MapComponent/>}></Route>
+          <Route path='/MapComponent/:detailDestination' element={<MapComponent/>}/>
+          <Route path='/TourGuide/:areaCode/:contentTypeId' element={<TourGuide/>}/>
           <Route path='/detail/:type/:id' element={<DetailPage/>}/>
+          <Route path='/searchtour' element={<SearchTour/>}></Route>
+          <Route path='/testcard' element={<TestCard/>}/>
           <Footer />
         </Routes>
     </BrowserRouter>

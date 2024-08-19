@@ -1,0 +1,282 @@
+{
+  "top": [
+    {
+      "name": "Data consumed",
+      "content": "145,14 GB",
+      "type": "data"
+    },
+    {
+      "name": "Open cases",
+      "content": 30,
+      "type": "open-cases"
+    },
+    {
+      "name": "Work orders",
+      "content": 400,
+      "type": "work-orders"
+    },
+    {
+      "name": "New invoices",
+      "content": 123,
+      "type": "new-invoices"
+    }
+  ],
+  "block1": {
+    "name": "Finances 💰",
+    "graphs": {
+      "main": {
+        "name": "Your Account Balance",
+        "type": "line",
+        "data": {
+          "color": "blue",
+          "ticksColor": "blue",
+          "label": "Your Account Balance",
+          "dollar": true,
+          "hideLegend": true,
+          "labels": [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July"
+          ],
+          "values": [20, 14, 21, 15, 22, 8, 18],
+          "min": 0,
+          "max": 30
+        }
+      },
+      "regular": [
+        {
+          "name": "Work hours",
+          "subtitle": "Hours worked this month",
+          "type": "doughnut",
+          "value": 86.4,
+          "color": "green",
+
+          "data": {
+            "labels": ["Hours Worked", "Hours Remaining"],
+            "hideLegend": true,
+            "values": [250, 200]
+          }
+        },
+        {
+          "name": "Tasks Completed",
+          "subtitle": "Tasks Completed this months",
+          "type": "doughnut",
+          "value": 325,
+          "color": "indigo",
+
+          "data": {
+            "labels": ["Completed", "Remaining"],
+            "hideLegend": true,
+            "values": [300, 50]
+          }
+        }
+      ]
+    }
+  },
+  "block2": {
+    "name": "Usage 📈",
+    "graphs": {
+      "regular": [
+        {
+          "name": "Monthly Usage",
+          "subtitle": "Monthly allowed usage",
+          "type": "doughnut",
+          "value": "86%",
+          "color": "pink",
+          "data": {
+            "labels": ["Credit Used", "Remaining"],
+            "hideLegend": true,
+            "values": [300, 50]
+          }
+        },
+        {
+          "name": "All Income",
+          "subtitle": "Lorem ipsum dolor sit",
+          "type": "doughnut",
+          "value": "$126,41",
+          "color": "green",
+          "data": {
+            "labels": ["Completed", "Remaining"],
+            "hideLegend": true,
+            "values": [200, 80]
+          }
+        }
+      ],
+      "main": {
+        "name": "Your referrals",
+        "type": "line",
+        "data": {
+          "color": "primary",
+          "ticksColor": "#adb5bd",
+          "label": "Referrals",
+          "labels": [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July"
+          ],
+          "values": [13, 21, 13, 17, 13, 20, 15],
+          "min": 0,
+          "max": 30,
+          "hideLegend": true
+        }
+      }
+    }
+  },
+  "cards": {
+    "name": "Linked Cards 💳",
+    "items": [
+      {
+        "number": "1245 1478 1362 6985",
+        "content": "417.78",
+        "type": "visa",
+        "link": "#"
+      },
+      {
+        "number": "1245 1478 1362 6985",
+        "content": "224.17",
+        "type": "mastercard",
+        "link": "#"
+      },
+      {
+        "number": "1245 1478 1362 6985",
+        "content": "568.00",
+        "type": "discover",
+        "link": "#"
+      }
+    ]
+  },
+  "updates": {
+    "name": "Updates 🆕",
+    "transactions": {
+      "name": "Transaction history",
+      "subtitle": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+      "items": [
+        {
+          "name": "Dropbox Inc.",
+          "type": "dropbox",
+          "content": "Account renewal",
+          "price": "-$20"
+        },
+        {
+          "name": "App Store.",
+          "type": "appstore",
+          "content": "Software cost",
+          "price": "-$35"
+        },
+        {
+          "name": "Supermarket.",
+          "type": "shopping",
+          "content": "Shopping",
+          "price": "-$15"
+        },
+        {
+          "name": "Play Store.",
+          "type": "playstore",
+          "content": "Software cost",
+          "price": "-$20"
+        },
+        {
+          "name": "Dropbox Inc.",
+          "type": "dropbox",
+          "content": "Account renewal",
+          "price": "-$20"
+        },
+        {
+          "name": "App Store.",
+          "type": "appstore",
+          "content": "Software cost",
+          "price": "-$35"
+        }
+      ]
+    },
+    "notifications": [
+      {
+        "name": "Completed cases",
+        "content": "127 new cases",
+        "type": "tasks"
+      },
+      {
+        "name": "New Quotes",
+        "content": "214 new quotes",
+        "type": "quotes"
+      },
+      {
+        "name": "New clients",
+        "content": "25 new clients",
+        "type": "clients"
+      }
+    ],
+    "graph": {
+      "name": "Daily Profile Visitors",
+      "value": "86.4",
+      "color": "red",
+      "data": {
+        "type": "line",
+        "color": "red",
+        "label": "Profile Visitors",
+        "labels": [
+          "Jun 1",
+          "Jun 2",
+          "Jun 3",
+          "Jun 4",
+          "Jun 5",
+          "Jun 6",
+          "Jun 7",
+          "Jun 8",
+          "Jun 9",
+          "Jun 10",
+          "Jun 11",
+          "Jun 12",
+          "Jun 13",
+          "Jun 14"
+        ],
+        "hideLabels": true,
+        "values": [20, 14, 21, 15, 22, 8, 18, 13, 21, 13, 17, 13, 20, 15],
+        "min": 0,
+        "max": 30,
+        "hideLegend": true
+      }
+    }
+  },
+  "people": {
+    "name": "People 👩‍💻",
+    "items": [
+      {
+        "name": "Jason Maxwell",
+        "date": [24, "Apr"],
+        "type": "User testing",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.",
+        "img": "/img/avatar-1.jpg"
+      },
+      {
+        "name": "Sam Andy",
+        "date": [15, "May"],
+        "type": "Web Developer",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit..",
+        "img": "/img/avatar-2.jpg"
+      },
+      {
+        "name": "Margret Peter",
+        "date": [17, "Aug"],
+        "type": "Analysis Agent",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit..",
+        "img": "/img/avatar-3.jpg"
+      },
+      {
+        "name": "Jason Doe",
+        "date": [15, "Sep"],
+        "type": "User testing",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit..",
+        "img": "/img/avatar-4.jpg"
+      }
+    ]
+  }
+}
