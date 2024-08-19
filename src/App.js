@@ -31,6 +31,7 @@ import OAuthNew from './pages/auth/OAuthNew';
 import OAuthLoading from './pages/auth/OAuthLoading';
 import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
 import CourseDetail from './pages/tourcourse/CourseDetail';
+import TestReservation from './pages/reservation/TestReservation';
 import MapComponent from './pages/location/MapComponent';
 import TestCard from './pages/tourguide/TestCard';
 import SearchTour from './pages/tourguide/SearchTour';
@@ -74,6 +75,7 @@ function App() {
           <Route path='/MapComponent/:detailDestination' element={<MapComponent/>}/>
           <Route path='/TourGuide/:areaCode/:contentTypeId' element={<TourGuide/>}/>
           <Route path='/detail/:type/:id' element={<DetailPage/>}/>
+          <Route path='/reservation' element={<TestReservation/>}/>
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
           <Footer />
