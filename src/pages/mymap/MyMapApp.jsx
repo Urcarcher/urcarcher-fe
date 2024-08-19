@@ -1,14 +1,11 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
-import './Map.css';
-import Modal from './Modal';
-import { Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
+import 'assets/Map.css';
+import Modal from 'components/mymap/Modal';
 
 const { kakao } = window;
-
 
 //마커 커스텀 이미지
 const myMapIcon = "https://urcarcher-local.kro.kr/icon/markericon.png";
@@ -18,14 +15,27 @@ const MyMapApp = () => {
 
   const [memberId, setMemberId] = useState('bleakwinter');  // 테스트할 회원 ID
 
-  //카테고리 리스트 넘겨받기
-  //const location = useLocation();
-
   const [topCategoryList, setTopCategoryList] = useState([]);
   
+  //API KEY 설정
+  // const [data, setData] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(`${process.env.REACT_APP_KAKAOMAP_APP_KEY}/endpoint`);
+  //       setData(response.data);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+
+  //카테고리 데이터 호출
   useEffect(() => {
-    // 데이터 호출
-    axios.get(`https://urcarcher-local.kro.kr:8443/api/paymentPlace/top-categories`, {
+    axios.get(`/api/paymentPlace/top-categories`, {
         params: {
             memberId: memberId
         }
@@ -93,7 +103,7 @@ const MyMapApp = () => {
 
     if (savedLat && savedLng) {
       return {
-        lat: parseFloat(savedLat),
+        lat: parseFloat(savedLat), //실수로 변환
         lng: parseFloat(savedLng),
       };
     }
@@ -211,11 +221,10 @@ const MyMapApp = () => {
     const bounds = new kakao.maps.LatLngBounds();
     data.forEach((item) => bounds.extend(new kakao.maps.LatLng(item.y, item.x)));
     bounds.extend(new kakao.maps.LatLng(state.center.lat, state.center.lng));
-    map.setBounds(bounds); //!!map null 오류(map이 null 상태일 때 displayPlaces 함수가 호출중)
+    map.setBounds(bounds); 
     setSearch(data);
   };
 
- //-------------
  // 마커의 위치로 지도의 중심 좌표 이동하기
   const moveLatLng = (data) => {
     const newLatLng = new kakao.maps.LatLng(data.y, data.x); 
@@ -253,7 +262,6 @@ const MyMapApp = () => {
 
   return (
     <>
-      {/* <Header/> */}
       <div className='kakaomap-wrap contents'>
         
         {/* 상위 3개 카테고리 버튼 */}
@@ -336,13 +344,13 @@ const MyMapApp = () => {
                 <img src="/icon/icon-list.png" alt="아이콘" />
               </Link>
           </div>
+          {/* 내 위치 찾기 */}
           <div className='current-location-btn'>
             <button onClick={updateCurrentLocation}>
-              <img src='/icon/icon-my-location.png'></img>
+              <img src='/icon/icon-my-location.png' alt='내위치'></img>
             </button>
           </div>
         </Map>
-        {/* <Footer /> */}
       </div>
     </>
   );

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
-import StoreInfoList from '../../components/mymap/StoreInfoList';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import StoreInfoList from 'components/mymap/StoreInfoList';
+import 'assets/Map.css';
 
 function BestStoreList(props) {
 
@@ -12,7 +11,7 @@ function BestStoreList(props) {
 
     useEffect(() => {
         // 데이터 호출
-        axios.get(`https://urcarcher-local.kro.kr:8443/api/paymentPlace/best-store`, {
+        axios.get(`/api/paymentPlace/best-store`, {
             params: {
                 memberId: memberId
             }
@@ -28,14 +27,12 @@ function BestStoreList(props) {
 
     return (
         <div>
-            {/* <Header /> */}
             <div className='contents'>
                 <div className='categoryRank-title inner'>
-                    <h3>다른 사람이 많이 방문한 곳은 어디일까요?</h3>
+                    <h3>다른 사람이 많이 방문한 곳은 <br /> 어디일까요?</h3>
                 </div>
                 <StoreInfoList storeList={storeList} />
             </div>
-            {/* <Footer /> */}
         </div>
     );
 }

@@ -13,7 +13,7 @@ function Header() {
             case '/maphome/categoryRank':
             case '/maphome/beststorelist':
                 return '나만의 지도';
-            case '/CourseList':
+            case '/courseList':
                 return '여행 코스';
             case '/card':
                 return '카드 신청';
@@ -32,7 +32,11 @@ function Header() {
                 return '홈';
         }
     };
-    
+
+    // '/' 경로일 때 헤더를 숨기기
+    if (location.pathname === '/') {
+        return null; 
+    }
  
     return (
         <header>

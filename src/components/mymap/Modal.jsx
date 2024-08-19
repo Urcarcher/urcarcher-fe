@@ -1,5 +1,5 @@
 import React from 'react';
-import './Map.css'; 
+import 'assets/Map.css'; 
 
 const Modal = ({
   search,
@@ -18,7 +18,7 @@ const Modal = ({
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="modal-contents">
         <h2>{selectedPlace?.place_name}</h2>
         <p>{selectedPlace?.address_name}</p>
         <p>{selectedPlace?.phone}</p>

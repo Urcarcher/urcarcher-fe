@@ -1,0 +1,46 @@
+.hidden{
+    display: none;
+}
+.home-container{
+    margin: 0 auto;
+}
+.home-container > h5{
+    text-align: left;
+}
+.main-content > div{
+    margin: 10px 0;
+    width: 100%;
+    border-radius: 10px;
+}
+.card-type-wrap{
+    height: 190px;
+    background-color: #476EFF;
+}
+.card-type-wrap > p{
+    color: #F4F7FC;
+    margin: 0;
+    /* font-weight: bold; */
+}
+.amount-used, .card-signup{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+.amount-used{
+    height: 70px;
+    line-height: 70px;
+    background-color: #F4F7FC;
+}
+.card-signup{
+    height: 50px;
+    line-height: 50px;
+    background-color: #DCE2FF;
+}
+.service-list{
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+.home-title{
+    text-align: left;
+}
