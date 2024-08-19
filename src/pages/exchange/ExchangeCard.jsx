@@ -68,28 +68,24 @@ function ExchangeCard(props) {
     };
 
     return (
-        <>
-            <Header/>
-            <div className="contents">
-                <h2>어떤 카드에 충전할까요?</h2>
-                <div>
-                    {/* null, undefined 아닌지 확인 후 id 비교 */}
-                    {cardList.map((card) => (
-                        <div key={card.id} 
-                            className={selectCard?.id === card.id ? "choice" : "unChoice"}
-                            style={{ display: card.type === "선불카드" ? "block" : "none" }}
-                        >
-                            <p>{card.type}</p>
-                            <p>잔액 {card.balance.toLocaleString()}원</p>
-                            <button onClick={() => cardSelectHandle(card)}>선택</button>
-                        </div>
-                    ))}
-                </div>
-                <button onClick={backHandle}>취소</button>
-                <button onClick={nextHandle}>다음</button>
+        <div className="contents">
+            <h2>어떤 카드에 충전할까요?</h2>
+            <div>
+                {/* null, undefined 아닌지 확인 후 id 비교 */}
+                {cardList.map((card) => (
+                    <div key={card.id} 
+                        className={selectCard?.id === card.id ? "choice" : "unChoice"}
+                        style={{ display: card.type === "선불카드" ? "block" : "none" }}
+                    >
+                        <p>{card.type}</p>
+                        <p>잔액 {card.balance.toLocaleString()}원</p>
+                        <button onClick={() => cardSelectHandle(card)}>선택</button>
+                    </div>
+                ))}
             </div>
-            <Footer/>
-        </>
+            <button onClick={backHandle}>취소</button>
+            <button onClick={nextHandle}>다음</button>
+        </div>
     );
 }
 

@@ -168,49 +168,45 @@ function ExchangeCurrency(props) {
     };
 
     return (
-        <>
-            <Header/>
-            <div className="contents">
-                <h2>얼마를 충전할까요?</h2>
-                <h3>대한민국 KRW</h3>
-                <div className="inputDiv">
-                    <input
-                        name="exCur"
-                        type="text"
-                        value={currency}
-                        onKeyDown={keyDownHandle}
-                        onChange={numberHandle}
-                        onFocus={focusHandle}
-                        style={{ width: `${inputWidth}px` }}
-                    />원
-                </div>
-
-                <h3>{nation} (사용자의 국적)</h3>
-                <p>{calculateAmount}달러</p>
-                {exchangeCurInfo[nation] ? 
-                (<p>1달러 = {exchangeCurInfo[nation].rate}원</p>) : (<p>환율 정보를 조회하는 중입니다</p>)}
-
-                <p>환율우대</p>
-                <div>
-                    <span>적용환율</span>
-                    {exchangeCurInfo[nation] ? 
-                    (<span>KRW {exchangeCurInfo[nation].rate} = 1달러</span>) : (<span>환율 정보를 조회하는 중입니다</span>)}
-                </div>
-                <br/>
-                <div>
-                    <span>우대사항</span>
-                    <span>환율우대 90%</span>
-                </div>
-                <br/>
-                <div>
-                    <span>원화 예상 금액</span>
-                    <span>{calculateAmount}달러</span>
-                </div>
-                <br/>
-                <button onClick={insertHandle}>충전하기</button>
+        <div className="contents">
+            <h2>얼마를 충전할까요?</h2>
+            <h3>대한민국 KRW</h3>
+            <div className="inputDiv">
+                <input
+                    name="exCur"
+                    type="text"
+                    value={currency}
+                    onKeyDown={keyDownHandle}
+                    onChange={numberHandle}
+                    onFocus={focusHandle}
+                    style={{ width: `${inputWidth}px` }}
+                />원
             </div>
-            <Footer/>
-        </>
+
+            <h3>{nation} (사용자의 국적)</h3>
+            <p>{calculateAmount}달러</p>
+            {exchangeCurInfo[nation] ? 
+            (<p>1달러 = {exchangeCurInfo[nation].rate}원</p>) : (<p>환율 정보를 조회하는 중입니다</p>)}
+
+            <p>환율우대</p>
+            <div>
+                <span>적용환율</span>
+                {exchangeCurInfo[nation] ? 
+                (<span>KRW {exchangeCurInfo[nation].rate} = 1달러</span>) : (<span>환율 정보를 조회하는 중입니다</span>)}
+            </div>
+            <br/>
+            <div>
+                <span>우대사항</span>
+                <span>환율우대 90%</span>
+            </div>
+            <br/>
+            <div>
+                <span>원화 예상 금액</span>
+                <span>{calculateAmount}달러</span>
+            </div>
+            <br/>
+            <button onClick={insertHandle}>충전하기</button>
+        </div>
     );
 }
 

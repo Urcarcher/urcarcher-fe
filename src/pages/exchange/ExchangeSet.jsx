@@ -11,13 +11,9 @@ function ExchangeSet(props) {
     console.log("선택한 카드 정보 받기", selectedCard);
 
     return (
-        <>
-            <Header/>
-            <div className="contents">
-                <h2>원하는 환율이 되면 자동 충전돼요</h2>
-            </div>
-            <Footer/>
-        </>
+        <div className="contents">
+            <h2>원하는 환율이 되면 자동 충전돼요</h2>
+        </div>
     );
 }
 
