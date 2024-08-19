@@ -11,18 +11,20 @@ function MyMapHome(props) { //시작 페이지
 
     //로그인한 회원 이름 저장
     const [memberId, setMemberId] = useState('bleakwinter');  // 테스트할 회원 ID
+    //const [name, setName] = useState('');
 
-    // useEffect(() => {
-    //     // "bleakwinter" 회원의 데이터를 가져오는 API 호출
-    //     axios.get('/api/members/bleakwinter')// 로그인된 id로 나중에 수정하기
-    //         .then(response => {
+    //  useEffect(() => {
+    //      // "bleakwinter" 회원의 데이터를 가져오는 API 호출
+    //      axios.get('/api/members/bleakwinter')// 로그인된 id로 나중에 수정하기
+    //          .then(response => {
     //             const memberData = response.data;
-    //             setMemberId(memberData.memberId);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching member data:', error);
-    //         });
-    // }, []);
+    //              setMemberId(memberData.memberId);
+    //              setName(memberData.name);
+    //          })
+    //          .catch(error => {
+    //              console.error('Error fetching member data:', error);
+    //          });
+    //  }, []);
 
     //버튼 클릭이벤트 - 페이지 이동 (결제 내역 null 조건 추가하기)
     const goRankPage = () => {
@@ -30,7 +32,7 @@ function MyMapHome(props) { //시작 페이지
     }
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
             <div className='mymaphome-wrap contents'>
                 <div className='maphome-content inner'>
                     <div className='maphome_textwrap'>
@@ -46,7 +48,7 @@ function MyMapHome(props) { //시작 페이지
                     <button onClick={goRankPage}>시작하기</button>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 }

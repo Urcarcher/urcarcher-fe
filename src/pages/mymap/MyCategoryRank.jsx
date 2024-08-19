@@ -7,17 +7,14 @@ import RandomImage from '../../components/mymap/RandomImage';
 import './Map.css';
 import NoResult from '../../components/mymap/NoResult';
 import axios from 'axios';
-//import { useData } from './DataContext';
 
 function MyCategoryRank(props) {
 
     const navigator = new useNavigate();
     
     const [categoryList, setCategoryList] = useState([]);
-    //const { categoryList ,setCategoryList } = useData();  // use setCategoryList from DataContext.js
 
     const [memberId, setMemberId] = useState('bleakwinter');  // 테스트할 회원 ID
-
 
     //서버로 부터 결제 내역의 카테고리 데이터 호출
     useEffect(() => {
@@ -48,12 +45,12 @@ function MyCategoryRank(props) {
     }
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
             <div className='categoryRank-wrap contents'>
                 {categoryList.length > 0 ? (
                     <>
                         <div className='categoryRank-title inner'>
-                            <p>당신의 일상에 꼭 맞는 새로운 핫스팟을 만나보세요.</p>
+                            <p>당신의 일상에 꼭 맞는 새로운 장소를 만나보세요.</p>
                             <h3>이번 달 내가 가장 자주 가는 곳은?</h3>
                         </div>
                         <RandomImage />
@@ -71,7 +68,7 @@ function MyCategoryRank(props) {
                     {categoryList.length > 0 ? '내 주변 탐색' : '홈으로 돌아가기'}
                 </button>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 }

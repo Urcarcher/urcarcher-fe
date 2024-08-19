@@ -5,17 +5,10 @@ import Header from '../../components/Header';
 import './Map.css';
 import Modal from './Modal';
 import { Link, useLocation } from 'react-router-dom';
-// import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 const { kakao } = window;
 
-//테스트용 - DB에서 나의 결제 내역과 연결된 가맹점(카테고리) 정보 가져오기
-const KEYWORD_LIST = [
-  { id: 1, value: '음식점' },
-  { id: 2, value: '편의점'},
-  { id: 3, value: '카페' },
-  { id: 4, value: '병원' }
-];
 
 //마커 커스텀 이미지
 const myMapIcon = "https://urcarcher-local.kro.kr/icon/markericon.png";
@@ -23,17 +16,27 @@ const locationIcon = "https://urcarcher-local.kro.kr/icon/icon-location.png";
 
 const MyMapApp = () => {  
 
+  const [memberId, setMemberId] = useState('bleakwinter');  // 테스트할 회원 ID
+
   //카테고리 리스트 넘겨받기
-  const location = useLocation();
-  const { categoryList } = location.state || { categoryList: [] };
+  //const location = useLocation();
 
- // ID가 없는 경우 UUID 생성
-//  const categoriesWithIds = categoryList.map(category => ({
-//   ...category,
-//   id: category.id || uuidv4() // 기존 ID가 없으면 새로 생성
-// }));
-
-
+  const [topCategoryList, setTopCategoryList] = useState([]);
+  
+  useEffect(() => {
+    // 데이터 호출
+    axios.get(`https://urcarcher-local.kro.kr:8443/api/paymentPlace/top-categories`, {
+        params: {
+            memberId: memberId
+        }
+    })
+    .then(response => {
+        setTopCategoryList(response.data); // 데이터를 상태에 저장
+    })
+    .catch(error => {
+        console.error('There was an error!', error);
+    });
+  }, [memberId]);
 
   // 카카오 맵에 접근해 지도 상태 조작하는 상태 변수
   const [map, setMap] = useState(null); 
@@ -80,50 +83,8 @@ const MyMapApp = () => {
     isLoading: true,
   });
 
-  //현재 사용자 위치 state에 저장하는 함수
+  //1. 현재 사용자 위치 state에 저장하는 함수
   //현재 위치 오류로 비동기에서 동기적 방식으로 수정 (async/await사용)
-  // const getCurrentLocation = async () => {
-  //     if (navigator.geolocation) {
-  //       try { //오류 처리
-  //         const position = await new Promise((resolve, reject) => { //위치 가져오기
-  //           navigator.geolocation.getCurrentPosition(resolve, reject);
-  //         });
-           
-  //         //현재 위치 정보 출력
-  //         console.log('현재 위치:', position.coords.latitude, position.coords.longitude);
-
-  
-  //         setState((prev) => ({
-  //           ...prev,
-  //           center: {
-  //             lat: position.coords.latitude,
-  //             lng: position.coords.longitude,
-  //           },
-  //           isLoading: false,
-  //         }));
-  //       } catch (err) {
-  //         setState((prev) => ({
-  //           ...prev,
-  //           errMsg: err.message,
-  //           isLoading: false,
-  //         }));
-  //       }
-  //     } else {
-  //       setState((prev) => ({
-  //         ...prev,
-  //         errMsg: 'geolocation을 사용할 수 없어요.',
-  //         isLoading: false,
-  //       }));
-  //     }
-  //   };
-  //   //처음 로딩 시 현재 위치 호출
-  //   useEffect(() => {
-  //     getCurrentLocation();
-  //   }, []);
-  //   //지도가 있는 창이 열릴 때 저장된 위도경도 값으로 지도 그리기
-  //   useEffect(()=>{
-
-  //   },[])
 
    // 로컬 스토리지에서 위치를 가져오는 함수
    const loadSavedLocation = () => {
@@ -207,7 +168,7 @@ const MyMapApp = () => {
   }, []);
 
 
-  //-----------------------------------------------------주변위치 카테고리로 조회
+  //2. 주변위치 카테고리로 조회
 
   // 카테고리 검색으로 주변 위치 검색하기
   const searchPlaces = (keyword) => {
@@ -254,10 +215,6 @@ const MyMapApp = () => {
     setSearch(data);
   };
 
- //id로 정렬한 후 상위 3개의 요소만 가져와서 버튼 생성하기
- const topKeywords = KEYWORD_LIST.sort((a, b) => a.id - b.id).slice(0, 3);
-
-
  //-------------
  // 마커의 위치로 지도의 중심 좌표 이동하기
   const moveLatLng = (data) => {
@@ -287,31 +244,28 @@ const MyMapApp = () => {
   }, [map]);
   
   
-  const [activeButtonId, setActiveButtonId] = useState(1); // 처음에 첫 번째 버튼을 활성화 상태로 설정
+  const [activeButtonId, setActiveButtonId] = useState(0); // 처음에 첫 번째 버튼을 활성화 상태로 설정
   
-  const handleButtonClick = (id, value) => {
-    setActiveButtonId(id); // 클릭한 버튼의 id를 활성화 상태로 설정
-    searchPlaces(value);   // 버튼 클릭 시 장소 검색
+  const handleButtonClick = (index, name) => {
+    setActiveButtonId(index); // 클릭한 버튼의 id를 활성화 상태로 설정
+    searchPlaces(name);   // 버튼 클릭 시 장소 검색
   };
 
   return (
     <>
-      <Header/>
+      {/* <Header/> */}
       <div className='kakaomap-wrap contents'>
-        {/* <img src={myMapIcon} alt="아이콘"></img> */}
-     
+        
         {/* 상위 3개 카테고리 버튼 */}
         <div className='cate-btn-wrap'>
-          {topKeywords.map((keywordObj) => (
+          {topCategoryList.map((item, index) => (
             <button 
-              key={keywordObj.id} 
+              key={index} 
               type='button' 
-              // className={keywordObj.id === 1 ? 'active' : ''} 
-              className={keywordObj.id === activeButtonId ? 'active' : ''} 
-              // onClick={() => searchPlaces(keywordObj.value)}
-              onClick={() => handleButtonClick(keywordObj.id, keywordObj.value)}
+              className={index === activeButtonId ? 'active' : ''}
+              onClick={() => handleButtonClick(index, item.categoryName)}
               >
-              {keywordObj.value}
+              {item.categoryName}
             </button>
           ))}
         </div>
@@ -388,7 +342,7 @@ const MyMapApp = () => {
             </button>
           </div>
         </Map>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );

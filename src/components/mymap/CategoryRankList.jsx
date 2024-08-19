@@ -1,42 +1,37 @@
-import { useData } from 'pages/mymap/DataContext';
 import React, { useEffect, useState } from 'react';
 
 
-function CategoryRankList({categoryList}) { //{categoryList}
-    
-    //const { categoryList } = useData();  // Get categoryList from DataContext.js
+function CategoryRankList({categoryList}) {
 
-    //DB에서 가져올 많이 결제 한 카테고리 리스트 저장
+    //리스트 개별적으로 저장
     const [paymentCategoryList, setPaymentCategoryList] = useState([]);
 
-    
-    //list 한 개씩 나타남
+    //리스트 한 개씩 나타내기 효과
     useEffect(() => {
         categoryList.forEach((item, index) => {
             setTimeout(() => {
                 setPaymentCategoryList(prev => [...prev, item]);
-            }, index * 700); // 각 아이템이 0.2초 간격으로 나타남
+            }, index * 700); 
         });
-    }, []);
-
+    }, [categoryList]); //categoryList가 변돌될 때 실행
+    
     console.log(paymentCategoryList);
 
     return (
         <div className='rank-list-wrap'>
             <ul className='rank-list inner'>
-                {/* 카운트 수 제일 큰 것 부터 */}
-                {categoryList.map((category, index) => (
-                     <li 
-                     key={index}
-                     className={`${index === 0 ? 'first' : ''} ${categoryList.some(item => item.categoryName === category.categoryName) ? 'show' : ''}`}
-                 > 
+                {/* paymentCategoryList로 각 항목을 렌더링 */}
+                {paymentCategoryList.map((category, index) => (
+                    <li 
+                        key={index}
+                        className={`${index === 0 ? 'first' : ''} ${index < paymentCategoryList.length ? 'show' : ''}`}
+                    > 
                      <div>
-                         <p>{category.categoryName}</p>
+                         <p className={index === 0 ? 'top-category' : ''}>{category.categoryName}</p>
                          <p>{category.usageCount}건</p>
                      </div>
                  </li>
                 ))}
-               
             </ul>
         </div>
     );
