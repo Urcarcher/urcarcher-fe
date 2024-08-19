@@ -1,6 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../../assets/exchangeCurrency.css';
+import Footer from '../../components/Footer';
+import Header from '../../components/Header';
+import { ExchangeContext } from './exportContext';
 
 function ExchangeCurrency(props) {
     const [exchangeCurInfo, setExchangeCurInfo] = useState({});
@@ -9,15 +13,22 @@ function ExchangeCurrency(props) {
 
     // 이전 페이지에서 보낸 선택한 카드 정보
     const location = useLocation();
-    const selectedCard = { ...location.state };
-    // console.log("선택한 카드 정보 받기", selectedCard);
+    // const exCard = { ...location.state };
+    const cardId = location.state.selectCard;
+    const [exCard, setExCard] = useState(cardId);
 
+    console.log("선택한 카드 정보 받기", exCard);
+    console.log("선택한 카드 아이디 받기", exCard.id);
+    console.log(typeof exCard);
+    
     const [nation, setNation] = useState("USD"); // 사용자 국적 임시 data
 
     const [focused, setFocused] = useState(false);
     const [inputWidth, setInputWidth] = useState(15); // 글자 너비 기본값 (15px)
     const [currency, setCurrency] = useState(0); // 사용자가 입력한 KRW
     const [calculateAmount, setCalculateAmount] = useState(0); // 예상 원화
+
+    const navi = useNavigate();
 
     // 처음 렌더링 될 때만 웹소켓 연결
     useEffect(()=>{
@@ -77,22 +88,25 @@ function ExchangeCurrency(props) {
         setCurrency(numCur.toLocaleString());
         setInputWidth(inputVal.length * 10); // 동적으로 input 길이 변경
 
-        // && => null, undefined 등의 falsy 값 확인
-        /*
         if (exchangeCurInfo[nation] && exchangeCurInfo[nation].rate && exchangeCurInfo[nation].buy) {
-            const nationRate = exchangeCurInfo[nation].rate; // 매매기준율
-            const buyRate = exchangeCurInfo[nation].buy; // 현찰 살 때
+            // 쉼표 제거 후 문자열을 숫자로 변환 (NaN 발생)
+            const nationRate = parseFloat(exchangeCurInfo[nation].rate.replace(/,/g, "")); // 매매기준율
+            const buyRate = parseFloat(exchangeCurInfo[nation].buy.replace(/,/g, "")); // 현찰 살 때
 
-            // 환율 우대 90% 적용
-            const discountRate = 0.9;
-            const appliedRate = nationRate + (buyRate - nationRate) * (1 - discountRate);
-            const calculated = (numCur / appliedRate).toFixed(2);
+            // 환율 우대 90% 적용된 예상 원화 계산
+            // 매매기준율 + (현찰 살 때 - 매매기준율) * (1 - 환율 우대율)
+            if (!isNaN(nationRate) && !isNaN(buyRate)) {
+                const discountRate = 0.9;
+                const appliedRate = nationRate + (buyRate - nationRate) * (1 - discountRate);
+                const calculatAmt = (numCur / appliedRate).toFixed(2); // 소수점 두 자리까지
 
-            setCalculateAmount(calculated); // 계산된 예상 원화
+                setCalculateAmount(calculatAmt); // 계산된 예상 원화
+            } else {
+                setCalculateAmount(0); // 환율 정보 없음
+            }
         } else {
             setCalculateAmount(0); // 환율 정보 없음
         }
-        */
     };
 
     // 환율 우대 90% 적용해서 계산
@@ -107,12 +121,59 @@ function ExchangeCurrency(props) {
     };
     */
 
+    // 환전 내역에 insert
+    const insertHandle = () => {
+        if (!currency || parseFloat(currency.replace(/,/g, "")) <= 0) {
+            alert("0원 이상의 충전하실 금액을 입력해 주세요");
+            return;
+        }
+
+        if (!exchangeCurInfo || !exchangeCurInfo[nation] || !exchangeCurInfo[nation].rate) {
+            alert("환율 정보를 조회하는 중입니다. 다시 시도해 주세요");
+            return;
+        }
+    
+        if (!calculateAmount || parseFloat(calculateAmount) <= 0) {
+            alert("예상 원화 금액을 계산할 수 없습니다. 다시 시도해 주세요");
+            return;
+        }
+
+        const data = {
+            cardId: exCard.id,
+            exRate: parseFloat(exchangeCurInfo[nation].rate.replace(/,/g, "")), // 적용환율
+            exCur: parseFloat(currency.replace(/,/g, "")), // 환전금액
+            exPay: parseFloat(calculateAmount) // 결제금액
+        };
+    
+        axios.post("https://urcarcher-local.kro.kr:8443/api/exchange/insert", data, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
+            console.log("바로 충전 성공", response.data);
+            
+            setExchangeCurInfo(response.data);
+            navi("/exchange/success", {
+                state: {
+                    successMsg: response.data,
+                    successData: data,
+                    successPlus: exCard.balance + (parseFloat(currency.replace(/,/g, "")))
+                }
+            });
+        })
+        .catch(error => {
+            console.error("바로 충전 실패", error);
+        });
+    };
+
     return (
-        <div>
+        <div className="contents">
             <h2>얼마를 충전할까요?</h2>
             <h3>대한민국 KRW</h3>
             <div className="inputDiv">
                 <input
+                    name="exCur"
                     type="text"
                     value={currency}
                     onKeyDown={keyDownHandle}
@@ -131,7 +192,7 @@ function ExchangeCurrency(props) {
             <div>
                 <span>적용환율</span>
                 {exchangeCurInfo[nation] ? 
-                (<span>KRW = {exchangeCurInfo[nation].rate} = 1달러</span>) : (<span>환율 정보를 조회하는 중입니다</span>)}
+                (<span>KRW {exchangeCurInfo[nation].rate} = 1달러</span>) : (<span>환율 정보를 조회하는 중입니다</span>)}
             </div>
             <br/>
             <div>
@@ -144,7 +205,7 @@ function ExchangeCurrency(props) {
                 <span>{calculateAmount}달러</span>
             </div>
             <br/>
-            <button>충전하기</button>
+            <button onClick={insertHandle}>충전하기</button>
         </div>
     );
 }

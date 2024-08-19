@@ -1,0 +1,273 @@
+[
+  {
+    "cards": [
+      {
+        "className": "mb-4",
+        "title": "Card title",
+        "img": "/img/mockup1.jpg",
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+        "button": {
+          "link": "#",
+          "label": "Button"
+        }
+      },
+      {
+        "className": "mb-4",
+        "title": "Card title",
+        "img": "/img/mockup3.jpg",
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+        "list": ["Vice tote bag shabby chic", "Portland Etsy craft beer"],
+        "links": [
+          {
+            "name": "Card link",
+            "link": "#"
+          },
+          {
+            "name": "Another link here",
+            "link": "#"
+          }
+        ]
+      },
+      {
+        "className": "mb-4",
+        "img": "/img/mockup4.jpg",
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content."
+      },
+      {
+        "className": "mb-4",
+        "title": "Card title",
+        "subtitle": "Support card subtitle",
+        "img": "/img/mockup5.jpg",
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+        "titleTop": true
+      }
+    ]
+  },
+  {
+    "cards": [
+      {
+        "className": "mb-4",
+        "header": "Featured",
+        "title": "Special title treatment",
+        "titleTag": "h4",
+        "text": "With supporting text below as a natural lead-in to additional content.",
+        "button": {
+          "label": "Go somewhere",
+          "link": "#"
+        }
+      },
+      {
+        "className": "mb-4",
+        "title": "Special title treatment",
+        "titleTag": "h4",
+        "text": "With supporting text below as a natural lead-in to additional content.",
+        "button": {
+          "label": "Go somewhere",
+          "link": "#",
+          "variant": "outline-primary"
+        },
+        "footer": "2 days ago"
+      },
+      {
+        "className": "mb-4",
+        "header": "Featured",
+        "title": "Special title treatment",
+        "titleTag": "h4",
+        "text": "With supporting text below as a natural lead-in to additional content.",
+        "button": {
+          "label": "Go somewhere",
+          "link": "#",
+          "variant": "dark"
+        },
+        "footer": "2 days ago"
+      }
+    ]
+  },
+  {
+    "cards": [
+      {
+        "className": "mb-4",
+        "title": "Card title",
+        "subtitle": "Support card subtitle",
+        "img": "/img/mockup6.jpg",
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+        "textMuted": "Last updated 3 mins ago"
+      },
+      {
+        "className": "mb-4",
+        "title": "Card title",
+        "subtitle": "Support card subtitle",
+        "img": "/img/mockup4.jpg",
+        "imgBottom": true,
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+        "textMuted": "Last updated 3 mins ago"
+      },
+      {
+        "className": "mb-4",
+        "title": "Card title",
+        "img": "/img/mockup4.jpg",
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+        "textMuted": "Last updated 3 mins ago",
+        "overlay": true
+      }
+    ]
+  },
+  {
+    "name": "Background variants",
+    "cards": [
+      {
+        "className": "bg-primary text-white mb-4",
+        "headerClass": "card-header-transparent",
+        "title": "Some additional title here",
+        "header": "Primary card",
+        "headerTransparent": true,
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content."
+      },
+      {
+        "className": "bg-secondary text-white mb-4",
+        "headerClass": "card-header-transparent",
+        "title": "Some additional title here",
+        "header": "Secondary card",
+        "headerTransparent": true,
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content."
+      },
+      {
+        "className": "bg-success text-white mb-4",
+        "headerClass": "card-header-transparent",
+        "title": "Some additional title here",
+        "header": "Success card",
+        "headerTransparent": true,
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content."
+      },
+      {
+        "className": "bg-danger text-white mb-4",
+        "headerClass": "card-header-transparent",
+        "title": "Some additional title here",
+        "header": "Danger card",
+        "headerTransparent": true,
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content."
+      },
+      {
+        "className": "bg-warning text-white mb-4",
+        "headerClass": "card-header-transparent",
+        "title": "Some additional title here",
+        "header": "Warning card",
+        "headerTransparent": true,
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content."
+      },
+      {
+        "className": "bg-info text-white mb-4",
+        "headerClass": "card-header-transparent",
+        "title": "Some additional title here",
+        "header": "Info card",
+        "headerTransparent": true,
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content."
+      },
+      {
+        "className": "bg-light mb-4",
+        "headerClass": "card-header-transparent",
+        "title": "Some additional title here",
+        "header": "Light card",
+        "headerTransparent": true,
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content."
+      },
+      {
+        "className": "bg-dark text-white mb-4",
+        "headerClass": "card-header-transparent",
+        "title": "Some additional title here",
+        "header": "Dark card",
+        "headerTransparent": true,
+        "text": "Some quick example text to build on the card title and make up the bulk of the card's content."
+      }
+    ]
+  },
+
+  {
+    "name": "Groups",
+    "group": true,
+    "cards": [
+      {
+        "title": "Card title",
+        "img": "/img/mockup4.jpg",
+        "text": "This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
+        "textMuted": "Last updated 3 mins ago"
+      },
+      {
+        "title": "Card title",
+        "img": "/img/mockup3.jpg",
+        "text": "This card has supporting text below as a natural lead-in to additional content.",
+        "textMuted": "Last updated 3 mins ago"
+      },
+      {
+        "title": "Card title",
+        "img": "/img/mockup1.jpg",
+        "text": "This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.",
+        "textMuted": "Last updated 3 mins ago"
+      }
+    ]
+  },
+  {
+    "name": "Navigation",
+
+    "cards": [
+      {
+        "title": "Special title treatment",
+        "text": "With supporting text below as a natural lead-in to additional content.",
+        "className": "text-center mb-4",
+        "nav": {
+          "variant": "tabs",
+          "items": [
+            {
+              "name": "Active",
+              "active": true,
+              "link": "#"
+            },
+            {
+              "name": "Link",
+              "link": "#"
+            },
+            {
+              "name": "Disabled",
+              "disabled": true,
+              "link": "#"
+            }
+          ]
+        },
+        "button": {
+          "label": "Go somewhere",
+          "link": "#"
+        }
+      },
+      {
+        "title": "Special title treatment",
+        "text": "With supporting text below as a natural lead-in to additional content.",
+        "className": "text-center mb-4",
+        "headerClass": "py-3",
+        "nav": {
+          "variant": "pills",
+          "items": [
+            {
+              "name": "Active",
+              "active": true,
+              "link": "#"
+            },
+            {
+              "name": "Link",
+              "link": "#"
+            },
+            {
+              "name": "Disabled",
+              "disabled": true,
+              "link": "#"
+            }
+          ]
+        },
+        "button": {
+          "label": "Go somewhere",
+          "link": "#",
+          "variant": "secondary"
+        }
+      }
+    ]
+  }
+]

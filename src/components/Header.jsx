@@ -20,6 +20,14 @@ function Header() {
             case '/login':
                 return '로그인';
             // => 추가 경로에 따라 제목 설정
+            case '/exchange':
+                return '환전';
+            case '/exchange/card':
+                return '카드 선택';
+            case '/exchange/currency':
+                return '환전';
+            case '/exchange/set':
+                return '자동 환전';
             default:
                 return '홈';
         }

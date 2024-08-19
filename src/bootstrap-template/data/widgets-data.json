@@ -1,0 +1,571 @@
+{
+  "tickets": [
+    {
+      "status": "Open",
+      "subject": "License not recieved",
+      "department": "Support",
+      "date": "4 hours ago"
+    },
+    {
+      "status": "Closed",
+      "subject": "BSOD again",
+      "department": "IT",
+      "date": "yesterday"
+    },
+    {
+      "status": "On Hold",
+      "subject": "Wrong Invoice",
+      "department": "Accounting",
+      "date": "yesterday"
+    },
+    {
+      "status": "In Progress",
+      "subject": "Asking for a refund",
+      "department": "Support",
+      "date": "3 hours ago"
+    },
+    {
+      "status": "Open",
+      "subject": "License not recieved",
+      "department": "Support",
+      "date": "4 hours ago"
+    },
+    {
+      "status": "Closed",
+      "subject": "BSOD again",
+      "department": "IT",
+      "date": "yesterday"
+    },
+    {
+      "status": "On Hold",
+      "subject": "Wrong Invoice",
+      "department": "Accounting",
+      "date": "3 hours ago"
+    },
+    {
+      "status": "In Progress",
+      "subject": "Asking for a refund",
+      "department": "Support",
+      "date": "4 hours ago"
+    }
+  ],
+  "posts": [
+    {
+      "name": "Memora",
+      "img": "/img/photos/w-100/soroush-zargar-zFSUhqGual8-unsplash.jpg",
+      "priority": true,
+      "person": "Nielsen Cobb",
+      "type": "Gear",
+      "text": "One morning, when Gregor Samsa woke from"
+    },
+    {
+      "name": "Zilidium",
+      "img": "/img/photos/w-100/faruk-kaymak-CNVvDjVDiVI-unsplash.jpg",
+      "person": "Margret Cote",
+      "priority": true,
+      "type": "Stories",
+      "text": "The bedding was hardly able to cover it "
+    },
+    {
+      "name": "Chorizon",
+      "img": "/img/photos/w-100/aron-visuals-3jBU9TbKW7o-unsplash.jpg",
+      "priority": true,
+      "person": "Rachel Vinson",
+      "type": "Tips & Tricks",
+      "text": "His room, a proper human room although a"
+    },
+    {
+      "name": "Comverges",
+      "img": "/img/photos/w-100/elizabeth-gottwald-dnIWYrliZfU-unsplash.jpg",
+      "priority": true,
+      "person": "Gabrielle Aguirre",
+      "type": "Trips",
+      "text": "Samsa was a travelling salesman - and ab"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Memora",
+      "img": "/img/avatar-0.jpg",
+      "person": "Nielsen Cobb",
+      "place": "Levant",
+      "due": "January 25",
+      "priority": "Medium"
+    },
+    {
+      "name": "Zilidium",
+      "img": "/img/avatar-1.jpg",
+      "person": "Margret Cote",
+      "place": "Foxworth",
+      "due": "January 25",
+      "priority": "High"
+    },
+    {
+      "name": "Chorizon",
+      "img": "/img/avatar-2.jpg",
+      "person": "Rachel Vinson",
+      "place": "Eastmont",
+      "due": "January 25",
+      "priority": "Low"
+    },
+    {
+      "name": "Comverges",
+      "img": "/img/avatar-3.jpg",
+      "person": "Gabrielle Aguirre",
+      "place": "Whitewater",
+      "due": "January 25",
+      "priority": "New"
+    },
+    {
+      "name": "Remold",
+      "img": "/img/avatar-4.jpg",
+      "person": "Spears Collier",
+      "place": "Hebron",
+      "due": "January 25",
+      "priority": "Medium"
+    },
+    {
+      "name": "Euron",
+      "img": "/img/avatar-5.jpg",
+      "person": "Keisha Thomas",
+      "place": "Levant",
+      "due": "January 25",
+      "priority": "High"
+    }
+  ],
+  "members": [
+    {
+      "img": "/img/avatar-0.jpg",
+      "person": "Nielsen Cobb",
+      "company": "Levant",
+      "link": "#!"
+    },
+    {
+      "img": "/img/avatar-1.jpg",
+      "person": "Margret Cote",
+      "company": "Foxworth",
+      "link": "#!"
+    },
+    {
+      "img": "/img/avatar-2.jpg",
+      "person": "Rachel Vinson",
+      "company": "Eastmont",
+      "link": "#!"
+    },
+    {
+      "img": "/img/avatar-3.jpg",
+      "person": "Gabrielle Aguirre",
+      "company": "Whitewater",
+      "link": "#!"
+    },
+    {
+      "img": "/img/avatar-4.jpg",
+      "person": "Spears Collier",
+      "company": "Hebron",
+      "link": "#!"
+    },
+    {
+      "img": "/img/avatar-5.jpg",
+      "person": "Keisha Thomas",
+      "company": "Euron",
+      "link": "#!"
+    },
+    {
+      "img": "/img/avatar-6.jpg",
+      "person": "Elisabeth Key",
+      "company": "Netagy",
+      "link": "#!"
+    }
+  ],
+  "projects2": [
+    {
+      "name": "Publish New Theme",
+      "date": "10 mins ago",
+      "participants": [
+        {
+          "img": "/img/avatar-0.jpg",
+          "name": "Nielsen Cobb"
+        },
+        {
+          "img": "/img/avatar-1.jpg",
+          "name": "Margret Cote"
+        }
+      ]
+    },
+    {
+      "name": "Internal Linkbuilding",
+      "date": "2 hours ago",
+      "participants": [
+        {
+          "img": "/img/avatar-1.jpg",
+          "name": "Nielsen Cobb"
+        },
+        {
+          "img": "/img/avatar-2.jpg",
+          "name": "Margret Cote"
+        },
+        {
+          "img": "/img/avatar-3.jpg",
+          "name": "Rachel Vinson"
+        }
+      ]
+    },
+    {
+      "name": "New Writer Onboarding",
+      "date": "3 days ago",
+      "participants": [
+        {
+          "img": "/img/avatar-1.jpg",
+          "name": "Nielsen Cobb"
+        },
+        {
+          "img": "/img/avatar-3.jpg",
+          "name": "Margret Cote"
+        },
+        {
+          "img": "/img/avatar-4.jpg",
+          "name": "Rachel Vinson"
+        },
+        {
+          "img": "/img/avatar-5.jpg",
+          "name": "Gabrielle Aguirre"
+        }
+      ]
+    }
+  ],
+  "activeTickets": [
+    {
+      "id": 2568,
+      "description": {
+        "title": "License not recieved",
+        "text": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed in"
+      },
+      "user": {
+        "name": "Nielsen Cobb",
+        "img": "/img/avatar-0.jpg"
+      },
+      "due": "<strong>4</strong><span class='text-muted'> days</span>"
+    },
+    {
+      "id": 2569,
+      "description": {
+        "title": "BSOD again",
+        "text": "The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pit"
+      },
+      "user": {
+        "name": "Margret Cote",
+        "img": "/img/avatar-1.jpg"
+      },
+      "due": "<strong>4</strong><span class='text-muted'> days</span>"
+    },
+    {
+      "id": 2570,
+      "description": {
+        "title": "Wrong Invoice",
+        "text": "His room, a proper human room although a little too small, lay peacefully between its four familiar"
+      },
+      "user": {
+        "name": "Rachel Vinson",
+        "img": "/img/avatar-2.jpg"
+      },
+      "due": "<strong>4</strong><span class='text-muted'> days</span>"
+    },
+    {
+      "id": 2571,
+      "description": {
+        "title": "Asking for a refund",
+        "text": "Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of"
+      },
+      "user": {
+        "name": "Gabrielle Aguirre",
+        "img": "/img/avatar-3.jpg"
+      },
+      "due": "<strong>4</strong><span class='text-muted'> days</span>"
+    },
+    {
+      "id": 2572,
+      "description": {
+        "title": "License not recieved",
+        "text": "He must have tried it a hundred times, shut his eyes so that he wouldn't have to look at the flounde"
+      },
+      "user": {
+        "name": "Spears Collier",
+        "img": "/img/avatar-4.jpg"
+      },
+      "due": "<strong>4</strong><span class='text-muted'> days</span>"
+    }
+  ],
+  "customers": [
+    {
+      "name": "Nielsen Cobb",
+      "country": {
+        "name": "Czech Republic",
+        "code": "cz"
+      },
+      "orders": 2
+    },
+    {
+      "name": "Margret Cote",
+      "country": {
+        "name": "United States",
+        "code": "us"
+      },
+      "orders": 4
+    },
+    {
+      "name": "Rachel Vinson",
+      "country": {
+        "name": "Slovakia",
+        "code": "sk"
+      },
+      "orders": 7
+    },
+    {
+      "name": "Gabrielle Aguirre",
+      "country": {
+        "name": "Germany",
+        "code": "de"
+      },
+      "orders": 2
+    },
+    {
+      "name": "Rachel Vinson",
+      "country": {
+        "name": "India",
+        "code": "in"
+      },
+      "orders": 3
+    },
+    {
+      "name": "Keisha Thomas",
+      "country": {
+        "name": "Thailand",
+        "code": "th"
+      },
+      "orders": 12
+    },
+    {
+      "name": "Elisabeth Key",
+      "country": {
+        "name": "Austria",
+        "code": "at"
+      },
+      "orders": 2
+    },
+    {
+      "name": "Patel Mack",
+      "country": {
+        "name": "Spain",
+        "code": "es"
+      },
+      "orders": 4
+    }
+  ],
+  "updates": [
+    {
+      "content": "License not recieved",
+      "type": "twitter",
+      "date": "4 hours ago"
+    },
+    {
+      "content": "BSOD again",
+      "type": "message",
+      "date": "yesterday"
+    },
+    {
+      "content": "Wrong Invoice",
+      "type": "upload",
+      "date": "yesterday"
+    },
+    {
+      "content": "Asking for a refund",
+      "type": "facebook",
+      "date": "3 hours ago"
+    },
+    {
+      "content": "License not recieved",
+      "type": "twitter",
+      "date": "4 hours ago"
+    },
+    {
+      "content": "BSOD again",
+      "type": "message",
+      "date": "yesterday"
+    },
+    {
+      "content": "Asking for a refund",
+      "type": "upload",
+      "date": "3 hours ago"
+    },
+    {
+      "content": "License not recieved",
+      "type": "facebook",
+      "date": "4 hours ago"
+    }
+  ],
+  "products": [
+    {
+      "id": 2568,
+      "name": "Round grey hanging decor",
+      "img": "/img/product/product-1.jpg",
+      "price": "22.00",
+      "stock": 43,
+      "lastOrder": "2021/04/06",
+      "status": "new"
+    },
+    {
+      "id": 2569,
+      "name": "silver black round Ipod",
+      "img": "/img/product/product-2.jpg",
+      "price": "22.00",
+      "stock": 44,
+      "lastOrder": "2021/10/25"
+    },
+    {
+      "id": 2570,
+      "name": "White USB cable",
+      "img": "/img/product/product-3.jpg",
+      "price": "22.00",
+      "stock": 45,
+      "lastOrder": "2021/12/08",
+      "status": "trending"
+    },
+    {
+      "id": 2571,
+      "name": "Sony PS 4 game controller",
+      "img": "/img/product/product-4.jpg",
+      "price": "22.00",
+      "stock": 46,
+      "lastOrder": "2021/05/25"
+    },
+    {
+      "id": 2572,
+      "name": "Kui Ye Chen’s AirPods",
+      "img": "/img/product/product-5.jpg",
+      "price": "22.00",
+      "stock": 47,
+      "lastOrder": "2021/05/10"
+    },
+    {
+      "id": 2573,
+      "name": "Black camera lens",
+      "img": "/img/product/product-6.jpg",
+      "price": "22.00",
+      "stock": 48,
+      "lastOrder": "2021/06/02",
+      "status": "hot"
+    }
+  ],
+  "orders": [
+    {
+      "id": 2458,
+      "customer": {
+        "name": "Nielsen Cobb",
+        "email": "nielsencobb@memora.com"
+      },
+      "date": "2021/12/05",
+      "total": "280.95",
+      "status": "open",
+      "stars": 4
+    },
+    {
+      "id": 2459,
+      "customer": {
+        "name": "Margret Cote",
+        "email": "margretcote@zilidium.com"
+      },
+      "date": "2021/04/05",
+      "total": "20.78",
+      "status": "closed",
+      "stars": 5
+    },
+    {
+      "id": 2460,
+      "customer": {
+        "name": "Rachel Vinson",
+        "email": "rachelvinson@chorizon.com"
+      },
+      "date": "2021/09/29",
+      "total": "630.32",
+      "status": "onhold",
+      "stars": 2
+    },
+    {
+      "id": 2461,
+      "customer": {
+        "name": "Gabrielle Aguirre",
+        "email": "gabrielleaguirre@comverges.com"
+      },
+      "date": "2021/02/06",
+      "total": "590.29",
+      "status": "inprogress",
+      "stars": 3
+    },
+    {
+      "id": 2462,
+      "customer": {
+        "name": "Spears Collier",
+        "email": "spearscollier@remold.com"
+      },
+      "date": "2021/06/17",
+      "total": "50.46",
+      "status": "open",
+      "stars": 4
+    },
+    {
+      "id": 2463,
+      "customer": {
+        "name": "Keisha Thomas",
+        "email": "keishathomas@euron.com"
+      },
+      "date": "2021/08/26",
+      "total": "430.25",
+      "status": "closed",
+      "stars": 4
+    },
+    {
+      "id": 2464,
+      "customer": {
+        "name": "Elisabeth Key",
+        "email": "elisabethkey@netagy.com"
+      },
+      "date": "2021/02/05",
+      "total": "590.02",
+      "status": "onhold",
+      "stars": 3
+    },
+    {
+      "id": 2465,
+      "customer": {
+        "name": "Patel Mack",
+        "email": "patelmack@zedalis.com"
+      },
+      "date": "2021/04/05",
+      "total": "860.98",
+      "status": "inprogress",
+      "stars": 5
+    },
+    {
+      "id": 2466,
+      "customer": {
+        "name": "Erika Whitaker",
+        "email": "erikawhitaker@uniworld.com"
+      },
+      "date": "2021/02/21",
+      "total": "400.19",
+      "status": "open",
+      "stars": 2
+    },
+    {
+      "id": 2467,
+      "customer": {
+        "name": "Meyers Swanson",
+        "email": "meyersswanson@candecor.com"
+      },
+      "date": "2021/07/17",
+      "total": "540.82",
+      "status": "closed",
+      "stars": 5
+    }
+  ]
+}

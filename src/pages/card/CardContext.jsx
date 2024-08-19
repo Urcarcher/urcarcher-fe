@@ -45,7 +45,7 @@ export const CardProvider = ({children}) => {
     const [produceCardOffer, setProduceCardOffer] = useState({
         "card_id": null,
         "card_account":null,
-        "card_balance" : null, 
+        "card_balance" : 0, 
         "card_number":generateRandomCardNumber(),
         "card_password":null,
         "card_pickup":null,
