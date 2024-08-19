@@ -1,7 +1,5 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import 'assets/exchangeSelect.css';
 
 function ExchangeSelect(props) {
     const navi = useNavigate();
@@ -17,8 +15,24 @@ function ExchangeSelect(props) {
 
     return (
         <div className="contents">
-            <h2>어카처에서 편하게 환전하고 원할 때 바로 사용하세요!</h2>
-            <button id="currency" onClick={exchangeHandle}>충전하기</button>
+            <div className="exchange_wrapper">
+                <div className="exchange_title">
+                    <h5>어카처에서 편하게 환전하고</h5>
+                    <h5>원할 때 바로 사용하세요!</h5>
+                </div>
+                <div className="exchange_content">
+                    <p>모바일로 편하게 환전 하고</p>
+                    <p>원하는 날, 원하는 곳에서 바로 사용</p>
+                </div>
+                <div className="exchange_card">
+                    <img src="img/exchange/card.png" alt="카드 아이콘"/>
+                </div>
+                <div className="exchange_money">
+                    <img src="img/exchange/money.png" alt="돈 아이콘"/>
+                </div>
+                <button>내역보기</button>
+                <button id="currency" onClick={exchangeHandle}>충전하기</button>
+            </div>
 
             <h2>이런 환전 방법은 어떠세요?</h2>
             <button id="set" onClick={exchangeHandle}>목표환율 자동충전</button>

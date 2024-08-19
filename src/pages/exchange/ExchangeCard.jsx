@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../../assets/exchangeCard.css';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
+import 'assets/exchangeCard.css';
+import axios from 'axios';
 
 function ExchangeCard(props) {
     // 이전 페이지에서 보낸 버튼 정보
@@ -13,30 +12,34 @@ function ExchangeCard(props) {
     const navi = useNavigate();
 
     // 사용자의 카드 목록 임시 data
-    const userCard = [
-        { id: 1, balance: 10000, type: "선불카드" },
-        { id: 2, balance: 50000, type: "선불카드" },
-        { id: 3, balance: 0, type: "신용카드" },
-        { id: 4, balance: 0, type: "선불카드" },
-    ];
+    // const userCard = [
+    //     { id: 1, balance: 10000, type: "선불카드" },
+    //     { id: 2, balance: 50000, type: "선불카드" },
+    //     { id: 3, balance: 0, type: "신용카드" },
+    //     { id: 4, balance: 0, type: "선불카드" },
+    // ];
 
-    const [cardList, setCardList] = useState(userCard);
+    // const [cardList, setCardList] = useState(userCard);
+    
+    const [cardList, setCardList] = useState([]);
     const [selectCard, setSelectCard] = useState(null);
-
+    
     // 카드 리스트 조회
-    // const [cardList, setCardList] = useState([]);
-
-    /*
     useEffect(() => {
+        if (!cardList) {
+            alert("카드를 먼저 발급받아주세요");
+            return;
+        }
+
         axios.get("https://urcarcher-local.kro.kr:8443/api/exchange/list")
             .then((response) => {
                 setCardList(response.data);
+                console.log(response.data);
             })
             .catch((error) => {
                 console.error("카드 조회 실패", error);
             });
     }, []);
-    */
 
     // 카드 선택
     const cardSelectHandle = (card) => {
@@ -73,12 +76,12 @@ function ExchangeCard(props) {
             <div>
                 {/* null, undefined 아닌지 확인 후 id 비교 */}
                 {cardList.map((card) => (
-                    <div key={card.id} 
-                        className={selectCard?.id === card.id ? "choice" : "unChoice"}
-                        style={{ display: card.type === "선불카드" ? "block" : "none" }}
+                    <div key={card.cardId}
+                        className={selectCard?.cardId === card.cardId ? "choice" : "unChoice"}
+                        style={{ display: card.cardUsage === "선불카드" ? "block" : "none" }}
                     >
-                        <p>{card.type}</p>
-                        <p>잔액 {card.balance.toLocaleString()}원</p>
+                        <p>{card.cardUsage}</p>
+                        <p>잔액 {card.cardBalance.toLocaleString()}원</p>
                         <button onClick={() => cardSelectHandle(card)}>선택</button>
                     </div>
                 ))}

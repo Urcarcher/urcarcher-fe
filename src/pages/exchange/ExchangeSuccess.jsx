@@ -22,6 +22,7 @@ function ExchangeSuccess(props) {
 
     return (
         <>
+            <Header/>
             <div className="contents">
                 <h2>{ exchangeMsg }</h2>
             </div>
@@ -49,6 +50,7 @@ function ExchangeSuccess(props) {
                 <button>내역보기</button>
                 <button onClick={homeHandle}>확인</button>
             </div>
+            <Footer/>
         </>
     );
 }

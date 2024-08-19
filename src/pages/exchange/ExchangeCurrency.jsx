@@ -1,10 +1,7 @@
 import axios from 'axios';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../../assets/exchangeCurrency.css';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
-import { ExchangeContext } from './exportContext';
+import 'assets/exchangeCurrency.css';
 
 function ExchangeCurrency(props) {
     const [exchangeCurInfo, setExchangeCurInfo] = useState({});
@@ -18,7 +15,7 @@ function ExchangeCurrency(props) {
     const [exCard, setExCard] = useState(cardId);
 
     console.log("선택한 카드 정보 받기", exCard);
-    console.log("선택한 카드 아이디 받기", exCard.id);
+    console.log("선택한 카드 아이디 받기", exCard.cardId);
     console.log(typeof exCard);
     
     const [nation, setNation] = useState("USD"); // 사용자 국적 임시 data
@@ -139,7 +136,7 @@ function ExchangeCurrency(props) {
         }
 
         const data = {
-            cardId: exCard.id,
+            cardId: exCard.cardId,
             exRate: parseFloat(exchangeCurInfo[nation].rate.replace(/,/g, "")), // 적용환율
             exCur: parseFloat(currency.replace(/,/g, "")), // 환전금액
             exPay: parseFloat(calculateAmount) // 결제금액
@@ -158,7 +155,7 @@ function ExchangeCurrency(props) {
                 state: {
                     successMsg: response.data,
                     successData: data,
-                    successPlus: exCard.balance + (parseFloat(currency.replace(/,/g, "")))
+                    successPlus: exCard.cardBalance + (parseFloat(currency.replace(/,/g, "")))
                 }
             });
         })
