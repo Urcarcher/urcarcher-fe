@@ -34,12 +34,12 @@ export function signin(userDTO) {
   return axios(getOptions("/api/auth/login", "POST", userDTO))
           .then(resp=>{
             if(resp.data.accessToken) {
-              cookie.save(ACCESS_TOKEN, resp.data.accessToken);
+              cookie.save(ACCESS_TOKEN, resp.data.accessToken, {path:"/"});
               window.location.href = "/test";
             }
           })
           .catch(err=>{
             console.log(err);
-            window.location.href = "/login";
+            // window.location.href = "/login";
           });
 }
