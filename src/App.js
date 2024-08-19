@@ -31,6 +31,7 @@ import OAuthNew from './pages/auth/OAuthNew';
 import OAuthLoading from './pages/auth/OAuthLoading';
 import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
 import CourseDetail from './pages/tourcourse/CourseDetail';
+import ExchangeSuccess from './pages/exchange/ExchangeSuccess';
 import TestReservation from './pages/reservation/TestReservation';
 import MapComponent from './pages/location/MapComponent';
 import TestCard from './pages/tourguide/TestCard';
@@ -70,6 +71,7 @@ function App() {
           <Route path='/exchange' element={<ExchangeSelect/>}></Route>
           <Route path='/exchange/card' element={<ExchangeCard/>}></Route>
           <Route path='/exchange/currency' element={<ExchangeCurrency/>}></Route>
+          <Route path='/exchange/success' element={<ExchangeSuccess/>}></Route>
           <Route path='/exchange/set' element={<ExchangeSet/>}></Route>
           <Route path='/MapComponent' element={<MapComponent/>}></Route>
           <Route path='/MapComponent/:detailDestination' element={<MapComponent/>}/>

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 function ExchangeSelect(props) {
     const navi = useNavigate();
@@ -14,7 +16,7 @@ function ExchangeSelect(props) {
     };
 
     return (
-        <div>
+        <div className="contents">
             <h2>어카처에서 편하게 환전하고 원할 때 바로 사용하세요!</h2>
             <button id="currency" onClick={exchangeHandle}>충전하기</button>
 
