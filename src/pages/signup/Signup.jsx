@@ -1,40 +1,49 @@
-import React from 'react';
-import './signup.css'; 
-import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
-import LocalSignupFlow from './LocalSignupFlow';
+import React, { useState } from 'react';
+//import './signup.css'; 
+import { Route, Routes } from 'react-router-dom';
+import ConsentForm from './ConsentForm';
 import UserInfoForm from './UserInfoForm';
 import Success from './Success';
 
-function SignupOptions() {
-    const navi = useNavigate();
-    const clickHandler1 = () => {
-        navi("/signup/local");
+
+function LocalSignupFlow(props) {
+    const [consentData, setConsentData] = useState({
+        personalInfoConsent: false,
+        locationConsent: false,
+        matchingServiceConsent: false,
+    });
+
+    const [userInfo, setUserInfo] = useState({
+        id: '',
+        password: '',
+        name: '',
+        birth: '',
+        gender: '',
+        nationality: '',
+        email: '',
+        phone: '',
+    });
+
+    const saveConsentData = (data) =>{
+        setConsentData(data);
     }
+    
+    const saveUserInfo = (info) => {
+        setUserInfo(info);
+    };
+
+    const handleSubmit = () => {
+        console.log('Submit to DB', {...userInfo, ...consentData});
+    };
 
     return (
-        <div>
-            <h2>어카처 회원가입 방법을 선택해주세요.</h2>
-
-            <Button className="divStyle1" onClick={clickHandler1}>내국인 <br /> 휴대폰으로 가입하기</Button>
-            <Button className="divStyle1" onClick={clickHandler1}>외국인 <br /> 구글 이메일로 가입하기</Button>
-        </div>
-    );
-}
-
-function Signup() {
-
-    return (
-        <div>
-            <Routes>
-                <Route path="/" element={<SignupOptions />}></Route>
-                <Route path="/local" element={<LocalSignupFlow/>}></Route>
+       <Routes>
+            <Route path = "/" element={<ConsentForm saveConsentData={saveConsentData} />}/>
+            <Route path="/local" element={<LocalSignupFlow/>}></Route>
                 <Route path = "/userInfo" element={<UserInfoForm    />}/>
                 <Route path = "/success" element={<Success    />}/>
-            </Routes>
-            <Outlet></Outlet>
-        </div>
+        </Routes>
     );
 }
 
-export default Signup;
+export default LocalSignupFlow;

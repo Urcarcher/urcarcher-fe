@@ -1,0 +1,57 @@
+{
+  "block1": {
+    "graphs": {
+      "main": {
+        "name": "Closed Projects",
+        "type": "line",
+        "data": {
+          "color": "blue",
+          "ticksColor": "blue",
+          "label": "Your Account Balance",
+          "dollar": true,
+          "hideLegend": true,
+          "labels": [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July"
+          ],
+          "values": [20, 14, 21, 15, 22, 8, 18],
+          "min": 0,
+          "max": 30
+        }
+      },
+      "regular": [
+        {
+          "name": "Work hours",
+          "subtitle": "Hours worked this month",
+          "type": "doughnut",
+          "value": 86.4,
+          "color": "green",
+
+          "data": {
+            "labels": ["Hours Worked", "Hours Remaining"],
+            "hideLegend": true,
+            "values": [250, 200]
+          }
+        },
+        {
+          "name": "Tasks Completed",
+          "subtitle": "Tasks Completed this months",
+          "type": "doughnut",
+          "value": 325,
+          "color": "indigo",
+
+          "data": {
+            "labels": ["Completed", "Remaining"],
+            "hideLegend": true,
+            "values": [300, 50]
+          }
+        }
+      ]
+    }
+  }
+}

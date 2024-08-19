@@ -1,0 +1,215 @@
+[
+  {
+    "rowClassName": "mb-4",
+    "columns": [
+      {
+        "size": {
+          "lg": 8
+        },
+        "className": "mb-4 mb-lg-0",
+        "charts": [
+          {
+            "name": "Line chart Example",
+            "text": "<p class='text-gray-500'>Charts on this page use <a href='https://www.chartjs.org/'>Chart.js</a> - Simple yet flexible JavaScript charting for designers & developers.</p><p class='text-gray-500'>Theme has built in React wrapper. You can find all chart components in <code>src/components/charts</code> folder.</p>",
+            "exampleCode": "mainChartCode",
+            "component": "CustomLineChart",
+            "className": "mt-5 mb-5",
+            "type": "line",
+            "data": {
+              "color": "blue",
+              "ticksColor": "blue",
+
+              "grid": true,
+              "labels": [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July"
+              ],
+              "label": "Data Set One",
+              "label2": "Data Set Two",
+              "values": [30, 50, 40, 61, 42, 35, 40],
+              "values2": [50, 40, 50, 40, 45, 40, 30],
+              "min": 30,
+              "max": 65
+            }
+          }
+        ]
+      },
+      {
+        "size": {
+          "lg": 4
+        },
+        "charts": [
+          {
+            "name": "Line chart with primary gradient",
+            "component": "CustomLineChart2",
+            "cardClassName": "mb-4",
+            "data": {
+              "color": "primary",
+              "ticksColor": "primary",
+              "label": "Referrals",
+              "grid": true,
+              "hideX": true,
+              "labels": [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July"
+              ],
+              "values": [13, 21, 13, 17, 13, 20, 15],
+              "min": 0,
+              "max": 30
+            }
+          },
+          {
+            "name": "Bar Chart",
+            "component": "BarChart",
+            "cardClassName": "mb-3",
+            "data": {
+              "labels": [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July"
+              ],
+              "color": "primary",
+              "label": "Data Set 1",
+              "values": [65, 59, 80, 81, 56, 55, 40],
+              "color2": "pinkLighter",
+              "label2": "Data Set 2",
+              "values2": [35, 40, 60, 47, 88, 27, 30],
+              "hideX": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rowClassName": "mb-4",
+    "columns": [
+      {
+        "size": {
+          "lg": 5
+        },
+        "charts": [
+          {
+            "name": "Donut Chart",
+            "component": "DoughnutChart",
+            "cardClassName": "mb-4",
+            "exampleCode": "donutChartCode",
+            "data": {
+              "color": "cyan",
+              "cutout": "70%",
+              "labels": ["Tasks Done", "Remaining"],
+              "values": [250, 200]
+            }
+          },
+          {
+            "name": "Donut Chart 2",
+            "component": "DoughnutChart",
+            "cardClassName": "mb-4",
+            "exampleCode": "donutChartCode2",
+            "data": {
+              "color": "blue",
+              "hideLegend": true,
+              "labels": ["First", "Second"],
+              "values": [300, 50]
+            }
+          }
+        ]
+      },
+      {
+        "size": {
+          "lg": 7
+        },
+        "charts": [
+          {
+            "name": "Bar Chart 2",
+            "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+            "component": "BarChart",
+            "exampleCode": "barChartCode2",
+            "data": {
+              "ticksColor": "primary",
+              "label": "Sunny Days",
+              "grid": false,
+              "gradient": "pinkBlue",
+              "labels": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14"
+              ],
+              "values": [
+                65, 59, 80, 81, 56, 55, 40, 30, 45, 80, 44, 36, 66, 58
+              ],
+              "min": 20,
+              "max": 100,
+              "hideLegend": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "columns": [
+      {
+        "size": {
+          "lg": 6
+        },
+        "charts": [
+          {
+            "name": "Donut chart Example",
+            "component": "CustomDoughnutChart",
+            "cardClassName": "mb-4",
+            "exampleCode": "customDonutCode",
+            "data": {
+              "cutout": "70%",
+              "color": ["#0d6efd", "#3d8bfd", "#6ea8fe", "#9ec5fe"],
+              "labels": ["Sandra", "Becky", "Julie", "Danny"],
+              "values": [250, 50, 100, 40]
+            }
+          }
+        ]
+      },
+      {
+        "size": {
+          "lg": 6
+        },
+        "charts": [
+          {
+            "name": "Pie chart Example",
+            "component": "PieChart",
+            "exampleCode": "pieChartCode",
+            "data": {
+              "color": ["#6610f2", "#8540f5", "#a370f7", "#c29ffa"],
+              "labels": ["John", "Mark", "Frank", "Danny"],
+              "values": [300, 50, 100, 80]
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
