@@ -10,6 +10,7 @@
     border: none;
     text-align: right;
     margin: 0 auto;
+    font-family: 'NanumSquareNeoExtraBold';
 }
 
 input:focus {

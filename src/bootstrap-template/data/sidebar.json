@@ -1,0 +1,296 @@
+[
+  {
+    "name": "Main",
+    "items": [
+      {
+        "name": "Dashboards",
+        "link": "/#",
+        "icon": "real-estate-1",
+        "links": [
+          {
+            "name": "Default",
+            "link": "/"
+          },
+          {
+            "name": "CMS",
+            "link": "/index-cms"
+          },
+
+          {
+            "name": "E-commerce",
+            "link": "/index-e-commerce"
+          },
+          {
+            "name": "Projects",
+            "link": "/index-projects"
+          },
+          {
+            "name": "Charts",
+            "link": "/index-charts"
+          }
+        ]
+      },
+      {
+        "name": "CMS",
+        "link": "/#",
+        "icon": "reading-1",
+        "links": [
+          {
+            "name": "Posts",
+            "link": "/cms-post"
+          },
+          {
+            "name": "Add new post",
+            "link": "/cms-post-new"
+          },
+
+          {
+            "name": "Categories",
+            "link": "/cms-category"
+          },
+          {
+            "name": "Media library",
+            "link": "/cms-media"
+          }
+        ]
+      },
+      {
+        "name": "Widgets",
+        "link": "/#",
+        "icon": "statistic-1",
+        "links": [
+          {
+            "name": "Stats",
+            "link": "/widgets-stats"
+          },
+          {
+            "name": "Data",
+            "link": "/widgets-data"
+          }
+        ]
+      },
+      {
+        "name": "E-commerce",
+        "link": "/#",
+        "icon": "delivery-truck-1",
+        "links": [
+          {
+            "name": "Products",
+            "link": "/e-commerce-products"
+          },
+          {
+            "name": "Products - New",
+            "link": "/e-commerce-product-new"
+          },
+          {
+            "name": "Orders",
+            "link": "/e-commerce-orders"
+          },
+          {
+            "name": "Order - detail",
+            "link": "/e-commerce-order"
+          },
+          {
+            "name": "Customers",
+            "link": "/e-commerce-customers"
+          }
+        ]
+      },
+      {
+        "name": "Pages",
+        "link": "#",
+        "icon": "paper-stack-1",
+        "links": [
+          {
+            "name": "Profile",
+            "link": "/pages-profile"
+          },
+          {
+            "name": "Pricing table",
+            "link": "/pages-pricing"
+          },
+          {
+            "name": "Contacts",
+            "link": "/pages-contacts"
+          },
+          {
+            "name": "Invoice",
+            "link": "/pages-invoice"
+          },
+          {
+            "name": "Knowledge base",
+            "link": "/pages-knowledge-base",
+            "new": true
+          },
+          {
+            "name": "Knowledge base - Topic",
+            "link": "/pages-knowledge-base-topic",
+            "new": true
+          }
+        ]
+      },
+      {
+        "name": "User",
+        "link": "#",
+        "icon": "man-1",
+        "links": [
+          {
+            "name": "Login page",
+            "link": "/login"
+          },
+          {
+            "name": "Register",
+            "link": "/register"
+          },
+          {
+            "name": "Login v.2",
+            "link": "/login-2",
+            "new": true
+          },
+          {
+            "name": "Register v.2",
+            "link": "/register-2",
+            "new": true
+          }
+        ]
+      },
+      {
+        "name": "Components",
+        "link": "#",
+        "icon": "sorting-1",
+        "links": [
+          {
+            "name": "Cards",
+            "link": "/components-cards"
+          },
+          {
+            "name": "Calendar",
+            "link": "/components-calendar"
+          },
+          {
+            "name": "Gallery",
+            "link": "/components-gallery"
+          },
+          {
+            "name": "Loading buttons",
+            "link": "/components-loading-buttons"
+          },
+          {
+            "name": "Maps",
+            "link": "/components-map"
+          },
+          {
+            "name": "Notifications",
+            "link": "/components-notifications"
+          },
+          {
+            "name": "Preloaders",
+            "link": "/components-preloader"
+          }
+        ]
+      },
+      {
+        "name": "Charts",
+        "link": "#",
+        "icon": "pie-chart-1",
+        "links": [
+          {
+            "name": "Charts",
+            "link": "/charts"
+          },
+          {
+            "name": "Gauge + Sparkline",
+            "link": "/charts-gauge-sparkline"
+          }
+        ]
+      },
+      {
+        "name": "Forms",
+        "link": "#",
+        "icon": "file-storage-1",
+        "links": [
+          {
+            "name": "Basic forms",
+            "link": "/forms"
+          },
+          {
+            "name": "Advanced forms",
+            "link": "/forms-advanced"
+          },
+          {
+            "name": "Files upload",
+            "link": "/forms-dropzone"
+          },
+          {
+            "name": "Text editor",
+            "link": "/forms-texteditor"
+          },
+          {
+            "name": "Validation",
+            "link": "/forms-validation"
+          }
+        ]
+      },
+      {
+        "name": "Tables",
+        "link": "#",
+        "icon": "grid-1",
+        "links": [
+          {
+            "name": "Bootstrap tables",
+            "link": "/tables"
+          },
+          {
+            "name": "Datatable",
+            "link": "/tables-datatable"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Docs",
+    "items": [
+      {
+        "name": "Introduction",
+        "link": "/docs/introduction",
+        "icon": "angle-brackets-1"
+      },
+      {
+        "name": "Directory structure",
+        "link": "/docs/directory-structure",
+        "icon": "table-content-1"
+      },
+      {
+        "name": "Next.js",
+        "link": "/docs/next",
+        "icon": "keyboard-1"
+      },
+      {
+        "name": "CSS",
+        "link": "#",
+        "icon": "design-1",
+        "links": [
+          {
+            "name": "CSS Components",
+            "link": "/docs/components-theme"
+          },
+          {
+            "name": "Customizing CSS",
+            "link": "/docs/customizing-css"
+          }
+        ]
+      },
+      {
+        "name": "Credits",
+        "link": "/docs/credits",
+        "icon": "star-medal-1"
+      },
+      {
+        "name": "Changelog",
+        "link": "/docs/changelog",
+        "icon": "new-1"
+      }
+    ]
+  }
+]

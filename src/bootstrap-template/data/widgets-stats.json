@@ -1,0 +1,392 @@
+{
+  "group1": [
+    {
+      "number": "$10,500",
+      "icon": "speed-1",
+      "name": "Earnings",
+      "footer": "20% increase",
+      "color": "red"
+    },
+    {
+      "number": "584",
+      "icon": "news-1",
+      "name": "Readers",
+      "footer": "3% increase",
+      "color": "blue"
+    },
+    {
+      "number": "876",
+      "icon": "bookmark-1",
+      "name": "Bookmarks",
+      "footer": "10% increase",
+      "color": "primary"
+    },
+    {
+      "number": "3,500",
+      "icon": "world-map-1",
+      "name": "Visitors",
+      "footer": "5% increase",
+      "color": "green"
+    }
+  ],
+  "group2": [
+    {
+      "name": "All earnings",
+      "number": "$19,200",
+      "profit": "$2,123",
+      "icon": "pay-1",
+      "color": "primary"
+    },
+    {
+      "name": "Offers",
+      "number": "$12,500",
+      "loss": "$2,123",
+      "icon": "label-tag-1",
+      "color": "green"
+    },
+    {
+      "name": "Bestsellers",
+      "number": "$10,800",
+      "profit": "$2,123",
+      "icon": "star-medal-1",
+      "color": "indigo"
+    }
+  ],
+  "group3": [
+    {
+      "name": "Earnings",
+      "text": "20% increase",
+      "profit": "$10,500"
+    },
+    {
+      "name": "Readers",
+      "text": "3% increase",
+      "profit": "584"
+    },
+    {
+      "name": "Bookmarks",
+      "text": "10% increase",
+      "profit": "876"
+    },
+    {
+      "name": "Visitors",
+      "text": "5% decrease",
+      "loss": "3,500"
+    }
+  ],
+  "group4": [
+    {
+      "name": "subscribers",
+      "number": "526",
+      "text": "20% change",
+      "color": "danger",
+      "icon": "woman-1",
+      "button": {
+        "label": "Manage list",
+        "link": "#!"
+      }
+    },
+    {
+      "name": "readers",
+      "number": "3,258",
+      "text": "35% change",
+      "color": "info",
+      "icon": "reading-1",
+      "button": {
+        "label": "See details",
+        "link": "#!"
+      }
+    },
+    {
+      "name": "photos",
+      "number": "1,256",
+      "text": "18% change",
+      "color": "primary",
+      "icon": "retro-camera-1",
+      "button": {
+        "label": "Upload new",
+        "link": "#!"
+      }
+    }
+  ],
+  "group5": [
+    {
+      "name": "Publish New Theme",
+      "category": "Web Design",
+      "text": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like ba",
+      "button": {
+        "label": "Completed",
+        "link": "#!"
+      },
+      "updates": 23,
+      "milestones": 2,
+      "participants": [
+        {
+          "name": "Elisabeth Key",
+          "img": "/img/avatar-0.jpg"
+        },
+        {
+          "name": "Nielsen Cobb",
+          "img": "/img/avatar-1.jpg"
+        }
+      ],
+      "progress": 70,
+      "color": "primary"
+    },
+    {
+      "name": "Internal Linkbuilding",
+      "category": "Marketing",
+      "text": "The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of",
+      "button": {
+        "label": "Completed",
+        "link": "#!"
+      },
+      "updates": 23,
+      "milestones": 2,
+      "participants": [
+        {
+          "name": "Nielsen Cobb",
+          "img": "/img/avatar-1.jpg"
+        },
+        {
+          "name": "Elisabeth Key",
+          "img": "/img/avatar-2.jpg"
+        },
+        {
+          "name": "Gabrielle Aguirre",
+          "img": "/img/avatar-3.jpg"
+        },
+        {
+          "name": "Rachel Vinson",
+          "img": "/img/avatar-4.jpg"
+        }
+      ],
+      "progress": 48,
+      "color": "info"
+    }
+  ],
+  "stats6": {
+    "name": "New Customers",
+    "number": "625",
+    "progress": 60,
+    "color": "success",
+    "cols": [
+      {
+        "number": "254",
+        "name": "Affiliates",
+        "data": "+125"
+      },
+      {
+        "number": "328",
+        "name": "SEM",
+        "data": "+144"
+      }
+    ]
+  },
+  "stats7": [
+    {
+      "loss": "1,112",
+      "name": "Affiliate Sales",
+      "progress": 75
+    },
+    {
+      "profit": "258",
+      "name": "Ads Sales",
+      "progress": 50
+    }
+  ],
+  "stats8": {
+    "header": "Lines of code",
+    "number": "828",
+    "cols": [
+      {
+        "name": "Tabs",
+        "number": "456",
+        "color": "green"
+      },
+      {
+        "name": "Spaces",
+        "number": "125",
+        "color": "indigo"
+      }
+    ]
+  },
+  "stats8icon": {
+    "header": "Customers",
+    "icon": "chart-1",
+    "cols": [
+      {
+        "name": "Happy",
+        "number": "456",
+        "color": "pink"
+      },
+      {
+        "name": "Ecstatic",
+        "number": "125",
+        "color": "info"
+      }
+    ]
+  },
+  "stats9": {
+    "header": "Plan",
+    "number": "78.2%",
+    "graphs": [
+      {
+        "name": "Sales",
+        "progress": 78,
+        "color": "primary"
+      },
+      {
+        "name": "Ads",
+        "progress": 48,
+        "color": "success"
+      },
+      {
+        "name": "Campaigns",
+        "progress": 88,
+        "color": "pink"
+      },
+      {
+        "name": "Subscribers",
+        "progress": 98,
+        "color": "indigo"
+      }
+    ]
+  },
+  "group6": [
+    {
+      "header": "Your spendings",
+      "color": "primary",
+      "number": "$950",
+      "text": "Planned for next month",
+      "number2": "$1253",
+      "progress": 78,
+      "button": {
+        "label": "Take action",
+        "link": "#!"
+      }
+    },
+    {
+      "header": "Transactions",
+      "color": "warning",
+      "number": "323",
+      "text": "Planned for next month",
+      "number2": "356",
+      "progress": 83,
+      "button": {
+        "label": "Take action",
+        "link": "#!"
+      }
+    },
+    {
+      "header": "Vat",
+      "color": "danger",
+      "number": "$158",
+      "text": "Planned for next month",
+      "number2": "$300",
+      "progress": 45,
+      "button": {
+        "label": "Take action",
+        "link": "#!"
+      }
+    }
+  ],
+  "group7": [
+    {
+      "number": "$10,500",
+      "icon": "speed-1",
+      "name": "Earnings",
+      "progress": 85,
+      "color": "danger",
+      "date": "May 23 - June 01 (2018)"
+    },
+    {
+      "number": "584",
+      "icon": "news-1",
+      "name": "Readers",
+      "progress": 75,
+      "color": "blue",
+      "date": "May 23 - June 01 (2018)"
+    },
+    {
+      "number": "876",
+      "icon": "bookmark-1",
+      "name": "Bookmarks",
+      "progress": 67,
+      "color": "primary",
+      "date": "May 23 - June 01 (2018)"
+    },
+    {
+      "number": "3,500",
+      "icon": "world-map-1",
+      "name": "Visitors",
+      "progress": 93,
+      "color": "green",
+      "date": "May 23 - June 01 (2018)"
+    }
+  ],
+  "group8": [
+    {
+      "name": "Earnings",
+      "number": "$10,500",
+      "number2": "-20.3%",
+      "progress": 85,
+      "color": "danger"
+    },
+    {
+      "name": "Readers",
+      "number": "584",
+      "number2": "+3.3%",
+      "progress": 75,
+      "color": "blue"
+    },
+    {
+      "name": "Earnings",
+      "number": "876",
+      "number2": "+10.5%",
+      "progress": 67,
+      "color": "primary"
+    },
+    {
+      "name": "Visitors",
+      "number": "3,500",
+      "number2": "-5.8%",
+      "progress": 93,
+      "color": "green"
+    }
+  ],
+  "group9": [
+    {
+      "number": "$10,500",
+      "icon": "speed-1",
+      "name": "Earnings",
+      "percentage": 20.3,
+      "progress": 85,
+      "color": "red"
+    },
+    {
+      "number": "584",
+      "icon": "news-1",
+      "name": "Readers",
+      "percentage": 3.3,
+      "progress": 75,
+      "color": "blue"
+    },
+    {
+      "number": "876",
+      "icon": "bookmark-1",
+      "name": "Bookmarks",
+      "percentage": 10.5,
+      "progress": 67,
+      "color": "primary"
+    },
+    {
+      "number": "3,500",
+      "icon": "world-map-1",
+      "name": "Visitors",
+      "percentage": -5.8,
+      "progress": 93,
+      "color": "green"
+    }
+  ]
+}

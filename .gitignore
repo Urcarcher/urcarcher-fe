@@ -25,4 +25,4 @@ yarn-error.log*
 #ssl
 cert1.pem
 privkey1.pem
-.env 
+.env

@@ -1,0 +1,92 @@
+{
+  "pricing": [
+    {
+      "name": "Free",
+      "price": 0,
+      "features": [
+        {
+          "name": "Single User"
+        },
+        {
+          "name": "5GB Storage"
+        },
+        {
+          "name": "Unlimited Public Projects"
+        },
+        {
+          "name": "Community Access",
+          "disabled": true
+        },
+        {
+          "name": "Unlimited Private Projects",
+          "disabled": true
+        },
+        {
+          "name": "Dedicated Phone Support",
+          "disabled": true
+        },
+        {
+          "name": "Monthly Status Reports",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "name": "Plus",
+      "price": 9,
+      "featured": true,
+      "features": [
+        {
+          "name": "Single User"
+        },
+        {
+          "name": "5GB Storage"
+        },
+        {
+          "name": "Unlimited Public Projects"
+        },
+        {
+          "name": "Community Access"
+        },
+        {
+          "name": "Unlimited Private Projects"
+        },
+        {
+          "name": "Dedicated Phone Support",
+          "disabled": true
+        },
+        {
+          "name": "Monthly Status Reports",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "name": "Pro",
+      "price": 30,
+      "features": [
+        {
+          "name": "Single User"
+        },
+        {
+          "name": "5GB Storage"
+        },
+        {
+          "name": "Unlimited Public Projects"
+        },
+        {
+          "name": "Community Access"
+        },
+        {
+          "name": "Unlimited Private Projects"
+        },
+        {
+          "name": "Dedicated Phone Support"
+        },
+        {
+          "name": "Monthly Status Reports"
+        }
+      ]
+    }
+  ]
+}

@@ -3,20 +3,30 @@ import { getOptions } from '../../services/AuthService';
 import axios from 'axios';
 
 function Test(props) {
-    const [a, SetA] = useState({});
+    const [a, setA] = useState({});
     const [b, setB] = useState({});
 
     useEffect(()=> {
-        axios(getOptions('/api/t/test', 'GET', null)).then(
+        axios(getOptions('/api/t/test', 'GET', null))
+        .then(
             (resp)=>{
-                SetA(resp.data);
+                setA(resp.data);
+                console.log(resp.data);
             }
-        );
-        axios(getOptions('/api/t/vali', 'GET', null)).then(
+        )
+        .catch(err=>{
+            console.log(err);
+        });
+
+        axios(getOptions('/api/t/vali', 'GET', null))
+        .then(
             (resp)=>{
                 setB(resp.data);
             }
-        );
+        )
+        .catch(err=>{
+            console.log(err);
+        });
     }, []);
     
     return (
