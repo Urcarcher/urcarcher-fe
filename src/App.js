@@ -34,6 +34,8 @@ import CourseDetail from './pages/tourcourse/CourseDetail';
 import MapComponent from './pages/location/MapComponent';
 import TestCard from './pages/tourguide/TestCard';
 import SearchTour from './pages/tourguide/SearchTour';
+import Header from 'components/Header';
+import Footer from 'components/Footer';
 
 function App() {
   return (
@@ -41,6 +43,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Header />
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/login/loading' element={<OAuthLoading/>}/>
@@ -72,8 +75,8 @@ function App() {
           <Route path='/TourGuide/:areaCode/:contentTypeId' element={<TourGuide/>}/>
           <Route path='/detail/:type/:id' element={<DetailPage/>}/>
           <Route path='/searchtour' element={<SearchTour/>}></Route>
-
           <Route path='/testcard' element={<TestCard/>}/>
+          <Footer />
         </Routes>
     </BrowserRouter>
    </div>
