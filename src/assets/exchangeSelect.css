@@ -14,13 +14,13 @@
 .exchange_title h5 {
     margin: 0;
     padding: 0;
-    line-height: 40px;
+    line-height: 30px;
 }
 
 .exchange_content {
     width: 100%;
     height: 40px;
-    margin-top: 80px;
+    margin-top: 60px;
     /* border: 1px solid red; */
 }
 
@@ -35,8 +35,8 @@
     width: 50%;
     height: 130px;
     margin: 0 auto;
-    margin-top: 30px;
-    border: 1px solid red;
+    margin-top: 40px;
+    /* border: 1px solid red; */
 }
 
 .exchange_card img {
@@ -47,12 +47,101 @@
 .exchange_money {
     width: 100px;
     height: 100px;
-    border: 1px solid red;
     position: relative;
+    left: 275px;
+    bottom: 70px;
+    /* border: 1px solid red; */
 }
 
 .exchange_money img {
     width: 100%;
     height: 100%;
-    position: absolute;
+}
+
+.btn_wrapper {
+    font-family: 'NanumSquareNeoBold';
+    font-size: 15px;
+    width: 100%;
+    height: 60px;
+    margin-top: -20px;
+    /* border: 1px solid red; */
+}
+
+.info_btn {
+    width: 140px;
+    height: 50px;
+    margin-right: 20px;
+    border-radius: 7px;
+    border: none;
+    color: white;
+    background-color: #CCCCCC;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+    /* border: 1px solid red; */
+}
+
+.info_btn:hover {
+    transform: translateY(-2px);
+}
+
+.exchange_btn {
+    width: 140px;
+    height: 50px;
+    margin-left: 20px;
+    border-radius: 7px;
+    border: none;
+    color: white;
+    background-color: #476EFF;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+    /* border: 1px solid red; */
+}
+
+.exchange_btn:hover {
+    transform: translateY(-2px);
+}
+
+.set_title {
+    width: 80%;
+    height: 50px;
+    margin: 0 auto;
+    margin-top: 60px;
+    text-align: left;
+    /* border: 1px solid red; */
+}
+
+.set_title h5 {
+    margin: 0;
+    padding: 0;
+    line-height: 50px;
+}
+
+.set_wrapper {
+    width: 80%;
+    height: 100px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.set_btn {
+    width: 100%;
+    height: 100%;
+    border-radius: 7px;
+    border: 1px solid #476EFF;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 5px 10px 0px;
+}
+
+.set_btn p {
+    text-align: left;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+.set_p {
+    font-family: 'NanumSquareNeoExtraBold';
+    font-size: 15px;
+    color: #476EFF;
+}
+
+.set_btn:hover {
+    transform: translateY(-2px);
 }

@@ -30,12 +30,20 @@ function ExchangeSelect(props) {
                 <div className="exchange_money">
                     <img src="img/exchange/money.png" alt="돈 아이콘"/>
                 </div>
-                <button>내역보기</button>
-                <button id="currency" onClick={exchangeHandle}>충전하기</button>
+                <div className="btn_wrapper">
+                    <button className="info_btn">내역보기</button>
+                    <button className="exchange_btn" id="currency" onClick={exchangeHandle}>충전하기</button>
+                </div>
+                <div className="set_title">
+                    <h5>이런 환전 방법은 어떠세요?</h5>
+                </div>
+                <div className="set_wrapper">
+                    <button className="set_btn" id="set" onClick={exchangeHandle}>
+                        <p className="set_p">목표환율 자동충전</p>
+                        <p>목표 환율 도달 시 자동 환전해줘요</p>
+                    </button>
+                </div>
             </div>
-
-            <h2>이런 환전 방법은 어떠세요?</h2>
-            <button id="set" onClick={exchangeHandle}>목표환율 자동충전</button>
         </div>
     );
 }
