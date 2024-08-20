@@ -34,9 +34,8 @@
 .App {
     text-align: center;
     width: 430px; 
-    height: 932px;  
-    margin: 0 auto;
-    border: 1px solid black;
+    height: 932px;
+    /* border: 1px solid black; */
     font-family: 'NanumSquareNeo', sans-serif;
     overflow: hidden;  /* 크기 바깥 숨김 */
     position: relative; /* .menu-wrap의 기준 위치 */

@@ -44,7 +44,7 @@ function App() {
     <CardProvider>
     <div className="App">
       <BrowserRouter>
-        <Header />
+      <Header />
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
@@ -81,7 +81,7 @@ function App() {
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
         </Routes>
-        <Footer />
+      <Footer />
     </BrowserRouter>
    </div>
   </CardProvider>
