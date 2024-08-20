@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import './RegionList.css';
 import RegionList from './RegionList';
 import RegionSelect from './RegionSelect';
 import SortOptions from './SortOptions';
 import CourseCard from './CourseCard';
+import '../../assets/CourseList.css';
+import '../../assets/RegionList.css';
+import '../../assets/SortOptions.css';
 
 const CourseList = () => {
     const { selectedRegion, courses, regions, handleRegionClick } = RegionSelect();
     const [sortOption, setSortOption] = useState('최신순');
     const [filteredCourses, setFilteredCourses] = useState([]);
+    const [visibleCourses, setVisibleCourses] = useState([]);  // 현재 표시되는 코스들
+    const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
         let filtered = courses;
@@ -18,28 +22,46 @@ const CourseList = () => {
 
         const sorted = filtered.sort((a, b) => {
             if (sortOption === '최신순') {
-                return b.courseId.localeCompare(a.courseId);  // 최신순 정렬 (courseId가 문자열이므로 비교)
+                return b.courseId.localeCompare(a.courseId);  // 최신순 정렬
             } else if (sortOption === '조회순') {
-                return b.views - a.views;  // 조회순 정렬 (조회수 데이터가 있다고 가정)
+                return b.views - a.views;  // 조회순 정렬
             } else if (sortOption === '인증순') {
-                return b.certifications - a.certifications;  // 인증순 정렬 (인증 데이터가 있다고 가정)
+                return b.certifications - a.certifications;  // 인증순 정렬
             }
             return 0;
         });
 
         setFilteredCourses(sorted);
+        setVisibleCourses(sorted.slice(0, 10));  // 처음 10개 코스를 보여줌
+        setHasMore(sorted.length > 10);  // 코스가 10개 이상인지 확인
     }, [selectedRegion, sortOption, courses]);
 
+    const loadMoreCourses = () => {
+        if (visibleCourses.length >= filteredCourses.length) {
+            setHasMore(false);  // 더 이상 불러올 코스가 없는 경우
+            return;
+        }
+        const newCourses = filteredCourses.slice(visibleCourses.length, visibleCourses.length + 10);
+        setVisibleCourses(prevCourses => [...prevCourses, ...newCourses]);  // 기존 코스에 새로운 코스를 추가
+    };
+
+    const handleScroll = (event) => {
+        const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
+        if (scrollHeight - scrollTop === clientHeight) {
+            loadMoreCourses();  // 스크롤이 하단에 도달하면 더 많은 코스를 로드
+        }
+    };
+
     return (
-        <div>
-            <RegionList regions={regions} handleRegionClick={handleRegionClick} />
-            <SortOptions setSortOption={setSortOption} />
-            <div className="course-list">
-                {filteredCourses.map(course => (
-                    <CourseCard key={course.courseId} course={course} />
-                ))}
-            </div>
+        <div className="inner-div" >
+        <RegionList regions={regions} handleRegionClick={handleRegionClick}/>
+        <SortOptions setSortOption={setSortOption} />
+        <div className="course-list" onScroll={handleScroll} >
+            {visibleCourses.map(course => (
+                <CourseCard key={course.courseId} course={course} />
+            ))}
         </div>
+    </div>
     );
 };
 

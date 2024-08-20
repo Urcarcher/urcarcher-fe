@@ -1,0 +1,82 @@
+@media (min-width: 992px) {
+    .col-lg-6 {
+        flex: 0 0 auto;
+        width: 100% !important;
+    }
+}
+
+.App > div {
+    margin-top: 20%;
+}
+
+.card {
+    box-shadow: none !important;
+}
+
+.card-body {
+    padding: 2rem 2.8rem !important;
+}
+
+.form-floating > .form-control {
+    height: calc(3rem + calc(var(--bs-border-width)* 2)) !important;
+    min-height: calc(3rem + calc(var(--bs-border-width)* 2)) !important;
+}
+
+.form-control {
+    border: 1px solid rgba(6, 74, 255, .25) !important;
+}
+
+.form-check {
+    text-align: left;
+    align-self: center;
+
+    margin-top: 3%;
+}
+
+.form-check > label {
+    margin-top: 1%;
+    margin-left: 1%;
+}
+
+#agree {
+    width: 20px;
+    height: 20px;
+
+    border: 1px solid rgba(71, 110, 255, .50);
+    border-radius: 50%;
+}
+
+.btn {
+    width: 100%;
+    background-color: #476EFF !important;
+
+    font-size: 100% !important;
+}
+
+.btn:hover {
+    background-color: #064AFF !important;
+}
+
+.oauth {
+    margin-top: 3%;
+
+    color: #000 !important;
+    background-color: #fff !important;
+    border: 1px solid rgba(0, 0, 0, .5) !important;
+}
+
+.logo {
+    width: 17px;
+    height: 17px;
+
+    margin-right: 3%;
+}
+
+.form-check > a {
+    color: #777;
+    margin-left: 1%;
+}
+
+.findid {
+    margin-left: 23% !important;
+}
