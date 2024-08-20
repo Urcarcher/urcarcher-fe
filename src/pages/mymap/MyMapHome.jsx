@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
-import './Map.css';
-import axios from 'axios';
+import 'assets/Map.css';
 
 function MyMapHome(props) { //시작 페이지
 

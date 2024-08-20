@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function MenuCategory({ title, items }) {
@@ -9,7 +9,7 @@ function MenuCategory({ title, items }) {
             <p>{title}</p>
             <ul className='menu-category-list'>
                 {items.map((item, index) => (
-                <Link to={item.link}>
+                <Link to={item.link} >
                 <li key={index}>
                     <div>
                         <p className='menu-name'>{item.text}</p>
