@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Menu from './menu/Menu';
 
@@ -6,6 +6,7 @@ function Footer(props) {
    
     const [activeIndex, setActiveIndex] = useState(0);
     const [isMenuVisible, setIsMenuVisible] = useState(false); // 메뉴 상태
+
 
     //path 경로 추가하기 
     const menuItems = [ 
