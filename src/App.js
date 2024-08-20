@@ -10,7 +10,7 @@ import Card4 from './pages/card/Card4';
 import Card5 from './pages/card/Card5';
 import Card6 from './pages/card/Card6';
 import Signup from './pages/signup/Signup';
-import './pages/tourcourse/RegionList.css';
+import './assets/RegionList.css';
 import MyMapApp from './pages/mymap/MyMapApp';
 import MyMapHome from './pages/mymap/MyMapHome';
 import CourseList from './pages/tourcourse/CourseList';
@@ -30,6 +30,8 @@ import ExchangeSet from './pages/exchange/ExchangeSet';
 import OAuthNew from './pages/auth/OAuthNew';
 import OAuthLoading from './pages/auth/OAuthLoading';
 import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
+
+//import CourseDetail from './pages/tourcourse/CourseDetail2';
 import CourseDetail from './pages/tourcourse/CourseDetail';
 import ExchangeSuccess from './pages/exchange/ExchangeSuccess';
 import TestReservation from './pages/reservation/TestReservation';
@@ -39,12 +41,13 @@ import SearchTour from './pages/tourguide/SearchTour';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
+
 function App() {
   return (
     <CardProvider>
     <div className="App">
       <BrowserRouter>
-        <Header />
+      <Header />
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
@@ -77,11 +80,14 @@ function App() {
           <Route path='/MapComponent/:detailDestination' element={<MapComponent/>}/>
           <Route path='/TourGuide/:areaCode/:contentTypeId' element={<TourGuide/>}/>
           <Route path='/detail/:type/:id' element={<DetailPage/>}/>
+
+        
+
           <Route path='/reservation' element={<TestReservation/>}/>
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
         </Routes>
-        <Footer />
+      <Footer />
     </BrowserRouter>
     </div>
   </CardProvider>

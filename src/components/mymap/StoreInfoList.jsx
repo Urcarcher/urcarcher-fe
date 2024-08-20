@@ -1,65 +1,68 @@
 import React, { useEffect, useState } from 'react';
+import UrlPreview from 'components/mymap/UrlPreview';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
-const memberId = "bleakwinter";
+const locationIcon = "https://urcarcher-local.kro.kr/icon/markericon.png";
 
-//테스트용
-const topstorelist = [
-    {name:"CGV 홍대"},
-    {name:"CGV 홍대1"},
-    {name:"CGV 홍대2"},
-    {name:"CGV 홍대3"},
-];
+function StoreInfoList({storeList}) {
 
-function StoreInfoList(props) {
-
-    //테스트
-    //전체 결제 내역 중 건수가 많은 가맹점 정보 저장 (아직 데이터 연결 X)
+    //리스트 개별 저장
     const [topStore, setTopStore] = useState([]);
-    
-    //list가 한 개씩 나타나도록 setTimeout() 
+
     useEffect(() => {
-        topstorelist.forEach((item, index) => {
+        
+        // storeList가 변경될 때 topStore 초기화
+         setTopStore([]);
+
+        storeList.forEach((item, index) => {
             setTimeout(() => {
                 setTopStore(prev => [...prev, item]);
             }, index * 700); // 각 아이템이 0.2초 간격으로 나타남
         });
-    }, [topstorelist]);
+    }, [storeList]);
 
-   
-
-     useEffect(() => {
-         const axiosTopStores = async () => {
-             try {
-                //  const response = await axios.get(`/api/top-store?memberId=${memberId}`); //서버 주소 입력
-                //  setTopStore(response.data);
-             } catch (error) {
-                 console.error('Error fetching top stores:', error);
-             }
-         };
- 
-         axiosTopStores();
-     }, [memberId]);
   
     return (
         <div>
-            가맹점 리스트
             <ul className='top-store-list inner'>
-            {/* {topStore.map((store, index) => (
-                <li key={store.store_name} className={`rank-${index + 1}`}>
-                    <div>
-                        <p>{index + 1}위: {store.store_name}</p>
-                        <p>이용 횟수: {store.store_count}</p>
+            {topStore.map((store, index) => (
+                <li key={store.storeId} 
+                    className={topStore.includes(store) ? 'show' : ''}
+                >
+                    <UrlPreview url={store.storeUrl} />
+                    
+                    <div className='rank-wrap'>
+                        <p className='rank'>{index + 1}위</p>
+                        <p> 
+                            <img src="/icon/icon-human.png" alt="사람" />
+                            {store.paymentCount}
+                        </p>
                     </div>
-                </li>
-            ))} */}
-            {topstorelist.map((store, index) => (
-                 <li key={index} className={topStore.includes(store) ? 'show' : ''}>
-                    <div>
-                        <p>{index + 1}위: {store.name}</p>
-                        <p>이용 횟수: </p>
+
+                    <div className='store-info-text'>
+                        <div>
+                            <p className='name'>{store.storeName}</p>
+                            <p><a href={store.storeUrl} target="_blank" rel="noopener noreferrer">상세페이지 이동</a></p>
+                        </div>
+                        <p className='category'>{store.categoryName}</p>
+                        <p className='addr'>{store.storeAddr}</p>
+                        <p className='phone'>{store.storePhone}</p>
                     </div>
+                     <Map center={{ lat: parseFloat(store.storeY), lng: parseFloat(store.storeX) }}
+                     style={{ width: '100%', height: '150px'}}
+                     level={3} >
+                        <MapMarker position={{ lat: parseFloat(store.storeY), lng: parseFloat(store.storeX) }}
+                         image={{
+                            src: locationIcon,
+                            size: {
+                              width: 35,
+                              height: 35,
+                            },
+                          }}
+                        />
+                    </Map>
                 </li>
-            ))}
+                ))}
             </ul>
         </div>
     );
