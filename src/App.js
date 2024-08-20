@@ -44,8 +44,8 @@ function App() {
     <CardProvider>
     <div className="App">
       <BrowserRouter>
-        <Routes>
           <Header />
+        <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/login/loading' element={<OAuthLoading/>}/>
@@ -77,11 +77,11 @@ function App() {
           <Route path='/MapComponent/:detailDestination' element={<MapComponent/>}/>
           <Route path='/TourGuide/:areaCode/:contentTypeId' element={<TourGuide/>}/>
           <Route path='/detail/:type/:id' element={<DetailPage/>}/>
-          <Route path='/reservation' element={<TestReservation/>}/>
+          {/* <Route path='/reservation' element={<TestReservation/>}/> */}
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
-          <Footer />
         </Routes>
+          <Footer />
     </BrowserRouter>
    </div>
   </CardProvider>

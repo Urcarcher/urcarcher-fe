@@ -28,6 +28,10 @@ function Header() {
                 return '환전';
             case '/exchange/set':
                 return '자동 환전';
+            case '/signup':
+            case '/signup/success':
+            case '/signup/userinfo':
+                return '회원가입';
             default:
                 return '홈';
         }
