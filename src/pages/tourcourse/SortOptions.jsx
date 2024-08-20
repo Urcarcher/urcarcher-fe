@@ -1,5 +1,5 @@
 import React from 'react';
-import './SortOptions.css';
+import '../../assets/SortOptions.css';
 
 const SortOptions = ({ setSortOption }) => {
     return (

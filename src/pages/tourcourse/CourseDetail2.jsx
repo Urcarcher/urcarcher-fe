@@ -64,42 +64,21 @@ const CourseDetail = () => {
     }
   };
 
-  const fetchGeolocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          setCurrentLocation({ lat: latitude, lng: longitude });
-          console.log('Current location:', { lat: latitude, lng: longitude });
-
-          await loadMapScript();
-          initMap(latitude, longitude);
-        },
-        (error) => {
-          switch(error.code) {
-            case error.PERMISSION_DENIED:
-              setError("사용자가 위치 정보 제공을 거부했습니다.");
-              break;
-            case error.POSITION_UNAVAILABLE:
-              setError("위치 정보를 사용할 수 없습니다.");
-              break;
-            case error.TIMEOUT:
-              setError("위치 정보를 가져오는 데 시간이 초과되었습니다.");
-              break;
-            case error.UNKNOWN_ERROR:
-              setError("알 수 없는 오류가 발생했습니다.");
-              break;
-            default:
-              setError("위치 정보를 가져오는 중 오류가 발생했습니다.");
-          }
-          console.error('Error getting geolocation:', error);
-        },
-        { enableHighAccuracy: true } 
-      );
-    } else {
-      setError('이 브라우저는 Geolocation을 지원하지 않습니다.');
+  const fetchGeolocation = async () => {
+    try {
+      const response = await axios.post('/api/getGeolocation');
+      const { lat, lng } = response.data.location;
+      setCurrentLocation({ lat, lng });
+      console.log('Current location from Google API:', { lat, lng });
+  
+      await loadMapScript();
+      initMap(lat, lng);
+    } catch (error) {
+      console.error('Error fetching geolocation from server:', error);
+      setError('Error fetching geolocation from server.');
     }
   };
+  
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -114,7 +93,7 @@ const CourseDetail = () => {
     <div className="course-detail">
       {course.map((item) => (
         <div key={item.placeId} className="course-item">
-          <button onClick={() => openModal(item)}>
+          <button onClick={openModal}>
             {item.placeName} 버튼
           </button>
           <h2>{item.placeName}</h2>
@@ -138,7 +117,6 @@ const CourseDetail = () => {
           </div>
         </div>
       )}
-
 
       {currentLocation && (
         <div className="current-location">
