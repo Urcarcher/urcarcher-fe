@@ -1,7 +1,124 @@
+.card_title {
+    width: 100%;
+    height: 80px;
+    margin-top: 20px;
+    /* border: 1px solid red; */
+}
+
+.card_title h3 {
+    margin: 0;
+    padding: 0;
+    line-height: 80px;
+}
+
+.card_wrapper {
+    font-family: 'NanumSquareNeoBold';
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    /* border: 1px solid red; */
+}
+
+.card_wrapper p {
+    margin-top: 25px;
+    margin-left: 25px;
+    line-height: 16px
+}
+
+.card_balance {
+    font-family: 'NanumSquareNeoExtraBold';
+    font-size: 18px;
+}
+
+.card_text {
+    font-size: 13px;
+    color: #CCCCCC;
+}
+
 .unChoice {
-    border: 1px solid gray;
+    width: 85%;
+    height: 150px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    border-radius: 7px;
+    text-align: left;
+    border: 1px solid #CCCCCC;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.unChoice:hover {
+    transform: translateY(-2px);
 }
 
 .choice {
-    border: 1px solid #476EFF;
+    width: 85%;
+    height: 150px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    border-radius: 7px;
+    text-align: left;
+    border: 1px solid #476EFF;box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.choice button {
+    font-family: 'NanumSquareNeoExtraBold';
+    color: #476EFF;
+}
+
+.choice:hover {
+    transform: translateY(-2px);
+}
+
+.exCard_btn {
+    font-size: 17px;
+    color: #CCCCCC;
+    /* text-decoration-line: underline; */
+    border: none;
+    background-color: white;
+    float: right;
+    position: relative;
+    right: 25px;
+    bottom: 40px;
+}
+
+.btn_container {
+    font-family: 'NanumSquareNeoExtraBold';
+    font-size: 15px;
+    width: 85%;
+    height: 60px;
+    margin: 0 auto;
+    margin-top: 45px;
+    /* border: 1px solid red; */
+}
+
+.back_btn {
+    width: 165px;
+    height: 50px;
+    float: left;
+    /* margin-right: 20px; */
+    border-radius: 7px;
+    border: none;
+    color: white;
+    background-color: #CCCCCC;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.back_btn:hover {
+    transform: translateY(-2px);
+}
+
+.next_btn {
+    width: 165px;
+    height: 50px;
+    float: right;
+    /* margin-left: 20px; */
+    border-radius: 7px;
+    border: none;
+    color: white;
+    background-color: #476EFF;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.next_btn:hover {
+    transform: translateY(-2px);
 }

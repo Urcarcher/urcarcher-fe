@@ -28,6 +28,8 @@ function Header() {
                 return '환전';
             case '/exchange/set':
                 return '자동 환전';
+            case '/exchange/success':
+                return '환전';
             default:
                 return '홈';
         }
