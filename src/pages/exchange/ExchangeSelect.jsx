@@ -10,10 +10,10 @@ function ExchangeSelect(props) {
     // 카드 선택 페이지로 이동
     const exchangeHandle = (event) => {
         // 카드 선택 후 버튼 종류에 따라 다른 페이지 보여주기 위해
-        const btn = event.target.id;
-       // console.log("충전 버튼 종류", btn);
+        const selectBtn = event.target.id;
+        // alert(selectBtn);
 
-        navi("/exchange/card", { state: { btn } });
+        navi("/exchange/card", { state: { selectBtn } });
     };
 
     return (

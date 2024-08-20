@@ -6,8 +6,8 @@ import axios from 'axios';
 function ExchangeCard(props) {
     // 이전 페이지에서 보낸 버튼 정보
     const location = useLocation();
-    const { btn } = location.state || {};
-    // console.log("선택한 충전 버튼 종류", btn);
+    const { choiceBtn } = location.state || {};
+    console.log("선택한 충전 버튼 종류", choiceBtn);
     
     const navi = useNavigate();
 
@@ -57,10 +57,10 @@ function ExchangeCard(props) {
         if (selectCard) {
             let location = "";
             
-            if (btn === "currency") {
+            if (choiceBtn === "currency") {
                 // 바로충전
                 location = "/exchange/currency";
-            } else if (btn === "set") {
+            } else if (choiceBtn === "set") {
                 // 자동충전
                 location = "/exchange/set";
             }
