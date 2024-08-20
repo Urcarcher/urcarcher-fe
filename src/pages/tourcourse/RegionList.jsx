@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../assets/RegionList.css';
 
 function RegionList({ regions, handleRegionClick }) {
     return (

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import { useLocation, useNavigate } from 'react-router-dom';
+import 'assets/exchangeSuccess.css';
+import exchangeCard from 'assets/card.png'
+import exchangeMoney from 'assets/money.png'
 
 function ExchangeSuccess(props) {
     const location = useLocation();
@@ -21,35 +21,48 @@ function ExchangeSuccess(props) {
     };
 
     return (
-        <>
-            <div className="contents">
-                <h2>{ exchangeMsg }</h2>
+        <div className="contents">
+            <div className="success_wrapper">
+                <div className="success_card">
+                    <img src={exchangeCard} alt="카드 아이콘"/>
+                </div>
+                <div className="success_money">
+                    <img src={exchangeMoney} alt="돈 아이콘"/>
+                </div>
+                <div className="success_title">
+                    <h3>
+                        <span style={{ color: "#476EFF" }}>{ exchangeMsg }</span> 을
+                    </h3>
+                    <h3>채웠어요</h3>
+                </div>
             </div>
-            <div>
-                <span>적용환율</span>
-                <span>KRW { exchangeData.exRate } = 1달러</span>
+            <div className="success_rate">
+                <div>
+                    <p className="left_p">적용환율</p>
+                    <p className="right_p" style={{ color: "#476EFF" }}>KRW { exchangeData.exRate } = 1달러</p>
+                </div>
+                <div>
+                    <p className="left_p">환율우대</p>
+                    <p className="right_p">90%</p>
+                </div>
+                <div>
+                    <p className="left_p">결제금액</p>
+                    <p className="right_p">{ exchangeData.exPay }달러</p>
+                </div>
+                <div>
+                    <p className="left_p">출금계좌</p>
+                    <p className="right_p">Citi Bank</p>
+                </div>
+                <div>
+                    <p className="left_p">KRW 잔액</p>
+                    <p className="right_p">￦ { exchangeBalance.toLocaleString() }</p>
+                </div>
             </div>
-            <div>
-                <span>환율우대</span>
-                <span>90%</span>
+            <div className="success_btn_wrapper">
+                <button className="detail_btn">내역보기</button>
+                <button className="check_btn" onClick={homeHandle}>확인</button>
             </div>
-            <div>
-                <span>결제금액</span>
-                <span>{ exchangeData.exPay }달러</span>
-            </div>
-            <div>
-                <span>출금계좌</span>
-                <span>Citi Bank</span>
-            </div>
-            <div>
-                <span>KRW 잔액</span>
-                <span>￦ { exchangeBalance.toLocaleString() }</span>
-            </div>
-            <div>
-                <button>내역보기</button>
-                <button onClick={homeHandle}>확인</button>
-            </div>
-        </>
+        </div>
     );
 }
 

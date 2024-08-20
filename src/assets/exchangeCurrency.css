@@ -1,18 +1,131 @@
+.cur_title {
+    width: 100%;
+    height: 80px;
+    margin-top: 20px;
+    /* border: 1px solid red; */
+}
+
+.cur_title h3 {
+    margin: 0;
+    padding: 0;
+    line-height: 80px;
+}
+
+.ex_wrapper {
+    width: 80%;
+    height: 70px;
+    margin: 0 auto;
+    margin-top: 25px;
+    text-align: left;
+    /* border: 1px solid red; */
+}
+
 .inputDiv {
     width: 100%;
-    height: 50px;
-    margin: 0 auto;
+    height: 40px;
+    text-align: left;
     /* border: 1px solid red; */
 }
 
 .inputDiv input {
-    /* border: 1px solid red; */
+    font-family: 'NanumSquareNeoBold';
+    font-size: 16px;
     border: none;
-    text-align: right;
-    margin: 0 auto;
-    font-family: 'NanumSquareNeoExtraBold';
 }
 
 input:focus {
 	outline: none;
+}
+
+.cur_wrapper {
+    width: 80%;
+    height: 100px;
+    margin: 0 auto;
+    margin-top: 50px;
+    text-align: left;
+    /* border: 1px solid red; */
+}
+
+.cur_wrapper p {
+    font-size: 16px;
+}
+
+.amount_text {
+    font-family: 'NanumSquareNeoExtraBold';
+}
+
+.rate_wrapper {
+    font-family: 'NanumSquareNeoBold';
+    width: 82%;
+    height: 250px;
+    margin: 0 auto;
+    margin-top: 60px;
+    /* border: 1px solid red; */
+}
+
+.rate_table {
+    width: 100%;
+    height: 80%;
+    margin-top: -10px;
+    padding: 20px;
+    border-radius: 7px;
+    border: 1px solid #BFBFBF;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.rate_col {
+    width: 100%;
+    height: 25px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    /* border: 1px solid green; */
+}
+
+.left_text {
+    width: 100px;
+    float: left;
+    text-align: left;
+    line-height: 25px;
+    /* border: 1px solid red; */
+}
+
+.right_text {
+    width: 200px;
+    float: right;
+    color: #476EFF;
+    text-align: right;
+    line-height: 25px;
+    /* border: 1px solid red; */
+}
+
+.rate_line {
+    width: 100%;
+    height: 1.5px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #BFBFBF;
+}
+
+.plus_wrapper {
+    width: 80%;
+    height: 50px;
+    margin: 0 auto;
+    margin-top: 25px;
+}
+
+.plus_btn {
+    font-family: 'NanumSquareNeoExtraBold';
+    font-size: 15px;
+    width: 100%;
+    height: 100%;
+    color: white;
+    background-color: #476EFF;
+    border: none;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.plus_btn:hover {
+    transform: translateY(-2px);
 }
