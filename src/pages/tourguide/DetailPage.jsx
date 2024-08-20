@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import CardOverlay from '../../bootstrap-template/components/cards/CardOverlay';
 import { Margin } from '@mui/icons-material';
 import { Button } from 'react-bootstrap';
+import Reservation from './Reservation';
 
 function DetailPage() {
   const { type, id } = useParams(); // id와 type을 URL 파라미터로 받음
@@ -53,7 +54,9 @@ function DetailPage() {
       <br/>
       <br/>
       <br/>
-
+      <br/>
+      <br/>
+      <div  className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
       <CardOverlay 
                 className="my-custom-class" 
                 img={item.firstimage} 
@@ -84,11 +87,17 @@ function DetailPage() {
         >
           길찾기
         </Button>
-        <Button style={{width:'110px'}}>
+        <Button style={{width:'110px'}} onClick={()=>{
+          navigate(`/reservation1`);
+          // <Reservation/>
+        }}>
           예약 및 결제
         </Button>
+        <br/>
+        <br/>
+        <br/>
       </div>
-
+      </div>
     </div>
   );
 }

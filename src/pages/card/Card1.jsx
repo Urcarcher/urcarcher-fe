@@ -6,6 +6,7 @@ import { useCardContext } from './CardContext';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import CardOverlay from '../../bootstrap-template/components/cards/CardOverlay';
 
 function Card1() {
     const [selectedCard, setSelectedCard] = useState(null);
@@ -17,7 +18,7 @@ function Card1() {
     let navigate = useNavigate();
 
     const flickityOptions = {
-        cellAlign: 'right',
+        cellAlign: 'center',
         pageDots: false,
         groupCells: '20%',
         selectedAttraction: 0.03,
@@ -70,14 +71,12 @@ function Card1() {
                         >
                             {cards.map((card, index) => (
                                 <div className="carousel-cell" key={card.cardTypeId}>
-                                    {/* <img src={card.cardImg} className="p" alt={card.cardName} /> */}
-                                    <img src={require('../../assets/Card1.png')} width='200' height='335'  imageStyle={{borderRadius: 15}}/>
-                                    <div className='card-info'>
-                                        <div>카드이름: {card.cardName}</div>
-                                        <div>카드사용목적: {card.cardUsage}</div>
-                                        <div>카드한도: {card.cardLimit}</div>
-                                        <div>연회비: {card.annualFee}</div>
-                                    </div>
+                                    <CardOverlay
+                                        className='my-custom-class'
+                                        img={ require(`../../assets/Card${card.cardTypeId}.png`)}
+                                        imgStyle={{width:'200px', height:'335px'}}
+
+                                    />
                                 </div>
                             ))}
                         </Flickity>
@@ -86,10 +85,11 @@ function Card1() {
 
                 {selectedCard && (
                     <div className='selected-card'>
-                        <div>선택한 카드이름: {selectedCard.cardName}</div>
-                        <div>카드사용목적: {selectedCard.cardUsage}</div>
-                        <div>카드한도: {selectedCard.cardLimit}</div>
-                        <div>연회비: {selectedCard.annualFee}</div>
+                        
+                        <h2 className="display-7">선택한 카드이름: {selectedCard.cardName}</h2>
+                        <p>카드사용목적: {selectedCard.cardUsage}</p>
+                        <p>카드한도: {selectedCard.cardLimit}</p>
+                        <p>연회비: {selectedCard.annualFee}</p>
                     </div>
                 )}
             </div>
