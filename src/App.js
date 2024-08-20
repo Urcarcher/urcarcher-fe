@@ -84,11 +84,10 @@ function App() {
           <Route path='/MapComponent/:detailDestination' element={<MapComponent/>}/>
           <Route path='/TourGuide/:areaCode/:contentTypeId' element={<TourGuide/>}/>
           <Route path='/detail/:type/:id' element={<DetailPage/>}/>
-          <Route path='/reservation' element={<TestReservation/>}/>
+          {/* <Route path='/reservation' element={<TestReservation/>}/> */}
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
           <Route path='/reservation1' element={<Reservation/>}/>
-
 
           <Route path='/cardmanagement' element={<CardManagerment/>}></Route>
           <Route path='/paymentpage' element={<Payment/>}></Route>

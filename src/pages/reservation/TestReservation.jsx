@@ -9,7 +9,7 @@ const TestReservation = () => {
   useEffect(() => {
     const fetchPerformances = () => {
       $.ajax({
-        url: 'http://www.kopis.or.kr/openApi/restful/pblprfr',
+        url: '/api/reservation/reservation-info',
         method: 'GET',
         data: {
           service: process.env.REACT_APP_KOPIS_API_KEY,  // 여기에 실제 서비스 키를 입력하세요
@@ -44,7 +44,7 @@ const TestReservation = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div>
+    <div className="contents">
       <h1>KOPIS Performances</h1>
       <ul>
         {performances.map((performance, index) => (

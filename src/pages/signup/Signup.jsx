@@ -4,6 +4,8 @@ import { Route, Routes } from 'react-router-dom';
 import ConsentForm from './ConsentForm';
 import UserInfoForm from './UserInfoForm';
 import Success from './Success';
+import "assets/Test.css"
+import "./signup.css"
 
 
 function LocalSignupFlow(props) {
@@ -38,7 +40,7 @@ function LocalSignupFlow(props) {
 
     return (
        <Routes>
-            <Route path = "/" element={<ConsentForm saveConsentData={saveConsentData} />}/>
+            <Route path = "/" element={<ConsentForm/>}/>
             <Route path="/local" element={<LocalSignupFlow/>}></Route>
                 <Route path = "/userInfo" element={<UserInfoForm    />}/>
                 <Route path = "/success" element={<Success    />}/>
