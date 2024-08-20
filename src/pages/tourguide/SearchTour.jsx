@@ -57,6 +57,7 @@ function SearchTour(props) {
                     </ToggleButton>
                 ))}
         </ButtonGroup>
+        <div  className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
             
@@ -88,6 +89,7 @@ function SearchTour(props) {
                     </Link>
                 </div>
             ))}
+        </div>
         </div>
         </>
     );

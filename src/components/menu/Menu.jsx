@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import MenuCategory from './MenuCategory';
+import 'assets/Menu.css';
+import MenuCategory from 'components/menu/MenuCategory';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../../assets/Menu.css';
 
 function Menu({onClose}) {
   
     const [isActive, setIsActive] = useState(false);
+    // const location = useLocation();
 
     // 로그인 상태와 사용자 이름 관리
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,7 +36,7 @@ function Menu({onClose}) {
           document.removeEventListener('keydown', handleEscape);
       };
   }, [onClose]);
-  
+
   useEffect(() => {
       // 컴포넌트가 마운트된 후에 `active` 클래스를 추가하기 위한 Timeout
       const timer = setTimeout(() => {
@@ -79,7 +80,7 @@ function Menu({onClose}) {
                   { text: "카드 신청", link: "/card1" },
                   { text: "환율 조회 및 예측", link: "/exchange" },
                   { text: "여행 코스 추천", link: "/courseList" },
-                  { text: "소비 리포트", link: "" },
+                  { text: "소비 리포트", link: "/chart1" },
                 ]}
               />
               <MenuCategory 
@@ -88,7 +89,7 @@ function Menu({onClose}) {
                   { text: "카드 신청", link: "/card1" },
                   { text: "카드 분실 신고", link: "/" },
                   { text: "사용 내역 조회", link: "/" },
-                  { text: "소비 리포트", link: "/" },
+                  { text: "소비 리포트", link: "/chart1" },
                   { text: "환율 조회 및 예측", link: "/exchange" },
                   { text: "환전하기", link: "/exchange" },
                 ]}
