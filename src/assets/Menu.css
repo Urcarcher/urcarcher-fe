@@ -1,3 +1,8 @@
+.menu-wrap a{ /* 링크 스타일 초기화 */
+    color: black;
+    text-decoration: none;
+}
+
 .menu-wrap{
     z-index: 120; /* 최상위 표시 - 헤더보다 높게 */
     position: absolute; 
@@ -17,8 +22,10 @@
 }
 .close-button {
     position: absolute;
-    top: 33px;
-    right: 35px;
+    /* top: 33px;
+    right: 35px; */
+    top: 13px;
+    right: 15px;
     background: none;
     border: none;
     color: rgb(0, 0, 0);

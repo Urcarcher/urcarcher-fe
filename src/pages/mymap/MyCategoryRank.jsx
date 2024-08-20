@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
-import CategoryRankList from '../../components/mymap/CategoryRankList';
-import RandomImage from '../../components/mymap/RandomImage';
-import './Map.css';
-import NoResult from '../../components/mymap/NoResult';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import CategoryRankList from 'components/mymap/CategoryRankList';
+import NoResult from 'components/mymap/NoResult';
+import RandomImage from 'components/mymap/RandomImage';
+import 'assets/Map.css';
 
 function MyCategoryRank(props) {
 
