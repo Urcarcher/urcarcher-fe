@@ -5,21 +5,20 @@ function Header() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // 경로에 따라 제목을 설정하는 함수 (수정하기)
+    // 경로에 따라 제목을 설정하는 함수 
     const getTitle = (pathname) => {
         switch (pathname) {
-            case '/maphome':
+            case '/maphome':  // => 추가 경로에 따라 제목 설정
             case '/maphome/map':
             case '/maphome/categoryRank':
             case '/maphome/beststorelist':
                 return '나만의 지도';
-            case '/CourseList':
+            case '/courseList':
                 return '여행 코스';
             case '/card':
                 return '카드 신청';
             case '/login':
                 return '로그인';
-            // => 추가 경로에 따라 제목 설정
             case '/exchange':
                 return '환전';
             case '/exchange/card':
@@ -32,7 +31,11 @@ function Header() {
                 return '홈';
         }
     };
-    
+
+    // '/' 경로일 때 헤더를 숨기기
+    if (location.pathname === '/') {
+        return null; 
+    }
  
     return (
         <header>
@@ -42,7 +45,7 @@ function Header() {
                 >
                     <img src="/icon/left-arrow.png" alt="화살표" />
                 </button>
-                <h3>{getTitle(location.pathname)}</h3> {/* 경로에 맞는 제목 표시 */}
+                <h5>{getTitle(location.pathname)}</h5> {/* 경로에 맞는 제목 표시 */}
             </div>
         </header>
     );

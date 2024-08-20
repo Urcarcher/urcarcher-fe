@@ -28,16 +28,19 @@
   src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.eot);
   src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.ttf) format("truetype");
 }
-
+#root{ /* 임시 */
+  background-color: #333;
+}
 .App {
     text-align: center;
     width: 430px; 
-    height: 932px;
+    height: 932px;  
     margin: 0 auto;
     border: 1px solid black;
     font-family: 'NanumSquareNeo', sans-serif;
     overflow: hidden;  /* 크기 바깥 숨김 */
     position: relative; /* .menu-wrap의 기준 위치 */
+    background-color: #fff;
   }
 
 .App-logo {
@@ -77,7 +80,7 @@
 }
 
 /* 공통css */
-.contents{   /* 페이지컴포넌트 최상위div calssName에 넣어주세요 */
+.contents{   /* 페이지컴포넌트 최상위div calssName에 넣어주세요(헤더만큼 공백) */
   padding-top: 77px;
 }
 .inner{
@@ -120,8 +123,9 @@ header{
   margin-right: 10px;
 }
 
-.header-wrap > h3{
+.header-wrap > h5{
   margin: 0;
+  line-height: 77px;
 }
 
 /* Footer */
