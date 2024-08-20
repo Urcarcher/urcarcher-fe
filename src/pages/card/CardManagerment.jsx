@@ -12,117 +12,6 @@ import PaymentSummary from './PaymentSummary';
 
 // Styled-components for CardManagerment
 
-const CardDetailsContainer = styled.div`
-  width: 100%;
-  max-width: 420px;
-  margin: auto;
-  padding: 25px;
-  background-color: #F9FBFC;
-  border-radius: 12px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-`;
-
-const CardSection = styled.div`
-  position: relative;
-  text-align: center;
-`;
-
-const CarouselCell = styled.div`
-  margin: 0 32px;
-`;
-
-
-
-
-const FlickityStyled = styled(Flickity)`
-  .flickity-slider .is-pointer-down,
-  .flickity-slider .flickity-prev-next-button:focus {
-    outline: none;
-    border: none;
-    box-shadow: none;
-  }
-
-  .flickity-button {
-    display: none; /* Flickity 버튼을 완전히 숨김 */
-  }
-`;
-
-const OptionItem = styled(ListGroup.Item)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 20px;
-  font-size: 16px;
-  color: #333;
-  background-color: #FFF;
-  border-bottom: 1px solid #E6E9ED;
-  cursor: pointer; /* 클릭 가능하도록 포인터 커서 추가 */
-
-  &:first-child {
-    border-radius: 12px 12px 0 0;
-  }
-
-  &:last-child {
-    border-radius: 0 0 12px 12px;
-    border-bottom: none;
-  }
-
-  &:hover {
-    background-color: #F1F3F5;
-  }
-`;
-
-const MaskedCardInfo = styled.span`
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-  color: #555;
-`;
-
-const ToggleSwitch = styled.div`
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 22px;
-
-  & input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  & label {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #bbb;
-    transition: .4s;
-    border-radius: 34px;
-  }
-
-  & input:checked + label {
-    background-color: #4CAF50;
-  }
-
-  & label:before {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-  }
-
-  & input:checked + label:before {
-    transform: translateX(18px);
-  }
-`;
-
 function CardManagerment(props) {
     // 임시 
     const test = [{name:'card1', value:'test1', cardTypeId:11},{name:'card1', value:'test1', cardTypeId:11}];
@@ -263,5 +152,115 @@ function CardManagerment(props) {
         </>
     );
 }
+const CardDetailsContainer = styled.div`
+  width: 100%;
+  max-width: 420px;
+  margin: auto;
+  padding: 25px;
+  background-color: #F9FBFC;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+`;
+
+const CardSection = styled.div`
+  position: relative;
+  text-align: center;
+`;
+
+const CarouselCell = styled.div`
+  margin: 0 32px;
+`;
+
+
+
+
+const FlickityStyled = styled(Flickity)`
+  .flickity-slider .is-pointer-down,
+  .flickity-slider .flickity-prev-next-button:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  .flickity-button {
+    display: none; /* Flickity 버튼을 완전히 숨김 */
+  }
+`;
+
+const OptionItem = styled(ListGroup.Item)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  font-size: 16px;
+  color: #333;
+  background-color: #FFF;
+  border-bottom: 1px solid #E6E9ED;
+  cursor: pointer; /* 클릭 가능하도록 포인터 커서 추가 */
+
+  &:first-child {
+    border-radius: 12px 12px 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 12px 12px;
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: #F1F3F5;
+  }
+`;
+
+const MaskedCardInfo = styled.span`
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  color: #555;
+`;
+
+const ToggleSwitch = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+
+  & input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  & label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #bbb;
+    transition: .4s;
+    border-radius: 34px;
+  }
+
+  & input:checked + label {
+    background-color: #4CAF50;
+  }
+
+  & label:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+
+  & input:checked + label:before {
+    transform: translateX(18px);
+  }
+`;
 
 export default CardManagerment;

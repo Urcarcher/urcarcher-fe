@@ -145,7 +145,7 @@ function TourGuide({
       <ul style={{ padding: '0', listStyleType: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {tourData.map((item) => (
           <li key={item.contentid} style={{ margin: '15px 15px'}}>
-            <Link to={`/detail/${contentTypeId === 39 ? 'restaurant':'tour'}/${item.contentid}`}>
+            <Link to={`/detail/${contentTypeId === '39' ? 'restaurant':'tour'}/${item.contentid}`}>
               <CardOverlay 
                 className="my-custom-class" 
                 img={item.firstimage} 
