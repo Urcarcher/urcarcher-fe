@@ -6,7 +6,7 @@ import axios from 'axios';
 function ExchangeCard(props) {
     // 이전 페이지에서 보낸 버튼 정보
     const location = useLocation();
-    const { choiceBtn } = location.state || {};
+    const choiceBtn = location.state.selectBtn;
     console.log("선택한 충전 버튼 종류", choiceBtn);
     
     const navi = useNavigate();
@@ -72,12 +72,12 @@ function ExchangeCard(props) {
 
     return (
         <div className="contents">
-            <div className="card_title">
+            <div className="exCard_title">
                 <h3>
                     어떤 카드에 <span style={{ color: "#476EFF" }}>충전</span>할까요?
                 </h3>
             </div>
-            <div className="card_wrapper">
+            <div className="exCard_wrapper">
                 {/* null, undefined 아닌지 확인 후 id 비교 */}
                 {cardList.map((card) => (
                     <div key={card.cardId}
@@ -85,15 +85,15 @@ function ExchangeCard(props) {
                         style={{ display: card.cardUsage === "선불카드" ? "block" : "none" }}
                     >
                         <p>{card.cardUsage}</p>
-                        <p className="card_balance">잔액 {card.cardBalance.toLocaleString()}원</p>
-                        <p className="card_text">연결 계좌에서 바로 충전 가능!</p>
+                        <p className="exCard_balance">잔액 {card.cardBalance.toLocaleString()}원</p>
+                        <p className="exCard_text">연결 계좌에서 바로 충전 가능!</p>
                         <button className="exCard_btn" onClick={() => cardSelectHandle(card)}>선택</button>
                     </div>
                 ))}
             </div>
-            <div className="btn_container">
-                <button className="back_btn" onClick={backHandle}>취소</button>
-                <button className="next_btn" onClick={nextHandle}>다음</button>
+            <div className="exCard_btn_container">
+                <button className="exCard_back_btn" onClick={backHandle}>취소</button>
+                <button className="exCard_next_btn" onClick={nextHandle}>다음</button>
             </div>
         </div>
     );

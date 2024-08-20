@@ -1,17 +1,17 @@
-.cur_title {
+.exCur_title {
     width: 100%;
     height: 80px;
     margin-top: 20px;
     /* border: 1px solid red; */
 }
 
-.cur_title h3 {
+.exCur_title h3 {
     margin: 0;
     padding: 0;
     line-height: 80px;
 }
 
-.ex_wrapper {
+.exCur_wrapper {
     width: 80%;
     height: 70px;
     margin: 0 auto;
@@ -20,14 +20,14 @@
     /* border: 1px solid red; */
 }
 
-.inputDiv {
+.exCur_div {
     width: 100%;
     height: 40px;
     text-align: left;
     /* border: 1px solid red; */
 }
 
-.inputDiv input {
+.exCur_div input {
     font-family: 'NanumSquareNeoBold';
     font-size: 16px;
     border: none;
@@ -37,7 +37,7 @@ input:focus {
 	outline: none;
 }
 
-.cur_wrapper {
+.exAmt_wrapper {
     width: 80%;
     height: 100px;
     margin: 0 auto;
@@ -46,15 +46,15 @@ input:focus {
     /* border: 1px solid red; */
 }
 
-.cur_wrapper p {
+.exAmt_wrapper p {
     font-size: 16px;
 }
 
-.amount_text {
+.exAmt_text {
     font-family: 'NanumSquareNeoExtraBold';
 }
 
-.rate_wrapper {
+.exRate_wrapper {
     font-family: 'NanumSquareNeoBold';
     width: 82%;
     height: 250px;
@@ -63,7 +63,7 @@ input:focus {
     /* border: 1px solid red; */
 }
 
-.rate_table {
+.exRate_table {
     width: 100%;
     height: 80%;
     margin-top: -10px;
@@ -73,7 +73,7 @@ input:focus {
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
 }
 
-.rate_col {
+.exRate_col {
     width: 100%;
     height: 25px;
     margin: 0 auto;
@@ -81,7 +81,7 @@ input:focus {
     /* border: 1px solid green; */
 }
 
-.left_text {
+.exRate_left_text {
     width: 100px;
     float: left;
     text-align: left;
@@ -89,7 +89,7 @@ input:focus {
     /* border: 1px solid red; */
 }
 
-.right_text {
+.exRate_right_text {
     width: 200px;
     float: right;
     color: #476EFF;
@@ -98,7 +98,7 @@ input:focus {
     /* border: 1px solid red; */
 }
 
-.rate_line {
+.exRate_line {
     width: 100%;
     height: 1.5px;
     margin: 0 auto;
@@ -107,14 +107,14 @@ input:focus {
     background-color: #BFBFBF;
 }
 
-.plus_wrapper {
+.exRate_plus_wrapper {
     width: 80%;
     height: 50px;
     margin: 0 auto;
     margin-top: 25px;
 }
 
-.plus_btn {
+.exRate_plus_btn {
     font-family: 'NanumSquareNeoExtraBold';
     font-size: 15px;
     width: 100%;
@@ -126,6 +126,6 @@ input:focus {
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
 }
 
-.plus_btn:hover {
+.exRate_plus_btn:hover {
     transform: translateY(-2px);
 }

@@ -44,6 +44,7 @@ import CardManagerment from 'pages/card/CardManagerment';
 import Reservation from 'pages/tourguide/Reservation';
 import Payment from 'pages/card/Payment';
 import Verification from 'pages/card/Verification';
+import ExchangeSetNull from 'pages/exchange/ExchangeSetNull';
 
 
 function App() {
