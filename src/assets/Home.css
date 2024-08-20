@@ -1,6 +1,10 @@
 .hidden{
     display: none;
 }
+.card-signup a{
+    text-decoration: none;
+    color: #333;
+}
 .home-container{
     margin: 0 auto;
 }
@@ -15,11 +19,25 @@
 .card-type-wrap{
     height: 190px;
     background-color: #476EFF;
+    position: relative;
 }
 .card-type-wrap > p{
     color: #F4F7FC;
     margin: 0;
     /* font-weight: bold; */
+}
+p.card-type-text{
+    text-align: left;
+    padding: 15px 0 0 15px;
+}
+span.type{
+    font-size: 12px;
+    background-color: #F7F7F7;
+    color: #333;
+    border-radius: 8px;
+    padding: 3px 5px;
+    box-sizing: border-box;
+    margin-left: 10px;
 }
 .amount-used, .card-signup{
     display: flex;
@@ -31,6 +49,9 @@
     line-height: 70px;
     background-color: #F4F7FC;
 }
+.amount-used > p, .card-signup > p {
+    font-weight: bold;
+}
 .card-signup{
     height: 50px;
     line-height: 50px;
@@ -41,6 +62,49 @@
     justify-content: center;
     padding: 0;
 }
+.service-list > li >a{
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
 .home-title{
     text-align: left;
+}
+
+p.card_balance{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-weight: bold;
+    font-size: 25px;
+}
+p.card-charge{
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    background-color: #F7F7F7;
+    color: #333;
+    padding: 0 10px;
+    border-radius: 15px;
+    height: 20px;
+    box-sizing: border-box;
+}
+.rate-list{
+    margin: 0;
+    padding: 0;
+}
+.rate-list > li{
+    width: 100%;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    line-height: 50px;
+    box-sizing: border-box;
+    padding: 0 5px;
+}
+.country{
+    font-size: 12px;
 }

@@ -1,14 +1,52 @@
 import 'assets/Home.css';
+import axios from 'axios';
 import CurrencyRateList from 'components/home/CurrencyRateList';
 import ServiceList from 'components/home/ServiceList ';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Home(props) {
+    
+    const [mainCardInfo, setMainCardInfo] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    //0. 로그인 회원 정보 (로그인 안한 경우 main-content내용 달라짐)
+    //1. 로그인 회원 정보
+    const [memberId, setMemberId] = useState('bleakwinter'); //테스트용
 
-    //1. 회원이 소지하고 있는 첫번째? 카드 종류와 정보
 
-    //2.이번 달 카드 사용 금액 받아오기 (위와 동일한 카드 내역)
+    //2. 회원이 소지하고 있는 첫 번째 카드 종류와 이번 달 카드 사용 금액 정보  (정보 없을 경우 예외 처리 필요)
+    useEffect(() => {
+        
+        // memberId가 없으면 에러 처리
+        if (!memberId) {
+            console.error('Member ID is missing!');
+            return;
+        }
+
+        // API 호출
+        axios.get(`https://urcarcher-local.kro.kr:8443/api/home/my-main-card/${memberId}`)
+            .then(response => {
+                console.log(response.data)
+                setMainCardInfo(response.data);
+                setLoading(false); // 데이터 로드 완료 후 로딩 상태를 false로 설정
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+                setLoading(false); // 에러 발생 시에도 로딩 상태를 false로 설정
+            });
+    }, [memberId]);
+
+    //계좌 번호 형태 네글자-세글자-나머지
+    // const cardAccountString = mainCardInfo.cardAccount.toString();
+    // const cardAccount = `${cardAccountString.slice(0, 4)}-${cardAccountString.slice(4, 7)}-${cardAccountString.slice(7)}`;
+   
+    if (loading) {
+        return <p>Loading...</p>; // 로딩 중일 때 표시할 내용
+    }
+
+    if (!mainCardInfo) {
+        return <p>No card information available</p>; // 데이터가 없을 때 표시할 내용
+    }
 
     //3.실시간 환율 정보
 
@@ -29,25 +67,37 @@ function Home(props) {
     return (
         <div className="contents">
             <div className='home-container inner'>
-                {/* <h5>User님 반갑습니다.🙌</h5> */}
-                <h5>🙌로그인하기</h5>
+                <h5>{memberId}님 반갑습니다.🙌</h5>
+                {/* <h5>🙌로그인하기</h5> */}
                 <div className='main-content'>
                     <h2 className='hidden'>card section</h2>
-                    <div className="card-type-wrap">
-                        <p className='card-type'>
-                            <span>카드 이름</span>
-                            <span>선불카드</span>
-                        </p>
-                        <p>10,000원</p>
-                        <p>충전</p>
-                    </div>
+                    {mainCardInfo ? (
+                        <div className="card-type-wrap">
+                            <p className='card-type-text'>
+                                <span>{mainCardInfo.cardUsage === "신용카드" ? mainCardInfo.cardAccount : mainCardInfo.cardName}</span>
+                                <span className='type'>{mainCardInfo.cardUsage}</span>
+                            </p>
+                            <p className='card_balance'>{mainCardInfo.cardBalance.toLocaleString()}원</p>
+                            <p className='card-charge'>충전</p>
+                            <p className={mainCardInfo.cardUsage === "신용카드" ? 'hidden' : 'card-charge'}>충전</p>
+                        </div>
+                     ) : (
+                        <div className="card-type-wrap">
+                            <p className='card_balance'>Loading...</p>
+                        </div>
+                    )}
                     <div className='amount-used'>
                         <p>이번달 사용 금액</p>
-                        <p>120,020원</p>
+                        {mainCardInfo ? (
+                            <p>{mainCardInfo.totalPayment.toLocaleString()}원</p>
+                        ) : (
+                            <p>Loading...</p>
+                        )}
                     </div>
                     <div className='card-signup'>
-                        <p>카드 신청</p>
-                        <p><img src="icon/icon-credit-card.png" alt="카드신청" style={{width:"40px"}}/></p>
+                            <p><Link to="/card">카드 신청 </Link></p>
+                            <p><img src="icon/icon-credit-card.png" alt="카드신청" style={{width:"40px"}}/></p>
+                       
                     </div>
                 </div>
                 <div> 
