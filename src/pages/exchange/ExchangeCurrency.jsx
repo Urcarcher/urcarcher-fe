@@ -21,7 +21,7 @@ function ExchangeCurrency(props) {
     const [nation, setNation] = useState("USD"); // 사용자 국적 임시 data
 
     const [focused, setFocused] = useState(false);
-    const [inputWidth, setInputWidth] = useState(15); // 글자 너비 기본값 (15px)
+    const [inputWidth, setInputWidth] = useState(200); // 글자 너비 기본값 (15px)
     const [currency, setCurrency] = useState(0); // 사용자가 입력한 KRW
     const [calculateAmount, setCalculateAmount] = useState(0); // 예상 원화
 
@@ -83,7 +83,7 @@ function ExchangeCurrency(props) {
         const numCur = Number(inputVal.replace(/[^0-9]/g, ""));
 
         setCurrency(numCur.toLocaleString());
-        setInputWidth(inputVal.length * 10); // 동적으로 input 길이 변경
+        setInputWidth(inputVal.length * 15); // 동적으로 input 길이 변경
 
         if (exchangeCurInfo[nation] && exchangeCurInfo[nation].rate && exchangeCurInfo[nation].buy) {
             // 쉼표 제거 후 문자열을 숫자로 변환 (NaN 발생)
@@ -166,43 +166,52 @@ function ExchangeCurrency(props) {
 
     return (
         <div className="contents">
-            <h2>얼마를 충전할까요?</h2>
-            <h3>대한민국 KRW</h3>
-            <div className="inputDiv">
-                <input
-                    name="exCur"
-                    type="text"
-                    value={currency}
-                    onKeyDown={keyDownHandle}
-                    onChange={numberHandle}
-                    onFocus={focusHandle}
-                    style={{ width: `${inputWidth}px` }}
-                />원
+            <div className="cur_title">
+                <h3>얼마를 <span style={{ color: "#476EFF" }}>충전</span>할까요?</h3>
             </div>
-
-            <h3>{nation} (사용자의 국적)</h3>
-            <p>{calculateAmount}달러</p>
-            {exchangeCurInfo[nation] ? 
-            (<p>1달러 = {exchangeCurInfo[nation].rate}원</p>) : (<p>환율 정보를 조회하는 중입니다</p>)}
-
-            <p>환율우대</p>
-            <div>
-                <span>적용환율</span>
+            <div className="ex_wrapper">
+                <h5>대한민국 KRW</h5>
+                <div className="inputDiv">
+                    <input
+                        name="exCur"
+                        type="text"
+                        value={currency === 0 || currency === null ? "충전할 금액 입력" : currency}
+                        onKeyDown={keyDownHandle}
+                        onChange={numberHandle}
+                        onFocus={focusHandle}
+                        style={{ width: `${inputWidth}px`, color: currency === 0 || currency === null ? "#BFBFBF" : "black" }}
+                        autocomplete="off"
+                        />
+                </div>
+            </div>
+            <div className="cur_wrapper">
+                <h5>{nation} (사용자의 국적)</h5>
+                <p className="amount_text">{calculateAmount}달러</p>
                 {exchangeCurInfo[nation] ? 
-                (<span>KRW {exchangeCurInfo[nation].rate} = 1달러</span>) : (<span>환율 정보를 조회하는 중입니다</span>)}
+                (<p style={{ color: "#BFBFBF" }}>1달러 = {exchangeCurInfo[nation].rate}원</p>) : (<p style={{ color: "#BFBFBF" }}>환율 정보를 조회하는 중입니다</p>)}
             </div>
-            <br/>
-            <div>
-                <span>우대사항</span>
-                <span>환율우대 90%</span>
+            <div className="rate_wrapper">
+                <p style={{ fontFamily: "NanumSquareNeoExtraBold", textAlign: "left", marginLeft: "20px" }}>환율우대</p>
+                <div className="rate_table">
+                    <div className="rate_col">
+                        <p className="left_text">적용환율</p>
+                        {exchangeCurInfo[nation] ? 
+                        (<p className="right_text">KRW {exchangeCurInfo[nation].rate} = 1달러</p>) : (<p className="right_text">환율 정보를 조회하는 중입니다</p>)}
+                    </div>
+                    <div className="rate_col">
+                        <p className="left_text">우대사항</p>
+                        <p className="right_text">환율우대 90%</p>
+                    </div>
+                    <div className="rate_line"></div>
+                    <div className="rate_col">
+                        <p className="left_text">원화 예상 금액</p>
+                        <p className="right_text">{calculateAmount}달러</p>
+                    </div>
+                </div>
             </div>
-            <br/>
-            <div>
-                <span>원화 예상 금액</span>
-                <span>{calculateAmount}달러</span>
+            <div className="plus_wrapper">
+                <button className="plus_btn" onClick={insertHandle}>충전하기</button>
             </div>
-            <br/>
-            <button onClick={insertHandle}>충전하기</button>
         </div>
     );
 }

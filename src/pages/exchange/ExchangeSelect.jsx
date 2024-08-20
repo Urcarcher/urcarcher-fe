@@ -1,5 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import 'assets/exchangeSelect.css';
+import exchangeCard from 'assets/card.png'
+import exchangeMoney from 'assets/money.png'
+import exchangeArrow from 'assets/arrow.png'
 
 function ExchangeSelect(props) {
     const navi = useNavigate();
@@ -25,10 +28,10 @@ function ExchangeSelect(props) {
                     <p>원하는 날, 원하는 곳에서 바로 사용</p>
                 </div>
                 <div className="exchange_card">
-                    <img src="img/exchange/card.png" alt="카드 아이콘"/>
+                    <img src={exchangeCard} alt="카드 아이콘"/>
                 </div>
                 <div className="exchange_money">
-                    <img src="img/exchange/money.png" alt="돈 아이콘"/>
+                    <img src={exchangeMoney} alt="돈 아이콘"/>
                 </div>
                 <div className="btn_wrapper">
                     <button className="info_btn">내역보기</button>
@@ -37,9 +40,10 @@ function ExchangeSelect(props) {
                 <div className="set_title">
                     <h5>이런 환전 방법은 어떠세요?</h5>
                 </div>
-                <div className="set_wrapper">
+                <div className="select_wrapper">
                     <button className="set_btn" id="set" onClick={exchangeHandle}>
                         <p className="set_p">목표환율 자동충전</p>
+                        <img src={exchangeArrow} alt="화살표 아이콘"/>
                         <p>목표 환율 도달 시 자동 환전해줘요</p>
                     </button>
                 </div>
