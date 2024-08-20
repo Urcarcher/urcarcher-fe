@@ -40,6 +40,10 @@ import TestCard from './pages/tourguide/TestCard';
 import SearchTour from './pages/tourguide/SearchTour';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import CardManagerment from 'pages/card/CardManagerment';
+import Reservation from 'pages/tourguide/Reservation';
+import Payment from 'pages/card/Payment';
+import Verification from 'pages/card/Verification';
 
 
 function App() {
@@ -80,12 +84,15 @@ function App() {
           <Route path='/MapComponent/:detailDestination' element={<MapComponent/>}/>
           <Route path='/TourGuide/:areaCode/:contentTypeId' element={<TourGuide/>}/>
           <Route path='/detail/:type/:id' element={<DetailPage/>}/>
-
-        
-
           <Route path='/reservation' element={<TestReservation/>}/>
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
+          <Route path='/reservation1' element={<Reservation/>}/>
+
+
+          <Route path='/cardmanagement' element={<CardManagerment/>}></Route>
+          <Route path='/paymentpage' element={<Payment/>}></Route>
+          <Route path='/cardverification' element={<Verification/>}></Route>
         </Routes>
       <Footer />
     </BrowserRouter>
