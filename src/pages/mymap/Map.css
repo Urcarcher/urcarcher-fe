@@ -106,9 +106,9 @@
     transition: 0.3s;
   }
 
-.maphome-btn > button:hover{
-  background-color: #064AFF;
-}
+  .maphome-btn > button:hover{
+    background-color: #064AFF;
+  }
   .maphome-btn > span{
     font-size: 14px;
     color: #656565;
@@ -135,9 +135,35 @@
     margin-bottom: -30px;
   }
 
+  .current-location-btn{
+    position: absolute;
+    right: 10px;
+    bottom: 100px;
+    width: 58px;
+    height: 58px;
+    background-color: #fff;
+    z-index: 100;
+    border-radius: 50%;
+    line-height: 58px;
+  }
+  .current-location-btn>button{
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+  .current-location-btn>button > img{
+    height: 100%;
+  }
+
   /* MyCategoryRank.jsx */
   .inner{
     max-width: 360px;
+  }
+  .top-category::before {
+    content: '🏆';  /* 예: 트로피 이모지 */
+    margin-right: 8px;  /* 이모지와 텍스트 사이의 간격 조정 */
   }
   .categoryRank-wrap{
     /* height: 763px; */
@@ -180,8 +206,8 @@
   }
   .rank-list li {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(70px);
+    transition: opacity 0.5s ease, transform 1s ease;
   }
 
   .rank-list li.show {
@@ -222,7 +248,7 @@
   .top-store-list  li{
     border: 1px solid #ccc;
     width: 100%;
-    height: 80px;
+    /* height: 80px; */
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;

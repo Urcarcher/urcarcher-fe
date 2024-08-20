@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../assets/Card3.css';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../../components/Footer';
 
 function Card3() {
     const [formData, setFormData] = useState({

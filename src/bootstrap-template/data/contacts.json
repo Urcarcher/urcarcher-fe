@@ -1,0 +1,67 @@
+{
+  "contacts": [
+    {
+      "name": "Nielsen Cobb",
+      "description": "Memora",
+      "email": "nielsencobb@memora.com",
+      "phone": "+1 (851) 552-2735",
+      "img": "/img/avatar-0.jpg"
+    },
+    {
+      "name": "Margret Cote",
+      "description": "Zilidium",
+      "email": "margretcote@zilidium.com",
+      "phone": "+1 (893) 532-2218",
+      "img": "/img/avatar-1.jpg"
+    },
+    {
+      "name": "Rachel Vinson",
+      "description": "Chorizon",
+      "email": "rachelvinson@chorizon.com",
+      "phone": "+1 (891) 494-2060",
+      "img": "/img/avatar-2.jpg"
+    },
+    {
+      "name": "Gabrielle Aguirre",
+      "description": "Comverges",
+      "email": "gabrielleaguirre@comverges.com",
+      "phone": "+1 (805) 459-3869",
+      "img": "/img/avatar-3.jpg"
+    },
+    {
+      "name": "Spears Collier",
+      "description": "Remold",
+      "email": "spearscollier@remold.com",
+      "phone": "+1 (910) 555-2436",
+      "img": "/img/avatar-4.jpg"
+    },
+    {
+      "name": "Keisha Thomas",
+      "description": "Euron",
+      "email": "keishathomas@euron.com",
+      "phone": "+1 (958) 405-3392",
+      "img": "/img/avatar-5.jpg"
+    },
+    {
+      "name": "Elisabeth Key",
+      "description": "Netagy",
+      "email": "elisabethkey@netagy.com",
+      "phone": "+1 (900) 421-2096",
+      "img": "/img/avatar-6.jpg"
+    },
+    {
+      "name": "Patel Mack",
+      "description": "Zedalis",
+      "email": "patelmack@zedalis.com",
+      "phone": "+1 (800) 460-2720",
+      "img": "/img/avatar-7.jpg"
+    },
+    {
+      "name": "Erika Whitaker",
+      "description": "Uniworld",
+      "email": "erikawhitaker@uniworld.com",
+      "phone": "+1 (911) 484-3333",
+      "img": "/img/avatar-8.jpg"
+    }
+  ]
+}

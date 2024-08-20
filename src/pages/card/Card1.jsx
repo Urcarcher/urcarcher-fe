@@ -4,6 +4,8 @@ import Flickity from 'react-flickity-component';
 import axios from 'axios';
 import { useCardContext } from './CardContext';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 function Card1() {
     const [selectedCard, setSelectedCard] = useState(null);
@@ -49,9 +51,7 @@ function Card1() {
 
     return (
         <div className='container'>
-            <div className='header'>
-                <div>카드 신청</div>
-            </div>
+            {/* <Header /> */}
 
             <div className='content'>
 
@@ -70,7 +70,8 @@ function Card1() {
                         >
                             {cards.map((card, index) => (
                                 <div className="carousel-cell" key={card.cardTypeId}>
-                                    <img src={card.cardImg} className="p" alt={card.cardName} />
+                                    {/* <img src={card.cardImg} className="p" alt={card.cardName} /> */}
+                                    <img src={require('../../assets/Card1.png')} width='200' height='335'  imageStyle={{borderRadius: 15}}/>
                                     <div className='card-info'>
                                         <div>카드이름: {card.cardName}</div>
                                         <div>카드사용목적: {card.cardUsage}</div>

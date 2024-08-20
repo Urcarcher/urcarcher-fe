@@ -3,6 +3,7 @@ import { Input, Switch, FormControlLabel,Button } from '@mui/material';
 import { useCardContext } from './CardContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Footer from '../../components/Footer';
 
 function Card2() {
     const [idNum, setIdNum] = useState('');
@@ -18,7 +19,7 @@ function Card2() {
 
     useEffect(() => {
         // "bleakwinter" 회원의 데이터를 가져오는 API 호출
-        axios.get('/api/members/bleakwinter')// 로그인된 id로 나중에 수정하기
+        axios.get('/api/card/bleakwinter')// 로그인된 id로 나중에 수정하기
             .then(response => {
                 const memberData = response.data;
                 setPhoneNumber(memberData.phoneNumber);

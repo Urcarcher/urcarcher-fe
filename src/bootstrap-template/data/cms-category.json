@@ -1,0 +1,49 @@
+{
+  "categories": [
+    {
+      "name": "Gear",
+      "slug": "gear",
+      "count": 23
+    },
+    {
+      "name": "Stories",
+      "slug": "stories",
+      "count": 2
+    },
+    {
+      "name": "Tips & Tricks",
+      "slug": "gear",
+      "count": 4
+    },
+    {
+      "name": "Trips",
+      "slug": "trips",
+      "count": 5
+    },
+    {
+      "name": "Gear",
+      "slug": "gear",
+      "count": 23
+    },
+    {
+      "name": "Stories",
+      "slug": "stories",
+      "count": 2
+    },
+    {
+      "name": "Tips & Tricks",
+      "slug": "gear",
+      "count": 4
+    },
+    {
+      "name": "Trips",
+      "slug": "trips",
+      "count": 5
+    },
+    {
+      "name": "Uncategorized",
+      "slug": "uncategorized",
+      "count": 2
+    }
+  ]
+}

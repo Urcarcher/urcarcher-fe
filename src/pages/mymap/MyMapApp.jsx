@@ -4,108 +4,175 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import './Map.css';
 import Modal from './Modal';
-import { Link } from 'react-router-dom';
-
+import { Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const { kakao } = window;
 
-//DB에서 나의 결제 내역과 연결된 가맹점(카테고리) 정보 가져오기
-const KEYWORD_LIST = [
-  { id: 1, value: '음식점' },
-  { id: 2, value: '편의점'},
-  { id: 3, value: '카페' },
-  { id: 4, value: '병원' }
-];
 
+//마커 커스텀 이미지
 const myMapIcon = "https://urcarcher-local.kro.kr/icon/markericon.png";
 const locationIcon = "https://urcarcher-local.kro.kr/icon/icon-location.png";
 
-const MyMapApp = () => {  //카테고리 넘겨받기
+const MyMapApp = () => {  
+
+  const [memberId, setMemberId] = useState('bleakwinter');  // 테스트할 회원 ID
+
+  //카테고리 리스트 넘겨받기
+  //const location = useLocation();
+
+  const [topCategoryList, setTopCategoryList] = useState([]);
+  
+  useEffect(() => {
+    // 데이터 호출
+    axios.get(`https://urcarcher-local.kro.kr:8443/api/paymentPlace/top-categories`, {
+        params: {
+            memberId: memberId
+        }
+    })
+    .then(response => {
+        setTopCategoryList(response.data); // 데이터를 상태에 저장
+    })
+    .catch(error => {
+        console.error('There was an error!', error);
+    });
+  }, [memberId]);
+
+  // 카카오 맵에 접근해 지도 상태 조작하는 상태 변수
+  const [map, setMap] = useState(null); 
+  
+  // 검색에 사용될 키워드를 관리하는 상태 변수
+  const [keyword, setKeyword] = useState('대형마트'); 
+  
+  // 검색 결과를 담는 상태 변수
+  const [search, setSearch] = useState([]); 
+
+  // 검색 결과의 페이지네이션 정보를 관리하는 상태 변수
+  const [pagination, setPagination] = useState(null); 
+
+  // 현재 페이지 번호를 관리하는 상태 변수 
+  // 페이지네이션 기능과 연동해 어떤 페이지를 보고 있는지 나타냄
+  const [currentPage, setCurrentPage] = useState(1); 
+  
+  // 현재 열려있는 마커의 ID를 관리하는 상태 변수
+  const [openMarkerId, setOpenMarkerId] = useState(null);
+  
+  // 사이드바의 열림/닫힘 상태를 관리하는 상태 변수
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
+  
+  // 모바일 환경에서 사용될 모달의 열림/닫힘 상태를 관리하는 상태 변수
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+
+  //모달창 열기/닫기
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
 
-  // 기본 위치 상태
+  //기본 위치 상태
   const [state, setState] = useState({
-    center: {
-      lat: 33.450701,
-      lng: 126.570667,
+    center: { 
+      lat: 37.5594538,   //학원 위치
+      lng: 126.9226294 ,
     },
     errMsg: null,
     isLoading: true,
   });
 
-  //----------현재 사용자 위치 받아오기 (navigator.geolocation)
-  useEffect(() => {
+  //1. 현재 사용자 위치 state에 저장하는 함수
+  //현재 위치 오류로 비동기에서 동기적 방식으로 수정 (async/await사용)
+
+   // 로컬 스토리지에서 위치를 가져오는 함수
+   const loadSavedLocation = () => {
+    const savedLat = localStorage.getItem('savedLat');
+    const savedLng = localStorage.getItem('savedLng');
+
+    if (savedLat && savedLng) {
+      return {
+        lat: parseFloat(savedLat),
+        lng: parseFloat(savedLng),
+      };
+    }
+
+    return null;
+  };
+
+  // 현재 위치를 받아와 상태를 업데이트하고 로컬 스토리지에 저장하는 함수
+  const updateCurrentLocation = async () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setState((prev) => ({
-            ...prev,
-            center: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            },
-            isLoading: false,
-          }));
-        },
-        (err) => {
-          setState((prev) => ({
-            ...prev,
-            errMsg: err.message,
-            isLoading: false,
-          }));
-        },
-      );
+      try {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0,
+          });
+        });
+
+        console.log('현재 위치:', position.coords.latitude, position.coords.longitude);
+
+        const newCenter = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+
+        // 상태 업데이트
+        setState({
+          center: newCenter,
+          errMsg: null,
+          isLoading: false,
+        });
+
+        // 로컬 스토리지에 위치 저장
+        localStorage.setItem('savedLat', newCenter.lat);
+        localStorage.setItem('savedLng', newCenter.lng);
+
+      } catch (err) {
+        console.error('위치 정보를 가져오는 데 실패했습니다.', err);
+        setState((prev) => ({
+          ...prev,
+          errMsg: err.message,
+          isLoading: false,
+        }));
+      }
     } else {
       setState((prev) => ({
         ...prev,
-        errMsg: 'geolocation을 사용할수 없어요..',
+        errMsg: 'geolocation을 사용할 수 없어요.',
+        isLoading: false,
+      }));
+    }
+  };
+
+  // 컴포넌트가 처음 렌더링될 때 저장된 위치로 지도 초기화
+  useEffect(() => {
+    const savedLocation = loadSavedLocation();
+
+    if (savedLocation) {
+      setState((prev) => ({
+        ...prev,
+        center: savedLocation,
+        isLoading: false,
+      }));
+    } else {
+      // 저장된 위치가 없을 경우 기본 위치 사용
+      setState((prev) => ({
+        ...prev,
         isLoading: false,
       }));
     }
   }, []);
 
-  //-------------------
-    // 카카오 맵에 접근해 지도 상태 조작하는 상태 변수
-    const [map, setMap] = useState(null); 
-    
-    // 검색에 사용될 키워드를 관리하는 상태 변수
-    const [keyword, setKeyword] = useState('대형마트'); 
-   
-    // 검색 결과를 담는 상태 변수
-    const [search, setSearch] = useState([]); 
 
-    // 검색 결과의 페이지네이션 정보를 관리하는 상태 변수
-    const [pagination, setPagination] = useState(null); 
-
-    // 현재 페이지 번호를 관리하는 상태 변수 
-    // 페이지네이션 기능과 연동해 어떤 페이지를 보고 있는지 나타냄
-    const [currentPage, setCurrentPage] = useState(1); 
-    
-    // 현재 열려있는 마커의 ID를 관리하는 상태 변수
-    const [openMarkerId, setOpenMarkerId] = useState(null);
-   
-    // 사이드바의 열림/닫힘 상태를 관리하는 상태 변수
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
-    
-    // 모바일 환경에서 사용될 모달의 열림/닫힘 상태를 관리하는 상태 변수
-    const [isModalOpen, setIsModalOpen] = useState(false); 
-
-    //모달창 닫기
-    const openModal = () => {
-      setIsModalOpen(true);
-    };
-  
-    const closeModal = () => {
-      setIsModalOpen(false);
-    };
-
-
-
-  //------------주변위치 카테고리로 조회
+  //2. 주변위치 카테고리로 조회
 
   // 카테고리 검색으로 주변 위치 검색하기
   const searchPlaces = (keyword) => {
-    console.log(keyword); //편의점,음식점 .. 카테고리명을 받아옴
+    console.log(keyword); //편의점,음식점 .. 등 카테고리명을 받아옴
     // Places 서비스 객체 생성
     const ps = new kakao.maps.services.Places();
     // 검색 옵션 설정
@@ -148,10 +215,6 @@ const MyMapApp = () => {  //카테고리 넘겨받기
     setSearch(data);
   };
 
- //id로 정렬한 후 상위 3개의 요소만 가져와서 버튼 생성하기
- const topKeywords = KEYWORD_LIST.sort((a, b) => a.id - b.id).slice(0, 3);
-
-
  //-------------
  // 마커의 위치로 지도의 중심 좌표 이동하기
   const moveLatLng = (data) => {
@@ -179,24 +242,30 @@ const MyMapApp = () => {  //카테고리 넘겨받기
       kakao.maps.event.removeListener(map, 'click', clickListener);
     };
   }, [map]);
+  
+  
+  const [activeButtonId, setActiveButtonId] = useState(0); // 처음에 첫 번째 버튼을 활성화 상태로 설정
+  
+  const handleButtonClick = (index, name) => {
+    setActiveButtonId(index); // 클릭한 버튼의 id를 활성화 상태로 설정
+    searchPlaces(name);   // 버튼 클릭 시 장소 검색
+  };
 
   return (
     <>
-      <Header/>
+      {/* <Header/> */}
       <div className='kakaomap-wrap contents'>
-        {/* <img src={myMapIcon} alt="아이콘"></img> */}
-     
+        
         {/* 상위 3개 카테고리 버튼 */}
         <div className='cate-btn-wrap'>
-          {topKeywords.map((keywordObj) => (
+          {topCategoryList.map((item, index) => (
             <button 
-              key={keywordObj.id} 
+              key={index} 
               type='button' 
-              className={keywordObj.id === 1 ? 'active' : ''} 
-              onClick={() => searchPlaces(keywordObj.value)}
-              //onCreate={setMap} // 지도가 생성될 때 setMap 함수를 호출해 지도 객체 업데이트 추가
+              className={index === activeButtonId ? 'active' : ''}
+              onClick={() => handleButtonClick(index, item.categoryName)}
               >
-              {keywordObj.value}
+              {item.categoryName}
             </button>
           ))}
         </div>
@@ -206,7 +275,7 @@ const MyMapApp = () => {  //카테고리 넘겨받기
           center={state.center} 
           style={{ width: '430px', height: '750px'}} 
           level={3}
-          onCreate={setMap}  // 지도 객체가 생성될 때 setMap 호출
+          onCreate={setMap}  // 지도 객체가 생성될 때 setMap 호출, 지도 객체 업데이트
         >
           {/* 현재 위치 마커 표시 */}
           <MapMarker
@@ -267,8 +336,13 @@ const MyMapApp = () => {  //카테고리 넘겨받기
                 <img src="/icon/icon-list.png" alt="아이콘" />
               </Link>
           </div>
+          <div className='current-location-btn'>
+            <button onClick={updateCurrentLocation}>
+              <img src='/icon/icon-my-location.png'></img>
+            </button>
+          </div>
         </Map>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );

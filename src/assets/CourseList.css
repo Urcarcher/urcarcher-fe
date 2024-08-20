@@ -2,8 +2,8 @@
 
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
-    height : 680px;
-
+    height : 500px;
+    
     justify-items: center;
     overflow-y: auto; /* 세로 스크롤 활성화 */
  

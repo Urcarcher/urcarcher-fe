@@ -1,5 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import '../../assets/exchangeCard.css';
+import Footer from '../../components/Footer';
+import Header from '../../components/Header';
 
 function ExchangeCard(props) {
     // 이전 페이지에서 보낸 버튼 정보
@@ -8,24 +11,37 @@ function ExchangeCard(props) {
     // console.log("선택한 충전 버튼 종류", btn);
     
     const navi = useNavigate();
-    const [isChoice, setIsChoice] = useState(false);
 
     // 사용자의 카드 목록 임시 data
     const userCard = [
         { id: 1, balance: 10000, type: "선불카드" },
         { id: 2, balance: 50000, type: "선불카드" },
         { id: 3, balance: 0, type: "신용카드" },
+        { id: 4, balance: 0, type: "선불카드" },
     ];
 
     const [cardList, setCardList] = useState(userCard);
-    const [selectedCard, setSelectedCard] = useState(null);
+    const [selectCard, setSelectCard] = useState(null);
+
+    // 카드 리스트 조회
+    // const [cardList, setCardList] = useState([]);
+
+    /*
+    useEffect(() => {
+        axios.get("https://urcarcher-local.kro.kr:8443/api/exchange/list")
+            .then((response) => {
+                setCardList(response.data);
+            })
+            .catch((error) => {
+                console.error("카드 조회 실패", error);
+            });
+    }, []);
+    */
 
     // 카드 선택
-    const cardSelecthandle = (card) => {
+    const cardSelectHandle = (card) => {
         console.log("선택한 카드 정보", card);
-        setSelectedCard(card);
-        setIsChoice(!isChoice);
-        console.log(!isChoice);
+        setSelectCard(card);
     };
 
     // 취소 버튼
@@ -35,7 +51,7 @@ function ExchangeCard(props) {
 
     // 다음 버튼 => 선택한 버튼 종류 별 페이지 이동
     const nextHandle = () => {
-        if (selectedCard !== null) {
+        if (selectCard) {
             let location = "";
             
             if (btn === "currency") {
@@ -45,25 +61,28 @@ function ExchangeCard(props) {
                 // 자동충전
                 location = "/exchange/set";
             }
-            navi(location, { state: { selectedCard } });
+            navi(location, { state: { selectCard } });
         } else {
-            alert("카드를 선택해주세요");
+            alert("충전하실 카드를 선택해 주세요");
         }
     };
 
     return (
-        <div>
+        <div className="contents">
             <h2>어떤 카드에 충전할까요?</h2>
             <div>
+                {/* null, undefined 아닌지 확인 후 id 비교 */}
                 {cardList.map((card) => (
-                    <div key={card.id}>
+                    <div key={card.id} 
+                        className={selectCard?.id === card.id ? "choice" : "unChoice"}
+                        style={{ display: card.type === "선불카드" ? "block" : "none" }}
+                    >
                         <p>{card.type}</p>
                         <p>잔액 {card.balance.toLocaleString()}원</p>
-                        <button onClick={() => cardSelecthandle(card)}>선택</button>
+                        <button onClick={() => cardSelectHandle(card)}>선택</button>
                     </div>
                 ))}
             </div>
-            
             <button onClick={backHandle}>취소</button>
             <button onClick={nextHandle}>다음</button>
         </div>
