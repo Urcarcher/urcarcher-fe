@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import 'components/Header.css';
 
 function Header() {
     const navigate = useNavigate();
@@ -7,7 +8,7 @@ function Header() {
 
     // 경로에 따라 제목을 설정하는 함수 (수정하기)
     const getTitle = (pathname) => {
-        switch (pathname) {
+        switch (pathname.endsWith("/") ? pathname.substring(0, pathname.length-1) : pathname) {
             case '/maphome':
             case '/maphome/map':
             case '/maphome/categoryRank':
