@@ -48,3 +48,26 @@
     font-size: 15px;
     line-height: 50px;
 }
+
+.exchange_set_btn_wrapper {
+    width: 80%;
+    height: 50px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.exchange_set_btn {
+    font-family: 'NanumSquareNeoExtraBold';
+    font-size: 15px;
+    width: 100%;
+    height: 100%;
+    color: white;
+    background-color: #476EFF;
+    border: none;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.exchange_set_btn:hover {
+    transform: translateY(-2px);
+}

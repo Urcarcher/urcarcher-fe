@@ -21,19 +21,19 @@ function Header() {
             case '/login':
                 return '로그인';
             case '/exchange':
+            case '/exchange/currency':
                 return '환전';
             case '/exchange/card':
                 return '카드 선택';
-            case '/exchange/currency':
-                return '환전';
+            case '/exchange/success':
+                    return '환전 완료';
             case '/exchange/set':
+            case '/exchange/setRate':
                 return '자동 환전';
             case '/signup':
             case '/signup/success':
             case '/signup/userinfo':
                 return '회원가입';
-            case '/exchange/success':
-                return '환전';
             default:
                 return '홈';
         }
