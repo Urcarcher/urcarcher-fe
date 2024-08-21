@@ -16,7 +16,7 @@ function ExchangeCurrency(props) {
 
     console.log("선택한 카드 정보 받기", exCard);
     console.log("선택한 카드 아이디 받기", exCard.cardId);
-    console.log(typeof exCard);
+    // console.log(typeof exCard);
     
     const [nation, setNation] = useState("USD"); // 사용자 국적 임시 data
 
@@ -177,11 +177,11 @@ function ExchangeCurrency(props) {
                         name="exCur"
                         type="text"
                         value={currency === 0 || currency === null ? "충전할 금액 입력" : currency}
+                        onFocus={focusHandle}
                         onKeyDown={keyDownHandle}
                         onChange={numberHandle}
-                        onFocus={focusHandle}
                         style={{ width: `${inputWidth}px`, color: currency === 0 || currency === null ? "#BFBFBF" : "black" }}
-                        autocomplete="off"
+                        autoComplete="off"
                         />
                 </div>
             </div>

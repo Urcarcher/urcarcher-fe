@@ -7,7 +7,7 @@ function ExchangeCard(props) {
     // 이전 페이지에서 보낸 버튼 정보
     const location = useLocation();
     const choiceBtn = location.state.selectBtn;
-    console.log("선택한 충전 버튼 종류", choiceBtn);
+    // console.log("선택한 충전 버튼 종류", choiceBtn);
     
     const navi = useNavigate();
 

@@ -81,3 +81,8 @@
 .css-1rtg91x-MuiDateCalendar-root {
     max-height: 310px;
 }
+
+.set_rate_cur input {
+    border: none;
+    background-color: white;
+}

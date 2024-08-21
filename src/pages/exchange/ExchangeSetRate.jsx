@@ -26,27 +26,32 @@ function ExchangeSetRate(props) {
 
     const [isView, setIsView] = useState(false); // toggle 효과
     const [rateList, setRateList] = useState(rate);
-    const [selectDate, setSelectDate] = useState(null); // 조회 할 그래프 예측일 (월)
+    const [selectDate, setSelectDate] = useState(null); // 선택한 그래프 예측일(월)
     const [selectRate, setSelectRate] = useState(null); // 선택한 예측 정보
-    const [selectCurDate, setSelectCurDate] = useState(null);
-
+    
     // DatePicker
     // const [startDate, setStartDate] = useState(new Date());
     const [cleared, setCleared] = React.useState(false);
-    const [selectReserve, setSelectReserve] = useState(null);
-    const [reserveDate, setReserveDate] = useState("");
+    const [selectReserve, setSelectReserve] = useState(null); // 날짜 포맷 적용 X
+    const [reserveDate, setReserveDate] = useState(""); // 예약 날짜 (날짜 포맷 적용 O)
+    
+    const [focused, setFocused] = useState(false);
+    const [inputWidth, setInputWidth] = useState(150); // 글자 너비 기본값 (15px)
+    const [selectCur, setSelectCur] = useState(0); // 사용자가 입력한 KRW
+    const [selectAmount, setSelectAmount] = useState(0); // 예상 원화
+    
 
-    // 환율 예측 그래프 날짜 선택
+    // 환율 예측 그래프 날짜(월) 선택
     const showRateHandle = (event) => {
         const showDate = event.currentTarget.value;
-        console.log("그래프 month", showDate);
+        console.log("그래프 날짜(월)", showDate);
 
         // 월 선택이므로 잘라서 비교
         setSelectDate(showDate.slice(0, 7));
         setIsView(!isView); // true
     };
 
-    // 예측일 정보 선택
+    // 예측 정보 선택
     const selectRateHandle = (rate) => {
         console.log("선택한 예측 정보", rate);
         setSelectRate(rate);
@@ -65,7 +70,7 @@ function ExchangeSetRate(props) {
         return () => {};
     }, [cleared]);
 
-    // DatePicker 선택한 날짜 포맷 변경
+    // DatePicker 선택한 날짜 포맷 변경 후 범위 확인
     const dateChangeHandle = (date) => {
         setSelectReserve(date);
 
@@ -85,21 +90,60 @@ function ExchangeSetRate(props) {
                     console.log("범위 내에 있는 날짜");
                 } else {
                     console.log("범위 밖에 있는 날짜");
-                    alert("추천 시작일과 종료일 사이의 날짜만 가능해요");
 
                     setCleared(false);
-                    setReserveDate("");
+                    setReserveDate(""); // 선택 날짜 초기화
+
+                    alert("추천 시작일과 종료일 사이의 날짜만 가능해요");
                 }
             } else {
-                alert("예측 정보를 선택해 주세요");
-                
                 setCleared(false);
-                setReserveDate("");
+                setReserveDate(""); // 선택 날짜 초기화
+                
+                alert("예측 정보를 선택해 주세요");
             }
         }
     };
 
     console.log("예약일 선택", reserveDate);
+
+    // input 클릭 시 초기화
+    const focusHandle = () => {
+        if (!focused && selectRate) {
+            setSelectCur("");
+            setFocused(true);
+        } 
+    };
+
+    // 숫자만 입력 가능
+    const keyDownHandle = (event) => {
+        // 숫자, 백스페이스, 삭제, 화살표 키 등만 허용
+        const keys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'];
+
+        // 숫자 키, 허용된 키가 아닐 경우
+        if ((event.key < "0" || event.key > "9") && !keys.includes(event.key)) {
+            event.preventDefault();
+        }
+    }
+
+    // 입력한 값이 숫자일 때만 상태값 변경
+    const numberHandle = (event) => {
+        const inputVal = event.target.value;
+        // 세 자리 수 마다 콤마 찍기 위해 타입 변환
+        const numValue = Number(inputVal.replace(/[^0-9]/g, ""));
+
+        setSelectCur(numValue.toLocaleString());
+        setInputWidth(inputVal.length * 20); // 동적으로 input 길이 변경
+
+        if (selectRate) {
+            // 시가에 환율 우대 90% 적용
+            const calculatRate = selectRate.rOpen * 0.90;
+
+            // 예상 원화 계산
+            const calculatAmt = numValue / calculatRate;
+            setSelectAmount(calculatAmt);
+        } 
+    };
 
     return (
         <div className="contents">
@@ -157,16 +201,25 @@ function ExchangeSetRate(props) {
                         </LocalizationProvider>
                     </div>
                     <br/>
-                    <div>
+                    <div className="set_rate_cur">
                         <label>
                             환전 금액
-                            <input placeholder="충전할 금액 입력"/>
+                            <input
+                                type="text"
+                                value={selectCur === 0 || selectCur === null ? "충전할 금액 입력" : selectCur}
+                                onFocus={focusHandle}
+                                onKeyDown={keyDownHandle}
+                                onChange={numberHandle}
+                                style={{ width: `${inputWidth}px`, color: selectCur === 0 || selectCur === null ? "#BFBFBF" : "black" }}
+                                autoComplete="off"
+                                disabled={!selectRate}
+                            />
                         </label>
                     </div>
                     <br/>
                     <div>
                         <p>원화 예상 금액</p>
-                        <p>사용자가 입력한 금액 별 계산</p>
+                        <p>{selectAmount}</p>
                     </div>
                     <div>
                         <button>설정하기</button>

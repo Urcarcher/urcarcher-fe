@@ -12,7 +12,7 @@ function ExchangeSuccess(props) {
 
     console.log("insert 메세지", exchangeMsg);
     console.log("insert 내역", exchangeData);
-    console.log("잔액 확인", exchangeBalance);
+    console.log("충전 후 잔액", exchangeBalance);
 
     const navi = useNavigate();
 
