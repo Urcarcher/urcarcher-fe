@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import 'assets/exchangeSetRate.css';
-import DatePicker from "react-datepicker";
+
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from 'dayjs';
+// import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 
 function ExchangeSetRate(props) {
+    // 이전 페이지에서 보낸 선택한 카드 정보
     const location = useLocation();
     const setCard = location.state.reserveCard;
     const [exCard, setExCard] = useState(setCard);
@@ -20,17 +26,80 @@ function ExchangeSetRate(props) {
 
     const [isView, setIsView] = useState(false); // toggle 효과
     const [rateList, setRateList] = useState(rate);
-    const [selectDate, setSelectDate] = useState(null); // 조회중인 예측일
+    const [selectDate, setSelectDate] = useState(null); // 조회 할 그래프 예측일 (월)
+    const [selectRate, setSelectRate] = useState(null); // 선택한 예측 정보
+    const [selectCurDate, setSelectCurDate] = useState(null);
 
-    // 예측일 선택
+    // DatePicker
+    // const [startDate, setStartDate] = useState(new Date());
+    const [cleared, setCleared] = React.useState(false);
+    const [selectReserve, setSelectReserve] = useState(null);
+    const [reserveDate, setReserveDate] = useState("");
+
+    // 환율 예측 그래프 날짜 선택
     const showRateHandle = (event) => {
         const showDate = event.currentTarget.value;
-        console.log(showDate);
+        console.log("그래프 month", showDate);
 
         // 월 선택이므로 잘라서 비교
         setSelectDate(showDate.slice(0, 7));
         setIsView(!isView); // true
     };
+
+    // 예측일 정보 선택
+    const selectRateHandle = (rate) => {
+        console.log("선택한 예측 정보", rate);
+        setSelectRate(rate);
+    };
+
+    // DatePicker 날짜 선택 시 지우기 버튼 생성
+    React.useEffect(() => {
+        if (cleared) {
+            const timeout = setTimeout(() => {
+                setCleared(false);
+                setReserveDate("");
+            }, 1500);
+
+            return () => clearTimeout(timeout);
+        }
+        return () => {};
+    }, [cleared]);
+
+    // DatePicker 선택한 날짜 포맷 변경
+    const dateChangeHandle = (date) => {
+        setSelectReserve(date);
+
+        if (date) {
+            // setReserveDate(dayjs(date).format("YYYY-MM-DD"));
+            const formatDate = dayjs(date).format("YYYY-MM-DD");
+            setReserveDate(formatDate);
+
+            // 날짜 객체로 변환
+            const reserveDateObj = dayjs(formatDate);
+
+            if (selectRate) {
+                const startDateObj = dayjs(selectRate.rStart); // 추천 시작일
+                const endDateObj = dayjs(selectRate.rEnd); // 추천 종료일
+
+                if (reserveDateObj.isBetween(startDateObj, endDateObj, null, "[]")) {
+                    console.log("범위 내에 있는 날짜");
+                } else {
+                    console.log("범위 밖에 있는 날짜");
+                    alert("추천 시작일과 종료일 사이의 날짜만 가능해요");
+
+                    setCleared(false);
+                    setReserveDate("");
+                }
+            } else {
+                alert("예측 정보를 선택해 주세요");
+                
+                setCleared(false);
+                setReserveDate("");
+            }
+        }
+    };
+
+    console.log("예약일 선택", reserveDate);
 
     return (
         <div className="contents">
@@ -58,6 +127,7 @@ function ExchangeSetRate(props) {
                             <p className="set_rate_right">{rate.rStart}</p>
                             <p className="set_rate_left">여행 추천 종료일</p>
                             <p className="set_rate_right">{rate.rEnd}</p>
+                            <button onClick={() => selectRateHandle(rate)}>선택</button>
                         </div>
                     ))}
                 </div>
@@ -68,7 +138,23 @@ function ExchangeSetRate(props) {
                 <div className="set_rate_value">
                     <div>
                         <p>환전 예약일</p>
-                        <p>사용자가 시작일 ~ 종료일 사이 지정</p>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                label="환전 예약일 선택"
+                                showDaysOutsideCurrentMonth
+                                slotProps={{
+                                    textField: {
+                                        helperText: "당일 예약 불가",
+                                        clearable: true, onClear: () => setCleared(true),
+                                        size: "small"
+                                    },
+                                }}
+                                // selected={startDate}
+                                value={selectReserve}
+                                onChange={(date) => dateChangeHandle(date)}
+                                dateFormat="YYYY-MM-DD"
+                            />
+                        </LocalizationProvider>
                     </div>
                     <br/>
                     <div>

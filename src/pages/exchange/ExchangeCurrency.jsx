@@ -142,7 +142,8 @@ function ExchangeCurrency(props) {
             exPay: parseFloat(calculateAmount) // 결제금액
         };
     
-        axios.post("https://urcarcher-local.kro.kr:8443/api/exchange/insert", data, {
+        // axios.post("https://urcarcher-local.kro.kr:8443/api/exchange/insert", data, {
+        axios.post("/api/exchange/insert", data, {
             headers: {
                 "Content-Type": "application/json"
             }

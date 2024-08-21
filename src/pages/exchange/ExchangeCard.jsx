@@ -31,7 +31,8 @@ function ExchangeCard(props) {
             return;
         }
 
-        axios.get("https://urcarcher-local.kro.kr:8443/api/exchange/list")
+        // axios.get("https://urcarcher-local.kro.kr:8443/api/exchange/list")
+        axios.get("/api/exchange/list")
             .then((response) => {
                 setCardList(response.data);
                 console.log(response.data);
