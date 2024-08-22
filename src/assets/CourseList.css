@@ -1,9 +1,9 @@
 .course-list {
-
+    padding-bottom: 180px;
+    height: 80%;
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
-    height : 500px;
-    
+
     justify-items: center;
     overflow-y: auto; /* 세로 스크롤 활성화 */
  

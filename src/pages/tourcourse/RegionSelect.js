@@ -6,7 +6,7 @@ const useCourseList = () => {
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
-        axios.get('https://urcarcher-local.kro.kr:8443/api/course/list')
+        axios.get('/api/course/list')
             .then(response => {
                 setCourses(response.data);
                 console.log(response.data);
@@ -18,10 +18,13 @@ const useCourseList = () => {
     }, []);
 
     const handleRegionClick = (region) => {
-        setSelectedRegion(region);
+        if (region === '전체') {
+            setSelectedRegion(null); // 전체를 선택하면 null로 설정하여 모든 코스를 표시
+        } else {
+            setSelectedRegion(region);
+        }
     };
-
-    const regions = ['서울', '경기', '인천', '대전', '대구', '부산', '충청', '강원', '전라', '경상', '제주'];
+    const regions = ['전체','서울', '경기', '인천', '대전', '대구', '부산', '충청', '강원', '전라', '경상', '제주'];
 
     return {
         selectedRegion,

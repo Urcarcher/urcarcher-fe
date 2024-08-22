@@ -9,46 +9,7 @@
   
     display: inline-block;
 }
-/* 
-.modal {
-    display: flex;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-}
 
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 80%;
-    max-width: 500px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1001; 
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-} */
-
-/* Modal.css */
 .modal {
     display: flex;
     position: fixed;
@@ -80,6 +41,10 @@
 }
 
 .close {
+    position: absolute;
+    top:7px;
+    right: 15px;
+    cursor: pointer;
     color: #aaa;
     float: right;
     font-size: 28px;
