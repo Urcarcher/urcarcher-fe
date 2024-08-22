@@ -126,12 +126,12 @@ function ExchangeCurrency(props) {
         }
 
         if (!exchangeCurInfo || !exchangeCurInfo[nation] || !exchangeCurInfo[nation].rate) {
-            alert("환율 정보를 조회하는 중입니다. 다시 시도해 주세요");
+            alert("환율 정보를 찾고 있어요. 다시 시도해 주세요");
             return;
         }
     
         if (!calculateAmount || parseFloat(calculateAmount) <= 0) {
-            alert("예상 원화 금액을 계산할 수 없습니다. 다시 시도해 주세요");
+            alert("예상 원화 금액을 계산할 수 없어요. 다시 시도해 주세요");
             return;
         }
 
@@ -150,8 +150,8 @@ function ExchangeCurrency(props) {
         })
         .then(response => {
             console.log("바로 충전 성공", response.data);
-            
             setExchangeCurInfo(response.data);
+            
             navi("/exchange/success", {
                 state: {
                     successMsg: response.data,
@@ -189,7 +189,7 @@ function ExchangeCurrency(props) {
                 <h5>{nation} (사용자의 국적)</h5>
                 <p className="exAmt_text">{calculateAmount}달러</p>
                 {exchangeCurInfo[nation] ? 
-                (<p style={{ color: "#BFBFBF" }}>1달러 = {exchangeCurInfo[nation].rate}원</p>) : (<p style={{ color: "#BFBFBF" }}>환율 정보를 조회하는 중입니다</p>)}
+                (<p style={{ color: "#BFBFBF" }}>1달러 = {exchangeCurInfo[nation].rate}원</p>) : (<p style={{ color: "#BFBFBF" }}>환율 정보를 찾고 있어요</p>)}
             </div>
             <div className="exRate_wrapper">
                 <p style={{ fontFamily: "NanumSquareNeoExtraBold", textAlign: "left", marginLeft: "20px" }}>환율우대</p>
@@ -197,7 +197,7 @@ function ExchangeCurrency(props) {
                     <div className="exRate_col">
                         <p className="exRate_left_text">적용환율</p>
                         {exchangeCurInfo[nation] ? 
-                        (<p className="exRate_right_text">KRW {exchangeCurInfo[nation].rate} = 1달러</p>) : (<p className="right_text">환율 정보를 조회하는 중입니다</p>)}
+                        (<p className="exRate_right_text">KRW {exchangeCurInfo[nation].rate} = 1달러</p>) : (<p className="exRate_right_text">환율 정보를 찾고 있어요</p>)}
                     </div>
                     <div className="exRate_col">
                         <p className="exRate_left_text">우대사항</p>

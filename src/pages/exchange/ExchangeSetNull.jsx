@@ -14,7 +14,7 @@ function ExchangeSetNull({ exchangeSetHandle }) {
                 <img src={moneyStack} alt="돈"/>
             </div>
             <div className="ex_set_null">
-                <p>자동 충전 설정 내역이 없습니다</p>
+                <p>자동 충전 설정 내역이 없어요</p>
             </div>
             <div className="exchange_set_btn_wrapper">
                 <button className="exchange_set_btn" onClick={exchangeSetHandle}>자동충전 설정하기</button>

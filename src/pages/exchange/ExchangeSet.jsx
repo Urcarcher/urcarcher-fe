@@ -17,7 +17,7 @@ function ExchangeSet(props) {
 
     // 자동 충전 설정 페이지
     const exchangeSetHandle = () => {
-        navi("/exchange/setRate", { state: { reserveCard } });
+        navi("/exchange/set/rate", { state: { reserveCard } });
     };
 
     return (

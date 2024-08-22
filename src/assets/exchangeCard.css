@@ -72,13 +72,23 @@
 .exCard_btn {
     font-size: 17px;
     color: #CCCCCC;
-    text-decoration-line: underline;
+    /* text-decoration-line: underline; */
     border: none;
     background-color: white;
     float: right;
     position: relative;
     right: 25px;
     bottom: 40px;
+}
+
+.exCard_btn::before {
+    content: "";
+    position: absolute;
+    bottom: 3.5px;
+    width: 33px;
+    height: 1px;
+    display: block;
+    background-color: #CCCCCC;
 }
 
 .exCard_btn_container {

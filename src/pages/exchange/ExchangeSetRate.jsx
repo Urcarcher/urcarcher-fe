@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import 'assets/exchangeSetRate.css';
 
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from 'dayjs';
+import axios from 'axios';
 // import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 
 function ExchangeSetRate(props) {
@@ -16,12 +17,17 @@ function ExchangeSetRate(props) {
 
     console.log("예약 카드 정보 받기", setCard);
     console.log("예약 카드 아이디 받기", exCard.cardId);
+
+    const navi = useNavigate();
+    
+    const [reserveList, setReserveList] = useState([]); // 사용자 환전 예약 정보
+    const [nation, setNation] = useState("USD"); // 사용자 국적 임시 data
     
     // 예측 환율 임시 data
     const rate = [
-        // 예측 날짜, 시가, 여행 추천 시작일, 여행 추천 종료일
-        { rDate: "2024-08-24", rOpen: 1332.50, rStart: "2024-08-21", rEnd: "2024-08-27" },
-        { rDate: "2024-08-26", rOpen: 1330.30, rStart: "2024-08-22", rEnd: "2024-08-27" }
+        // 예측 날짜, 시가, 여행 추천 시작일, 여행 추천 종료일 (국가 별 예측 정보가 있다고 가정)
+        { rDate: "2024-08-24", rOpen: "1336.40", rStart: "2024-08-21", rEnd: "2024-08-27", rNation: "USD" },
+        { rDate: "2024-08-26", rOpen: "1330.30", rStart: "2024-08-22", rEnd: "2024-08-27", rNation: "USD" }
     ];
 
     const [isView, setIsView] = useState(false); // toggle 효과
@@ -100,7 +106,7 @@ function ExchangeSetRate(props) {
                 setCleared(false);
                 setReserveDate(""); // 선택 날짜 초기화
                 
-                alert("예측 정보를 선택해 주세요");
+                alert("예측 정보를 먼저 선택해 주세요");
             }
         }
     };
@@ -136,13 +142,58 @@ function ExchangeSetRate(props) {
         setInputWidth(inputVal.length * 20); // 동적으로 input 길이 변경
 
         if (selectRate) {
-            // 시가에 환율 우대 90% 적용
-            const calculatRate = selectRate.rOpen * 0.90;
-
             // 예상 원화 계산
-            const calculatAmt = numValue / calculatRate;
+            const calculatAmt = (numValue / selectRate.rOpen).toFixed(2);
             setSelectAmount(calculatAmt);
-        } 
+        } else {
+            setSelectAmount(0);
+        }
+    };
+
+    // 환전 예약 isnert
+    const insertHandle = () => {
+        if (!selectRate) {
+            alert("예측 정보 선택 후 예약 정보를 설정해 주세요");
+            return;
+        }
+        
+        if (!reserveDate) {
+            alert("환전 예약일을 선택해 주세요");
+            return;
+        }
+        
+        if (!selectAmount) {
+            alert("0원 이상의 충전하실 금액을 입력해 주세요");
+            return;
+        }
+
+        const data = {
+            cardId: exCard.cardId,
+            setRate: parseFloat(selectRate.rOpen.replace(/,/g, "")), // 예약환율
+            setCur: parseFloat(selectCur.replace(/,/g, "")), // 예약금액
+            setPay: parseFloat(selectAmount), // 결제금액
+            setDate: reserveDate // 예약일
+        };
+
+        axios.post("/api/exchange/rate/insert", data, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
+            console.log("환전 예약 성공", response.data);
+            setReserveList(response.data);
+
+            navi("/exchange/set/success", {
+                state: {
+                    successMsg: response.data,
+                    successData: data,
+                }
+            });
+        })
+        .catch(error => {
+            console.log("환전 예약 실패", error);
+        });
     };
 
     return (
@@ -222,7 +273,7 @@ function ExchangeSetRate(props) {
                         <p>{selectAmount}</p>
                     </div>
                     <div>
-                        <button>설정하기</button>
+                        <button onClick={insertHandle}>설정하기</button>
                     </div>
                 </div>
             </div>
