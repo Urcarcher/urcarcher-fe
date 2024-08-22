@@ -8,30 +8,13 @@ import Modal from 'components/mymap/Modal';
 const { kakao } = window;
 
 //마커 커스텀 이미지
-const myMapIcon = "https://urcarcher-local.kro.kr/icon/markericon.png";
-const locationIcon = "https://urcarcher-local.kro.kr/icon/icon-location.png";
+const myMapIcon = "/icon/markericon.png";
+const locationIcon = "/icon/icon-location.png";
 
 const MyMapApp = () => {  
 
   const [memberId, setMemberId] = useState('bleakwinter');  // 테스트할 회원 ID
-
   const [topCategoryList, setTopCategoryList] = useState([]);
-  
-  //API KEY 설정
-  // const [data, setData] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`${process.env.REACT_APP_KAKAOMAP_APP_KEY}/endpoint`);
-  //       setData(response.data);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
 
   //카테고리 데이터 호출
   useEffect(() => {

@@ -6,22 +6,23 @@ import { Link } from 'react-router-dom';
 function Menu({onClose}) {
   
     const [isActive, setIsActive] = useState(false);
-    // const location = useLocation();
 
     // 로그인 상태와 사용자 이름 관리
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userName, setUserName] = useState('');
+    const [userName, setUserName] = useState(''); 
 
-   // 로그인 함수 (실제 로그인 로직과 API 호출 등은 여기에 추가)
+   // 로그인 (로그인 정보 API 로직 추가하기 ) 
     const handleLogin = () => {
       setIsLoggedIn(true);
       setUserName('홍길동'); // 로그인 시 받아온 사용자 이름을 설정
+      onClose(); //메뉴 닫기
     };
 
-  // 로그아웃 함수
+  // 로그아웃
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserName('');
+    onClose(); //메뉴 닫기
   };
 
     //Esc키로 메뉴 닫기
@@ -56,7 +57,7 @@ function Menu({onClose}) {
                   {isLoggedIn ? (
                       <>
                         <span>{userName}님</span>
-                        <button onClick={handleLogout}>로그아웃</button>
+                        <Link to="/" onClick={handleLogout} >로그아웃</Link>
                       </>
                     ) : (
                       <Link to="/login" onClick={handleLogin}>로그인</Link>
@@ -75,6 +76,7 @@ function Menu({onClose}) {
               </div>
               <div className="menu-section">
               <MenuCategory 
+                onClose={onClose}
                 title="추천" 
                 items={[
                   { text: "카드 신청", link: "/card1" },
@@ -84,28 +86,31 @@ function Menu({onClose}) {
                 ]}
               />
               <MenuCategory 
+                onClose={onClose}
                 title="금융" 
                 items={[
                   { text: "카드 신청", link: "/card1" },
-                  { text: "카드 분실 신고", link: "/" },
-                  { text: "사용 내역 조회", link: "/" },
+                  { text: "카드 분실 신고", link: "/cardmanagement" },
+                  { text: "사용 내역 조회", link: "/usage" },
                   { text: "소비 리포트", link: "/chart1" },
                   { text: "환율 조회 및 예측", link: "/exchange" },
                   { text: "환전하기", link: "/exchange" },
                 ]}
               />
               <MenuCategory 
+                onClose={onClose}
                 title="관광" 
                 items={[
-                  { text: "관광지 추천", link: "/" },
+                  { text: "관광지 추천", link: "/searchtour" },
                   { text: "결제 기반 장소 추천", link: "/maphome" },
                   { text: "문화 활동 예약 하기", link: "/" },
-                  { text: "여행 코스 추천", link: "/" },
-                  { text: "리워드 지급", link: "/" },
-                  { text: "길찾기", link: "/" },
+                  { text: "여행 코스 추천", link: "/courseList" },
+                  { text: "리워드 지급", link: "/courseList" },
+                  { text: "길찾기", link: "/MapComponent" },
                 ]}
               />
               <MenuCategory 
+                onClose={onClose}
                 title="고객 센터" 
                 items={[
                   { text: "자주 묻는 질문", link: "/" },

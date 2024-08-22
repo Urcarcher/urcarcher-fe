@@ -1,4 +1,4 @@
-//아직 사용 X - context 사용할 필요 없나?
+//사용 X 
 const { createContext,  useState, useContext } = require("react");
 
 const DataContext = createContext();

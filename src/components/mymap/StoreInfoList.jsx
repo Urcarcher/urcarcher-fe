@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import UrlPreview from 'components/mymap/UrlPreview';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
-const locationIcon = "https://urcarcher-local.kro.kr/icon/markericon.png";
+const locationIcon = "/icon/markericon.png";
 
 function StoreInfoList({storeList}) {
 
