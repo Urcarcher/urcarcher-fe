@@ -1,0 +1,73 @@
+.ex_set_null_wrapper {
+    width: 80%;
+    height: 400px;
+    margin: 0 auto;
+    margin-top: 90px;
+    /* border: 1px solid red; */
+}
+
+.ex_set_chart {
+    width: 65%;
+    height: 250px;
+    margin: 0 auto;
+    /* border: 1px solid blue; */
+}
+
+.ex_set_chart img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ex_set_money {
+    width: 70%;
+    height: 250px;
+    margin: 0 auto;
+    position: relative;
+    left: 65px;
+    bottom: 160px;
+    /* border: 1px solid blue; */
+}
+
+.ex_set_money img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ex_set_null {
+    width: 100%;
+    height: 50px;
+    margin-top: -110px;
+    /* border: 1px solid green; */
+}
+
+.ex_set_null p {
+    /* font-family: 'NanumSquareNeoBold'; */
+    color: #CCCCCC;
+    font-size: 15px;
+    line-height: 50px;
+}
+
+.exchange_set_btn_wrapper {
+    width: 80%;
+    height: 50px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.exchange_set_btn {
+    font-family: 'NanumSquareNeoExtraBold';
+    font-size: 15px;
+    width: 100%;
+    height: 100%;
+    color: white;
+    background-color: #476EFF;
+    border: none;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.exchange_set_btn:hover {
+    transform: translateY(-2px);
+}
