@@ -2,29 +2,29 @@ import 'assets/Home.css';
 import axios from 'axios';
 import CurrencyRateList from 'components/home/CurrencyRateList';
 import ServiceList from 'components/home/ServiceList ';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 
 function Home(props) {
     
     const [mainCardInfo, setMainCardInfo] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    //1. 로그인 회원 정보
-    const [memberId, setMemberId] = useState('bleakwinter'); //테스트용
-
+    //1. 로그인 회원 정보   
+    const [memberId, setMemberId] = useState('bleakwinter');  //bleakwinter (신용카드) happy(선불카트) - 테스트ID
 
     //2. 회원이 소지하고 있는 첫 번째 카드 종류와 이번 달 카드 사용 금액 정보  (정보 없을 경우 예외 처리 필요)
     useEffect(() => {
         
         // memberId가 없으면 에러 처리
         if (!memberId) {
-            console.error('Member ID is missing!');
+            console.log('Member ID is missing!');
+            setLoading(false); // memberId가 없을 경우에도 로딩 상태를 false로 설정
             return;
         }
 
-        // API 호출
-        axios.get(`https://urcarcher-local.kro.kr:8443/api/home/my-main-card/${memberId}`)
+        axios.get(`/api/home/my-main-card/${memberId}`)
             .then(response => {
                 console.log(response.data)
                 setMainCardInfo(response.data);
@@ -36,20 +36,8 @@ function Home(props) {
             });
     }, [memberId]);
 
-    //계좌 번호 형태 네글자-세글자-나머지
-    // const cardAccountString = mainCardInfo.cardAccount.toString();
-    // const cardAccount = `${cardAccountString.slice(0, 4)}-${cardAccountString.slice(4, 7)}-${cardAccountString.slice(7)}`;
-   
-    if (loading) {
-        return <p>Loading...</p>; // 로딩 중일 때 표시할 내용
-    }
-
-    if (!mainCardInfo) {
-        return <p>No card information available</p>; // 데이터가 없을 때 표시할 내용
-    }
-
-    //3.실시간 환율 정보
-
+    
+    //3.실시간 환율 정보 : CurrencyRateList 컴포넌트에서 처리
     
     //현재 날짜
     const getCurrentDate = () => {
@@ -62,50 +50,90 @@ function Home(props) {
         const formattedDay = day < 10 ? `0${day}` : day;
       
         return `${formattedMonth}.${formattedDay}`;
-      };
+    };
 
     return (
         <div className="contents">
-            <div className='home-container inner'>
-                <h5>{memberId}님 반갑습니다.🙌</h5>
-                {/* <h5>🙌로그인하기</h5> */}
+            {/* <p><img src={Logo} alt="로고" /></p> */}
+            <div className='home-container'>
+             
+                {/* 로그인회원 이름으로 수정 */}
+                {memberId ? (
+                    <h5><span style={{color:'#476EFF'}}>{mainCardInfo.name}</span>님 반갑습니다!🙌</h5>
+                ) : (
+                    <h5>
+                        <Link to='/login'>🙌로그인하기</Link>
+                    </h5>
+                )}
                 <div className='main-content'>
                     <h2 className='hidden'>card section</h2>
-                    {mainCardInfo ? (
-                        <div className="card-type-wrap">
-                            <p className='card-type-text'>
-                                <span>{mainCardInfo.cardUsage === "신용카드" ? mainCardInfo.cardAccount : mainCardInfo.cardName}</span>
-                                <span className='type'>{mainCardInfo.cardUsage}</span>
-                            </p>
-                            <p className='card_balance'>{mainCardInfo.cardBalance.toLocaleString()}원</p>
-                            <p className='card-charge'>충전</p>
-                            <p className={mainCardInfo.cardUsage === "신용카드" ? 'hidden' : 'card-charge'}>충전</p>
-                        </div>
-                     ) : (
-                        <div className="card-type-wrap">
-                            <p className='card_balance'>Loading...</p>
-                        </div>
-                    )}
-                    <div className='amount-used'>
-                        <p>이번달 사용 금액</p>
-                        {mainCardInfo ? (
-                            <p>{mainCardInfo.totalPayment.toLocaleString()}원</p>
+
+                    <div className="card-type-wrap">
+                        {memberId ? ( //로그인 한 경우
+                            <>
+                                {loading ? (
+                                    <p className='card_balance'>Loading...</p>
+                                ) : mainCardInfo ? ( //로그인 후 카드 정보 있을 경우 
+                                    <>
+                                        <p className='card-type-text'>
+                                            <span>{mainCardInfo.cardUsage === "신용카드" ? mainCardInfo.card_number : mainCardInfo.cardName}</span>
+                                            <span className={mainCardInfo.cardUsage === null ? '' : 'type'}>{mainCardInfo.cardUsage}</span>
+                                        </p>
+                                        <p className='card_balance'>
+                                        {mainCardInfo.cardId === null ? (
+                                            '카드 발급 후 사용해주세요'
+                                        ) : (
+                                            mainCardInfo.cardUsage === "신용카드" ? '' : (
+                                                mainCardInfo.cardBalance ? mainCardInfo.cardBalance.toLocaleString() + '원' :  <Link to='/'>카드 충전</Link>
+                                            )
+                                        )}
+                                        </p>
+                                        <p className={mainCardInfo.cardUsage === "신용카드" ? 'hidden' : 'card-charge'}>충전</p>
+                                        <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-expiration-date' : 'hidden'}>만료일: {mainCardInfo.expiration_date}</p>
+                                        <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-name' : 'hidden'}>{mainCardInfo.name}</p>
+                                    </>
+                                ) : (
+                                    <p className='card_balance'>카드 정보가 없습니다.</p>
+                                )}
+                            </>
                         ) : (
-                            <p>Loading...</p>
+                            <>
+                                <p className='card_balance-no'>어카처의 다양한 서비스를 <br /> 이용해보세요</p>
+                                <p className='member-sigup'>
+                                    <Link to='/signup'>&gt; 회원 가입</Link>
+                                </p>
+                             </>   
                         )}
                     </div>
+                    {memberId ? ( //로그인 한 경우
+                        mainCardInfo ? ( //카드 정보 있는 경우
+                            <div className='amount-used'>
+                                <p>이번달 사용 금액</p>
+                                <p>{mainCardInfo.totalPayment ? mainCardInfo.totalPayment.toLocaleString() + '원' : mainCardInfo.totalPayment + '원'}</p>
+                            </div>
+                        ) : (
+                            <div className='amount-used'>
+                                <p className='noCardInfo-text'>결제 내역 정보가 없습니다</p>
+                            </div>
+                        )
+                    ) : (
+                        <div className='amount-used-no'>
+                            <p><Link to="/login">로그인 후 확인 가능합니다</Link></p>
+                        </div>
+                    )}
+                    
                     <div className='card-signup'>
-                            <p><Link to="/card">카드 신청 </Link></p>
-                            <p><img src="icon/icon-credit-card.png" alt="카드신청" style={{width:"40px"}}/></p>
-                       
+                        <p><Link to="/card">카드 신청</Link></p>
+                        <p><img src="icon/icon-credit-card.png" alt="카드신청" style={{width:"40px"}}/></p>
                     </div>
                 </div>
-                <div> 
+                <div className='home-content-box'> 
                     <h4 className='home-title'>서비스</h4>
                     <ServiceList />
                 </div>
-                <div> 
-                    <h4 className='home-title'>현재 환율 <span className='rate-date'>({getCurrentDate()}기준)</span></h4>
+                <div className='home-title-wrap'> 
+                    <h4 className='home-title'>현재 환율</h4> 
+                    <p className='rate-date'>({getCurrentDate()}기준)</p>
                     <CurrencyRateList />
                 </div>
             </div>

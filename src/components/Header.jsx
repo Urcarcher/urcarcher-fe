@@ -1,6 +1,8 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import 'components/Header.css';
+import { getTitle } from 'components/Pathname.js';  // 경로에 맞는 제목 설정 함수 임포트
+import Logo from 'assets/logo2.png';
 
 function Header() {
     const navigate = useNavigate();
@@ -49,12 +51,18 @@ function Header() {
     return (
         <header>
             <div className='header-wrap'>
-                <button
-                    onClick={() => navigate(-1)}  // 뒤로 가기 버튼 클릭 시 이전 페이지로 이동
-                >
-                    <img src="/icon/left-arrow.png" alt="화살표" />
+            {location.pathname === '/' ? (
+            <p className='home-logo'>
+                <img src={Logo} alt="로고" />
+            </p>
+            ) : (
+            <>
+                <button onClick={() => navigate(-1)}>
+                <img src="/icon/left-arrow.png" alt="화살표" />
                 </button>
-                <h5>{getTitle(location.pathname)}</h5> {/* 경로에 맞는 제목 표시 */}
+                <h5>{getTitle(location.pathname)}</h5>
+            </>
+            )}
             </div>
         </header>
     );

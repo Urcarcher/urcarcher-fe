@@ -17,7 +17,7 @@ function MyCategoryRank(props) {
     //서버로 부터 결제 내역의 카테고리 데이터 호출
     useEffect(() => {
         // 데이터 호출
-        axios.get(`https://urcarcher-local.kro.kr:8443/api/paymentPlace/categories`, {
+        axios.get(`/api/paymentPlace/categories`, {
             params: {
                 memberId: memberId
             }
