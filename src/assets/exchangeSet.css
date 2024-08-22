@@ -1,0 +1,11 @@
+.exchange_set_wrapper {
+    width: 100%;
+    height: 40px;
+    margin-top: 60px;
+}
+
+.exchange_set_wrapper h3 {
+    margin: 0;
+    padding: 0;
+    line-height: 40px;
+}

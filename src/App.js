@@ -44,6 +44,9 @@ import CardManagerment from 'pages/card/CardManagerment';
 import Reservation from 'pages/tourguide/Reservation';
 import Payment from 'pages/card/Payment';
 import Verification from 'pages/card/Verification';
+import ExchangeSetNull from 'pages/exchange/ExchangeSetNull';
+import ExchangeSetRate from 'pages/exchange/ExchangeSetRate';
+import ExchangeSetSuccess from 'pages/exchange/ExchangeSetSuccess';
 
 
 function App() {
@@ -80,6 +83,8 @@ function App() {
           <Route path='/exchange/currency' element={<ExchangeCurrency/>}></Route>
           <Route path='/exchange/success' element={<ExchangeSuccess/>}></Route>
           <Route path='/exchange/set' element={<ExchangeSet/>}></Route>
+          <Route path='/exchange/set/rate' element={<ExchangeSetRate/>}></Route>
+          <Route path='/exchange/set/success' element={<ExchangeSetSuccess/>}></Route>
           <Route path='/MapComponent' element={<MapComponent/>}></Route>
           <Route path='/MapComponent/:detailDestination' element={<MapComponent/>}/>
           <Route path='/TourGuide/:areaCode/:contentTypeId' element={<TourGuide/>}/>

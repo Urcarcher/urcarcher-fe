@@ -16,7 +16,7 @@ function ExchangeCurrency(props) {
 
     console.log("선택한 카드 정보 받기", exCard);
     console.log("선택한 카드 아이디 받기", exCard.cardId);
-    console.log(typeof exCard);
+    // console.log(typeof exCard);
     
     const [nation, setNation] = useState("USD"); // 사용자 국적 임시 data
 
@@ -126,12 +126,12 @@ function ExchangeCurrency(props) {
         }
 
         if (!exchangeCurInfo || !exchangeCurInfo[nation] || !exchangeCurInfo[nation].rate) {
-            alert("환율 정보를 조회하는 중입니다. 다시 시도해 주세요");
+            alert("환율 정보를 찾고 있어요. 다시 시도해 주세요");
             return;
         }
     
         if (!calculateAmount || parseFloat(calculateAmount) <= 0) {
-            alert("예상 원화 금액을 계산할 수 없습니다. 다시 시도해 주세요");
+            alert("예상 원화 금액을 계산할 수 없어요. 다시 시도해 주세요");
             return;
         }
 
@@ -142,15 +142,16 @@ function ExchangeCurrency(props) {
             exPay: parseFloat(calculateAmount) // 결제금액
         };
     
-        axios.post("https://urcarcher-local.kro.kr:8443/api/exchange/insert", data, {
+        // axios.post("https://urcarcher-local.kro.kr:8443/api/exchange/insert", data, {
+        axios.post("/api/exchange/insert", data, {
             headers: {
                 "Content-Type": "application/json"
             }
         })
         .then(response => {
             console.log("바로 충전 성공", response.data);
-            
             setExchangeCurInfo(response.data);
+            
             navi("/exchange/success", {
                 state: {
                     successMsg: response.data,
@@ -166,51 +167,51 @@ function ExchangeCurrency(props) {
 
     return (
         <div className="contents">
-            <div className="cur_title">
+            <div className="exCur_title">
                 <h3>얼마를 <span style={{ color: "#476EFF" }}>충전</span>할까요?</h3>
             </div>
-            <div className="ex_wrapper">
+            <div className="exCur_wrapper">
                 <h5>대한민국 KRW</h5>
-                <div className="inputDiv">
+                <div className="exCur_div">
                     <input
                         name="exCur"
                         type="text"
                         value={currency === 0 || currency === null ? "충전할 금액 입력" : currency}
+                        onFocus={focusHandle}
                         onKeyDown={keyDownHandle}
                         onChange={numberHandle}
-                        onFocus={focusHandle}
                         style={{ width: `${inputWidth}px`, color: currency === 0 || currency === null ? "#BFBFBF" : "black" }}
-                        autocomplete="off"
+                        autoComplete="off"
                         />
                 </div>
             </div>
-            <div className="cur_wrapper">
+            <div className="exAmt_wrapper">
                 <h5>{nation} (사용자의 국적)</h5>
-                <p className="amount_text">{calculateAmount}달러</p>
+                <p className="exAmt_text">{calculateAmount}달러</p>
                 {exchangeCurInfo[nation] ? 
-                (<p style={{ color: "#BFBFBF" }}>1달러 = {exchangeCurInfo[nation].rate}원</p>) : (<p style={{ color: "#BFBFBF" }}>환율 정보를 조회하는 중입니다</p>)}
+                (<p style={{ color: "#BFBFBF" }}>1달러 = {exchangeCurInfo[nation].rate}원</p>) : (<p style={{ color: "#BFBFBF" }}>환율 정보를 찾고 있어요</p>)}
             </div>
-            <div className="rate_wrapper">
+            <div className="exRate_wrapper">
                 <p style={{ fontFamily: "NanumSquareNeoExtraBold", textAlign: "left", marginLeft: "20px" }}>환율우대</p>
-                <div className="rate_table">
-                    <div className="rate_col">
-                        <p className="left_text">적용환율</p>
+                <div className="exRate_table">
+                    <div className="exRate_col">
+                        <p className="exRate_left_text">적용환율</p>
                         {exchangeCurInfo[nation] ? 
-                        (<p className="right_text">KRW {exchangeCurInfo[nation].rate} = 1달러</p>) : (<p className="right_text">환율 정보를 조회하는 중입니다</p>)}
+                        (<p className="exRate_right_text">KRW {exchangeCurInfo[nation].rate} = 1달러</p>) : (<p className="exRate_right_text">환율 정보를 찾고 있어요</p>)}
                     </div>
-                    <div className="rate_col">
-                        <p className="left_text">우대사항</p>
-                        <p className="right_text">환율우대 90%</p>
+                    <div className="exRate_col">
+                        <p className="exRate_left_text">우대사항</p>
+                        <p className="exRate_right_text">환율우대 90%</p>
                     </div>
-                    <div className="rate_line"></div>
-                    <div className="rate_col">
-                        <p className="left_text">원화 예상 금액</p>
-                        <p className="right_text">{calculateAmount}달러</p>
+                    <div className="exRate_line"></div>
+                    <div className="exRate_col">
+                        <p className="exRate_left_text">원화 예상 금액</p>
+                        <p className="exRate_right_text">{calculateAmount}달러</p>
                     </div>
                 </div>
             </div>
-            <div className="plus_wrapper">
-                <button className="plus_btn" onClick={insertHandle}>충전하기</button>
+            <div className="exRate_plus_wrapper">
+                <button className="exRate_plus_btn" onClick={insertHandle}>충전하기</button>
             </div>
         </div>
     );

@@ -1,0 +1,88 @@
+.set_rate_wrapper {
+    width: 100%;
+    height: 700px;
+    margin-top: 60px;
+    overflow-y: scroll;
+    /* border: 1px solid red; */
+}
+
+.set_rate_table {
+    width: 85%;
+    /* height: 250px; */
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    /* padding: 10px; */
+    border-radius: 7px;
+    overflow-y: scroll;
+    /* border: 1px solid #CCCCCC; */
+}
+
+/* .set_rate_table::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+}
+
+.set_rate_table::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.set_rate_table::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+} */
+
+.set_rate_list {
+    width: 100%;
+    height: 175px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 7px;
+    text-align: left;
+    /* border: 1px solid #476EFF; */
+    border: 1px solid #CCCCCC;
+}
+
+.set_rate_left {
+    width: 110px;
+    float: left;
+    text-align: left;
+    /* border: 1px solid red; */
+}
+
+.set_rate_right {
+    width: 150px;
+    float: right;
+    color: #476EFF;
+    text-align: right;
+    /* border: 1px solid red; */
+}
+
+.set_rate_value {
+    width: 85%;
+    height: 200px;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-radius: 7px;
+    /* border: 1px solid red; */
+}
+
+.MuiPaper-root {
+    width: 350px !important;
+    max-height: 310px !important;
+    border-radius: 10px !important;
+}
+
+.css-1rtg91x-MuiDateCalendar-root {
+    max-height: 310px;
+}
+
+.set_rate_cur input {
+    border: none;
+    background-color: white;
+}
