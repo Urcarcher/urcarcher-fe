@@ -20,6 +20,8 @@ function Header() {
                 return '카드 신청';
             case '/login':
                 return '로그인';
+            case '/login/new':
+                return '어카처 ID 생성';
             case '/exchange':
             case '/exchange/currency':
                 return '환전';
