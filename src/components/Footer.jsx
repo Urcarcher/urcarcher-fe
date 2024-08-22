@@ -16,7 +16,7 @@ function Footer(props) {
         {   src: "/icon/menu/menu.png", 
             alt: "메뉴", 
             activeSrc: "/icon/menu/menu-active.png", 
-            path: '' 
+            path: '#' 
         }
     ];
 
@@ -37,24 +37,29 @@ function Footer(props) {
     };
     return (
         <>
-          <footer className='footer-wrap'>
-              <ul className='menu-list'>
-                  {menuItems.map((item, index) => (
-                      <li key={index}>
-                          <Link 
-                              to={item.path || "javascript:void(0);"} 
-                              onClick={() => handleMenuClick(index)}
-                          >
-                              <img 
-                                  src={activeIndex === index ? item.activeSrc : item.src} 
-                                  alt={item.alt} 
-                              />
-                          </Link>
-                      </li>
-                  ))}
-              </ul>
-          </footer>
-          {isMenuVisible && <Menu onClose={handleCloseSideMenu} />} {/* 메뉴가 보일 때만 렌더링 */}
+            <footer className='footer-wrap'>
+                <ul className='menu-list'>
+                    {menuItems.map((item, index) => (
+                        <li key={index}>
+                            <Link 
+                                to={item.path}
+                                onClick={(e) => {
+                                    if (index === 3) {
+                                        e.preventDefault(); // 기본 링크 동작 방지
+                                    }
+                                    handleMenuClick(index);
+                                }}
+                            >
+                            <img 
+                                src={activeIndex === index ? item.activeSrc : item.src} 
+                                alt={item.alt} 
+                            />
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </footer>
+            {isMenuVisible && <Menu onClose={handleCloseSideMenu} />} {/* 메뉴가 보일 때만 렌더링 */}
         </>
     );
 }

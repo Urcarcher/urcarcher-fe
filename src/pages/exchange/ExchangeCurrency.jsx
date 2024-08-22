@@ -34,7 +34,7 @@ function ExchangeCurrency(props) {
 
     // 웹소켓 연결 설정
     const wsConnect = useCallback(()=>{
-        cwsc.current = new WebSocket("wss://urcarcher-local.kro.kr:8443/realtime/rate");
+        cwsc.current = new WebSocket(process.env.REACT_APP_WEBSOCKET_SERVICE_URL);
 
         cwsc.current.onmessage = (message) => {
             const rcvData = JSON.parse(message.data);

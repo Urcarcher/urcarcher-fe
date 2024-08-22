@@ -2,7 +2,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import 'assets/exchangeSet.css';
 import ExchangeSetNull from './ExchangeSetNull';
 import ExchangeSetList from './ExchangeSetList';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function ExchangeSet(props) {
     // 이전 페이지에서 보낸 선택한 카드 정보
@@ -14,6 +15,19 @@ function ExchangeSet(props) {
     console.log("선택한 카드 아이디 받기", reserveCard.cardId);
 
     const navi = useNavigate();
+
+    const [reserveInfo, setReserveInfo] = useState({}); // 예약 정보
+
+    useEffect(() => {
+        axios.get(`/api/exchange/rate/detail/${reserveCard.cardId}`)
+            .then((response) => {
+                setReserveInfo(response.data);
+                console.log("예약 카드 조회", response.data);
+            })
+            .catch((error) => {
+                console.log("예약 조회 실패", error);
+            });
+    }, []);
 
     // 자동 충전 설정 페이지
     const exchangeSetHandle = () => {
@@ -29,10 +43,13 @@ function ExchangeSet(props) {
                 <h3>자동 충전해요</h3>
             </div>
             {/* 설정 없음 */}
-            <ExchangeSetNull exchangeSetHandle={exchangeSetHandle}/>
-
+            <div style={{ display: reserveInfo === "" ? "block" : "none" }}>
+                <ExchangeSetNull exchangeSetHandle={exchangeSetHandle}/>
+            </div>
             {/* 설정 있음 */}
-            {/* <ExchangeSetList/> */}
+            <div style={{ display: reserveInfo !== "" ? "block" : "none" }}>
+                <ExchangeSetList/>
+            </div>
         </div>
     );
 }
