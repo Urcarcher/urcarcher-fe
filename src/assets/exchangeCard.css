@@ -1,17 +1,17 @@
-.card_title {
+.exCard_title {
     width: 100%;
     height: 80px;
     margin-top: 20px;
     /* border: 1px solid red; */
 }
 
-.card_title h3 {
+.exCard_title h3 {
     margin: 0;
     padding: 0;
     line-height: 80px;
 }
 
-.card_wrapper {
+.exCard_wrapper {
     font-family: 'NanumSquareNeoBold';
     width: 100%;
     height: auto;
@@ -19,18 +19,18 @@
     /* border: 1px solid red; */
 }
 
-.card_wrapper p {
+.exCard_wrapper p {
     margin-top: 25px;
     margin-left: 25px;
     line-height: 16px
 }
 
-.card_balance {
+.exCard_balance {
     font-family: 'NanumSquareNeoExtraBold';
     font-size: 18px;
 }
 
-.card_text {
+.exCard_text {
     font-size: 13px;
     color: #CCCCCC;
 }
@@ -81,7 +81,17 @@
     bottom: 40px;
 }
 
-.btn_container {
+.exCard_btn::before {
+    content: "";
+    position: absolute;
+    bottom: 3.5px;
+    width: 33px;
+    height: 1px;
+    display: block;
+    background-color: #CCCCCC;
+}
+
+.exCard_btn_container {
     font-family: 'NanumSquareNeoExtraBold';
     font-size: 15px;
     width: 85%;
@@ -91,7 +101,7 @@
     /* border: 1px solid red; */
 }
 
-.back_btn {
+.exCard_back_btn {
     width: 165px;
     height: 50px;
     float: left;
@@ -103,11 +113,11 @@
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
 }
 
-.back_btn:hover {
+.exCard_back_btn:hover {
     transform: translateY(-2px);
 }
 
-.next_btn {
+.exCard_next_btn {
     width: 165px;
     height: 50px;
     float: right;
@@ -119,6 +129,6 @@
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
 }
 
-.next_btn:hover {
+.exCard_next_btn:hover {
     transform: translateY(-2px);
 }

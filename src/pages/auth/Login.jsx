@@ -15,15 +15,11 @@ function Login() {
     const data = new FormData(event.target);
     const username = data.get("username");
     const password = data.get("password");
-
-    console.log(username);
-    console.log(password);
-
     signin({ memberId: username, password: password });
   };
 
   return (
-    <div className="align-items-center row">
+    <div className="align-items-center row contents">
       <div className="px-lg-4 col-lg-6">
         <div className="card">
           <div className="p-lg-5 card-body">
@@ -41,12 +37,16 @@ function Login() {
               <button type="submit" className="btn btn-primary btn-lg">로그인</button>
 
               <div className="mb-3 form-check">
-                <input type="checkbox" id="agree" className="form-check-input" />
-                <label title="" for="agree" className="form-check-label">자동 로그인</label>
+                <div className="fc-1">
+                  <input type="checkbox" id="agree" className="form-check-input" />
+                  <label title="" for="agree" className="form-check-label">자동 로그인</label>
+                </div>
 
-                <Link to="/find/id" className="findid">아이디 찾기</Link>
-                <label>|</label>
-                <Link to="/find/pw">비밀번호 찾기</Link>
+                <div className="fc-2">
+                  <Link to="/find/id" className="findid">아이디 찾기</Link>
+                  <label>|</label>
+                  <Link to="/find/pw">비밀번호 찾기</Link>
+                </div>
               </div>
 
             </form>
@@ -54,11 +54,18 @@ function Login() {
               <img className="logo" src={googleLogo}/>
               Google 로그인
             </button>
+            
             <button className="btn btn-primary btn-lg oauth">
               <img className="logo" src={appleLogo}/>
               Apple 로그인
             </button>
+
+            <div className="wantsign">
+              <span>아직 회원이 아니신가요?</span>
+              <button>회원가입</button>
+            </div>
           </div>
+
         </div>
       </div>
     </div>

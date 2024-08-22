@@ -1,18 +1,32 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // React Router의 Link 컴포넌트 추가
+
 import '../../assets/CourseCard.css';
+import { useNavigate } from 'react-router-dom';
 
 const CourseCard = ({ course }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/course/${course.courseId}`, { state: { courseName: course.courseName } });
+    };
+
+    // 이미지 URL 정리
+    const imageUrl = course.courseImg.replace(/^"|"$/g, '');
+
     return (
-        <Link to={`/course/${course.courseId}`} className="course-card-link"> {/* Link로 코스 상세 페이지로 연결 */}
+        <div onClick={handleClick} className="course-card-link">
             <div className="course-card">
-                <img src={course.imageUrl} alt={course.courseName} className="course-image" />
+                <img
+                    src={imageUrl}
+                    alt={course.courseName}
+                    className="course-image"
+                />
                 <div className="course-info">
                     <p className="course-region">{course.region}</p>
                     <p className="course-name">{course.courseName}</p>
                 </div>
             </div>
-        </Link>
+        </div>
     );
 };
 

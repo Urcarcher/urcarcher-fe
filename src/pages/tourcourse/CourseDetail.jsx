@@ -20,18 +20,67 @@ const CourseDetail = () => {
       .then((response) => {
         const courseData = response.data.map(item => ({
           ...item,
-          latitude: item.latitude.toFixed(3),
-          longitude: item.longitude.toFixed(3),
+          latitude: parseFloat(item.latitude).toFixed(5),
+          longitude: parseFloat(item.longitude).toFixed(5),
         }));
         console.log('Course data:', courseData);
         setCourse(courseData);
         setLoading(false);
+  
+        // 카카오맵 스크립트 로드 및 지도 표시
+        const script = document.createElement('script');
+        script.async = true;
+        // script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAOMAP_APP_KEY}&libraries=services`;
+        document.head.appendChild(script);
+  
+        script.onload = () => {
+          const firstPlace = courseData[0]; // 첫 번째 장소를 사용하여 초기 중심 위치 설정
+          const mapContainer = document.getElementById('map'); // 지도를 표시할 div
+  
+          const geocoder = new window.kakao.maps.services.Geocoder();
+  
+          // 첫 번째 주소를 사용해 좌표를 가져와서 지도 중심으로 설정
+          geocoder.addressSearch(firstPlace.address, (result, status) => {
+            if (status === window.kakao.maps.services.Status.OK) {
+              const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+  
+              const mapOption = {
+                center: coords, // 첫 번째 장소의 좌표로 지도 중심 설정
+                level: 5 // 지도 확대 레벨
+              };
+  
+              const map = new window.kakao.maps.Map(mapContainer, mapOption);
+  
+              // 모든 주소에 대해 마커 추가
+              courseData.forEach(item => {
+                const markerPosition = new window.kakao.maps.LatLng(item.latitude, item.longitude);
+  
+                const marker = new window.kakao.maps.Marker({
+                  map: map,
+                  position: markerPosition
+                });
+  
+                // 마커에 클릭 이벤트 추가
+                window.kakao.maps.event.addListener(marker, 'click', function() {
+                  alert(`${item.placeName}\n${item.address}`);
+                });
+              });
+            }
+          });
+        };
+  
+        return () => {
+          // 컴포넌트 언마운트 시 스크립트 제거
+          document.head.removeChild(script);
+        };
+  
       })
       .catch((error) => {
         console.error('Error fetching course:', error);
         setLoading(false);
       });
   }, [courseId]);
+  
 
   const getGeolocation = async () => {
     try {
@@ -164,39 +213,62 @@ const CourseDetail = () => {
     }, 200);
   };
 
-  return (
-    <div className="course-detail">
+
+    return (
+      <div className="course-detail">
       <div className="course-items-container">
         {course.map((item) => (
           <div key={item.placeId} className="course-item">
             <h2>{item.placeName}</h2>
             <button onClick={() => handleButtonClick(item)}>
-              장소 인증하기
+              장소 <br />인증하기
             </button>
+
+            
           </div>
         ))}
       </div>
 
-      {mapModalOpen && (
-        <div className="modal map-modal" style={{ display: 'flex' }}>
-          <div className="modal-content">
-            <span className="close" onClick={closeMapModal}>&times;</span>
-            <h2>현재 위치</h2>
-            <div id="map" style={{ width: '100%', height: '400px' }}></div>
-          </div>
-        </div>
-      )}
+   
+      <div className="place-containers">
+        {course.map((item) => (
+          <div key={item.placeId} className="all-place-container">
+            <div className="place-container">
+            <img src={item.placeImg} alt={item.placeName} className="place-image" />
+            <div className="place-details">
+              <h2 className="place-name">{item.placeName}</h2>
+              <p className="place-address">{item.address}</p>
+              <p className="place-content">{item.content}</p>
+            </div>
+              
+            </div>
 
-      {verificationModalOpen && (
-        <div className="modal verification-modal" style={{ display: 'flex', zIndex: 1100 }}>
-          <div className="modal-content">
-            <span className="close" onClick={closeVerificationModal}>&times;</span>
-            <p>{modalMessage}</p>
+            <p className="place-detail-content">{item.detailContent}</p>
           </div>
-        </div>
-      )}
-    </div>
-  );
-};
+        ))}
+      </div>
+
+      <div id="map" style={{ width: '100%', height: '400px' }}></div> 
+        {mapModalOpen && (
+          <div className="modal map-modal" style={{ display: 'flex' }}>
+            <div className="modal-content">
+              <span className="close" onClick={closeMapModal}>&times;</span>
+              <h2>현재 위치</h2>
+              <div id="map" style={{ width: '100%', height: '400px' }}></div>
+            </div>
+          </div>
+        )}
+  
+        {verificationModalOpen && (
+          <div className="modal verification-modal" style={{ display: 'flex', zIndex: 1100 }}>
+            <div className="modal-content">
+              <span className="close" onClick={closeVerificationModal}>&times;</span>
+              <p>{modalMessage}</p>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
 
 export default CourseDetail;
