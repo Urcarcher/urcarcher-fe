@@ -5,10 +5,6 @@
     }
 }
 
-.App > div {
-    margin-top: 20%;
-}
-
 .card {
     box-shadow: none !important;
 }
@@ -31,11 +27,6 @@
     align-self: center;
 
     margin-top: 3%;
-}
-
-.form-check > label {
-    margin-top: 1%;
-    margin-left: 1%;
 }
 
 #agree {
@@ -72,11 +63,52 @@
     margin-right: 3%;
 }
 
-.form-check > a {
-    color: #777;
-    margin-left: 1%;
+.form-check {
+    width: 100%;
 }
 
-.findid {
-    margin-left: 23% !important;
+.fc-1 {
+    float: left;
+    width: 30%;
+    margin-left: 5px;
+}
+
+.fc-1 > label {
+    margin-top: 4px;
+    margin-left: 3px;
+}
+
+.fc-2 {
+    margin-top: 4px;
+    float: right;
+    width: 60%;
+    text-align: right;
+}
+
+.fc-2 > * {
+    color: #777;
+}
+
+.fc-2 > label {
+    margin: 0 1%;
+}
+
+.wantsign {
+    margin-top: 15px;
+}
+
+.wantsign > span, button {
+    color: #476EFF;
+}
+
+.wantsign > button {
+    background-color: white;
+    border: 2px solid rgba(71, 110, 255, .50);
+    border-radius: 8px;
+    margin-left: 10px;
+}
+
+.wantsign > button:hover {
+    background-color: #064AFF;
+    color: white;
 }
