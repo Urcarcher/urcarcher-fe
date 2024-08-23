@@ -10,7 +10,6 @@ function DetailPage() {
   const { type, id } = useParams(); // id와 type을 URL 파라미터로 받음
   const [detailData, setDetailData] = useState(null);
   const [error, setError] = useState(null);
-  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,9 +44,11 @@ function DetailPage() {
   // 응답 데이터 구조에 맞게 수정 필요
   const item = detailData.response?.body?.items?.item[0];
 
+  
   if (!item) {
     return <div>No detail available</div>;
   }
+
 
   return (
     <div>
@@ -87,12 +88,17 @@ function DetailPage() {
         >
           길찾기
         </Button>
-        <Button style={{width:'110px'}} onClick={()=>{
-          navigate(`/reservation1`);
-          // <Reservation/>
-        }}>
-          예약 및 결제
-        </Button>
+
+        {
+          type === 'tour' ? ''
+          :
+          <Button style={{width:'110px'}} onClick={()=>{
+            navigate(`/reservation1`, { state: { title : item.title, location : item.addr1 } });
+          }}>
+            예약 및 결제
+          </Button>
+        }
+        
         <br/>
         <br/>
         <br/>

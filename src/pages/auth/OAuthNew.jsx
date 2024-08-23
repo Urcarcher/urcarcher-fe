@@ -1,19 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
+import "pages/auth/OAuthNew.css";
+import { oauthNew } from 'services/AuthService';
 
 function OAuthNew(props) {
   var loc = useLocation();
-  const navi = useNavigate();
+  const nav = useNavigate();
 
+  const [email, setEmail] = useState("");
   const [showModal, setShowModal] = useState(null); // 현재 열린 모달을 추적
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(()=>{
+    try {
+      if(loc.state.role == "GUEST") {
+        setEmail(loc.state.email);
+        setUserInfo({...userInfo, ['provider']: loc.state.provider, ['email']: loc.state.email});
+      }
+    } catch (error) {
+      nav("/login");
+    }
+  }, []);
 
   // 각 약관을 본 상태를 추적
   const [viewedTerms, setViewedTerms] = useState({
     information: false,
-    location: false,
-    matching: false,
   });
 
   const [userInfo, setUserInfo] = useState({
@@ -27,11 +39,17 @@ function OAuthNew(props) {
   });
 
   const handleInfoChange = (e) => {
-      console.log(e.target.name);
-
       if(e.target.name.includes("Consent")) {
         const { name, checked } = e.target;
         setUserInfo({ ...userInfo, [e.target.name]: checked });
+        return;
+      } else if(e.target.name === "registrationNumber") {
+        let val = e.target.value;
+        if(!val.endsWith('-')) {
+          val = val.length > 6 && val.length < 8 ? val.substring(0, 6) + "-" + val.substring(6) : val;
+        }
+        setUserInfo({ ...userInfo, [e.target.name]: val });
+        e.target.value = val;
         return;
       }
 
@@ -41,22 +59,31 @@ function OAuthNew(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    const requiredFields = [
+      'registrationNumber', 'gender', 'nationality', 'phoneNumber'
+    ];
+
+    const isEmptyField = requiredFields.some(field => !userInfo[field]);
+
+    if (isEmptyField) {
+      alert("모든 정보를 입력해주세요.");
+      return;
+    }
+
     if (!userInfo.informationConsent) {
       setErrorMessage("개인정보 수집 및 이용 동의는 필수에요.");
       return;
     }
     if (
-      !viewedTerms.information ||
-      !viewedTerms.location ||
-      !viewedTerms.matching
+      !viewedTerms.information
     ) {
-      setErrorMessage("모든 약관을 확인해야 완료할 수 있어요.");
+      setErrorMessage("필수 약관을 확인해야 완료할 수 있어요.");
       return;
     }
+    
+    oauthNew(userInfo);
 
-    // const data = new FormData(event.target);
-    // console.log(data.get("username"));
-    console.log(userInfo);
+    // console.log(userInfo);
   };
 
   const handleShowModal = (modalType) => setShowModal(modalType);
@@ -64,6 +91,7 @@ function OAuthNew(props) {
 
   const handleModalClose = (modalType) => {
     setViewedTerms({ ...viewedTerms, [modalType]: true });
+    setUserInfo({...userInfo, [modalType+"Consent"]:true});
     handleCloseModal();
   };
   return (
@@ -85,7 +113,7 @@ function OAuthNew(props) {
                   <hr></hr>
                   <form noValidate onSubmit={handleSubmit}>
                     <div className="form-floating mb-3">
-                      <input id="email" name="email" className="form-control" value={loc.state.email} disabled />
+                      <input id="email" name="email" className="form-control" value={email} disabled />
                       <label className="form-label" for="email">이메일</label>
                     </div>
 
@@ -169,23 +197,27 @@ function OAuthNew(props) {
                       <label className="form-label" for="phoneNumber">연락처</label>
                     </div>
 
-                    <div className="col-md-12 mb-3 ">
-                      <input
-                        type="radio"
-                        name="gender"
-                        className="form-check-input"
-                        value="male"
-                        checked={userInfo.gender === 'male'}
-                        onChange={handleInfoChange}
-                      /> 남성
-                      <input
-                        type="radio"
-                        name="gender"
-                        className="form-check-input"
-                        value="female"
-                        checked={userInfo.gender === 'female'}
-                        onChange={handleInfoChange}
-                      /> 여성
+                    <div className="col-md-12 mb-3 gender">
+                      <div>
+                        <input
+                          type="radio"
+                          name="gender"
+                          className="form-check-input"
+                          value="male"
+                          checked={userInfo.gender === 'male'}
+                          onChange={handleInfoChange}
+                        />
+                        <label>남성</label>
+                        <input
+                          type="radio"
+                          name="gender"
+                          className="form-check-input"
+                          value="female"
+                          checked={userInfo.gender === 'female'}
+                          onChange={handleInfoChange}
+                        />
+                        <label>여성</label>
+                      </div>
                     </div>
 
                     <div className="mb-3 form-check">
@@ -196,12 +228,15 @@ function OAuthNew(props) {
                         checked={userInfo.informationConsent}
                         onChange={handleInfoChange}
                       />
-                      <label htmlFor="agree" className="form-check-label"></label>
-                      &nbsp;개인정보 수집 및 이용 (필수)&nbsp;
+
+                      <label htmlFor="agree" className="form-check-label">
+                        &nbsp;개인정보 수집 및 이용 (필수)&nbsp;
+                      </label>
+
                       <Button
                         variant="link"
                         onClick={() => handleShowModal("information")}
-                        style={{ marginLeft: "10px" }}
+                        className='agree-btn'
                       >
                         보기
                       </Button>
@@ -215,11 +250,15 @@ function OAuthNew(props) {
                         checked={userInfo.locationConsent}
                         onChange={handleInfoChange}
                       />
-                      &nbsp;위치정보 이용 동의 (선택)&nbsp;
+
+                      <label htmlFor="agree" className="form-check-label">
+                        &nbsp;위치정보 이용 동의 (선택)&nbsp;
+                      </label>
+                      
                       <Button
                         variant="link"
                         onClick={() => handleShowModal("location")}
-                        style={{ marginLeft: "10px" }}
+                        className='agree-btn'
                       >
                         보기
                       </Button>
@@ -233,11 +272,15 @@ function OAuthNew(props) {
                         checked={userInfo.matchingConsent}
                         onChange={handleInfoChange}
                       />
-                      &nbsp;매칭 서비스 활용 동의 (선택)&nbsp;
+
+                      <label htmlFor="agree" className="form-check-label">
+                       &nbsp;매칭 서비스 활용 동의 (선택)&nbsp;
+                      </label>
+                      
                       <Button
                         variant="link"
                         onClick={() => handleShowModal("matching")}
-                        style={{ marginLeft: "10px" }}
+                        className='agree-btn'
                       >
                         보기
                       </Button>

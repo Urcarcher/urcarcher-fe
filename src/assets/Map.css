@@ -135,7 +135,21 @@
   transform: translateY(-50%);
   margin-bottom: -70px;
 }
-
+.maphome_textwrap{
+  animation: slideUp 1s ease-out; /* 1초 동안 애니메이션 적용 */
+  opacity: 1; /* 초기 상태를 설정 */
+}
+/* 애니메이션 정의 */
+@keyframes slideUp {
+  from {
+      transform: translateY(30px); /* 화면 아래에서 시작 */
+      opacity: 0; /* 투명도 0으로 시작 */
+  }
+  to {
+      transform: translateY(0); /* 원래 위치로 이동 */
+      opacity: 1; /* 투명도 1로 끝 */
+  }
+}
 .current-location-btn{
   position: absolute;
   right: 10px;

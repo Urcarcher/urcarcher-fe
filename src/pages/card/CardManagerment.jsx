@@ -9,9 +9,176 @@ import SettingPassword from './SettingPassword';
 import LoseCard from './LoseCard';
 import CancelCard from './CancelCard';
 import PaymentSummary from './PaymentSummary';
+import Axios from 'axios';
 
 // Styled-components for CardManagerment
 
+function CardManagerment(props) {
+    // 임시 
+    const test = [{name:'card1', value:'test1', cardTypeId:11},{name:'card1', value:'test1', cardTypeId:11}];
+
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState("");
+    const [modalTitle, setModalTitle] = useState('');
+
+    const flickityOptions = {
+        cellAlign: 'center',
+        pageDots: false,
+        groupCells: '20%',
+        selectedAttraction: 0.03,
+        friction: 0.15,
+        contain: false,
+        initialIndex: 0 // 첫 번째 카드가 중앙에 오도록 설정
+    };
+
+    const [isCardActive, setIsCardActive] = useState(true); // 카드 활성화 상태
+
+    const handleToggleChange = (event) => {
+      const newActiveState = event.target.checked;
+      setIsCardActive(newActiveState);
+  
+      Axios.post('/api/card/cardstatus', {
+        cardId: 5,    // 여기 카드아이디 삽입 ---> 향후 수정
+        isActive: newActiveState
+      }).then(response => {
+        console.log('카드 상태가 업데이트되었습니다.');
+      }).catch(error => {
+        console.error('카드 상태 업데이트에 실패했습니다.');
+      });
+  };
+
+    const handleOptionClick = (content) => {
+        // test
+        // console.log(content);
+        
+        switch(content){
+            case "1":
+                setModalContent(<PaymentSummary setShowModal={setShowModal}/>);
+                setModalTitle('결제 예상 금액');
+                break;
+            case "2":
+                setModalContent(<ChargePayment setShowModal={setShowModal}/>);
+                setModalTitle('금액 충전');
+                break;
+            case "3":
+                setModalContent(<SettingPassword setShowModal={setShowModal}/>);
+                setModalTitle('카드 비밀번호 설정');
+                break;
+            // case "4":
+            //     setModalContent(<LoseCard setShowModal={setShowModal}/>);
+            //     setModalTitle('분실신고');
+            //     break;
+            case "5":
+                setModalContent(<CancelCard setShowModal={setShowModal}/>);
+                setModalTitle('카드해지');
+                break;
+            default:
+                console.log("올바른 선택지가 아닙니다.");
+        }
+        
+        setShowModal(true);
+    };
+
+    return (
+        <>
+            <CardDetailsContainer>
+            <br/><br/><br/><br/><br/><br/>
+                <CardSection>
+                    <button className="arrow-button arrow-left">
+                      ‹
+                    </button>
+                    <FlickityStyled
+                        options={flickityOptions}
+                        flickityRef={(c) => {
+                            if (c) {
+                                console.log(c);
+                                //c.on('change', (index) => handleChange(index));
+                            }
+                        }}
+                    >
+                        {test.map((t, index) => (
+                            <CarouselCell key={t.cardTypeId}>
+                                <CardOverlay
+                                    className='my-custom-class'
+                                    img={ require(`../../assets/Card${t.cardTypeId}.png`)}
+                                    imgStyle={{width:'335px', height:'200px'}}
+                                />
+                            </CarouselCell>
+                        ))}
+                    </FlickityStyled>
+                    {/* 오른쪽 화살표 */}
+                    <button className="arrow-button arrow-right">
+                      ›
+                    </button>
+                </CardSection>
+                <br/><br/><br/><br/>
+
+                <ListGroup variant="flush" className="options-section">
+                    <OptionItem>
+                        <span className="option-text" style={{color:'#064AFF'}}><strong>카드번호</strong></span>
+                        <MaskedCardInfo>●●●● - ●●●● - ●●●● - ●●●●</MaskedCardInfo>
+                    </OptionItem>
+                    <OptionItem onClick={() => handleOptionClick("1")}>
+                        결제 예상 금액
+                    </OptionItem>
+                    <OptionItem onClick={() => handleOptionClick("2")}>
+                        금액 충전
+                    </OptionItem>
+                    <OptionItem onClick={() => handleOptionClick("3")}>
+                        카드 비밀번호 설정
+                    </OptionItem>
+                    
+                    <OptionItem>
+                        <span>카드활성화</span>
+                        <ToggleSwitch>
+                            <input 
+                              type="checkbox" 
+                              id="toggle-switch" 
+                              checked={isCardActive} 
+                              onChange={handleToggleChange} 
+                            />
+
+                            {/* <input type="checkbox" id="toggle-switch" /> */}
+                            <label htmlFor="toggle-switch"></label>
+                        </ToggleSwitch>
+                    </OptionItem>
+
+                    {/* <OptionItem onClick={() => handleOptionClick("4")}>
+                        분실신고
+                    </OptionItem> */}
+                    <OptionItem onClick={() => handleOptionClick("5")}>
+                        카드해지
+                    </OptionItem>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                </ListGroup>
+            </CardDetailsContainer>
+
+
+
+            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>{modalTitle}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+
+                    {/* component 단위로 분리 */}
+                    
+                    {modalContent}
+
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                        닫기
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    );
+}
 const CardDetailsContainer = styled.div`
   width: 100%;
   max-width: 420px;
@@ -122,146 +289,5 @@ const ToggleSwitch = styled.div`
     transform: translateX(18px);
   }
 `;
-
-function CardManagerment(props) {
-    // 임시 
-    const test = [{name:'card1', value:'test1', cardTypeId:11},{name:'card1', value:'test1', cardTypeId:11}];
-
-    const [showModal, setShowModal] = useState(false);
-    const [modalContent, setModalContent] = useState("");
-    const [modalTitle, setModalTitle] = useState('');
-
-    const flickityOptions = {
-        cellAlign: 'center',
-        pageDots: false,
-        groupCells: '20%',
-        selectedAttraction: 0.03,
-        friction: 0.15,
-        contain: false,
-        initialIndex: 0 // 첫 번째 카드가 중앙에 오도록 설정
-    };
-
-    const handleOptionClick = (content) => {
-        // test
-        // console.log(content);
-        
-        switch(content){
-            case "1":
-                setModalContent(<PaymentSummary setShowModal={setShowModal}/>);
-                setModalTitle('결제 예상 금액');
-                break;
-            case "2":
-                setModalContent(<ChargePayment setShowModal={setShowModal}/>);
-                setModalTitle('금액 충전');
-                break;
-            case "3":
-                setModalContent(<SettingPassword setShowModal={setShowModal}/>);
-                setModalTitle('카드 비밀번호 설정');
-                break;
-            case "4":
-                setModalContent(<LoseCard setShowModal={setShowModal}/>);
-                setModalTitle('분실신고');
-                break;
-            case "5":
-                setModalContent(<CancelCard setShowModal={setShowModal}/>);
-                setModalTitle('카드해지');
-                break;
-            default:
-                console.log("올바른 선택지가 아닙니다.");
-        }
-        
-        setShowModal(true);
-    };
-
-    return (
-        <>
-            <CardDetailsContainer>
-            <br/><br/><br/><br/><br/><br/>
-                <CardSection>
-                    <button className="arrow-button arrow-left">
-                      ‹
-                    </button>
-                    <FlickityStyled
-                        options={flickityOptions}
-                        flickityRef={(c) => {
-                            if (c) {
-                                console.log(c);
-                                //c.on('change', (index) => handleChange(index));
-                            }
-                        }}
-                    >
-                        {test.map((t, index) => (
-                            <CarouselCell key={t.cardTypeId}>
-                                <CardOverlay
-                                    className='my-custom-class'
-                                    img={ require(`../../assets/Card${t.cardTypeId}.png`)}
-                                    imgStyle={{width:'335px', height:'200px'}}
-                                />
-                            </CarouselCell>
-                        ))}
-                    </FlickityStyled>
-                    {/* 오른쪽 화살표 */}
-                    <button className="arrow-button arrow-right">
-                      ›
-                    </button>
-                </CardSection>
-                <br/><br/><br/><br/>
-
-                <ListGroup variant="flush" className="options-section">
-                    <OptionItem>
-                        <span className="option-text" style={{color:'#064AFF'}}><strong>카드번호</strong></span>
-                        <MaskedCardInfo>●●●● - ●●●● - ●●●● - ●●●●</MaskedCardInfo>
-                    </OptionItem>
-                    <OptionItem onClick={() => handleOptionClick("1")}>
-                        결제 예상 금액
-                    </OptionItem>
-                    <OptionItem onClick={() => handleOptionClick("2")}>
-                        금액 충전
-                    </OptionItem>
-                    <OptionItem onClick={() => handleOptionClick("3")}>
-                        카드 비밀번호 설정
-                    </OptionItem>
-                    
-                    <OptionItem>
-                        <span>카드활성화</span>
-                        <ToggleSwitch>
-                            <input type="checkbox" id="toggle-switch" />
-                            <label htmlFor="toggle-switch"></label>
-                        </ToggleSwitch>
-                    </OptionItem>
-
-                    <OptionItem onClick={() => handleOptionClick("4")}>
-                        분실신고
-                    </OptionItem>
-                    <OptionItem onClick={() => handleOptionClick("5")}>
-                        카드해지
-                    </OptionItem>
-                    <br/>
-                </ListGroup>
-            </CardDetailsContainer>
-
-
-
-            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>{modalTitle}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-
-                    {/* component 단위로 분리 */}
-                    
-                    {modalContent}
-
-
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowModal(false)}>
-                        닫기
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </>
-    );
-}
 
 export default CardManagerment;

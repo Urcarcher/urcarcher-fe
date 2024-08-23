@@ -23,23 +23,6 @@ const MyMapApp = () => {    //index.html에 스크립트 넣어두면 잘 뜸 (�
   const [openMarkerId, setOpenMarkerId] = useState(null);  // 현재 열려있는 마커의 ID를 관리하는 상태 변수
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // 사이드바의 열림/닫힘 상태를 관리하는 상태 변수
   const [isModalOpen, setIsModalOpen] = useState(false); // 모바일 환경에서 사용될 모달의 열림/닫힘 상태를 관리하는 상태 변수
-  
-  // const loadKakaoMapScript = () => {
-  //   const script = document.createElement('script');
-  //   script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAOMAP_APP_KEY}&libraries=services`;
-  //   script.defer = true; // 스크립트를 비동기로 로드
-  //   document.head.appendChild(script);
-  //   script.onload = () => {
-  //     if (window.kakao && window.kakao.maps) {
-  //       console.log('Kakao Maps script loaded successfully.');
-  //       //setMapLoaded(true); // 스크립트 로드 완료
-  //       console.log( script.src );
-        
-  //     } else {
-  //       console.error('Failed to load Kakao Maps script.');
-  //     }
-  //   };
-  // };
 
   //모달창 열기/닫기
   const openModal = () => {
