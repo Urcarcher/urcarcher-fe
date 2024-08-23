@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../assets/CourseCard.css';
+import 'assets/CourseCard.css';
 import { useNavigate } from 'react-router-dom';
 
 const CourseCard = ({ course }) => {
@@ -24,11 +24,10 @@ const CourseCard = ({ course }) => {
                     />
                 </div>
                 <div className="course-info">
-                    <div className='course-region-box'>
-                        <p className="course-region">{course.region}</p>
-                    </div>
-                    <div className="course-name-box">
-                        <p className="course-name">{course.courseName}</p>
+                    <p className="course-region">{course.region}</p>
+                    <div className ="course-name-wrap">
+                    <p className="course-name">{course.courseName}</p>
+
                     </div>
                 </div>
             </div>
