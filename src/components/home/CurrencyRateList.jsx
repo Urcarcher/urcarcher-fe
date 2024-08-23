@@ -5,46 +5,44 @@ import CN from 'assets/icon-nation/icon-cn.png';
 
 
 function CurrencyRateList(props) {
-   
-    const [exchangeCurInfo, setExchangeCurInfo] = useState({});
-    const [wscData, setWscData] = useState();
-    const cwsc = useRef(null);
+    const [exchangeRateInfos, setExchangeRateInfos] = useState({});
+    const [socketData, setSocketData] = useState();
+    const [date, setDate] = useState();
+    const [standard, setStandard] = useState();
+    const [round, setRound] = useState();
 
-    // 처음 렌더링 될 때만 웹소켓 연결
-    // useEffect(()=>{
-    //     wsConnect();
-    // }, []);
+    const wss = useRef(null);
 
-    // // 웹소켓 연결 설정
-    // const wsConnect = useCallback(()=>{
-    //     cwsc.current = new WebSocket("wss://urcarcher-local.kro.kr:8443/realtime/rate");
+    useEffect(()=>{
+        wsLogin();
+    }, []);
 
-    //     cwsc.current.onmessage = (message) => {
-    //         const rcvData = JSON.parse(message.data);
-    //         setWscData(rcvData);
-    //     };
-    // });
-    // 웹소켓 연결 종료 (컴포넌트가 화면에서 사라질 때)
-    //     return () => {
-    //         if (socket.current) {
-    //             socket.current.close();
-    //         }
-    //     };
-    // }, []);
+    useEffect(()=>{
+        if(socketData !== undefined) {
+            let id = socketData.exchangeType;
+            let datas = socketData;
+            exchangeRateInfos[id] = datas;
+            setDate(exchangeRateInfos[id].date);
+            setStandard(exchangeRateInfos[id].standard);
+            setRound(exchangeRateInfos[id].round);
+            setExchangeRateInfos(exchangeRateInfos);
+        }
+    }, [socketData]);
 
-    // useEffect(() => {
-    //     if (wscData !== undefined) {
-    //         const id = wscData.exchangeType;
-    //         const updateExchangeCurInfos = { ...exchangeCurInfo, [id]: wscData };
-    //         setExchangeCurInfo(updateExchangeCurInfos);
-    //     }
-    // }, [wscData, exchangeCurInfo]);
+    const wsLogin = useCallback(()=>{
+        wss.current = new WebSocket(process.env.REACT_APP_WEBSOCKET_SERVICE_URL);
+
+        wss.current.onmessage = (message) => {
+            const dataSet = JSON.parse(message.data);
+            setSocketData(dataSet);
+        };
+    });
 
     //환율 표시 국가
     const exchangeRates = [  // [!]소켓 연결 후 test속성 삭제
-        { country: '미국', currency: 'USD', symbol: '$', flag: US , test: '1,336.10' },  
-        { country: '일본', currency: 'JPY', symbol: '￥', flag: JP , test: '9.02' },
-        { country: '중국', currency: 'CNY', symbol: 'Y', flag: CN  , test: '178.03'},
+        { country: '미국', currency: 'USD', symbol: '$', flag: US },  
+        { country: '일본', currency: 'JPY', symbol: '￥', flag: JP },
+        { country: '중국', currency: 'CNY', symbol: 'Y', flag: CN },
       ];
     
     return (
@@ -65,7 +63,7 @@ function CurrencyRateList(props) {
                         KRW {exchangeCurInfo[rate.currency]?.rate || 'Loading...'} <span>=</span> 1{rate.symbol}
                     </p> */}
                     {/* 화면 테스트용 */}
-                    <p className='rate-txt' >KRW {exchangeCurInfo[rate.currency]?.rate || rate.test || 'Loading...'} <span>=</span> 1{rate.symbol}</p>
+                    <p className='rate-txt' >KRW {exchangeRateInfos[rate.currency]?.rate || exchangeRateInfos.rate || 'Loading...'} <span>=</span> 1{rate.symbol}</p>
                 </li>
             ))}
             </ul>
