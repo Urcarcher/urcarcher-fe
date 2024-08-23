@@ -7,7 +7,7 @@ import Logo from 'assets/logo5.png';
 function Header() {
     const navigate = useNavigate();
     const location = useLocation();
- 
+
     return (
         <header>
             <div className='header-wrap'>
