@@ -4,6 +4,8 @@ import CurrencyRateList from 'components/home/CurrencyRateList';
 import ServiceList from 'components/home/ServiceList ';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { options_GET } from 'services/CommonService';
+import cookie from 'react-cookies';
 
 
 function Home(props) {
@@ -12,11 +14,28 @@ function Home(props) {
     const [loading, setLoading] = useState(true);
 
     //1. 로그인 회원 정보   
-    const [memberId, setMemberId] = useState('bleakwinter');  //bleakwinter (신용카드) happy(선불카트) - 테스트ID
+    const [memberId, setMemberId] = useState('');  //bleakwinter (신용카드) happy(선불카트) - 테스트ID
+    const [name, setName] = useState('');
 
+    const isAuthorized = () => {
+        if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
+          axios(options_GET("/api/auth/authorizing", null))
+            .then((resp)=>{
+              if(resp.data.isAuthorized == true) {
+                setMemberId(resp.data.memberId);
+                setName(resp.data.name);
+              }
+            })
+            .catch((err)=>{
+              console.log(err);
+            });
+        }
+    };
+
+    isAuthorized();
     //2. 회원이 소지하고 있는 첫 번째 카드 종류와 이번 달 카드 사용 금액 정보  (정보 없을 경우 예외 처리 필요)
     useEffect(() => {
-        
+
         // memberId가 없으면 에러 처리
         if (!memberId) {
             console.log('Member ID is missing!');
@@ -59,7 +78,7 @@ function Home(props) {
              
                 {/* 로그인회원 이름으로 수정 */}
                 {memberId ? (
-                    <h5><span style={{color:'#476EFF'}}>{mainCardInfo.name}</span>님 반갑습니다!🙌</h5>
+                    <h5><span style={{color:'#476EFF'}}>{name}</span>님 반갑습니다!🙌</h5>
                 ) : (
                     <h5>
                         <Link to='/login'>🙌로그인하기</Link>
@@ -123,7 +142,7 @@ function Home(props) {
                     )}
                     
                     <div className='card-signup'>
-                        <p><Link to="/card">카드 신청</Link></p>
+                        <p><Link to="/card1">카드 신청</Link></p>
                         <p><img src="icon/icon-credit-card.png" alt="카드신청" style={{width:"40px"}}/></p>
                     </div>
                 </div>

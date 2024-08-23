@@ -3,11 +3,19 @@ import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useLocation } from 'react-router-dom';
+
+
 function Reservation() {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedTime, setSelectedTime] = useState('5:00 PM');
-  const [selectedPeople, setSelectedPeople] = useState('2명');
+  const [selectedTime, setSelectedTime] = useState('');
+  const [selectedPeople, setSelectedPeople] = useState('');
   const [showModal, setShowModal] = useState(false);
+  // 전달 받은 데이터 세팅
+  const location = useLocation();
+  const recv = location.state;
+  console.log(recv);
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -23,13 +31,21 @@ function Reservation() {
   const handleClose = () => {
     setShowModal(false);
   };
+
+  
+
+
   return (
     <div  className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
         <br/>
         <br/>
         <br/>
         <br/>
+        <br/>
+        
     <Container style={styles.container}>
+    <h2>장소 : {recv.title}</h2>
+    <br/>
       <Row className="mb-4">
         <Col>
           <h5 style={styles.header}>인원을 선택해 주세요</h5>
@@ -37,7 +53,7 @@ function Reservation() {
             {['1명', '2명', '3명', '4명', '5명이상'].map((people, index) => (
               <Button
                 key={index}
-                variant={selectedPeople === people ? 'success' : 'outline-secondary'}
+                variant={selectedPeople === people ? 'primary' : 'outline-secondary'}
                 onClick={() => handlePeopleChange(people)}
                 style={styles.peopleButton}
               >
@@ -65,7 +81,7 @@ function Reservation() {
             {['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'].map((time, index) => (
               <Button
                 key={index}
-                variant={selectedTime === time ? 'success' : 'outline-secondary'}
+                variant={selectedTime === time ? 'primary' : 'outline-secondary'}
                 onClick={() => handleTimeChange(time)}
                 style={styles.timeButton}
               >
@@ -90,6 +106,8 @@ function Reservation() {
           </Button>
         </Col>
       </Row>
+
+
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>예약 확인</Modal.Title>
@@ -97,9 +115,10 @@ function Reservation() {
         <Modal.Body>
           <div style={styles.modalContent}>
             <div style={styles.reservationBox}>
-              <h6 style={styles.reservationTitle}>인생파곱창 금천본점 예약</h6>
+              <h6 style={styles.reservationTitle}>{recv.title} 예약</h6>
               <p>일정: {selectedDate.toLocaleDateString()} - {selectedTime}</p>
               <p>인원: {selectedPeople}</p>
+              <p>위치 : {recv.location}</p>
             </div>
             <div style={styles.infoSection}>
               <h6 style={styles.infoTitle}>예약자 정보</h6>
@@ -116,7 +135,7 @@ function Reservation() {
             취소
           </Button>
           <Button variant="primary" onClick={handleClose}>
-            예약 완료
+            예약금 결제
           </Button>
         </Modal.Footer>
       </Modal>
@@ -131,7 +150,6 @@ const styles = {
     padding: '20px',
     border: '1px solid #ccc',
     borderRadius: '10px',
-    backgroundColor: '#F9F9F9',
     fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
   },
   header: {

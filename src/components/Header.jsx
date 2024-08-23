@@ -2,58 +2,18 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import 'components/Header.css';
 import { getTitle } from 'components/Pathname.js';  // 경로에 맞는 제목 설정 함수 임포트
-import Logo from 'assets/logo2.png';
+import Logo from 'assets/logo5.png';
 
 function Header() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // 경로에 따라 제목을 설정하는 함수 
-    const getTitle = (pathname) => {
-        switch (pathname.endsWith("/") ? pathname.substring(0, pathname.length-1) : pathname) { // => 추가 경로에 따라 제목 설정
-            case '/maphome':
-            case '/maphome/map':
-            case '/maphome/categoryRank':
-            case '/maphome/beststorelist':
-                return '나만의 지도';
-            case '/courseList':
-                return '여행 코스';
-            case '/card':
-                return '카드 신청';
-            case '/login':
-                return '로그인';
-            case '/login/new':
-                return '어카처 ID 생성';
-            case '/exchange':
-            case '/exchange/currency':
-                return '환전';
-            case '/exchange/card':
-                return '카드 선택';
-            case '/exchange/success':
-                    return '환전 완료';
-            case '/exchange/set':
-            case '/exchange/setRate':
-                return '자동 환전';
-            case '/signup':
-            case '/signup/success':
-            case '/signup/userinfo':
-                return '회원가입';
-            default:
-                return '홈';
-        }
-    };
-
-    // '/' 경로일 때 헤더를 숨기기
-    if (location.pathname === '/') {
-        return null; 
-    }
- 
     return (
         <header>
             <div className='header-wrap'>
             {location.pathname === '/' ? (
             <p className='home-logo'>
-                <img src={Logo} alt="로고" />
+                <img src={Logo} alt="로고" style={{width:'170px'}} />
             </p>
             ) : (
             <>

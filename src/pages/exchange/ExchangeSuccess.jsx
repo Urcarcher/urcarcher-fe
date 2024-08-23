@@ -31,7 +31,7 @@ function ExchangeSuccess(props) {
                 </div>
                 <div className="ex_success_title">
                     <h3>
-                        <span style={{ color: "#476EFF" }}>{ exchangeMsg }</span> 을
+                        <span style={{ color: "#476EFF" }}>{exchangeMsg}</span> 을
                     </h3>
                     <h3>채웠어요</h3>
                 </div>
@@ -39,7 +39,7 @@ function ExchangeSuccess(props) {
             <div className="ex_success_rate">
                 <div>
                     <p className="ex_success_left_p">적용환율</p>
-                    <p className="ex_success_right_p" style={{ color: "#476EFF" }}>KRW { exchangeData.exRate } = 1달러</p>
+                    <p className="ex_success_right_p" style={{ color: "#476EFF" }}>KRW {exchangeData.exRate} = 1달러</p>
                 </div>
                 <div>
                     <p className="ex_success_left_p">환율우대</p>
@@ -47,7 +47,7 @@ function ExchangeSuccess(props) {
                 </div>
                 <div>
                     <p className="ex_success_left_p">결제금액</p>
-                    <p className="ex_success_right_p">{ exchangeData.exPay }달러</p>
+                    <p className="ex_success_right_p">{exchangeData.exPay}달러</p>
                 </div>
                 <div>
                     <p className="ex_success_left_p">출금계좌</p>
@@ -55,7 +55,7 @@ function ExchangeSuccess(props) {
                 </div>
                 <div>
                     <p className="ex_success_left_p">KRW 잔액</p>
-                    <p className="ex_success_right_p">￦ { exchangeBalance.toLocaleString() }</p>
+                    <p className="ex_success_right_p">￦ {exchangeBalance.toLocaleString()}</p>
                 </div>
             </div>
             <div className="ex_success_btn_wrapper">

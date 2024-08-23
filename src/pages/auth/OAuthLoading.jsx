@@ -33,7 +33,6 @@ function OAuthLoading(props) {
 
     return (
         <div>
-            <h1>OAuth Control Page</h1>
         </div>
     );
 }

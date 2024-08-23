@@ -1,12 +1,38 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Menu from './menu/Menu';
+import cookie from 'react-cookies';
+import axios from 'axios';
+import { options_GET } from 'services/CommonService';
 
 function Footer(props) {
    
     const [activeIndex, setActiveIndex] = useState(0);
     const [isMenuVisible, setIsMenuVisible] = useState(false); // 메뉴 상태
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userName, setUserName] = useState(''); 
+
+    const isAuthorized = () => {
+        if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
+          axios(options_GET("/api/auth/authorizing", null))
+            .then((resp)=>{
+              if(resp.data.isAuthorized == true) {
+                setUserName(resp.data.name);
+                setIsLoggedIn(true);
+              } else {
+                setIsLoggedIn(false);
+              }
+            })
+            .catch((err)=>{
+              console.log(err);
+            });
+        }
+      };
+  
+      useEffect(()=>{
+        isAuthorized();
+      }, []);
 
     //path 경로 추가하기 
     const menuItems = [ 
@@ -16,20 +42,12 @@ function Footer(props) {
         {   src: "/icon/menu/menu.png", 
             alt: "메뉴", 
             activeSrc: "/icon/menu/menu-active.png", 
-            path: '' 
+            path: '#'  //빈 path
         }
     ];
 
     const handleMenuClick = (index) => {
-        // setActiveIndex(index);
-        // if (index === 3) {
-        //     setIsMenuVisible(true); //메뉴 표시
-        // } else {
-        //     setIsMenuVisible(false); //메뉴 숨김
-        // }
-        if (index !== 3) {
-            setActiveIndex(index); // index가 3이 아닌 경우에만 업데이트
-        }
+        setActiveIndex(index);
         setIsMenuVisible(index === 3); // index가 3이면 메뉴를 표시, 그렇지 않으면 숨김
     };
     const handleCloseSideMenu = () => {
@@ -42,8 +60,13 @@ function Footer(props) {
                   {menuItems.map((item, index) => (
                       <li key={index}>
                           <Link 
-                              to={item.path || "javascript:void(0);"} 
-                              onClick={() => handleMenuClick(index)}
+                            to={item.path} 
+                            onClick={(e) => {
+                                if (index === 3) {
+                                    e.preventDefault(); // 기본 링크 동작 방지
+                                }
+                                handleMenuClick(index);
+                            }}
                           >
                               <img 
                                   src={activeIndex === index ? item.activeSrc : item.src} 
@@ -54,7 +77,7 @@ function Footer(props) {
                   ))}
               </ul>
           </footer>
-          {isMenuVisible && <Menu onClose={handleCloseSideMenu} />} {/* 메뉴가 보일 때만 렌더링 */}
+          {isMenuVisible && <Menu onClose={handleCloseSideMenu} isLoggedIn={isLoggedIn} userName={userName} />} {/* 메뉴가 보일 때만 렌더링 */}
         </>
     );
 }

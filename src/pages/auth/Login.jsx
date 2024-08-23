@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { signin } from "../../services/AuthService";
 import "pages/auth/Login.css";
 import googleLogo from "assets/googleLogo.png";
 import appleLogo from "assets/appleLogo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import cookie from 'react-cookies';
+import axios from 'axios';
+import { options_GET } from "services/CommonService";
 
 function Login() {
+  const nav = useNavigate();
+
+  if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
+    axios(options_GET("/api/auth/authorizing", null))
+      .then((resp)=>{
+        if(resp.data.isAuthorized == true) {
+          nav('/');
+        }
+      })
+      .catch((err)=>{
+        console.log(err);
+      });
+  }
+  
   const googleOauth2Handler = () => {
     window.location.href = process.env.REACT_APP_GOOGLE_OAUTH2_HANDLING;
   }
@@ -15,7 +32,8 @@ function Login() {
     const data = new FormData(event.target);
     const username = data.get("username");
     const password = data.get("password");
-    signin({ memberId: username, password: password });
+    const on = data.get("agree");
+    signin({ memberId: username, password: password, agree: on});
   };
 
   return (
@@ -38,7 +56,7 @@ function Login() {
 
               <div className="mb-3 form-check">
                 <div className="fc-1">
-                  <input type="checkbox" id="agree" className="form-check-input" />
+                  <input type="checkbox" id="agree" name="agree" className="form-check-input" />
                   <label title="" for="agree" className="form-check-label">자동 로그인</label>
                 </div>
 

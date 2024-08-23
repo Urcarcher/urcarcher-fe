@@ -146,6 +146,7 @@
   padding-top:130px;
   font-size: 28px;
   padding:130px 10px 10px 10px;
+  word-break: keep-all;
 }
 
 #mainMap {
