@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getOptions } from '../../services/AuthService';
+import { options } from 'services/CommonService';
 import axios from 'axios';
 
 function Test(props) {
@@ -7,7 +7,7 @@ function Test(props) {
     const [b, setB] = useState({});
 
     useEffect(()=> {
-        axios(getOptions('/api/t/test', 'GET', null))
+        axios(options('/api/t/test', 'GET', null))
         .then(
             (resp)=>{
                 setA(resp.data);
@@ -18,7 +18,7 @@ function Test(props) {
             console.log(err);
         });
 
-        axios(getOptions('/api/t/vali', 'GET', null))
+        axios(options('/api/t/vali', 'GET', null))
         .then(
             (resp)=>{
                 setB(resp.data);
@@ -30,7 +30,7 @@ function Test(props) {
     }, []);
     
     return (
-        <div>
+        <div className='contents'>
             <h1>{a.memberId}</h1>
             <h1>{a.email}</h1>
             <h1>{b.result}</h1>

@@ -89,6 +89,11 @@ function TourGuide({
 
   return (
     <div>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       <h1>Tour Information</h1>
       
       <ButtonGroup className="mb-3">
@@ -135,11 +140,12 @@ function TourGuide({
           제목순
         </ToggleButton>
       </ButtonGroup>
-
+      
+      <div  className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
       <ul style={{ padding: '0', listStyleType: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {tourData.map((item) => (
           <li key={item.contentid} style={{ margin: '15px 15px'}}>
-            <Link to={`/detail/${contentTypeId === 39 ? 'restaurant':'tour'}/${item.contentid}`}>
+            <Link to={`/detail/${contentTypeId === '39' ? 'restaurant':'tour'}/${item.contentid}`}>
               <CardOverlay 
                 className="my-custom-class" 
                 img={item.firstimage} 
@@ -160,6 +166,7 @@ function TourGuide({
       </ul>
       <div ref={loaderRef}>
         {loading && <p>Loading...</p>}
+      </div>
       </div>
     </div>
   );

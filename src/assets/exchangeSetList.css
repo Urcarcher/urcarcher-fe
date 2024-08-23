@@ -1,0 +1,65 @@
+.ex_set_list_wrapper {
+    width: 80%;
+    height: 400px;
+    margin: 0 auto;
+    margin-top: 90px;
+    /* border: 1px solid red; */
+}
+
+.ex_set_list_table {
+    width: 100%;
+    height: 340px;
+    padding: 30px;
+    text-align: left;
+    border-radius: 7px;
+    border: 1px solid #476EFF;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.ex_set_list_p {
+    color: #CCCCCC;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.ex_set_list_col {
+    width: 100%;
+    height: 70px;
+    margin-top: 30px;
+    /* border: 1px solid red; */
+}
+
+.ex_set_list_btn {
+    font-family: 'NanumSquareNeoExtraBold';
+    font-size: 15px;
+    width: 100%;
+    height: 60px;
+    margin-top: 15px;
+    /* border: 1px solid red; */
+}
+
+.set_delete_btn {
+    width: 40%;
+    height: 100%;
+    float: left;
+    border-radius: 7px;
+    border: none;
+    color: #CCCCCC;
+    text-decoration-line: underline;
+    background-color: white;
+}
+
+.set_put_btn {
+    width: 40%;
+    height: 100%;
+    float: right;
+    border-radius: 7px;
+    border: none;
+    color: #476EFF;
+    text-decoration-line: underline;
+    background-color: white;
+}
+
+.ex_set_list_text {
+    margin-top: 55px;
+}

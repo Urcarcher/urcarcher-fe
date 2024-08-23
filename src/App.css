@@ -28,14 +28,13 @@
   src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.eot);
   src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.ttf) format("truetype");
 }
-#root{ /* 임시 */
-  background-color: #333;
-}
+
 .App {
     text-align: center;
-    width: 430px;
+    width: 430px; 
     height: 932px;
-    /* border: 1px solid black; */
+    margin: 0 auto;
+    border: 1px solid black;
     font-family: 'NanumSquareNeo', sans-serif;
     overflow: hidden;  /* 크기 바깥 숨김 */
     position: relative; /* .menu-wrap의 기준 위치 */
@@ -114,7 +113,8 @@ header{
   cursor: pointer;
   margin-right: 10px;
 }
-.header-wrap > h5{
+
+.header-wrap > h3{
   margin: 0;
   line-height: 77px;
 }
@@ -129,6 +129,7 @@ header{
   background-color: #fff;
   z-index: 200;
 }
+
 .menu-list{
   display: flex;
   justify-content: space-evenly;
@@ -140,4 +141,9 @@ header{
 }
 .menu-list > li{
   list-style: none;
+}
+
+@media screen and (max-Width: 390px) {
+
+    
 }

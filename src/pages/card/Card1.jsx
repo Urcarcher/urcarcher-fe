@@ -18,7 +18,7 @@ function Card1() {
     let navigate = useNavigate();
 
     const flickityOptions = {
-        cellAlign: 'center', // 카드를 중앙에 정렬
+        cellAlign: 'right',
         pageDots: false,
         groupCells: '20%',
         selectedAttraction: 0.03,
@@ -94,22 +94,11 @@ function Card1() {
                 </div>
 
                 {selectedCard && (
-                    <div className='selected-card' style={{ textAlign: 'left' }}>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <div className="card" style={{ width: '25rem', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                                <div className="card-body">
-                                    <p className="card-text">
-                                        <strong>카드 사용 목적:</strong> {selectedCard.cardUsage}
-                                    </p>
-                                    <p className="card-text">
-                                        <strong>카드 한도:</strong> {selectedCard.cardLimit}원
-                                    </p>
-                                    <p className="card-text">
-                                        <strong>연회비:</strong> {selectedCard.annualFee}원
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                    <div className='selected-card'>
+                        <div>선택한 카드이름: {selectedCard.cardName}</div>
+                        <div>카드사용목적: {selectedCard.cardUsage}</div>
+                        <div>카드한도: {selectedCard.cardLimit}</div>
+                        <div>연회비: {selectedCard.annualFee}</div>
                     </div>
                 )}
             </div>

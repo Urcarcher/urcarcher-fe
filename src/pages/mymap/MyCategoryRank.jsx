@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
-import CategoryRankList from '../../components/mymap/CategoryRankList';
-import RandomImage from '../../components/mymap/RandomImage';
-import './Map.css';
-import NoResult from '../../components/mymap/NoResult';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import CategoryRankList from 'components/mymap/CategoryRankList';
+import NoResult from 'components/mymap/NoResult';
+import RandomImage from 'components/mymap/RandomImage';
+import 'assets/Map.css';
 
 function MyCategoryRank(props) {
 
@@ -19,7 +17,7 @@ function MyCategoryRank(props) {
     //서버로 부터 결제 내역의 카테고리 데이터 호출
     useEffect(() => {
         // 데이터 호출
-        axios.get(`https://urcarcher-local.kro.kr:8443/api/paymentPlace/categories`, {
+        axios.get(`/api/paymentPlace/categories`, {
             params: {
                 memberId: memberId
             }

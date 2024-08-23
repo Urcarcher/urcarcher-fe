@@ -1,0 +1,14 @@
+
+header {
+    padding: 0;
+}
+
+.header-wrap {
+    width: 100%;
+    padding-left: 2%;
+}
+
+.header-wrap > h3 {
+    align-content: center;
+    font-size: 120%;
+}

@@ -1,45 +1,44 @@
-import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import cookie from 'react-cookies';
+import { options, options_GET, options_POST } from 'services/CommonService'
 
 const ACCESS_TOKEN = "URCARCHER_ACCESS_TOKEN";
 
-export function getOptions(api, method, request) {
-  let headers = new Headers({
-    "Content-Type": "application/json",
-  });
-
-  // 로컬 스토리지에서 ACCESS TOKEN 가져오기
-  const accessToken = cookie.load(ACCESS_TOKEN);
-
-  if (accessToken && accessToken !== null) {
-    headers.append("Authorization", "Bearer " + accessToken);
-  }
-
-  let options = {
-    headers: headers,
-    url: api,
-    method: method
-  };
-  // 조회는 요청 data가 없음, 입력과 수정시에는 보내는 data가 있음
-  if (request) {
-    // GET method
-    options.data = request;
-  }
-
-  return options;
+export function signin(userDTO) {
+  axios(options("/api/auth/login", "POST", userDTO))
+    .then(resp=>{
+      if(resp.data.accessToken) {
+        cookie.save(ACCESS_TOKEN, resp.data.accessToken, {path:"/"});
+        window.location.href = "/";
+      }
+    })
+    .catch(err=>{
+      // console.log(err);
+      window.location.href = "/login";
+    });
 }
 
-export function signin(userDTO) {
-  return axios(getOptions("/api/auth/login", "POST", userDTO))
-          .then(resp=>{
-            if(resp.data.accessToken) {
-              cookie.save(ACCESS_TOKEN, resp.data.accessToken, {path:"/"});
-              window.location.href = "/test";
-            }
-          })
-          .catch(err=>{
-            console.log(err);
-            // window.location.href = "/login";
-          });
+export function oauthNew(userDTO) {
+  axios(options("/api/auth/oauth/new", "POST", userDTO))
+    .then(resp=>{
+      if(resp.status == 200) {
+        window.location.href = "/";
+      }
+    })
+    .catch(err=>{
+      // console.log(err);
+      window.location.href = "/login";
+    });
+}
+
+export function logout() {
+  axios(options_POST("/api/auth/logout", null))
+    .then(resp=>{
+      if(resp.status == 200) {
+        window.location.href = "/";
+      }
+    })
+    .catch(err=>{
+      console.log(err);
+    });
 }

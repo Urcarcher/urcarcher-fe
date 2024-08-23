@@ -1,18 +1,131 @@
-.inputDiv {
+.exCur_title {
     width: 100%;
-    height: 50px;
-    margin: 0 auto;
+    height: 80px;
+    margin-top: 20px;
     /* border: 1px solid red; */
 }
 
-.inputDiv input {
-    /* border: 1px solid red; */
-    border: none;
-    text-align: right;
+.exCur_title h3 {
+    margin: 0;
+    padding: 0;
+    line-height: 80px;
+}
+
+.exCur_wrapper {
+    width: 80%;
+    height: 70px;
     margin: 0 auto;
-    font-family: 'NanumSquareNeoExtraBold';
+    margin-top: 25px;
+    text-align: left;
+    /* border: 1px solid red; */
+}
+
+.exCur_div {
+    width: 100%;
+    height: 40px;
+    text-align: left;
+    /* border: 1px solid red; */
+}
+
+.exCur_div input {
+    font-family: 'NanumSquareNeoBold';
+    font-size: 16px;
+    border: none;
 }
 
 input:focus {
 	outline: none;
+}
+
+.exAmt_wrapper {
+    width: 80%;
+    height: 100px;
+    margin: 0 auto;
+    margin-top: 50px;
+    text-align: left;
+    /* border: 1px solid red; */
+}
+
+.exAmt_wrapper p {
+    font-size: 16px;
+}
+
+.exAmt_text {
+    font-family: 'NanumSquareNeoExtraBold';
+}
+
+.exRate_wrapper {
+    font-family: 'NanumSquareNeoBold';
+    width: 82%;
+    height: 250px;
+    margin: 0 auto;
+    margin-top: 60px;
+    /* border: 1px solid red; */
+}
+
+.exRate_table {
+    width: 100%;
+    height: 80%;
+    margin-top: -10px;
+    padding: 20px;
+    border-radius: 7px;
+    border: 1px solid #BFBFBF;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.exRate_col {
+    width: 100%;
+    height: 25px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    /* border: 1px solid green; */
+}
+
+.exRate_left_text {
+    width: 100px;
+    float: left;
+    text-align: left;
+    line-height: 25px;
+    /* border: 1px solid red; */
+}
+
+.exRate_right_text {
+    width: 200px;
+    float: right;
+    color: #476EFF;
+    text-align: right;
+    line-height: 25px;
+    /* border: 1px solid red; */
+}
+
+.exRate_line {
+    width: 100%;
+    height: 1.5px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #BFBFBF;
+}
+
+.exRate_plus_wrapper {
+    width: 80%;
+    height: 50px;
+    margin: 0 auto;
+    margin-top: 25px;
+}
+
+.exRate_plus_btn {
+    font-family: 'NanumSquareNeoExtraBold';
+    font-size: 15px;
+    width: 100%;
+    height: 100%;
+    color: white;
+    background-color: #476EFF;
+    border: none;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.exRate_plus_btn:hover {
+    transform: translateY(-2px);
 }

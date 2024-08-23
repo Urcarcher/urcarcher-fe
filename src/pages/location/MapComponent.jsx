@@ -153,8 +153,13 @@ const MapComponent = (props) => {
   };
 
   return (
+    <div  className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
     <LoadScript googleMapsApiKey="AIzaSyB-rzhcUXcmRCulCzY1S3Hphp3BrT4NLNU" libraries={['places']}  onLoad={onLoadScriptHandler}>
       <div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <div>
           <Autocomplete>
             <input
@@ -228,6 +233,7 @@ const MapComponent = (props) => {
         </div>
       </div>
     </LoadScript>
+    </div>
   );
 };
 

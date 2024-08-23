@@ -10,7 +10,7 @@ import Card4 from './pages/card/Card4';
 import Card5 from './pages/card/Card5';
 import Card6 from './pages/card/Card6';
 import Signup from './pages/signup/Signup';
-import './pages/tourcourse/RegionList.css';
+import './assets/RegionList.css';
 import MyMapApp from './pages/mymap/MyMapApp';
 import MyMapHome from './pages/mymap/MyMapHome';
 import CourseList from './pages/tourcourse/CourseList';
@@ -30,7 +30,9 @@ import ExchangeSet from './pages/exchange/ExchangeSet';
 import OAuthNew from './pages/auth/OAuthNew';
 import OAuthLoading from './pages/auth/OAuthLoading';
 import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
-import CourseDetail from './pages/tourcourse/CourseDetail';
+
+import CourseDetail from './pages/tourcourse/CourseDetail2';
+//import CourseDetail from './pages/tourcourse/CourseDetail';
 import ExchangeSuccess from './pages/exchange/ExchangeSuccess';
 import TestReservation from './pages/reservation/TestReservation';
 import MapComponent from './pages/location/MapComponent';
@@ -38,13 +40,21 @@ import TestCard from './pages/tourguide/TestCard';
 import SearchTour from './pages/tourguide/SearchTour';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import CardManagerment from 'pages/card/CardManagerment';
+import Reservation from 'pages/tourguide/Reservation';
+import Payment from 'pages/card/Payment';
 import Verification from 'pages/card/Verification';
+import ExchangeSetNull from 'pages/exchange/ExchangeSetNull';
+import ExchangeSetRate from 'pages/exchange/ExchangeSetRate';
+import ExchangeSetSuccess from 'pages/exchange/ExchangeSetSuccess';
+
 
 function App() {
   return (
     <CardProvider>
     <div className="App">
       <BrowserRouter>
+      <Header />
       <Header />
         <Routes>
           <Route path='/' element={<Home/>}/>
@@ -74,6 +84,8 @@ function App() {
           <Route path='/exchange/currency' element={<ExchangeCurrency/>}></Route>
           <Route path='/exchange/success' element={<ExchangeSuccess/>}></Route>
           <Route path='/exchange/set' element={<ExchangeSet/>}></Route>
+          <Route path='/exchange/set/rate' element={<ExchangeSetRate/>}></Route>
+          <Route path='/exchange/set/success' element={<ExchangeSetSuccess/>}></Route>
           <Route path='/MapComponent' element={<MapComponent/>}></Route>
           <Route path='/MapComponent/:detailDestination' element={<MapComponent/>}/>
           <Route path='/TourGuide/:areaCode/:contentTypeId' element={<TourGuide/>}/>
@@ -81,14 +93,15 @@ function App() {
           <Route path='/reservation' element={<TestReservation/>}/>
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
+          <Route path='/reservation1' element={<Reservation/>}/>
 
-
-          <Route path='/verification' element={<Verification/>}></Route>
+          <Route path='/cardmanagement' element={<CardManagerment/>}></Route>
+          <Route path='/paymentpage' element={<Payment/>}></Route>
+          <Route path='/cardverification' element={<Verification/>}></Route>
         </Routes>
-        <Footer />
-
+      <Footer />
     </BrowserRouter>
-   </div>
+    </div>
   </CardProvider>
   );
 }

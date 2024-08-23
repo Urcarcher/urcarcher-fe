@@ -4,12 +4,12 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import CardOverlay from '../../bootstrap-template/components/cards/CardOverlay';
 import { Margin } from '@mui/icons-material';
 import { Button } from 'react-bootstrap';
+import Reservation from './Reservation';
 
 function DetailPage() {
   const { type, id } = useParams(); // id와 type을 URL 파라미터로 받음
   const [detailData, setDetailData] = useState(null);
   const [error, setError] = useState(null);
-  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,16 +44,20 @@ function DetailPage() {
   // 응답 데이터 구조에 맞게 수정 필요
   const item = detailData.response?.body?.items?.item[0];
 
+  
   if (!item) {
     return <div>No detail available</div>;
   }
+
 
   return (
     <div>
       <br/>
       <br/>
       <br/>
-
+      <br/>
+      <br/>
+      <div  className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
       <CardOverlay 
                 className="my-custom-class" 
                 img={item.firstimage} 
@@ -84,11 +88,22 @@ function DetailPage() {
         >
           길찾기
         </Button>
-        <Button style={{width:'110px'}}>
-          예약 및 결제
-        </Button>
-      </div>
 
+        {
+          type === 'tour' ? ''
+          :
+          <Button style={{width:'110px'}} onClick={()=>{
+            navigate(`/reservation1`, { state: { title : item.title, location : item.addr1 } });
+          }}>
+            예약 및 결제
+          </Button>
+        }
+        
+        <br/>
+        <br/>
+        <br/>
+      </div>
+      </div>
     </div>
   );
 }
