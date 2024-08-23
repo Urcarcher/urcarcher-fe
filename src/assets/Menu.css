@@ -67,6 +67,7 @@
     box-sizing: border-box;
     border-radius: 15px;
     display: flex;
+    justify-content: space-between;
 }
 .menu-banner p {
     color: #333;

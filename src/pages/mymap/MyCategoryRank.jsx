@@ -43,7 +43,6 @@ function MyCategoryRank(props) {
     }
     return (
         <div>
-            {/* <Header /> */}
             <div className='categoryRank-wrap contents'>
                 {categoryList.length > 0 ? (
                     <>
@@ -66,7 +65,6 @@ function MyCategoryRank(props) {
                     {categoryList.length > 0 ? '내 주변 탐색' : '홈으로 돌아가기'}
                 </button>
             </div>
-            {/* <Footer /> */}
         </div>
     );
 }
