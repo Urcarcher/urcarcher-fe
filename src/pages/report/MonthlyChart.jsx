@@ -23,14 +23,33 @@ const MonthlyChart = () => {
         "AC5": "교육/문화",
         "CT1": "교육/문화",
         "SW8": "교통",
-        "BK9": "금융 및 공공서비스",
-        "AG2": "금융 및 공공서비스",
-        "PO3": "금융 및 공공서비스",
+        "BK9": "금융/공공서비스",
+        "AG2": "금융/공공서비스",
+        "PO3": "금융/공공서비스",
         "FD6": "식비/건강",
         "CE7": "식비/건강",
         "HP8": "식비/건강",
         "PM9": "식비/건강",
         "AT4": "관광/여가"
+    };
+
+    const categoryColors = {
+        "생활편의": "#80B2FF",
+        "교육/문화": "#FF80EB",
+        "교통": "#FFCC80",
+        "금융/공공서비스": "#FF808F",
+        "식비/건강": "#80FF94",
+        "관광/여가": "#FF99CC",
+    };
+
+    const categoryImages = {
+        "생활편의": require('../../assets/fork.png'),
+        "교육/문화": require('../../assets/fork.png'),
+        "교통": require('../../assets/fork.png'),
+        "금융/공공서비스": require('../../assets/fork.png'),
+        "식비/건강": require('../../assets/fork.png'),
+        "관광/여가": require('../../assets/fork.png'),
+        "기타": require('../../assets/fork.png') // 기타 카테고리에 대한 이미지
     };
 
     useEffect(() => {
@@ -63,24 +82,32 @@ const MonthlyChart = () => {
         const categoryTotals = {};
         let totalAmount = 0;
 
-        data.forEach(item => {
-            const category = categoryMapping[item.category_code] || '기타';
-            if (categoryTotals[category]) {
-                categoryTotals[category] += item.paymentPrice;
-            } else {
-                categoryTotals[category] = item.paymentPrice;
+        // 모든 카테고리를 0으로 초기화
+        Object.keys(categoryMapping).forEach((code) => {
+            const category = categoryMapping[code];
+            if (!categoryTotals[category]) {
+                categoryTotals[category] = 0;
             }
+        });
+
+        // 실제 데이터를 반영하여 금액을 집계
+        data.forEach(item => {
+            const category = categoryMapping[item.categoryCode] || '기타';
+            categoryTotals[category] += item.paymentPrice;
             totalAmount += item.paymentPrice;
         });
 
         const formattedChartData = [['Category', 'Amount']];
-        const stats = [];
+        let stats = [];
 
         for (const [category, amount] of Object.entries(categoryTotals)) {
-            const percentage = Math.round((amount / totalAmount) * 100);  // 반올림하여 소숫점 제거
+            const percentage = totalAmount > 0 ? Math.round((amount / totalAmount) * 100) : 0;  // 반올림하여 소숫점 제거
             formattedChartData.push([category, amount]);
             stats.push({ category, amount, percentage });
         }
+
+        // 퍼센트 높은 순서대로 정렬
+        stats.sort((a, b) => b.percentage - a.percentage);
 
         setChartData(formattedChartData);
         setCategoryStats(stats);
@@ -97,18 +124,28 @@ const MonthlyChart = () => {
         const options = [];
         for (let month = 1; month <= 12; month++) {
             const value = month.toString().padStart(2, '0');
-            options.push(<option key={value} value={value}>{value}월</option>);
+            options.push(<option key={value} value={value}>{month}월</option>);
         }
         return options;
     };
 
+    // slices 옵션 생성
+    const slices = categoryStats.map((stat, index) => ({
+        color: categoryColors[stat.category] || categoryColors['기타']
+    }));
+
     return (
-        <div>
-            <div>
-                <label>월 선택: </label>
-                <select value={selectedMonth.split('-')[1]} onChange={handleMonthChange}>
+        <div  className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
+        <div style={{ marginTop: '100px', marginBottom: '150px'}}>
+            <div style={{fontSize: '20px', justifyContent: 'flex-start', display: 'flex', marginLeft: '20px', fontWeight: 'bolder'}}>
+                <select 
+                    value={selectedMonth.split('-')[1]} 
+                    onChange={handleMonthChange}
+                    style={{ border: 'none', outline: 'none' }} // 테두리와 아웃라인 제거
+                >
                     {generateMonthOptions()}
                 </select>
+                &nbsp;소비 패턴 분석
             </div>
 
             <div className="chart-container">
@@ -116,48 +153,31 @@ const MonthlyChart = () => {
                     chartType="PieChart"
                     data={chartData}
                     options={{
-                        title: `${selectedMonth.replace('-', '년 ')} 소비패턴 분석`,
                         pieHole: 0.4,
                         tooltip: { text: 'percentage' },
                         pieSliceText: 'percentage',  // 퍼센트 표시
+                        slices: slices // 카테고리별 색상 적용
                     }}
-                    width="500px"
-                    height="500px"
+                    width="480px"
+                    height="350px"
                     legendToggle
                 />
             </div>
 
-            {/* <div>
-                {filteredUsage.length > 0 ? (
-                    filteredUsage.map((usage, index) => (
-                        <div key={index}>
-                            <div>가맹점이름: {usage.store_name}</div>
-                            <div>결제금액 : {usage.paymentPrice}</div>
-                            <div>결제날짜 : {new Date(usage.paymentDate).toLocaleString()}</div>
-                            <div>카테고리 코드: {usage.category_code}</div>
-                            <p></p>
-                            <br/>
-                        </div>
-                    ))
-                ) : (
-                    <div>선택된 월에 대한 결제 내역이 없습니다.</div>
-                )}
-            </div> */}
-
-            <div>
-                <h3>카테고리별 소비 비율 및 금액</h3>
+            <div style={{position: 'absolute', top: '420px', width: '100%'}}>
                 {categoryStats.length > 0 ? (
                     categoryStats.map((stat, index) => (
-                        <div key={index} style={{ marginBottom: '10px' }}>
-                            <div><strong>{stat.category}</strong></div>
-                            <div>금액: {stat.amount.toLocaleString()}원</div>
-                            <div>비율: {stat.percentage}%</div>
+                        <div key={index} style={{ margin: '30px 20px', display: 'flex', justifyContent: 'space-between'}}>
+                            <img src={categoryImages[stat.category] || categoryImages['기타']} alt={stat.category} style={{ width: '40px', height: '40px' }} />
+                            <div style={{position: 'absolute', left: '20%', textAlign: 'center'}}><strong>{stat.category}</strong></div>
+                            <div style={{fontWeight: 'bold'}}>{stat.amount.toLocaleString()}원&nbsp; | &nbsp; {stat.percentage}%</div>
                         </div>
                     ))
                 ) : (
                     <div>카테고리 정보가 없습니다.</div>
                 )}
             </div>
+        </div>
         </div>
     );
 };

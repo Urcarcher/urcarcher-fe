@@ -2,17 +2,24 @@ import CardOverlay from 'bootstrap-template/components/cards/CardOverlay';
 import { Formik, Form as FormikForm, Field } from "formik";
 import React from 'react';
 import { Button, Form, Tab, Tabs } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
+import ProgressBar from './ProgressBar';
 function Verification() {
-   
+    let navigate = useNavigate();
+
     return (
         <>
         <br/>
         <br/>
         <br/>
         <Container>
-            <Title style={{textAlign:'left', margin:'20px 10px'}}>신분증정보</Title>
+            <ProgressBar
+                stages={['카드 선택', '정보 입력', '동의 사항', '카드 수령', '결제 정보']}
+                currentStage={'정보 입력'}
+            />
+            <div >
+            {/* <h3>신분증 정보</h3> */}
             <Tabs
                 defaultActiveKey="driver's license"
                 id="fill-tab-example"
@@ -23,12 +30,12 @@ function Verification() {
                 <br/>
                     <br/>
                     <CardOverlay
-                        className="my-custom-class" 
+                        className="my-custom-class"
                         img={'/img/cert_drive.png'}
+                        style={{fontSize:'0px'}}
                     />
                     <br/>
                     <br/>
-
                     <Formik>
                         <FormikForm>
                             <Row>
@@ -52,7 +59,6 @@ function Verification() {
                                     <option value="26">26-울산</option>
                                     <option value="28">28-없음</option>
                                 </SmallSelect>
-
                                 <div className="mb-3" style={{ flex: 1 }}>
                                     <FullWidthInput
                                         id="cert_drive"
@@ -69,17 +75,16 @@ function Verification() {
                     <p style={{fontWeight:'bold', textAlign:'left', margin:'0'}}>지역이나 앞 두자리 숫자를 선택 바랍니다.</p>
                     <p style={{color:'red', fontWeight:'bold', textAlign:'left'}}>지역선택은 필수입니다.</p>
                 </Tab>
-
                 <Tab eventKey="ID Card" title="주민등록증">
                 <br/>
                     <br/>
                     <CardOverlay
-                        className="my-custom-class" 
+                        className="my-custom-class"
                         img={'/img/cert_jumin.png'}
+                        style={{fontSize:'0px'}}
                     />
                     <br/>
                     <br/>
-
                     <Formik>
                         <FormikForm>
                             <div className="mb-3">
@@ -98,17 +103,16 @@ function Verification() {
                         </FormikForm>
                     </Formik>
                 </Tab>
-
                 <Tab eventKey="alien registration card" title="외국인 등록증">
                     <br/>
                     <br/>
                     <CardOverlay
-                        className="my-custom-class" 
+                        className="my-custom-class"
                         img={'/img/cert_foriCard.png'}
+                        style={{fontSize:'0px'}}
                     />
                     <br/>
                     <br/>
-
                     <Formik>
                         <FormikForm>
                             <div className="mb-3">
@@ -124,7 +128,6 @@ function Verification() {
                                 />
                             </div>
                             <br/>
-
                             <div className="mb-3">
                                 <Form.Label className="text-uppercase" htmlFor="cert_foriCard2">
                                     일련번호(신분증 뒷면) 입력
@@ -141,47 +144,48 @@ function Verification() {
                     </Formik>
                 </Tab>
             </Tabs>
-
-            <Button 
+            <Button
                 style={{
-                    width:'250px',
-                    position: 'fixed', 
-                    bottom: '120px', 
-                    left: '50%', 
-                    transform: 'translateX(-50%)',
+                    width: '100%',
+                    padding: '12px',
+                    backgroundColor: '#007BFF',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                  }}
+                onClick={()=>{
+                    navigate('/card3');
                 }}
                 >
             신분증 확인
             </Button>
+            </div>
         </Container>
+        
         </>
     );
 }
-
 const Container = styled.div`
   width: 400px;
   margin: 50px auto;
   font-family: Arial, sans-serif;
 `;
-
 const Title = styled.h1`
   font-size: 20px;
   margin-bottom: 20px;
 `;
-
 const Row = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
 `;
-
 const SmallSelect = styled(Form.Select)`
   width: 100px;
   transform: translateY(-8px);
 `;
-
 const FullWidthInput = styled(Field)`
   flex: 1;
 `;
-
 export default Verification;
