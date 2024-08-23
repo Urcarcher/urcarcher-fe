@@ -42,20 +42,12 @@ function Footer(props) {
         {   src: "/icon/menu/menu.png", 
             alt: "메뉴", 
             activeSrc: "/icon/menu/menu-active.png", 
-            path: '' 
+            path: '#'  //빈 path
         }
     ];
 
     const handleMenuClick = (index) => {
-        // setActiveIndex(index);
-        // if (index === 3) {
-        //     setIsMenuVisible(true); //메뉴 표시
-        // } else {
-        //     setIsMenuVisible(false); //메뉴 숨김
-        // }
-        if (index !== 3) {
-            setActiveIndex(index); // index가 3이 아닌 경우에만 업데이트
-        }
+        setActiveIndex(index);
         setIsMenuVisible(index === 3); // index가 3이면 메뉴를 표시, 그렇지 않으면 숨김
     };
     const handleCloseSideMenu = () => {
@@ -68,8 +60,13 @@ function Footer(props) {
                   {menuItems.map((item, index) => (
                       <li key={index}>
                           <Link 
-                              to={item.path || "javascript:void(0);"} 
-                              onClick={() => handleMenuClick(index)}
+                            to={item.path} 
+                            onClick={(e) => {
+                                if (index === 3) {
+                                    e.preventDefault(); // 기본 링크 동작 방지
+                                }
+                                handleMenuClick(index);
+                            }}
                           >
                               <img 
                                   src={activeIndex === index ? item.activeSrc : item.src} 

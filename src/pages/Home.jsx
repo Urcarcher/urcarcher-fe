@@ -142,7 +142,7 @@ function Home(props) {
                     )}
                     
                     <div className='card-signup'>
-                        <p><Link to="/card">카드 신청</Link></p>
+                        <p><Link to="/card1">카드 신청</Link></p>
                         <p><img src="icon/icon-credit-card.png" alt="카드신청" style={{width:"40px"}}/></p>
                     </div>
                 </div>

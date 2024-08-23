@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
 
 function MenuCategory({ title, items , onClose }) {
-
+    console.log(items);
     return (
         <div className="menu-category-wrap">
-            {/* title담은 p태그에 key값 없다고 오류나고 있음 */}
-            <p>{title}</p>
+            {title.map((t, index) => (
+                <p key={t.id}>{t.title}</p>
+            ))}
             <ul className='menu-category-list'>
                 {items.map((item, index) => (
                 <Link to={item.link} onClick={onClose}>
-                <li key={index}>
+                <li key={item.id}>
                     <div>
                         <p className='menu-name'>{item.text}</p>
                     </div>

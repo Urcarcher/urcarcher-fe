@@ -16,14 +16,20 @@ const CourseCard = ({ course }) => {
     return (
         <div onClick={handleClick} className="course-card-link">
             <div className="course-card">
-                <img
-                    src={imageUrl}
-                    alt={course.courseName}
-                    className="course-image"
-                />
+                <div className='course-img-box'>
+                    <img
+                        src={imageUrl}
+                        alt={course.courseName}
+                        className="course-image"
+                    />
+                </div>
                 <div className="course-info">
-                    <p className="course-region">{course.region}</p>
-                    <p className="course-name">{course.courseName}</p>
+                    <div className='course-region-box'>
+                        <p className="course-region">{course.region}</p>
+                    </div>
+                    <div className="course-name-box">
+                        <p className="course-name">{course.courseName}</p>
+                    </div>
                 </div>
             </div>
         </div>
