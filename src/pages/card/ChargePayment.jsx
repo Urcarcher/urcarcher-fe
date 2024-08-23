@@ -1,6 +1,7 @@
+import Axios from 'axios';
 import Preloader from 'bootstrap-template/components/Preloader';
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, ToggleButton, ToggleButtonGroup, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, ToggleButton, ToggleButtonGroup, Form, FormControl } from 'react-bootstrap';
 import styled from 'styled-components';
 
 const AmountButton = styled(Button)`
@@ -18,29 +19,65 @@ const PaymentOption = styled(Form.Check)`
   margin-bottom: 10px;
 `;
 
-
 function ChargePayment(props) {
+  const [nowRemainPay, setNowRemainPay] = useState();
   const [amount, setAmount] = useState('10000');
+  const [customAmount, setCustomAmount] = useState('');
+  
   const [paymentMethod, setPaymentMethod] = useState('credit-card-general');
-
-  const handleAmountChange = (value) => setAmount(value);
-  const handlePaymentMethodChange = (e) => setPaymentMethod(e.currentTarget.value);
-
   const [loading, setLoading] = useState(false);
-    
+
+  const handleAmountChange = (value) => {
+    if (value !== 'custom'){
+      setAmount(value);
+      setCustomAmount('');
+    } else {
+      setAmount(value);
+    }
+  }
+
+  const handleCustomAmountChange = (e) => {
+    setCustomAmount(e.target.value);
+    setAmount('custom'); // 사용자가 입력하면 'custom' 상태를 유지
+  }
+
+  const handlePaymentMethodChange = (e) => setPaymentMethod(e.currentTarget.value);
 
   const handleRecharge = () => {
     setLoading(true);
     // 비동기 작업 (예: API 호출)
-
-
-    setTimeout(() => {
-      // 성공 또는 실패 처리
-      setLoading(false);
-      alert('충전이 완료되었습니다.'); 
-      props.setShowModal(false);
-    }, 3000);
+    Axios.post('/api/card/chargeamount',{
+      cardId : 6,
+      cardBalance : amount === 'custom' ? customAmount : amount
+    })
+    .then(()=>{
+      setTimeout(() => {
+        // 성공 처리
+        setLoading(false);
+        alert('충전이 완료되었습니다.'); 
+        props.setShowModal(false);
+      }, 3000);
+    })
+    .catch(()=>{
+      setTimeout(() => {
+        // 실패 처리
+        setLoading(false);
+        alert('충전에 실패하였습니다.'); 
+        props.setShowModal(false);
+      }, 3000);
+    })
   };
+
+  useEffect(()=>{
+    Axios.get('/api/card/get/6')
+    .then((response)=>{
+      console.log(response.data.cardBalance);
+      setNowRemainPay(response.data.cardBalance);
+    })
+    .catch((error)=>{
+      alert('사용자 잔액 불러오는데 에러발생함');
+    })
+  },[]);
 
   return (
     <Container>
@@ -52,10 +89,17 @@ function ChargePayment(props) {
         <ToggleButton id="tbg-radio-3" value="50000" variant={amount === '50000' ? "primary" : "outline-secondary"}>5만원</ToggleButton>
         <ToggleButton id="tbg-radio-4" value="70000" variant={amount === '70000' ? "primary" : "outline-secondary"}>7만원</ToggleButton>
         <ToggleButton id="tbg-radio-5" value="100000" variant={amount === '100000' ? "primary" : "outline-secondary"}>10만원</ToggleButton>
-        {/* <ToggleButton id="tbg-radio-6" value="custom" variant={amount === 'custom' ? "primary" : "outline-secondary"} onClick={()=>{
-
-        }}>기타</ToggleButton> */}
+        <ToggleButton id="tbg-radio-6" value="custom" variant={amount === 'custom' ? "primary" : "outline-secondary"}>기타</ToggleButton>
       </ToggleButtonGroup>
+      {amount === 'custom' && (
+        <FormControl
+          type="number"
+          placeholder="금액을 입력하세요"
+          value={customAmount}
+          onChange={handleCustomAmountChange} // 별도의 핸들러 사용
+          className="mt-2"
+        />
+      )}
 
       <h5>결제 수단</h5>
       <Form>
@@ -71,12 +115,10 @@ function ChargePayment(props) {
 
       <h5>충전 후 예상 총 카드 잔액</h5>
       <div className="my-3">
-        <h2>{Number(amount).toLocaleString()}만원</h2>
+        <h2>{(Number(nowRemainPay) + Number(amount === 'custom' ? customAmount : amount)).toLocaleString()}원</h2>
       </div>
 
-      <RechargeButton onClick={()=>{
-        handleRecharge();
-      }}>충전하기</RechargeButton>
+      <RechargeButton onClick={handleRecharge}>충전하기</RechargeButton>
     </Container>
   );
 }
