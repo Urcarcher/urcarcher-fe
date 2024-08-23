@@ -4,20 +4,21 @@ import Flickity from 'react-flickity-component';
 import axios from 'axios';
 import { useCardContext } from './CardContext';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import CardOverlay from 'bootstrap-template/components/cards/CardOverlay';
+import ProgressBar from './ProgressBar';
+import { Button } from 'react-bootstrap';
 
 function Card1() {
     const [selectedCard, setSelectedCard] = useState(null);
     const [cards, setCards] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const {produceCardOffer, setProduceCardOffer} = useCardContext();
+    const { produceCardOffer, setProduceCardOffer } = useCardContext();
 
     let navigate = useNavigate();
 
     const flickityOptions = {
-        cellAlign: 'right',
+        cellAlign: 'center', // 카드를 중앙에 정렬
         pageDots: false,
         groupCells: '20%',
         selectedAttraction: 0.03,
@@ -43,18 +44,25 @@ function Card1() {
     const handleChange = (index) => {
         if (cards.length > 0 && index < cards.length) {
             setSelectedCard(cards[index]);
-            // console.log('Selected card:', cards[index]);
         } else {
             console.log("카드 데이터가 아직 로드되지 않았습니다.");
         }
     };
 
     return (
-        <div className='container'>
-            {/* <Header /> */}
+        <div style={{ marginTop: '130px'}}>
+            <ProgressBar
+                stages={['카드 선택', '정보 입력', '동의 사항', '카드 수령', '결제 정보']}
+                currentStage={'카드 선택'}
+            />
+
+            {selectedCard && (
+                <h5 style={{ textAlign: 'left',fontWeight: 'bold', margin: 'auto 110px', marginTop: '30px' }}>
+                    {selectedCard.cardName}
+                </h5>
+            )}
 
             <div className='content'>
-
                 <div className='carousel-container'>
                     {isLoading ? (
                         <div>카드 불러오는 중...</div>
@@ -70,14 +78,15 @@ function Card1() {
                         >
                             {cards.map((card, index) => (
                                 <div className="carousel-cell" key={card.cardTypeId}>
-                                    {/* <img src={card.cardImg} className="p" alt={card.cardName} /> */}
-                                    <img src={require('../../assets/Card1.png')} width='200' height='335'  imageStyle={{borderRadius: 15}}/>
-                                    <div className='card-info'>
-                                        <div>카드이름: {card.cardName}</div>
-                                        <div>카드사용목적: {card.cardUsage}</div>
-                                        <div>카드한도: {card.cardLimit}</div>
-                                        <div>연회비: {card.annualFee}</div>
-                                    </div>
+                                    <CardOverlay
+                                        className='my-custom-class'
+                                        img={require(`../../assets/Card${index + 1}.png`)}
+                                        imgStyle={{ width: '200px', height: '335px' }}
+                                        style={{ fontsize: '0px' }}
+                                    />
+                                    <br />
+                                    <br />
+                                    <br />
                                 </div>
                             ))}
                         </Flickity>
@@ -85,26 +94,48 @@ function Card1() {
                 </div>
 
                 {selectedCard && (
-                    <div className='selected-card'>
-                        <div>선택한 카드이름: {selectedCard.cardName}</div>
-                        <div>카드사용목적: {selectedCard.cardUsage}</div>
-                        <div>카드한도: {selectedCard.cardLimit}</div>
-                        <div>연회비: {selectedCard.annualFee}</div>
+                    <div className='selected-card' style={{ textAlign: 'left' }}>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <div className="card" style={{ width: '25rem', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                                <div className="card-body">
+                                    <p className="card-text">
+                                        <strong>카드 사용 목적:</strong> {selectedCard.cardUsage}
+                                    </p>
+                                    <p className="card-text">
+                                        <strong>카드 한도:</strong> {selectedCard.cardLimit}원
+                                    </p>
+                                    <p className="card-text">
+                                        <strong>연회비:</strong> {selectedCard.annualFee}원
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>
-            
-            <button onClick={() => {
-                if(selectedCard) {
-                    setProduceCardOffer(prevState => ({
-                        ...prevState,
-                        card_type_id:selectedCard.cardTypeId // 선택된 카드 타입 
-                    }));
-                    setTimeout(() => navigate('/card2'), 300);
-                }else{
-                    console.log('카드가 선택되지 않았습니다.');
-                }
-                 }}>신청하기</button>
+            <br />
+            <Button
+                style={{
+                    width: '80%',
+                    padding: '12px',
+                    backgroundColor: '#007BFF',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                }}
+                onClick={() => {
+                    if (selectedCard) {
+                        setProduceCardOffer(prevState => ({
+                            ...prevState,
+                            card_type_id: selectedCard.cardTypeId // 선택된 카드 타입 
+                        }));
+                        setTimeout(() => navigate('/card2'), 300);
+                    } else {
+                        console.log('카드가 선택되지 않았습니다.');
+                    }
+                }}>신청하기</Button>
             <div className='menubar'></div>
         </div>
     );

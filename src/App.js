@@ -38,14 +38,15 @@ import TestCard from './pages/tourguide/TestCard';
 import SearchTour from './pages/tourguide/SearchTour';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import Verification from 'pages/card/Verification';
 
 function App() {
   return (
     <CardProvider>
     <div className="App">
       <BrowserRouter>
+      <Header />
         <Routes>
-          <Header />
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/login/loading' element={<OAuthLoading/>}/>
@@ -80,8 +81,12 @@ function App() {
           <Route path='/reservation' element={<TestReservation/>}/>
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
-          <Footer />
+
+
+          <Route path='/verification' element={<Verification/>}></Route>
         </Routes>
+        <Footer />
+
     </BrowserRouter>
    </div>
   </CardProvider>

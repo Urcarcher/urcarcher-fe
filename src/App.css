@@ -5,7 +5,7 @@
   src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-aLt.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-aLt.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-aLt.ttf) format("truetype");
 }
 /* 기본 */
-@font-face { 
+@font-face {
   font-family: 'NanumSquareNeo';
   src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.eot);
   src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.ttf) format("truetype");
@@ -28,31 +28,30 @@
   src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.eot);
   src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.ttf) format("truetype");
 }
-
+#root{ /* 임시 */
+  background-color: #333;
+}
 .App {
     text-align: center;
-    width: 430px; 
+    width: 430px;
     height: 932px;
-    margin: 0 auto;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     font-family: 'NanumSquareNeo', sans-serif;
     overflow: hidden;  /* 크기 바깥 숨김 */
     position: relative; /* .menu-wrap의 기준 위치 */
+    background-color: #fff;
   }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
 .App-header {
-  background-color: #282c34;
+  background-color: #282C34;
   /* min-height: 100vh; */
   height: 50px;
   display: flex;
@@ -62,11 +61,9 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
 .App-link {
-  color: #61dafb;
+  color: #61DAFB;
 }
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -75,9 +72,8 @@
     transform: rotate(360deg);
   }
 }
-
 /* 공통css */
-.contents{   /* 페이지컴포넌트 최상위div calssName에 넣어주세요 */
+.contents{   /* 페이지컴포넌트 최상위div calssName에 넣어주세요(헤더만큼 공백) */
   padding-top: 77px;
 }
 .inner{
@@ -112,18 +108,16 @@ header{
 .header-wrap{
   display: flex;
 }
-
 .header-wrap > button{
   background: none;
   border: none;
   cursor: pointer;
   margin-right: 10px;
 }
-
-.header-wrap > h3{
+.header-wrap > h5{
   margin: 0;
+  line-height: 77px;
 }
-
 /* Footer */
 .footer-wrap {
   width: 430px;
