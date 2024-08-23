@@ -12,7 +12,7 @@ function Home(props) {
     const [loading, setLoading] = useState(true);
 
     //1. 로그인 회원 정보   
-    const [memberId, setMemberId] = useState('bleakwinter');  //bleakwinter (신용카드) happy(선불카트) - 테스트ID
+    const [memberId, setMemberId] = useState('happy');  //bleakwinter (신용카드) happy(선불카트) - 테스트ID
 
     //2. 회원이 소지하고 있는 첫 번째 카드 종류와 이번 달 카드 사용 금액 정보  (정보 없을 경우 예외 처리 필요)
     useEffect(() => {

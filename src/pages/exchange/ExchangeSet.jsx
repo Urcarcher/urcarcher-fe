@@ -25,7 +25,7 @@ function ExchangeSet(props) {
                 console.log("예약 카드 조회", response.data);
             })
             .catch((error) => {
-                console.log("예약 조회 실패", error);
+                console.log("예약 카드 조회 실패", error);
             });
     }, []);
 
@@ -42,14 +42,15 @@ function ExchangeSet(props) {
                 </h3>
                 <h3>자동 충전해요</h3>
             </div>
-            {/* 설정 없음 */}
-            <div style={{ display: reserveInfo === "" ? "block" : "none" }}>
-                <ExchangeSetNull exchangeSetHandle={exchangeSetHandle}/>
-            </div>
-            {/* 설정 있음 */}
-            <div style={{ display: reserveInfo !== "" ? "block" : "none" }}>
-                <ExchangeSetList/>
-            </div>
+            <>
+                {Object.keys(reserveInfo).length === 0 ? (
+                    /* 설정 없음 */
+                    <ExchangeSetNull exchangeSetHandle={exchangeSetHandle}/>
+                ) : (
+                    /* 설정 있음 */
+                    <ExchangeSetList reserveInfo={reserveInfo}/>
+                )}
+            </>
         </div>
     );
 }

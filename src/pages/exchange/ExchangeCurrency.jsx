@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import 'assets/exchangeCurrency.css';
+import krw from 'assets/icon-nation/icon-kr.png'
+import usd from 'assets/icon-nation/icon-us.png'
 
 function ExchangeCurrency(props) {
     const [exchangeCurInfo, setExchangeCurInfo] = useState({});
@@ -171,7 +173,12 @@ function ExchangeCurrency(props) {
                 <h3>얼마를 <span style={{ color: "#476EFF" }}>충전</span>할까요?</h3>
             </div>
             <div className="exCur_wrapper">
-                <h5>대한민국 KRW</h5>
+                <div className="ex_cur_img">
+                    <img src={krw} alt="KRW"/>
+                </div>
+                <div className="ex_cur_text">
+                    <h5>대한민국 KRW</h5>
+                </div>
                 <div className="exCur_div">
                     <input
                         name="exCur"
@@ -186,10 +193,17 @@ function ExchangeCurrency(props) {
                 </div>
             </div>
             <div className="exAmt_wrapper">
-                <h5>{nation} (사용자의 국적)</h5>
-                <p className="exAmt_text">{calculateAmount}달러</p>
-                {exchangeCurInfo[nation] ? 
-                (<p style={{ color: "#BFBFBF" }}>1달러 = {exchangeCurInfo[nation].rate}원</p>) : (<p style={{ color: "#BFBFBF" }}>환율 정보를 찾고 있어요</p>)}
+                <div className="ex_cur_img">
+                    <img src={usd} alt="USD"/>
+                </div>
+                <div className="ex_cur_nation">
+                    <h5>{nation} (사용자의 국적)</h5>
+                </div>
+                <div className="ex_cur_nation">
+                    <p className="exAmt_text">{calculateAmount}달러</p>
+                    {exchangeCurInfo[nation] ? 
+                    (<p style={{ color: "#BFBFBF" }}>1달러 = {exchangeCurInfo[nation].rate}원</p>) : (<p style={{ color: "#BFBFBF" }}>환율 정보를 찾고 있어요</p>)}
+                </div>
             </div>
             <div className="exRate_wrapper">
                 <p style={{ fontFamily: "NanumSquareNeoExtraBold", textAlign: "left", marginLeft: "20px" }}>환율우대</p>

@@ -172,7 +172,8 @@ function ExchangeSetRate(props) {
             setRate: parseFloat(selectRate.rOpen.replace(/,/g, "")), // 예약환율
             setCur: parseFloat(selectCur.replace(/,/g, "")), // 예약금액
             setPay: parseFloat(selectAmount), // 결제금액
-            setDate: reserveDate // 예약일
+            setDate: reserveDate, // 예약일
+            setStatus: "N"
         };
 
         axios.post("/api/exchange/rate/insert", data, {
