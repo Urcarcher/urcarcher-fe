@@ -9,6 +9,7 @@ import SettingPassword from './SettingPassword';
 import LoseCard from './LoseCard';
 import CancelCard from './CancelCard';
 import PaymentSummary from './PaymentSummary';
+import Axios from 'axios';
 
 // Styled-components for CardManagerment
 
@@ -30,6 +31,22 @@ function CardManagerment(props) {
         initialIndex: 0 // 첫 번째 카드가 중앙에 오도록 설정
     };
 
+    const [isCardActive, setIsCardActive] = useState(true); // 카드 활성화 상태
+
+    const handleToggleChange = (event) => {
+      const newActiveState = event.target.checked;
+      setIsCardActive(newActiveState);
+  
+      Axios.post('/api/card/cardstatus', {
+        cardId: 5,    // 여기 카드아이디 삽입 ---> 향후 수정
+        isActive: newActiveState
+      }).then(response => {
+        console.log('카드 상태가 업데이트되었습니다.');
+      }).catch(error => {
+        console.error('카드 상태 업데이트에 실패했습니다.');
+      });
+  };
+
     const handleOptionClick = (content) => {
         // test
         // console.log(content);
@@ -47,10 +64,10 @@ function CardManagerment(props) {
                 setModalContent(<SettingPassword setShowModal={setShowModal}/>);
                 setModalTitle('카드 비밀번호 설정');
                 break;
-            case "4":
-                setModalContent(<LoseCard setShowModal={setShowModal}/>);
-                setModalTitle('분실신고');
-                break;
+            // case "4":
+            //     setModalContent(<LoseCard setShowModal={setShowModal}/>);
+            //     setModalTitle('분실신고');
+            //     break;
             case "5":
                 setModalContent(<CancelCard setShowModal={setShowModal}/>);
                 setModalTitle('카드해지');
@@ -114,17 +131,27 @@ function CardManagerment(props) {
                     <OptionItem>
                         <span>카드활성화</span>
                         <ToggleSwitch>
-                            <input type="checkbox" id="toggle-switch" />
+                            <input 
+                              type="checkbox" 
+                              id="toggle-switch" 
+                              checked={isCardActive} 
+                              onChange={handleToggleChange} 
+                            />
+
+                            {/* <input type="checkbox" id="toggle-switch" /> */}
                             <label htmlFor="toggle-switch"></label>
                         </ToggleSwitch>
                     </OptionItem>
 
-                    <OptionItem onClick={() => handleOptionClick("4")}>
+                    {/* <OptionItem onClick={() => handleOptionClick("4")}>
                         분실신고
-                    </OptionItem>
+                    </OptionItem> */}
                     <OptionItem onClick={() => handleOptionClick("5")}>
                         카드해지
                     </OptionItem>
+                    <br/>
+                    <br/>
+                    <br/>
                     <br/>
                 </ListGroup>
             </CardDetailsContainer>
