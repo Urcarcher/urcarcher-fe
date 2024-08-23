@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form as FormikForm, Field } from "formik";
 import { Form, Button } from "react-bootstrap";
+import Axios from 'axios';
 
 function SettingPassword(props) {
     const [isVerified, setIsVerified] = useState(false);  // 비밀번호 검증 상태를 저장
@@ -16,12 +17,28 @@ function SettingPassword(props) {
     };
 
     const handleVerifyPassword = async (values) => {
-        const isMatch = await verifyCurrentPassword(values.currentPassword);
-        if (isMatch) {
-            setIsVerified(true);
-        } else {
-            alert("현재 비밀번호가 일치하지 않습니다.");
-        }
+        //const isMatch = await verifyCurrentPassword(values.currentPassword);
+
+        Axios.post('/api/card/checkpinnumber',{
+            cardId : 3,  // 임시데이터(향후 수정 요망)
+            pinNumber : values.currentPassword
+        })
+        .then((response)=>{
+            setIsVerified(response);
+        })
+        .catch((error)=>{
+            setIsVerified(false);
+            alert('현재 PIN번호가 일치하지 않습니다.');
+        })
+
+
+
+
+        // if (isMatch) {
+        //     setIsVerified(true);
+        // } else {
+        //     alert("현재 비밀번호가 일치하지 않습니다.");
+        // }
     };
 
     return (
@@ -68,15 +85,19 @@ function SettingPassword(props) {
                         else if(values.password1 !== values.password2){
                             alert("입력하신 비밀번호가 동일하지 않습니다.")
                         }else{
-                            // ******* be 전달시 ********
-                            // values로 비밀번호 비교 후 일치하면 insert  
-                            //alert(JSON.stringify(values, null, 2))
-                            alert('요청이 완료되었습니다.');
-                            // props 방식으로 회전
-                            props.setShowModal(false)
-                        }
 
-                        
+                            Axios.post('/api/card/changepinnumber',{
+                                cardId : 3, // 임시데이터(향후 수정예정)
+                                pinNumber : values.password1
+                            })
+                            .then(()=>{
+                                alert('PIN 번호가 정상적으로 변경되었습니다.');
+                                props.setShowModal(false)
+                            })
+                            .catch(()=>{
+                                alert('PIN 번호 변경에 실패하였습니다.');
+                            })
+                        }
                     }}
                 >
                     <FormikForm>

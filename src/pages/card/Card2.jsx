@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Switch, FormControlLabel,Button } from '@mui/material';
+import { Input, Switch, FormControlLabel, Button } from '@mui/material';
 import { useCardContext } from './CardContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Footer from '../../components/Footer';
+import ProgressBar from './ProgressBar';
 
 function Card2() {
     const [idNum, setIdNum] = useState('');
-    const [maskingNum, setMaskingNum] = useState(''); 
+    const [maskingNum, setMaskingNum] = useState('');
     const [postPaidTransport, setPostPaidTransport] = useState(false); // 교통기능신청상태 
-    const {produceCardOffer, setProduceCardOffer} = useCardContext(); 
-    
+    const { produceCardOffer, setProduceCardOffer } = useCardContext();
+
     const [phoneNumber, setPhoneNumber] = useState('');
     const [dateOfBirth, setDateOfBirth] = useState('');
     const [name, setName] = useState('');
@@ -60,37 +60,71 @@ function Card2() {
 
         setProduceCardOffer(prevState => ({
             ...prevState,
-            member_id:"bleakwinter", // 로그인된 id로 나중에 수정하기
-            transportation:postPaidTransport // 선택된 교통 신청 여부 반영
+            member_id: "bleakwinter", // 로그인된 id로 나중에 수정하기
+            transportation: postPaidTransport // 선택된 교통 신청 여부 반영
         }));
 
-        setTimeout(() => navigate('/card3'), 300);
+        if (produceCardOffer.card_type_id === 1 || produceCardOffer.card_type_id === 2){
+            setTimeout(() => navigate('/verification'), 300);
+        }else{
+            setTimeout(() => navigate('/card3'), 300);
+        }
+
+        
 
     }
 
     return (
-        <div>
-            <div className="submit-container" id="regist-container">
-                <h3>신청인 정보</h3>
-                <div>
-                    <p>이름</p>
-                    <input id="name" type="text" value={name}/><br />
-                </div>
-               
-                <div>
-                    <p>휴대전화 번호</p>
-                    <input id="phone" type="text" value={phoneNumber} /><br />
-                </div>
-                <div>
-                    <p>주민/외국인등록번호</p>
+        <div style={{ marginTop: '140px'}}>
+             <ProgressBar
+                stages={['카드 선택', '정보 입력', '동의 사항', '카드 수령', '결제 정보']}
+                currentStage={'정보 입력'}
+            />
+            <div className="submit-container" id="regist-container" style={{ margin: 'auto 50px'}}>
+                <h4 style={{marginTop: '65px', textAlign:'left', marginBottom: '30px'}}>신청인 정보를 확인해주세요</h4>
+                <div style={{ marginBottom: '30px'}}>
+                    <div style={{ justifyContent: 'flex-start', display: 'flex' }}>이름</div>
                     <Input
-                        placeholder={'-없이 숫자 13자리 입력'}
+                        id="name"
+                        placeholder="이름을 입력하세요"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        style={{ width: '100%' }}
+                    />
+                    <br />
+                </div>
+
+                <div style={{ marginBottom: '30px' }}>
+                    <div style={{ justifyContent: 'flex-start', display: 'flex' }}>휴대전화 번호</div>
+                    <Input
+                        id="phone"
+                        placeholder="휴대전화 번호를 입력하세요"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        style={{ width: '80%' }}
+                    />
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                    >
+                        인증
+                    </Button>
+                    <br />
+                </div>
+
+                <div style={{ marginBottom: '30px' }}>
+                    <div style={{ justifyContent: 'flex-start', display: 'flex' }}>주민/외국인등록번호</div>
+                    <Input
+                        placeholder={'-포함 숫자 13자리 입력'}
                         maxLength={14}
                         value={maskingNum || dateOfBirth}
                         onChange={handleIdNumChange}
+                        style={{ width: '100%' }}
                     />
                 </div>
-                <div>
+
+                <div style={{ justifyContent: 'flex-start', display: 'flex',  marginBottom: '30px'}}>
                     <FormControlLabel
                         control={
                             <Switch
@@ -98,16 +132,28 @@ function Card2() {
                                 onChange={handleSwitchChange}
                                 name="postPaidTransport"
                                 color="primary"
+                                style={{ marginLeft: '0 !important' }}
                             />
                         }
                         label="후불교통기능 신청"
+                        labelPlacement="start" // 라벨을 스위치 앞에 위치시킴
+                        style={{ marginLeft: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}
                     />
                 </div>
 
                 <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSubmit}
+                    variant="contained"
+                    style={{
+                        width: '100%',
+                        padding: '12px',
+                        backgroundColor: '#007BFF',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '8px',
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                      }}
+                    onClick={handleSubmit}
                 >
                     다음
                 </Button>

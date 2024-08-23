@@ -2,27 +2,19 @@ import 'assets/Menu.css';
 import MenuCategory from 'components/menu/MenuCategory';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { logout } from 'services/AuthService';
 
-function Menu({onClose}) {
-  
+function Menu({onClose, isLoggedIn, userName}) {
     const [isActive, setIsActive] = useState(false);
-
-    // 로그인 상태와 사용자 이름 관리
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userName, setUserName] = useState(''); 
-
+    
    // 로그인 (로그인 정보 API 로직 추가하기 ) 
     const handleLogin = () => {
-      setIsLoggedIn(true);
-      setUserName('홍길동'); // 로그인 시 받아온 사용자 이름을 설정
       onClose(); //메뉴 닫기
     };
 
   // 로그아웃
   const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUserName('');
-    onClose(); //메뉴 닫기
+    logout();
   };
 
     //Esc키로 메뉴 닫기

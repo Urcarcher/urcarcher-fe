@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import CardOverlay from 'bootstrap-template/components/cards/CardOverlay';
 import React, { useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
@@ -111,6 +112,14 @@ function Payment(props) {
 
             <Button onClick={()=>{
                 // 결제 성공시 성공팝업 띄우기
+                // Axios.post('',{
+                  
+                // })
+                // .then(()=>{
+                // })
+                // .catch(()=>{
+
+                // })
 
                 // 결제 실패시 실패 팝업 띄우기 
 
