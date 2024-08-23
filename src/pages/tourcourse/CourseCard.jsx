@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../assets/CourseCard.css';
+import 'assets/CourseCard.css';
 import { useNavigate } from 'react-router-dom';
 
 const CourseCard = ({ course }) => {
@@ -23,7 +23,9 @@ const CourseCard = ({ course }) => {
                 />
                 <div className="course-info">
                     <p className="course-region">{course.region}</p>
+                    <div className ="course-name-wrap">
                     <p className="course-name">{course.courseName}</p>
+                    </div>
                 </div>
             </div>
         </div>

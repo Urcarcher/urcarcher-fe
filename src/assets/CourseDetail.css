@@ -8,6 +8,7 @@
   }
   
   .course-items-container {
+    width: 90%;
     position: relative;
     display: flex;
     justify-content: center;
@@ -58,6 +59,7 @@
     
 
   .place-container {
+    word-break: keep-all;
     display: flex;
     margin-bottom: 20px;
     padding: 20px;
@@ -69,13 +71,16 @@
 }
 
 .place-image {
-    width: 120px;
-    height: 100px;
+    width: 130px;
+    height: 110px;
     border-radius: 8px;
     margin-right: 20px;
 }
 
 .place-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
     max-width: 600px; /* 텍스트 영역의 최대 너비 설정 */
 }
 
@@ -86,12 +91,14 @@
 }
 
 .place-address {
+  text-align: left;
     font-size: 12px;
     color: #000000;
     margin-bottom: 10px;
 }
 
 .place-content {
+  text-align: left;
     font-size: 10px;
     color: #000000;
     margin-bottom: 10px;

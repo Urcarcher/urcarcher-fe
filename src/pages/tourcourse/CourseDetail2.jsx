@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../../assets/Modal.css';
 import '../../assets/CourseDetail.css';
 import { useLocation } from 'react-router-dom';
 import arrow from '../../assets/arrow.png';
 import spot_arrow from '../../assets/spot_arrow.png';
+import { options_POST } from 'services/CommonService';
 const CourseDetail = () => {
+  const nav = useNavigate();
   const location = useLocation();
   const { courseId } = useParams();
   const [loading, setLoading] = useState(true);
   const [course, setCourse] = useState([]);
+  const [certifications, setCertifications] = useState([]);
   const [mapModalOpen, setMapModalOpen] = useState(false);
   const [verificationModalOpen, setVerificationModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
@@ -21,19 +24,25 @@ const CourseDetail = () => {
   const [verificationImage, setVerificationImage] = useState('');
 
   useEffect(() => {
-    console.log("화살표:",arrow);
-    console.log("Location state:", location.state);
-    console.log("courseName:", courseName);
-  
+    if(courseName === '') {
+      nav("/CourseList");
+      return;
+    } 
+
     axios.get(`/api/course/${courseId}`)
       .then((response) => {
-        const courseData = response.data.map(item => ({
-          ...item,
-          latitude: parseFloat(item.latitude).toFixed(6),
-          longitude: parseFloat(item.longitude).toFixed(6)
+
+        const { places, certifications } = response.data;
+
+        const courseData = places.map(item => ({
+        ...item,
+        latitude: parseFloat(item.latitude).toFixed(6),
+        longitude: parseFloat(item.longitude).toFixed(6)
         }));
         console.log('Course data:', courseData);
+        console.log('Certifications:', certifications);
         setCourse(courseData);
+        setCertifications(certifications);
         setLoading(false);
   
         // 카카오맵 스크립트 로드 및 기본 지도 표시
@@ -179,16 +188,14 @@ const CourseDetail = () => {
       });
 
       marker.setMap(map);
-      console.log('카카오맵 초기화 완료');
+     
     }
   };
 
   const handleButtonClick = async (targetLocation) => {
     try {
       const location = await getGeolocation();
-      console.log(`현재 위치: 위도 ${location.lat}, 경도 ${location.lng}`);
-      console.log(`목표 위치: 위도 ${targetLocation.latitude}, 경도 ${targetLocation.longitude}`);
-      compareLocation(location.lat, location.lng, targetLocation.latitude, targetLocation.longitude,targetLocation.placeId, targetLocation.placeName);
+         compareLocation(location.lat, location.lng, targetLocation.latitude, targetLocation.longitude, targetLocation.placeName,targetLocation.placeId);
     } catch (error) {
       console.error('Geolocation을 가져오는 데 실패했습니다.', error);
     }
@@ -218,13 +225,13 @@ const CourseDetail = () => {
     return degree * (Math.PI / 180);
   } 
 
-  const compareLocation = (currentLat, currentLng, targetLat, targetLng,placeId,placeName) => {
+  const compareLocation = (currentLat, currentLng, targetLat, targetLng,placeName ,placeId) => {
     const R = 6371e3; // 지구의 반지름 (미터 단위)
     
     // 현재 위치와 목표 위치를 라디안으로 변환
     const currentLatRad = toRadians(currentLat);
     const targetLatRad = toRadians(targetLat);
-    
+    console.log(currentLat ,currentLng );
     // 위도와 경도의 차이 계산
     const deltaLat = toRadians(targetLat - currentLat);
     const deltaLng = toRadians(targetLng - currentLng);
@@ -237,18 +244,25 @@ const CourseDetail = () => {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     
     const distance = R * c; // 두 좌표 간의 거리 (미터 단위)
-    
-    console.log(`현재 위치: 위도 ${currentLat}, 경도 ${currentLng}`);
-    console.log(`목표 위치: 위도 ${targetLat}, 경도 ${targetLng}`);
-    console.log(`계산된 거리: ${distance} meters`);
-
-    if (distance <= 1000) {  // 1km 반경 내에 있는지 확인
-        console.log('인증 완료되었습니다.');
+  
+   
+    if (distance <= 2000) {  // 1km 반경 내에 있는지 확인
+        
+        axios(options_POST("/api/course/certification", {
+          placeId: placeId,
+          courseId: courseId,
+        }))
+        .then((resp)=>{
+          console.log(resp.data);
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
         setModalMessage(`[${placeName}] \n 인증이 완료되었습니다.`);
         setVerificationImage(require('../../assets/success.png'));
       
     } else {
-        console.log('인증 실패했습니다.');
+        
         setModalMessage('인증에 실패했습니다.\n다시 시도해주십시오.');
         setVerificationImage(require('../../assets/failure.png'));
     }
@@ -266,19 +280,16 @@ const CourseDetail = () => {
       <div className="detail-course-name">{courseName}</div>
       <div className="course-items-container">
       {Array(Math.ceil(course.length / 4)).fill().map((_, rowIndex) => (
-        
         <div key={rowIndex} className="row-container">
-          
-          {course.slice(rowIndex * 4, rowIndex * 4 + 4).map((item) => (
+          {course.slice(rowIndex * 4, (rowIndex + 1) * 4).map((item) => (
             <div key={item.placeId} className="course-item">
-              <img 
-              src={require('../../assets/default.png')} 
-              alt="marker" 
-              className="marker-image"
-              onClick={() => handleButtonClick(item)} // 이미지를 클릭했을 때 함수 실행
-            />
+              <img
+                src={completedItems.has(item.placeId) ? require('../../assets/checked.png') : require('../../assets/default.png')}
+                alt="marker"
+                className="marker-image"
+                onClick={() => handleButtonClick(item)}
+              />
               <h2>{item.placeName}</h2>
-             
             </div>
           ))}
         </div>
@@ -289,18 +300,14 @@ const CourseDetail = () => {
         {course.map((item) => (
           <div key={item.placeId} className="all-place-container">
             <div className="place-container">
-            <img
-                  src={completedItems.has(item.placeId) ? require('../../assets/checked.png') : require('../../assets/default.png')}
-                  alt="marker"
-                  className="marker-image"
-                  onClick={() => handleButtonClick(item)}
-                />
+            <img src={item.placeImg} alt={`${item.placeName} 이미지`} className="place-image" />
             <div className="place-details">
-              
               <h2 className="place-name">{item.placeName}</h2>
               <p className="place-address">{item.address}</p>
               <p className="place-content">{item.content}</p>
             </div>
+
+           
             </div>
             <p className="place-detail-content">{item.detailContent}</p>
           </div>
