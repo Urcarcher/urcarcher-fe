@@ -18,7 +18,7 @@ function Card1() {
     let navigate = useNavigate();
 
     const flickityOptions = {
-        cellAlign: 'right',
+        cellAlign: 'center',
         pageDots: false,
         groupCells: '20%',
         selectedAttraction: 0.03,

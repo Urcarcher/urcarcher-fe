@@ -47,7 +47,6 @@ import Verification from 'pages/card/Verification';
 import ExchangeSetNull from 'pages/exchange/ExchangeSetNull';
 import ExchangeSetRate from 'pages/exchange/ExchangeSetRate';
 import ExchangeSetSuccess from 'pages/exchange/ExchangeSetSuccess';
-import SmsVerification from 'pages/card/SmsVerification';
 
 
 function App() {
@@ -99,7 +98,6 @@ function App() {
           <Route path='/cardmanagement' element={<CardManagerment/>}></Route>
           <Route path='/paymentpage' element={<Payment/>}></Route>
           <Route path='/verification' element={<Verification/>}></Route>
-          <Route path='/vvv' element={<SmsVerification/>}></Route>
         </Routes>
       <Footer />
     </BrowserRouter>

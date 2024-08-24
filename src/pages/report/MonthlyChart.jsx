@@ -8,9 +8,9 @@ const MonthlyChart = () => {
         return `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}`;
     });
     const [usage, setUsage] = useState([]);
-    const [filteredUsage, setFilteredUsage] = useState([]);
     const [chartData, setChartData] = useState([['Category', 'Amount']]);
     const [categoryStats, setCategoryStats] = useState([]);
+    const [memberId, setMemberId] = useState('');
 
     const categoryMapping = {
         "MT1": "생활편의",
@@ -53,28 +53,42 @@ const MonthlyChart = () => {
     };
 
     useEffect(() => {
-        axios.get('/api/payment/list')
+        axios.get('/api/t/test')
             .then(response => {
-                console.log('Original Data:', response.data);
-                setUsage(response.data);
+                const memberData = response.data;
+                setMemberId(memberData.memberId);
+
+                console.log('멤버아디', memberData.memberId);
+
+                // memberId를 사용하여 결제 데이터 가져오기
+                axios.post('/api/payment/by-member', { memberId: memberData.memberId })
+                    .then(paymentResponse => {
+                        console.log('Payment data:', paymentResponse.data); // 로그 추가
+                        setUsage(paymentResponse.data);
+                        filterDataByMonth(selectedMonth, paymentResponse.data); // 초기 데이터 필터링
+                    })
+                    .catch(paymentError => {
+                        console.error('Error fetching payment data:', paymentError.response || paymentError.message);
+                        // 에러 상태 처리
+                    });
             })
             .catch(error => {
-                console.log('Error fetching data', error);
+                console.error('Error fetching member data:', error);
+                // 에러 상태 처리
             });
     }, []);
 
     useEffect(() => {
         if (usage.length > 0) {
-            filterDataByMonth(selectedMonth);
+            filterDataByMonth(selectedMonth, usage); // 선택된 달에 따라 데이터 필터링
         }
-    }, [selectedMonth, usage]);
+    }, [selectedMonth]);
 
-    const filterDataByMonth = (month) => {
-        const filtered = usage.filter(item => {
+    const filterDataByMonth = (month, data) => {
+        const filtered = data.filter(item => {
             const itemMonth = new Date(item.paymentDate).toISOString().split('T')[0].substring(0, 7);
             return itemMonth === month;
         });
-        setFilteredUsage(filtered);
         generateChartData(filtered);
     };
 
@@ -101,7 +115,7 @@ const MonthlyChart = () => {
         let stats = [];
 
         for (const [category, amount] of Object.entries(categoryTotals)) {
-            const percentage = totalAmount > 0 ? Math.round((amount / totalAmount) * 100) : 0;  // 반올림하여 소숫점 제거
+            const percentage = totalAmount > 0 ? Math.round((amount / totalAmount) * 100) : 0;
             formattedChartData.push([category, amount]);
             stats.push({ category, amount, percentage });
         }
@@ -129,55 +143,54 @@ const MonthlyChart = () => {
         return options;
     };
 
-    // slices 옵션 생성
     const slices = categoryStats.map((stat, index) => ({
         color: categoryColors[stat.category] || categoryColors['기타']
     }));
 
     return (
-        <div  className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
-        <div style={{ marginTop: '100px', marginBottom: '150px'}}>
-            <div style={{fontSize: '20px', justifyContent: 'flex-start', display: 'flex', marginLeft: '20px', fontWeight: 'bolder'}}>
-                <select 
-                    value={selectedMonth.split('-')[1]} 
-                    onChange={handleMonthChange}
-                    style={{ border: 'none', outline: 'none' }} // 테두리와 아웃라인 제거
-                >
-                    {generateMonthOptions()}
-                </select>
-                &nbsp;소비 패턴 분석
-            </div>
+        <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
+            <div style={{ marginTop: '100px', marginBottom: '150px' }}>
+                <div style={{ fontSize: '20px', justifyContent: 'flex-start', display: 'flex', marginLeft: '20px', fontWeight: 'bolder' }}>
+                    <select
+                        value={selectedMonth.split('-')[1]}
+                        onChange={handleMonthChange}
+                        style={{ border: 'none', outline: 'none' }}
+                    >
+                        {generateMonthOptions()}
+                    </select>
+                    &nbsp;소비 패턴 분석
+                </div>
 
-            <div className="chart-container">
-                <Chart
-                    chartType="PieChart"
-                    data={chartData}
-                    options={{
-                        pieHole: 0.4,
-                        tooltip: { text: 'percentage' },
-                        pieSliceText: 'percentage',  // 퍼센트 표시
-                        slices: slices // 카테고리별 색상 적용
-                    }}
-                    width="480px"
-                    height="350px"
-                    legendToggle
-                />
-            </div>
+                <div className="chart-container">
+                    <Chart
+                        chartType="PieChart"
+                        data={chartData}
+                        options={{
+                            pieHole: 0.4,
+                            tooltip: { text: 'percentage' },
+                            pieSliceText: 'percentage',
+                            slices: slices
+                        }}
+                        width="480px"
+                        height="350px"
+                        legendToggle
+                    />
+                </div>
 
-            <div style={{position: 'absolute', top: '420px', width: '100%'}}>
-                {categoryStats.length > 0 ? (
-                    categoryStats.map((stat, index) => (
-                        <div key={index} style={{ margin: '30px 20px', display: 'flex', justifyContent: 'space-between'}}>
-                            <img src={categoryImages[stat.category] || categoryImages['기타']} alt={stat.category} style={{ width: '40px', height: '40px' }} />
-                            <div style={{position: 'absolute', left: '20%', textAlign: 'center'}}><strong>{stat.category}</strong></div>
-                            <div style={{fontWeight: 'bold'}}>{stat.amount.toLocaleString()}원&nbsp; | &nbsp; {stat.percentage}%</div>
-                        </div>
-                    ))
-                ) : (
-                    <div>카테고리 정보가 없습니다.</div>
-                )}
+                <div style={{ position: 'absolute', top: '420px', width: '100%' }}>
+                    {categoryStats.length > 0 ? (
+                        categoryStats.map((stat, index) => (
+                            <div key={index} style={{ margin: '30px 20px', display: 'flex', justifyContent: 'space-between' }}>
+                                <img src={categoryImages[stat.category] || categoryImages['기타']} alt={stat.category} style={{ width: '40px', height: '40px' }} />
+                                <div style={{ position: 'absolute', left: '20%', textAlign: 'center' }}><strong>{stat.category}</strong></div>
+                                <div style={{ fontWeight: 'bold' }}>{stat.amount.toLocaleString()}원&nbsp; | &nbsp; {stat.percentage}%</div>
+                            </div>
+                        ))
+                    ) : (
+                        <div>카테고리 정보가 없습니다.</div>
+                    )}
+                </div>
             </div>
-        </div>
         </div>
     );
 };
