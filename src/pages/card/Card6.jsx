@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { useCardContext } from './CardContext';
 import axios from 'axios';
 import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function Card6(props) {
     const { produceCardOffer } = useCardContext();
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         console.log('Card data:', produceCardOffer);
@@ -75,6 +77,7 @@ function Card6(props) {
                         fontWeight: 'bold',
                         marginTop: '60px'
                     }}
+                     onClick={() => navigate('/')}
                 >
                     홈으로
                 </Button>
