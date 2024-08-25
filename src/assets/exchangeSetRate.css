@@ -46,6 +46,7 @@
     /* text-align: left; */
     /* border: 1px solid #476EFF; */
     border: 1px solid #CCCCCC;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
 }
 
 .set_rate_list_select {
@@ -60,6 +61,7 @@
     /* text-align: left; */
     /* border: 1px solid #476EFF; */
     border: 1px solid #476EFF;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
 }
 
 .set_rate_btn {

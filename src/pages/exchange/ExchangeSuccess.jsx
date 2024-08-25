@@ -16,9 +16,15 @@ function ExchangeSuccess(props) {
 
     const navi = useNavigate();
 
+    // 확인
     const homeHandle = () => {
         navi("/");
     };
+
+    // 내역보기
+    const historyHandle = () => {
+        navi("/exchange/history/card");
+    }
 
     return (
         <div className="contents">
@@ -59,7 +65,7 @@ function ExchangeSuccess(props) {
                 </div>
             </div>
             <div className="ex_success_btn_wrapper">
-                <button className="success_info_btn">내역보기</button>
+                <button className="success_info_btn" onClick={historyHandle}>내역보기</button>
                 <button className="success_check_btn" onClick={homeHandle}>확인</button>
             </div>
         </div>

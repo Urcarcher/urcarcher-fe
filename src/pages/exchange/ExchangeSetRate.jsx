@@ -28,8 +28,6 @@ function ExchangeSetRate(props) {
     const rate = [
         // 예측 날짜, 시가, 여행 추천 시작일, 여행 추천 종료일 (국가 별 예측 정보가 있다고 가정)
         { rDate: "2024-08-24", rOpen: "1336.40", rStart: "2024-08-21", rEnd: "2024-08-27", rNation: "USD" },
-        { rDate: "2024-08-26", rOpen: "1330.30", rStart: "2024-08-22", rEnd: "2024-08-27", rNation: "USD" },
-        { rDate: "2024-08-26", rOpen: "1330.30", rStart: "2024-08-22", rEnd: "2024-08-27", rNation: "USD" },
         { rDate: "2024-08-26", rOpen: "1330.30", rStart: "2024-08-22", rEnd: "2024-08-27", rNation: "USD" }
     ];
 
