@@ -13,9 +13,9 @@ function CategoryRankList({categoryList}) {
                 setPaymentCategoryList(prev => [...prev, item]);
             }, index * 700); 
         });
-    }, [categoryList]); //categoryList가 변돌될 때 실행
+    }, [categoryList]); 
     
-    console.log(paymentCategoryList);
+    //console.log(paymentCategoryList);
 
     return (
         <div className='rank-list-wrap'>

@@ -1,8 +1,13 @@
+.logout-txt{
+    font-size: 15px;
+}
 .menu-wrap a{ /* 링크 스타일 초기화 */
     color: black;
     text-decoration: none;
 }
-
+.menu-wrap a:hover{
+    text-decoration: none;
+}
 .menu-wrap{
     z-index: 120; /* 최상위 표시 - 헤더보다 높게 */
     position: absolute; 
@@ -47,6 +52,7 @@
 
 .login-prompt > h3 > span {
     color: black;
+    padding-right: 10px;
 }
 
 .menu-category-list{
@@ -63,7 +69,7 @@
     font-weight: bold;
 }
 .menu-category-list li:hover .menu-name{
-    color: #064AFF;
+    color: #336bff;
 }
 .menu-banner{
     background-color: #F4F7FC;

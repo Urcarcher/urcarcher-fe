@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import 'assets/Map.css';
 import Modal from 'components/mymap/Modal';
 
@@ -11,9 +11,12 @@ const { kakao } = window;
 const myMapIcon = "/icon/markericon.png";
 const locationIcon = "/icon/icon-location.png";
  
-const MyMapApp = () => {    //index.html에 스크립트 넣어두면 잘 뜸 (원본)
+const MyMapApp = () => {  
+
+  const location = useLocation();
+  const { memberId } = location.state || ''; 
+  //console.log(memberId)
   
-  const [memberId, setMemberId] = useState('bleakwinter');  // 테스트할 회원 ID
   const [topCategoryList, setTopCategoryList] = useState([]);
   const [map, setMap] = useState(null); // 카카오 맵에 접근해 지도 상태 조작하는 상태 변수
   const [keyword, setKeyword] = useState('');  // 검색에 사용될 키워드를 관리하는 상태 변수
@@ -23,23 +26,7 @@ const MyMapApp = () => {    //index.html에 스크립트 넣어두면 잘 뜸 (�
   const [openMarkerId, setOpenMarkerId] = useState(null);  // 현재 열려있는 마커의 ID를 관리하는 상태 변수
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // 사이드바의 열림/닫힘 상태를 관리하는 상태 변수
   const [isModalOpen, setIsModalOpen] = useState(false); // 모바일 환경에서 사용될 모달의 열림/닫힘 상태를 관리하는 상태 변수
-  
-  // const loadKakaoMapScript = () => {
-  //   const script = document.createElement('script');
-  //   script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAOMAP_APP_KEY}&libraries=services`;
-  //   script.defer = true; // 스크립트를 비동기로 로드
-  //   document.head.appendChild(script);
-  //   script.onload = () => {
-  //     if (window.kakao && window.kakao.maps) {
-  //       console.log('Kakao Maps script loaded successfully.');
-  //       //setMapLoaded(true); // 스크립트 로드 완료
-  //       console.log( script.src );
-        
-  //     } else {
-  //       console.error('Failed to load Kakao Maps script.');
-  //     }
-  //   };
-  // };
+  //const [loading, setLoading] = useState(true);
 
   //모달창 열기/닫기
   const openModal = () => {
@@ -65,10 +52,10 @@ const MyMapApp = () => {    //index.html에 스크립트 넣어두면 잘 뜸 (�
     });
   }, [memberId]);
 
-  //기본 위치 상태
+  //기본 위치 상태 - 학원원 위치
   const [state, setState] = useState({
     center: { 
-      lat: 37.5594538,   //학원 위치
+      lat: 37.5594538,  
       lng: 126.9226294 ,
     },
     errMsg: null,
@@ -197,7 +184,7 @@ const MyMapApp = () => {    //index.html에 스크립트 넣어두면 잘 뜸 (�
 
   //검색된 장소 표시
   const displayPlaces = (data) => {
-    //map이 null일 때
+    
     if (!map) return;
 
     const bounds = new kakao.maps.LatLngBounds();
@@ -242,6 +229,10 @@ const MyMapApp = () => {    //index.html에 스크립트 넣어두면 잘 뜸 (�
     searchPlaces(name);   // 버튼 클릭 시 장소 검색
   };
 
+  // if (loading) {
+  //   return <LoadingSpinner />;
+  // }
+
   return (
     <>
       <div className='kakaomap-wrap contents'>
@@ -261,7 +252,7 @@ const MyMapApp = () => {    //index.html에 스크립트 넣어두면 잘 뜸 (�
         </div>
        
         {/* 지도 컴포넌트 */}
-        <Map 
+        <Map
           center={state.center} 
           style={{ width: '430px', height: '750px'}} 
           level={3}
@@ -321,16 +312,19 @@ const MyMapApp = () => {    //index.html에 스크립트 넣어두면 잘 뜸 (�
               closeModal = {closeModal}
             />
           )} 
-          <div className='storeRank-link'>
-              <Link to="/maphome/beststorelist">
-                <img src="/icon/icon-list.png" alt="아이콘" />
-              </Link>
-          </div>
-          {/* 내 위치 찾기 */}
-          <div className='current-location-btn'>
-            <button onClick={updateCurrentLocation}>
-              <img src='/icon/icon-my-location.png' alt='내위치'></img>
-            </button>
+          <div className='mymap-btn-wrap'>
+            {/* 내 위치 찾기 */}
+            <div className='current-location-btn'>
+              <button onClick={updateCurrentLocation}>
+                <img src='/icon/icon-my-location.png' alt='내위치'></img>
+              </button>
+            </div>
+            <div className='storeRank-link'>
+                <Link to="/maphome/beststorelist" state={{ memberId: memberId }} >
+                  <img src="/icon/icon-list.png" alt="아이콘" />
+                </Link>
+            </div>
+          
           </div>
         </Map>
       </div>
