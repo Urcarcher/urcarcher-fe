@@ -1,3 +1,4 @@
+/* 08-23 최신 수정 */
 .course-name-box{
     position: absolute;
     width: 100%;
@@ -5,9 +6,14 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.course-region-box{
+.course-region{
     text-align: right;
+    padding: 0 15px 0 0;
+}
+.course-region-box{
     padding-top: 10px;
+    position: absolute;
+    right: 15px;
 }
 
 .course-info p{
@@ -46,13 +52,9 @@
 }
 
 .course-info {
-    height: 100%;
+    height: 100px;
     position: relative; 
-    
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    justify-content: center;
+    padding: 10px;
 }
 
 .course-name {
@@ -91,9 +93,11 @@
 }
 
 .course-name-wrap{
-    
     height: auto;
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
 }

@@ -10,7 +10,7 @@ const Modal = ({
   pagination,
   currentPage,
   setCurrentPage,
-  closeModal, // closeModal 함수도 props로 받아서 사용합니다.
+  closeModal, // closeModal 함수도 props로 받아서 사용
 }) => {
   if (!isModalOpen || !openMarkerId) return null;
 
@@ -19,15 +19,15 @@ const Modal = ({
   return (
     <div className="modal-overlay">
       <div className="modal-contents">
-        <h2>{selectedPlace?.place_name}</h2>
+        <h2 style={{wordBreak:'keep-all'}}>{selectedPlace?.place_name}</h2>
         <p>{selectedPlace?.address_name}</p>
         <p>{selectedPlace?.phone}</p>
         <a href={selectedPlace?.place_url} target="_blank" rel="noopener noreferrer">
           자세히 보기
         </a>
-        <button onClick={closeModal}>Close</button>
+        <button className='modal-x-btn' onClick={closeModal}>X</button>
         
-        {/* 페이지네이션 추가 */}
+        {/* 페이지네이션 */}
         {/* {pagination && (
           <div className="pagination">
             <button

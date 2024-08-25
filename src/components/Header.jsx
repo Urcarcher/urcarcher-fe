@@ -2,7 +2,8 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import 'components/Header.css';
 import { getTitle } from 'components/Pathname.js';  // 경로에 맞는 제목 설정 함수 임포트
-import Logo from 'assets/logo5.png';
+// import Logo from 'assets/logo5.png';  //이전 색상 로고
+import Logo from 'assets/urcarcher-logo.png'; 
 
 function Header() {
     const navigate = useNavigate();

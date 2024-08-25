@@ -4,31 +4,51 @@ import { useCardContext } from './CardContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ProgressBar from './ProgressBar';
+import Axios from 'axios';
 
 function Card2() {
     const [idNum, setIdNum] = useState('');
     const [maskingNum, setMaskingNum] = useState('');
     const [postPaidTransport, setPostPaidTransport] = useState(false); // 교통기능신청상태 
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [registrationNumber, setRegistrationNumber] = useState('');
+    const [name, setName] = useState('');
+    const [memberId, setMemberId] = useState('');
+
     const { produceCardOffer, setProduceCardOffer } = useCardContext();
 
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [dateOfBirth, setDateOfBirth] = useState('');
-    const [name, setName] = useState('');
+    const [verificationCode, setVerificationCode] = useState('');  // 입력된 인증번호
+    const [isVerificationSent, setIsVerificationSent] = useState(false); // 인증번호 발송 여부
+    const [isVerificationSuccessful, setIsVerificationSuccessful] = useState(null); // 인증 성공 여부
 
     let navigate = useNavigate();
 
     useEffect(() => {
         // "bleakwinter" 회원의 데이터를 가져오는 API 호출
-        axios.get('/api/card/bleakwinter')// 로그인된 id로 나중에 수정하기
-            .then(response => {
-                const memberData = response.data;
-                setPhoneNumber(memberData.phoneNumber);
-                setDateOfBirth(memberData.dateOfBirth);
+        // axios.get('/api/card/bleakwinter')// 로그인된 id로 나중에 수정하기
+        //     .then(response => {
+        //         const memberData = response.data;
+        //         setPhoneNumber(memberData.phoneNumber);
+        //         setRegistrationNumber(memberData.registrationNumber);
+        //         setName(memberData.name);
+        //     })
+        //     .catch(error => {
+        //         console.error('Error fetching member data:', error);
+        //     });
+
+        Axios.get('/api/t/test')
+        .then((response)=>{
+            const memberData = response.data;
+            setPhoneNumber(memberData.phoneNumber);
+                setRegistrationNumber(memberData.registrationNumber);
                 setName(memberData.name);
-            })
-            .catch(error => {
-                console.error('Error fetching member data:', error);
-            });
+                setMemberId(memberData.memberId);
+
+                
+        })
+        .catch(error => {
+            console.error('Error fetching member data:', error);
+        });
     }, []);
 
     const handleIdNumChange = (event) => {
@@ -52,7 +72,46 @@ function Card2() {
         setPostPaidTransport(event.target.checked);
     };
 
-    const handleSubmit = () => {
+    // 인증번호 요청 함수
+    const handleVerificationRequest = () => {
+        axios.post('/send-one', { phoneNumber })
+            .then(response => {
+                console.log('인증번호 발송 성공:', response.data);
+                // 인증번호 발송 성공 시 입력 필드를 표시
+                setIsVerificationSent(true);
+            })
+            .catch(error => {
+                console.error('인증번호 발송 실패:', error);
+            });
+    };
+
+    // 인증번호 입력 값 업데이트 함수
+    const handleVerificationCodeChange = (event) => {
+        setVerificationCode(event.target.value);
+    };
+
+    // 인증번호 검증 요청 함수
+    const handleVerificationSubmit = () => {
+        axios.post('/verify-code', { phoneNumber, verificationCode })
+            .then(response => {
+                setIsVerificationSuccessful(response.data);
+                if (response.data) {
+                    alert('인증 성공!');
+                } else {
+                    alert('인증 실패! 다시 시도해주세요.');
+                }
+            })
+            .catch(error => {
+                console.error('인증 실패:', error);
+            });
+    };
+
+   const handleSubmit = () => {
+        // if (!isVerificationSuccessful) {
+        //     alert('인증을 완료해야 합니다.');
+        //     return;
+        // }
+
         const cardData = {
             idNum,
             postPaidTransport,
@@ -60,19 +119,16 @@ function Card2() {
 
         setProduceCardOffer(prevState => ({
             ...prevState,
-            member_id: "bleakwinter", // 로그인된 id로 나중에 수정하기
-            transportation: postPaidTransport // 선택된 교통 신청 여부 반영
+             member_id: memberId,
+            transportation: postPaidTransport
         }));
 
-        if (produceCardOffer.card_type_id === 1 || produceCardOffer.card_type_id === 2){
+        if (produceCardOffer.card_type_id === 1 || produceCardOffer.card_type_id === 2) {
             setTimeout(() => navigate('/verification'), 300);
-        }else{
+        } else {
             setTimeout(() => navigate('/card3'), 300);
         }
-
-        
-
-    }
+    };
 
     return (
         <div style={{ marginTop: '140px'}}>
@@ -98,7 +154,7 @@ function Card2() {
                     <div style={{ justifyContent: 'flex-start', display: 'flex' }}>휴대전화 번호</div>
                     <Input
                         id="phone"
-                        placeholder="휴대전화 번호를 입력하세요"
+                        placeholder="-를 빼고 휴대전화 번호를 입력하세요"
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         style={{ width: '80%' }}
@@ -106,19 +162,40 @@ function Card2() {
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={handleSubmit}
+                        onClick={handleVerificationRequest}
                     >
                         인증
                     </Button>
                     <br />
                 </div>
 
+            {/* 인증번호 입력 필드 및 확인 버튼, 인증번호 발송 후에만 표시 */}
+                {isVerificationSent && (
+                    <div style={{ marginBottom: '30px' }}>
+                        <div style={{ justifyContent: 'flex-start', display: 'flex' }}>인증번호 입력</div>
+                        <Input
+                            id="verification-code"
+                            placeholder="인증번호를 입력하세요"
+                            value={verificationCode}
+                            onChange={handleVerificationCodeChange}
+                            style={{ width: '80%' }}
+                        />
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleVerificationSubmit}
+                        >
+                            확인
+                        </Button>
+                    </div>
+                )}
+
                 <div style={{ marginBottom: '30px' }}>
                     <div style={{ justifyContent: 'flex-start', display: 'flex' }}>주민/외국인등록번호</div>
                     <Input
                         placeholder={'-포함 숫자 13자리 입력'}
                         maxLength={14}
-                        value={maskingNum || dateOfBirth}
+                        value={maskingNum || registrationNumber}
                         onChange={handleIdNumChange}
                         style={{ width: '100%' }}
                     />

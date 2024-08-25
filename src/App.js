@@ -58,7 +58,6 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <Header />
-      <Header />
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
@@ -100,10 +99,9 @@ function App() {
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
           <Route path='/reservation1' element={<Reservation/>}/>
-
           <Route path='/cardmanagement' element={<CardManagerment/>}></Route>
           <Route path='/paymentpage' element={<Payment/>}></Route>
-          <Route path='/cardverification' element={<Verification/>}></Route>
+          <Route path='/verification' element={<Verification/>}></Route>
         </Routes>
       <Footer />
     </BrowserRouter>

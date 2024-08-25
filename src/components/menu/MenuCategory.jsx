@@ -5,7 +5,7 @@ function MenuCategory({ title, items , onClose }) {
     return (
         <div className="menu-category-wrap">
             {title.map((t, index) => (
-                <p key={t.id}>{t.title}</p>
+                <p key={t.id}>{t.tit}</p>
             ))}
             <ul className='menu-category-list'>
                 {items.map((item, index) => (

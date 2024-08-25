@@ -7,7 +7,8 @@
     margin: 0 auto;
 }
 .kakaomap-wrap{
-    position: absolute;
+    position: relative;
+    height: 100vh;
 }
 .kakaomap-wrap> h1{
     /* padding: 0; */
@@ -56,11 +57,20 @@
   
 .modal-contents {
   background: white;
-  padding: 20px;
+  padding: 30px;
   border-radius: 8px;
   width: 300px;
   text-align: center;
   z-index: 80;
+  position: relative;
+}
+.modal-x-btn{
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-weight: bold;
 }
 
 .mymaphome-wrap{
@@ -151,9 +161,9 @@
   }
 }
 .current-location-btn{
-  position: absolute;
-  right: 10px;
-  bottom: 100px;
+  /* position: absolute; */
+  /* right: 10px;
+  bottom: 100px; */
   width: 58px;
   height: 58px;
   background-color: #fff;
@@ -202,6 +212,8 @@
 .categoryRank-title h3{
   font-size: 24px;
   letter-spacing: -1px;
+  animation: slideUp 1s ease-out; /* 1초 동안 애니메이션 적용 */
+  opacity: 1; /* 초기 상태를 설정 */
 }
 .rank-list-wrap{
   height: 400px;
@@ -252,12 +264,27 @@
 }
 .kakaomap-wrap>div:nth-child(2){
   height: 763px !important;
+  height: 100vh;
+}
+.mymap-btn-wrap{  /* 지도 하단 버튼 wrapper */
+  position: absolute;
+  bottom: 100px;
+  right: 15px;
+  z-index: 100;
+}
+.mymap-btn-wrap > div{
+  margin: 13px 0 0;
+}
+@media only screen and (max-width: 390px) {
+  .mymap-btn-wrap {
+      bottom: 30px;
+  }
 }
 .storeRank-link{
-  position: absolute;
-  right: 10px;
+  /* position: absolute; */
+  /* right: 10px;
   bottom: 30px;
-  z-index: 100;
+  z-index: 100; */
 }
 /* BestStoreList.jsx */
 .top-store-list{
@@ -274,6 +301,7 @@
   transition: opacity 0.5s ease, transform 0.5s ease;
   margin: 10px 0;
   background-color: #fff;
+  margin-bottom: 50px;
 }
 .top-store-list li.show {
   opacity: 1;
@@ -286,9 +314,9 @@
   display: flex;
   justify-content: space-between;
   position: absolute;
-  top: 0;
+  top: 10px;
   width: 100%;
-  padding: 0 5px;
+  padding: 0 10px;
   color: #fff;
 } 
 p.rank{
@@ -321,4 +349,13 @@ p.phone{
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
+}
+
+.noReslut-wrap-bs{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 400px;
 }

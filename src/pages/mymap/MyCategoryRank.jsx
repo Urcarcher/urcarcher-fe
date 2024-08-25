@@ -1,22 +1,25 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import CategoryRankList from 'components/mymap/CategoryRankList';
 import NoResult from 'components/mymap/NoResult';
 import RandomImage from 'components/mymap/RandomImage';
 import 'assets/Map.css';
+import cookie from 'react-cookies';
+import { options_GET } from 'services/CommonService';
+import LoadingSpinner from 'components/LoadingSpinner';
 
 function MyCategoryRank(props) {
 
-    const navigator = new useNavigate();
-    
+    const location = useLocation();
+    const { memberId } = location.state || ''; 
+    console.log(memberId)
+
+    const navigator = new useNavigate();    
     const [categoryList, setCategoryList] = useState([]);
-
-    const [memberId, setMemberId] = useState('bleakwinter');  // 테스트할 회원 ID
-
-    //서버로 부터 결제 내역의 카테고리 데이터 호출
+    const [loading, setLoading] = useState(true);
+    //결제 내역의 카테고리 데이터 호출
     useEffect(() => {
-        // 데이터 호출
         axios.get(`/api/paymentPlace/categories`, {
             params: {
                 memberId: memberId
@@ -24,9 +27,11 @@ function MyCategoryRank(props) {
         })
         .then(response => {
             setCategoryList(response.data); // 데이터를 상태에 저장
+            setLoading(false);
         })
         .catch(error => {
             console.error('There was an error!', error);
+            setLoading(false);
         });
     }, [memberId]);
 
@@ -34,13 +39,18 @@ function MyCategoryRank(props) {
 
     //버튼 클릭이벤트 - 페이지 이동
     const goMapAppPage = () => {
-        navigator("/maphome/map" , { state: { categoryList } });
+        navigator("/maphome/map" , { state: { categoryList, memberId }});
     }
 
     //나의 결제 내역이 없을 경우
     const goHome = () => {
         navigator('/');
     }
+
+    if (loading) {
+        return <LoadingSpinner />;
+    }
+
     return (
         <div>
             <div className='categoryRank-wrap contents'>
@@ -52,19 +62,32 @@ function MyCategoryRank(props) {
                         </div>
                         <RandomImage />
                         <CategoryRankList categoryList={categoryList} />
+                        <div className='ranklist-btn inner'>
+                            <button className='mymap-btn'  onClick={goMapAppPage}>
+                                내 주변 탐색
+                            </button>
+                        </div>
                     </>
                 ) : (
-                    <NoResult />
+                    <div className='noReslut-wrap inner'>
+                        <img src="/icon/white-exclamation-mark.png" alt="느낌표" 
+                            style={{width:'30px', height:'150px'}}
+                        />
+                        <h2 style={{margin:'20px 0'}}>결제 내역이 없습니다</h2> 
+                        <button className='mymap-btn'  onClick={goHome}>
+                            홈으로 돌아가기
+                        </button>
+                    </div>
+                    
                 )}
             </div>
-            {/* CategoryRankList가 null인 경우 홈 버튼으로 변경 */}
-            <div className='ranklist-btn inner'>
+            {/* <div className='ranklist-btn inner'>
                 <button 
                     className={`mymap-btn ${categoryList.length > 0 ? '' : 'home-btn'}`} 
                     onClick={categoryList.length > 0 ? goMapAppPage : goHome}>
                     {categoryList.length > 0 ? '내 주변 탐색' : '홈으로 돌아가기'}
                 </button>
-            </div>
+            </div> */}
         </div>
     );
 }

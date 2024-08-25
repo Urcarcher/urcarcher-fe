@@ -1,35 +1,53 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'assets/Map.css';
+import axios from 'axios';
+import cookie from 'react-cookies';
+import { options_GET } from 'services/CommonService';
 
 function MyMapHome(props) { //시작 페이지
 
     const navigator = new useNavigate();
 
     //로그인한 회원 이름 저장
-    const [memberId, setMemberId] = useState('bleakwinter');  // 테스트할 회원 ID
-    //const [name, setName] = useState('');
+    //const [memberId, setMemberId] = useState('bleakwinter');  // 테스트할 회원 ID
+    const [memberId, setMemberId] = useState(''); 
+    const [name, setName] = useState('');
 
-    //  useEffect(() => {
-    //      // "bleakwinter" 회원의 데이터를 가져오는 API 호출
-    //      axios.get('/api/members/bleakwinter')// 로그인된 id로 나중에 수정하기
-    //          .then(response => {
-    //             const memberData = response.data;
-    //              setMemberId(memberData.memberId);
-    //              setName(memberData.name);
-    //          })
-    //          .catch(error => {
-    //              console.error('Error fetching member data:', error);
-    //          });
-    //  }, []);
+    const isAuthorized = () => {
+        if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
+          axios(options_GET("/api/auth/authorizing", null))
+            .then((resp)=>{
+              if(resp.data.isAuthorized == true) {
+                setMemberId(resp.data.memberId);
+                setName(resp.data.name);
+                //console.log(name);
+              }
+            })
+            .catch((err)=>{
+              console.log(err);
+            });
+        }
+    };
+    
+    useEffect(() => {
+        isAuthorized();
+      }, []);
+      
+    // name이 업데이트된 후에만 실행
+    useEffect(() => {
+        if (name) {
+            //console.log(name)
+        }
+    }, [name]); // name이 업데이트될 때마다 실행
+    
 
-    //버튼 클릭이벤트 - 페이지 이동 (결제 내역 null 조건 추가하기)
+    //버튼 클릭이벤트 - 페이지 이동
     const goRankPage = () => {
-        navigator("/maphome/categoryRank");
+        navigator("/maphome/categoryRank",{ state: { memberId } } );
     }
     return (
         <div>
-            {/* <Header /> */}
             <div className='mymaphome-wrap contents'>
                 <div className='maphome-content inner'>
                     <div className='maphome_textwrap'>
@@ -41,11 +59,10 @@ function MyMapHome(props) { //시작 페이지
                     </div>
                 </div>
                 <div className='maphome-btn inner'>
-                    <span>{memberId}님의 결제 내역으로 장소를 추천합니다</span>
+                    <span>{name === ''? '회원' : name}님의 결제 내역으로 장소를 추천합니다</span>
                     <button onClick={goRankPage}>시작하기</button>
                 </div>
             </div>
-            {/* <Footer /> */}
         </div>
     );
 }

@@ -14,11 +14,10 @@ function Card1() {
     const [isLoading, setIsLoading] = useState(true);
 
     const { produceCardOffer, setProduceCardOffer } = useCardContext();
-
     let navigate = useNavigate();
 
     const flickityOptions = {
-        cellAlign: 'right',
+        cellAlign: 'center',
         pageDots: false,
         groupCells: '20%',
         selectedAttraction: 0.03,
@@ -49,17 +48,65 @@ function Card1() {
         }
     };
 
+    // 카드 별 혜택 정의
+    const getCardBenefits = (cardTypeId) => {
+        switch (cardTypeId) {
+            case 1:
+                return [
+                    "주요 관광지 입장권 할인",
+                    "공항 픽업 및 셔틀 서비스 할인",
+                    "지정된 레스토랑 및 카페에서 10% 할인",
+                    "환전 수수료 면제 및 특별 환율 제공"
+                ];
+            case 2:
+                return [
+                    "호텔 숙박비 할인",
+                    "무료 SIM 카드 제공",
+                    "여행자 보험 무료 가입",
+                    "관광지 티켓 사전 예약 서비스"
+                ];
+            case 3:
+                return [
+                    "대중교통 및 택시 할인",
+                    "공항 라운지 무료 이용",
+                    "뮤지컬 및 공연 티켓 할인",
+                    "VIP 라운지 이용권 제공"
+                ];
+            case 4:
+                return [
+                    "박물관, 갤러리, 역사적 명소 입장료 할인",
+                    "여행자 보험 무료 제공",
+                    "주요 관광지 티켓 구매 시 할인 혜택",
+                    "Wi-Fi 핫스팟 무료 이용"
+                ];
+            case 5:
+                return [
+                    "환승 및 렌트카 서비스 할인",
+                    "카페 및 코워킹 스페이스 할인",
+                    "여행 및 라이프스타일 관련 월간 혜택 제공",
+                    "문화 체험 프로그램 할인"
+                ];
+            default:
+                return [
+                    "기본 혜택 1",
+                    "기본 혜택 2",
+                    "기본 혜택 3",
+                    "기본 혜택 4"
+                ];
+        }
+    };
+
     return (
-        <div style={{ marginTop: '130px'}}>
+        <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
             <ProgressBar
                 stages={['카드 선택', '정보 입력', '동의 사항', '카드 수령', '결제 정보']}
                 currentStage={'카드 선택'}
             />
 
             {selectedCard && (
-                <h5 style={{ textAlign: 'left',fontWeight: 'bold', margin: 'auto 110px', marginTop: '30px' }}>
+                <div style={{ textAlign: 'left',fontWeight: 'bolder', margin: 'auto 110px', marginTop: '30px', fontSize: '18px' }}>
                     {selectedCard.cardName}
-                </h5>
+                </div>
             )}
 
             <div className='content'>
@@ -94,37 +141,71 @@ function Card1() {
                 </div>
 
                 {selectedCard && (
-                    <div className='selected-card'>
-                        <div>선택한 카드이름: {selectedCard.cardName}</div>
-                        <div>카드사용목적: {selectedCard.cardUsage}</div>
-                        <div>카드한도: {selectedCard.cardLimit}</div>
-                        <div>연회비: {selectedCard.annualFee}</div>
+                    <div style={{
+                        backgroundColor: 'white',
+                        width: '300px',
+                        padding: '20px',
+                        borderRadius: '10px',
+                        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+                        textAlign: 'center',
+                        margin: '20px auto'
+                    }}>
+                        {/* <div style={{display: 'flex', justifyContent: 'space-between'}}> */}
+                        
+                            <div style={{
+                                fontSize: '14px',
+                                color: '#476EFF',
+                                fontWeight: 'bold',
+                            }}>
+                                {selectedCard.cardUsage}
+                            </div>
+                            <div style={{
+                                fontSize: '12px',
+                                fontWeight: 'bold',
+                                marginTop: '5px'
+                            }}>
+                                {selectedCard.annualFee}원&nbsp;
+                                <span style={{ fontSize: '11px', color: '#999' }}>(연회비)</span>
+                            </div>
+                        {/* </div> */}
+
+
+                        <ul style={{
+                            listStyle: 'none',
+                            padding: '0',
+                            textAlign: 'left'
+                        }}>
+                            {getCardBenefits(selectedCard.cardTypeId).map((benefit, idx) => (
+                                <li key={idx} style={{ margin: '10px 0', fontSize: '1em' }}>✓ {benefit}</li>
+                            ))}
+                        </ul>
+                        <Button
+                            style={{
+                                width: '80%',
+                                padding: '12px',
+                                backgroundColor: '#007BFF',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '8px',
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                            }}
+                            onClick={() => {
+                                if (selectedCard) {
+                                    setProduceCardOffer(prevState => ({
+                                        ...prevState,
+                                        card_type_id: selectedCard.cardTypeId // 선택된 카드 타입 
+                                    }));
+                                    setTimeout(() => navigate('/card2'), 300);
+                                } else {
+                                    console.log('카드가 선택되지 않았습니다.');
+                                }
+                            }}>신청하기</Button>
                     </div>
                 )}
             </div>
             <br />
-            <Button
-                style={{
-                    width: '80%',
-                    padding: '12px',
-                    backgroundColor: '#007BFF',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    fontWeight: 'bold',
-                }}
-                onClick={() => {
-                    if (selectedCard) {
-                        setProduceCardOffer(prevState => ({
-                            ...prevState,
-                            card_type_id: selectedCard.cardTypeId // 선택된 카드 타입 
-                        }));
-                        setTimeout(() => navigate('/card2'), 300);
-                    } else {
-                        console.log('카드가 선택되지 않았습니다.');
-                    }
-                }}>신청하기</Button>
+
             <div className='menubar'></div>
         </div>
     );

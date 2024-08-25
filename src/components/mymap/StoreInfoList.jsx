@@ -10,7 +10,6 @@ function StoreInfoList({storeList}) {
     const [topStore, setTopStore] = useState([]);
 
     useEffect(() => {
-        
         // storeList가 변경될 때 topStore 초기화
          setTopStore([]);
 
@@ -34,7 +33,7 @@ function StoreInfoList({storeList}) {
                     <div className='rank-wrap'>
                         <p className='rank'>{index + 1}위</p>
                         <p> 
-                            <img src="/icon/icon-human.png" alt="사람" />
+                            <img src="/icon/icon-human.png" alt="사람" style={{width:'20px'}} />
                             {store.paymentCount}
                         </p>
                     </div>
@@ -50,7 +49,7 @@ function StoreInfoList({storeList}) {
                     </div>
                      <Map center={{ lat: parseFloat(store.storeY), lng: parseFloat(store.storeX) }}
                      style={{ width: '100%', height: '150px'}}
-                     level={3} >
+                     level={4} >
                         <MapMarker position={{ lat: parseFloat(store.storeY), lng: parseFloat(store.storeX) }}
                          image={{
                             src: locationIcon,
