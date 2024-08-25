@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Chart } from "react-google-charts";
 import '../../assets/WeeklyChart.css';
 import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const initialData = [
   ["요일", "소비 금액", { role: "style" }, { role: "annotation" }],
@@ -59,31 +60,55 @@ const getWeekOfMonth = (date) => {
 const WeeklyChart = () => {
   const [usage, setUsage] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [data, setData] = useState(initialData); // 초기 데이터 설정
+  const [data, setData] = useState(initialData);
   const [selectedMonthWeek, setSelectedMonthWeek] = useState(() => {
     const today = new Date();
     const month = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}`;
     const week = getWeekOfMonth(today);
     return `${month}-W${week}`;
   });
-  const [filteredUsage, setFilteredUsage] = useState([]); // 필터링된 데이터를 저장할 상태 추가
-  const [filter, setFilter] = useState("total"); // 추가된 필터 상태
+  const [filteredUsage, setFilteredUsage] = useState([]);
+  const [filter, setFilter] = useState("total");
+  const [memberId, setMemberId] = useState('');
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    axios.get('/api/payment/list')
+    axios.get('/api/t/test')
       .then(response => {
-        console.log(response.data);
-        setUsage(response.data);
+        const memberData = response.data;
+        setMemberId(memberData.memberId);
+
+        console.log('멤버아디', memberData.memberId);
+
+        // memberId를 사용하여 결제 데이터 가져오기
+        axios.post('/api/payment/by-member', { memberId: memberData.memberId })
+          .then(paymentResponse => {
+            console.log('Payment data:', paymentResponse.data); // 로그 추가
+            setUsage(paymentResponse.data);
+            filterDataByMonthWeek(selectedMonthWeek, paymentResponse.data); // 초기 데이터 필터링
+          })
+          .catch(paymentError => {
+            console.error('Error fetching payment data:', paymentError.response || paymentError.message);
+            // 에러 상태 처리
+          });
       })
       .catch(error => {
-        console.log('에러에러', error);
+        console.error('Error fetching member data:', error);
+        // 에러 상태 처리
       });
   }, []);
 
   useEffect(() => {
-    // 선택한 월과 주의 데이터 필터링
-    const [selectedMonth, selectedWeek] = selectedMonthWeek.split('-W');
-    const filteredData = usage.filter(item => {
+    if (usage.length > 0) {
+      filterDataByMonthWeek(selectedMonthWeek, usage); // 선택된 주에 따라 데이터 필터링
+    }
+  }, [selectedMonthWeek]);
+
+  const filterDataByMonthWeek = (monthWeek, data) => {
+    const [selectedMonth, selectedWeek] = monthWeek.split('-W');
+    const filteredData = data.filter(item => {
       const date = new Date(item.paymentDate);
       const month = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
       const week = getWeekOfMonth(date);
@@ -111,14 +136,13 @@ const WeeklyChart = () => {
     newData[maxIndex][2] = "#476EFF";
 
     setData(newData);
-    setFilteredUsage(filteredData); // 필터링된 데이터를 설정
+    setFilteredUsage(filteredData);
 
     // 주간 총 소비 금액 계산
     const totalWeekPrice = filteredData.reduce((acc, curr) => acc + curr.paymentPrice, 0);
     setTotalPrice(totalWeekPrice);
-  }, [selectedMonthWeek, usage]);
+  };
 
-  // 2024년 1월부터 현재 월까지의 옵션 생성
   const generateMonthWeekOptions = () => {
     const options = [];
     const currentDate = new Date();
@@ -138,97 +162,116 @@ const WeeklyChart = () => {
     return options;
   };
 
-  // 필터링된 데이터 반환
   const getFilteredUsageByFilter = () => {
     if (filter === "income") {
       return filteredUsage.filter(item => item.paymentPrice > 0);
     } else if (filter === "expense") {
       return filteredUsage.filter(item => item.paymentPrice < 0);
     } else {
-      return filteredUsage; // 총 지출 (모든 데이터)
+      return filteredUsage;
     }
   };
 
   return (
-    <div  className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
-    <div className="chart-container" style={{ marginTop: '100px', marginBottom: '100px' }}>
-      <div style={{ justifyContent: 'flex-start', display: 'flex', margin: '10px 20px', fontSize: '20px', position: 'relative' }}>
-        <select
-          value={selectedMonthWeek}
-          onChange={(e) => setSelectedMonthWeek(e.target.value)}
-          style={{
-            border: 'none',
-            outline: 'none',
-            backgroundPositionX: '5px', // 화살표를 왼쪽으로 이동
-          }}>
-          {generateMonthWeekOptions()}
-        </select>
-        차 사용 금액
-      </div>
-      <div style={{ justifyContent: 'flex-start', display: 'flex', margin: '8px 20px', color: '#064AFF', fontWeight: 'bolder', fontSize: '25px' }}>
-        {totalPrice.toLocaleString()}원
-      </div>
-      <Chart
-        chartType="ColumnChart"
-        height="450px"
-        data={data}
-        options={options}
-        loader={<div>Loading Chart...</div>}
-      />
-
-      {/* 필터 버튼 대신 텍스트로 */}
-      <div style={{ display: 'flex', gap: '15px', margin: 'auto 20px' }}>
-        <span 
-          onClick={() => setFilter("total")} 
-          style={{
-            cursor: 'pointer',
-            color: filter === "total" ? '#064AFF' : '#000',
-            fontWeight: filter === "total" ? 'bold' : 'normal'
-          }}
+    <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
+      <div className="header-menu">
+        <div
+          className={`menu-item ${location.pathname === '/chart2' ? 'active' : ''}`}
+          onClick={() => navigate('/chart2')}
         >
-          총 지출
-        </span>
-        <span 
-          onClick={() => setFilter("income")} 
-          style={{
-            cursor: 'pointer',
-            color: filter === "income" ? '#064AFF' : '#000',
-            fontWeight: filter === "income" ? 'bold' : 'normal'
-          }}
+          소비 리포트
+        </div>
+        <div
+           className={`menu-item ${location.pathname === '/chart1' ? 'active' : ''}`}
+          onClick={() => navigate('/chart1')}
         >
-          입금
-        </span>
-        <span 
-          onClick={() => setFilter("expense")} 
-          style={{
-            cursor: 'pointer',
-            color: filter === "expense" ? '#064AFF' : '#000',
-            fontWeight: filter === "expense" ? 'bold' : 'normal'
-          }}
-        >
-          출금
-        </span>
+          소비 패턴 분석
+        </div>
       </div>
 
-      {/* 결제내역 */}
-      {
-    getFilteredUsageByFilter().map((usage, index) => {
-        return (
-            <div style={{ display: 'flex', margin: '25px 20px', justifyContent: 'space-between', alignItems: 'center' }} key={index}>
+      <div className="chart-container" style={{ marginTop: '20px' }}>
+        <div style={{ justifyContent: 'flex-start', display: 'flex', margin: '10px 20px', fontSize: '20px', position: 'relative', fontWeight: 'bolder'  }}>
+          <select
+            value={selectedMonthWeek}
+            onChange={(e) => setSelectedMonthWeek(e.target.value)}
+            style={{
+              border: 'none',
+              outline: 'none',
+              backgroundPositionX: '5px',
+              fontWeight: 'bold' 
+            }}>
+            {generateMonthWeekOptions()}
+          </select>
+          차 사용 금액
+        </div>
+        <div style={{ justifyContent: 'flex-start', display: 'flex', margin: '8px 20px', color: '#064AFF', fontWeight: 'bolder', fontSize: '25px' }}>
+          {totalPrice.toLocaleString()}원
+        </div>
+        <Chart
+          chartType="ColumnChart"
+          height="450px"
+          data={data}
+          options={options}
+          loader={<div>Loading Chart...</div>}
+        />
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '15px', margin: 'auto 20px' }}>
+          <div
+            onClick={() => setFilter("total")}
+            style={{
+              cursor: 'pointer',
+              color: filter === "total" ? '#064AFF' : '#000',
+              fontWeight: filter === "total" ? 'bold' : 'normal',
+              width: '100%',  // 이 div의 너비를 부모에 맞추기
+              display: 'flex',  // flex 속성 추가
+              justifyContent: 'space-between'  // 자식 요소들을 공간 양 끝에 배치
+            }}
+          >
+            <div>총 소비 내역</div>
+            <div style={{ color: 'gray' }}
+              onClick={() => navigate('/usage')}>
+              카드 사용 내역 {'>'} </div>
+          </div>
+
+          {/* <span 
+            onClick={() => setFilter("income")} 
+            style={{
+              cursor: 'pointer',
+              color: filter === "income" ? '#064AFF' : '#000',
+              fontWeight: filter === "income" ? 'bold' : 'normal'
+            }}
+          >
+            입금
+          </span>
+          <span 
+            onClick={() => setFilter("expense")} 
+            style={{
+              cursor: 'pointer',
+              color: filter === "expense" ? '#064AFF' : '#000',
+              fontWeight: filter === "expense" ? 'bold' : 'normal'
+            }}
+          >
+            출금
+          </span> */}
+        </div>
+
+        {
+          getFilteredUsageByFilter().map((usage, index) => {
+            return (
+              <div style={{ display: 'flex', margin: '25px 20px', justifyContent: 'space-between', alignItems: 'center' }} key={index}>
                 <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                    <img src={require('../../assets/Arrow2.png')} alt='' />
+                  <img src={require('../../assets/Arrow2.png')} alt='' />
                 </div>
-                <div style={{ flex: 1, marginLeft: '20px' }}>  {/* flex: 1로 너비를 지정하여 가운데로 배치 */}
-                    <div style={{ fontWeight: 'bold', textAlign: 'start' }}>{usage.storeName}</div>
-                    <div style={{textAlign: 'start'}}>{new Date(usage.paymentDate).toLocaleString()}</div>
+                <div style={{ flex: 1, marginLeft: '20px' }}>
+                  <div style={{ fontWeight: 'bold', textAlign: 'start' }}>{usage.storeName}</div>
+                  <div style={{ textAlign: 'start' }}>{new Date(usage.paymentDate).toLocaleString()}</div>
                 </div>
                 <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice}원</div>
-            </div>
-        );
-    })
-}
-
-    </div>
+              </div>
+            );
+          })
+        }
+      </div>
     </div>
   );
 };

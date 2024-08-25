@@ -95,7 +95,7 @@ function App() {
           <Route path='/reservation1' element={<Reservation/>}/>
           <Route path='/cardmanagement' element={<CardManagerment/>}></Route>
           <Route path='/paymentpage' element={<Payment/>}></Route>
-          <Route path='/cardverification' element={<Verification/>}></Route>
+          <Route path='/verification' element={<Verification/>}></Route>
         </Routes>
       <Footer />
     </BrowserRouter>

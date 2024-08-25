@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { useCardContext } from './CardContext';
 import axios from 'axios';
 import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function Card6(props) {
     const { produceCardOffer } = useCardContext();
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         console.log('Card data:', produceCardOffer);
@@ -55,6 +57,7 @@ function Card6(props) {
                     src={require(`../../assets/Card${produceCardOffer.card_type_id}.png`)}
                     alt=""
                     width={'180px'}
+                    height={'270px'}
                     style={{
                         boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
                         borderRadius: '15px'
@@ -75,6 +78,7 @@ function Card6(props) {
                         fontWeight: 'bold',
                         marginTop: '60px'
                     }}
+                     onClick={() => navigate('/')}
                 >
                     홈으로
                 </Button>
