@@ -5,7 +5,7 @@ import CardOverlay from '../../bootstrap-template/components/cards/CardOverlay';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 
 function TourGuide({
-  numOfRows = '10',
+  numOfRows = '5',
   MobileOS = 'ETC',
   MobileApp = 'AppTest',
   _type = 'json',
@@ -87,6 +87,21 @@ function TourGuide({
     return <div>Error: {error}</div>;
   }
 
+  const buttonStyle = (isActive) => ({
+    width: '100px',
+    textAlign: 'center',
+    padding: '8px 10px',
+    fontSize: '14px',
+    cursor: 'pointer',
+    borderRadius: '20px',
+    margin: '0 5px',
+    backgroundColor: isActive ? '#476EFF' : '#f8f9fa',
+    color: isActive ? 'white' : '#007bff',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    transition: 'background-color 0.3s, color 0.3s',
+    border: 'none',  // 테두리 제거
+  });
+
   return (
     <div>
       <br/>
@@ -96,50 +111,38 @@ function TourGuide({
       <br/>
       <h1>Tour Information</h1>
       
-      <ButtonGroup className="mb-3">
-        <ToggleButton
-          type="radio"
-          variant={arrange === 'R' ? 'primary' : 'outline-secondary'}
-          name="arrange"
-          value="R"
-          checked={arrange === 'R'}
-          onClick={() => {
+      <ButtonGroup className="mb-3 d-flex justify-content-center">
+    <button
+        style={buttonStyle(arrange === 'R')}
+        onClick={() => {
             setPageNo(1);
             setTourData([]);
             setArrange('R');
-          }}
-        >
-          생성일순
-        </ToggleButton>
-        <ToggleButton
-          type="radio"
-          variant={arrange === 'Q' ? 'primary' : 'outline-secondary'}
-          name="arrange"
-          value="Q"
-          checked={arrange === 'Q'}
-          onClick={() => {
+        }}
+    >
+        생성일순
+    </button>
+    <button
+        style={buttonStyle(arrange === 'Q')}
+        onClick={() => {
             setPageNo(1);
             setTourData([]);
             setArrange('Q');
-          }}
-        >
-          수정일순
-        </ToggleButton>
-        <ToggleButton
-          type="radio"
-          variant={arrange === 'O' ? 'primary' : 'outline-secondary'}
-          name="arrange"
-          value="O"
-          checked={arrange === 'O'}
-          onClick={() => {
+        }}
+    >
+        수정일순
+    </button>
+    <button
+        style={buttonStyle(arrange === 'O')}
+        onClick={() => {
             setPageNo(1);
             setTourData([]);
             setArrange('O');
-          }}
-        >
-          제목순
-        </ToggleButton>
-      </ButtonGroup>
+        }}
+    >
+        제목순
+    </button>
+</ButtonGroup>
       
       <div  className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
       <ul style={{ padding: '0', listStyleType: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

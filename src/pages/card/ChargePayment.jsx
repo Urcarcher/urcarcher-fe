@@ -1,113 +1,198 @@
 import Axios from 'axios';
 import Preloader from 'bootstrap-template/components/Preloader';
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, ToggleButton, ToggleButtonGroup, Form, FormControl } from 'react-bootstrap';
+import { Container, Form, FormControl, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 
-const AmountButton = styled(Button)`
-  width: 100%;
-  margin-bottom: 10px;
-`;
-
+// Styled components
 const RechargeButton = styled(Button)`
-  width: 100%;
+  width: 70%;
   font-size: 20px;
   padding: 10px;
 `;
 
-const PaymentOption = styled(Form.Check)`
+const PaymentOptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-bottom: 10px;
+`;
+
+const PaymentOptionLabel = styled.label`
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 15px;
+  font-weight:bold;
+  border: 2px solid #cccccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+
+  &:hover {
+    background-color: #f1f1f1;
+    border-color: #aaaaaa;
+  }
+`;
+
+const PaymentOptionInput = styled(Form.Check.Input)`
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+`;
+
+const CustomToggleButtonGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+`;
+
+const CustomToggleButton = styled.button`
+  border-radius: 10px;
+  border: 2px solid ${({ active }) => (active ? '#476EFF' : '#cccccc')};
+  background-color: ${({ active }) => (active ? '#476EFF' : '#ffffff')};
+  color: ${({ active }) => (active ? '#ffffff' : '#333333')};
+  font-weight: bold;
+  width: 80px;
+  height: 50px;
+  text-align: center;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ active }) => (active ? '#365acb' : '#f1f1f1')};
+    border-color: ${({ active }) => (active ? '#365acb' : '#aaaaaa')};
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
 `;
 
 function ChargePayment(props) {
   const [nowRemainPay, setNowRemainPay] = useState();
   const [amount, setAmount] = useState('10000');
   const [customAmount, setCustomAmount] = useState('');
-  
-  const [paymentMethod, setPaymentMethod] = useState('credit-card-general');
+  const [paymentMethod, setPaymentMethod] = useState('credit-card-simple');
   const [loading, setLoading] = useState(false);
 
   const handleAmountChange = (value) => {
-    if (value !== 'custom'){
+    if (value !== 'custom') {
       setAmount(value);
       setCustomAmount('');
     } else {
       setAmount(value);
     }
-  }
+  };
 
   const handleCustomAmountChange = (e) => {
     setCustomAmount(e.target.value);
-    setAmount('custom'); // 사용자가 입력하면 'custom' 상태를 유지
-  }
+    setAmount('custom');
+  };
 
   const handlePaymentMethodChange = (e) => setPaymentMethod(e.currentTarget.value);
 
   const handleRecharge = () => {
     setLoading(true);
-    // 비동기 작업 (예: API 호출)
-    Axios.post('/api/card/chargeamount',{
-      cardId : 6,
-      cardBalance : amount === 'custom' ? customAmount : amount
+    Axios.post('/api/card/chargeamount', {
+      cardId: props.card.cardId,
+      cardBalance: amount === 'custom' ? customAmount : amount,
     })
-    .then(()=>{
-      setTimeout(() => {
-        // 성공 처리
-        setLoading(false);
-        alert('충전이 완료되었습니다.'); 
-        props.setShowModal(false);
-      }, 3000);
-    })
-    .catch(()=>{
-      setTimeout(() => {
-        // 실패 처리
-        setLoading(false);
-        alert('충전에 실패하였습니다.'); 
-        props.setShowModal(false);
-      }, 3000);
-    })
+      .then(() => {
+        setTimeout(() => {
+          setLoading(false);
+          alert('충전이 완료되었습니다.');
+          props.setShowModal(false);
+        }, 3000);
+      })
+      .catch(() => {
+        setTimeout(() => {
+          setLoading(false);
+          alert('충전에 실패하였습니다.');
+          props.setShowModal(false);
+        }, 3000);
+      });
   };
 
-  useEffect(()=>{
-    Axios.get('/api/card/get/6')
-    .then((response)=>{
-      console.log(response.data.cardBalance);
-      setNowRemainPay(response.data.cardBalance);
-    })
-    .catch((error)=>{
-      alert('사용자 잔액 불러오는데 에러발생함');
-    })
-  },[]);
+  useEffect(() => {
+    Axios.get(`/api/card/get/${props.card.cardId}`)
+      .then((response) => {
+        setNowRemainPay(response.data.cardBalance);
+      })
+      .catch((error) => {
+        alert('사용자 잔액 불러오는데 에러발생함');
+      });
+  }, [props.card.cardId]);
 
   return (
     <Container>
       {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />}
       <h5>충전 금액</h5>
-      <ToggleButtonGroup type="radio" name="amount" value={amount} onChange={handleAmountChange} className="mb-3">
-        <ToggleButton id="tbg-radio-1" value="10000" variant={amount === '10000' ? "primary" : "outline-secondary"}>1만원</ToggleButton>
-        <ToggleButton id="tbg-radio-2" value="30000" variant={amount === '30000' ? "primary" : "outline-secondary"}>3만원</ToggleButton>
-        <ToggleButton id="tbg-radio-3" value="50000" variant={amount === '50000' ? "primary" : "outline-secondary"}>5만원</ToggleButton>
-        <ToggleButton id="tbg-radio-4" value="70000" variant={amount === '70000' ? "primary" : "outline-secondary"}>7만원</ToggleButton>
-        <ToggleButton id="tbg-radio-5" value="100000" variant={amount === '100000' ? "primary" : "outline-secondary"}>10만원</ToggleButton>
-        <ToggleButton id="tbg-radio-6" value="custom" variant={amount === 'custom' ? "primary" : "outline-secondary"}>기타</ToggleButton>
-      </ToggleButtonGroup>
+      <br/>
+      <CustomToggleButtonGroup>
+        {['10000', '30000', '50000', '70000', '100000'].map((value) => (
+          <CustomToggleButton
+            key={value}
+            active={amount === value}
+            onClick={() => handleAmountChange(value)}
+          >
+            {parseInt(value, 10).toLocaleString()}원
+          </CustomToggleButton>
+        ))}
+        <CustomToggleButton
+          active={amount === 'custom'}
+          onClick={() => handleAmountChange('custom')}
+        >
+          기타
+        </CustomToggleButton>
+      </CustomToggleButtonGroup>
       {amount === 'custom' && (
         <FormControl
           type="number"
           placeholder="금액을 입력하세요"
           value={customAmount}
-          onChange={handleCustomAmountChange} // 별도의 핸들러 사용
+          onChange={handleCustomAmountChange}
           className="mt-2"
         />
       )}
-
+      <br/>
+      <br/>
       <h5>결제 수단</h5>
-      <Form>
-        <PaymentOption type="radio" label="신용카드 간편결제" value="credit-card-simple" checked={paymentMethod === 'credit-card-simple'} onChange={handlePaymentMethodChange} />
-        <PaymentOption type="radio" label="신용카드 일반결제" value="credit-card-general" checked={paymentMethod === 'credit-card-general'} onChange={handlePaymentMethodChange} />
-        <PaymentOption type="radio" label="SSGPAY" value="ssgpay" checked={paymentMethod === 'ssgpay'} onChange={handlePaymentMethodChange} />
-        <PaymentOption type="radio" label="계좌이체" value="bank-transfer" checked={paymentMethod === 'bank-transfer'} onChange={handlePaymentMethodChange} />
-      </Form>
+      <PaymentOptionContainer>
+        <PaymentOptionLabel>
+          <PaymentOptionInput
+            type="radio"
+            name="paymentMethod"
+            value="credit-card-simple"
+            checked={paymentMethod === 'credit-card-simple'}
+            onChange={handlePaymentMethodChange}
+          />
+          신용카드 간편결제
+        </PaymentOptionLabel>
+        <PaymentOptionLabel>
+          <PaymentOptionInput
+            type="radio"
+            name="paymentMethod"
+            value="credit-card-general"
+            checked={paymentMethod === 'credit-card-general'}
+            onChange={handlePaymentMethodChange}
+          />
+          신용카드 일반결제
+        </PaymentOptionLabel>
+        <PaymentOptionLabel>
+          <PaymentOptionInput
+            type="radio"
+            name="paymentMethod"
+            value="bank-transfer"
+            checked={paymentMethod === 'bank-transfer'}
+            onChange={handlePaymentMethodChange}
+          />
+          계좌이체
+        </PaymentOptionLabel>
+      </PaymentOptionContainer>
 
       <div className="my-3 text-muted">
         재충전 이후 거래 이력이 없는 경우, 충전일로부터 최대 7일 내 온라인에서 충전 취소가 가능합니다.
@@ -115,7 +200,10 @@ function ChargePayment(props) {
 
       <h5>충전 후 예상 총 카드 잔액</h5>
       <div className="my-3">
-        <h2>{(Number(nowRemainPay) + Number(amount === 'custom' ? customAmount : amount)).toLocaleString()}원</h2>
+        <h2 style={{fontWeight:'bold'}}>
+          {(Number(nowRemainPay) + Number(amount === 'custom' ? customAmount : amount)).toLocaleString()}
+          원
+        </h2>
       </div>
 
       <RechargeButton onClick={handleRecharge}>충전하기</RechargeButton>

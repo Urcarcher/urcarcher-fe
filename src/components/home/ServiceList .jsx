@@ -15,7 +15,7 @@ function ServiceList () {
           link: "/exchange",
         },
         {
-          name: "관광 명소",
+          name: "관광/맛집",
           imgSrc: "/img/home/service3.png",
           link: "/searchtour",
         },

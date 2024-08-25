@@ -1,18 +1,13 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { GoogleMap, LoadScript, DirectionsRenderer, Autocomplete } from '@react-google-maps/api';
 import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { Button } from 'react-bootstrap';
+import LocationIcon from '../../assets/nowlocation.png'; // 이미지 경로 가져오기
 
-const containerStyle = {
-  width: '430px',
-  height: '500px'
-};
-
-const center = {
-  lat: 37.5665,
-  lng: 126.9780
-};
 
 const MapComponent = (props) => {
+  const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY_1;
   const { detailDestination } = useParams();
   
   const [directionsResponse, setDirectionsResponse] = useState(null);
@@ -54,17 +49,10 @@ const MapComponent = (props) => {
     });
   };
 
-  // 마운트된 이후에 useEffect코드가 실행되지만 이것도 비동기 방식으로 실행되기때문에 해당 에러가 발생하는 듯 
-  // useEffect(() => {
-    
-  //   getCurrentLocation();
-  // }, []);
-
-  // 수정 test
-  const onLoadScriptHandler  = async() => {
+  const onLoadScriptHandler  = async () => {
     await getCurrentLocation();
     handleLoad();
-  }
+  };
 
   const handleLoad = useCallback(() => {
     const autocompleteStart = new window.google.maps.places.Autocomplete(
@@ -153,88 +141,160 @@ const MapComponent = (props) => {
   };
 
   return (
-    <div  className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
-    <LoadScript googleMapsApiKey="AIzaSyB-rzhcUXcmRCulCzY1S3Hphp3BrT4NLNU" libraries={['places']}  onLoad={onLoadScriptHandler}>
-      <div>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
+    <Container>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <LoadScript googleMapsApiKey={googleMapsApiKey} libraries={['places']} onLoad={onLoadScriptHandler}>
         <div>
-          <Autocomplete>
-            <input
-              id="start"
-              type="text"
-              placeholder="출발지"
-              value={origin || ''}
-              onChange={(e) => setOrigin(e.target.value)}
-              style={{ marginBottom: '10px', padding: '10px', width: '400px' }}
-            />
-          </Autocomplete>
-          <Autocomplete>
-            <input
-              id="end"
-              type="text"
-              placeholder="도착지"
-              value={destination || ''}
-              onChange={(e) => setDestination(e.target.value)}
-              style={{ marginBottom: '10px', padding: '10px', width: '400px' }}
-            />
-          </Autocomplete>
-
-          <button
-            onClick={async () => {
-              await getCurrentLocation();   // 현재 위치 설정될때 까지 대기
-            }}
-            style={{ padding: '10px 20px', backgroundColor: 'red', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-          >
-            현재 위치로 출발지 설정
-          </button>
-
-          <button
-            onClick={handleSubmit}
-            style={{ padding: '10px 20px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-          >
+          <InputContainer>
+            <Autocomplete>
+              <Input
+                id="start"
+                type="text"
+                placeholder="출발지"
+                value={origin || ''}
+                onChange={(e) => setOrigin(e.target.value)}
+              />
+            </Autocomplete>
+            <LocationButton onClick={async () => { await getCurrentLocation(); }}>
+              <LocationImage src={LocationIcon} alt="현재 위치 설정" />
+            </LocationButton>
+          </InputContainer>
+          <InputContainer>
+            <Autocomplete>
+              <Input
+                id="end"
+                type="text"
+                placeholder="도착지"
+                value={destination || ''}
+                onChange={(e) => setDestination(e.target.value)}
+              />
+            </Autocomplete>
+          </InputContainer>
+          <StyledButton onClick={handleSubmit}>
             길찾기
-          </button>
+          </StyledButton>
         </div>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={13}
-          onLoad={handleLoad}
-        >
-          {selectedRoute && <DirectionsRenderer directions={{ ...directionsResponse, routes: [selectedRoute] }} />}
-        </GoogleMap>
-        <div style={{ marginTop: '20px' }}>
-          {routes.map((route, index) => (
-            <div key={index} style={{ marginBottom: '20px', padding: '20px', border: '1px solid #ccc', borderRadius: '5px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-              <h3 style={{ marginBottom: '10px' }}>경로 {index + 1}</h3>
-              <button onClick={() => setSelectedRoute(route)}>
-                이 경로 보기
-              </button>
-              {route.legs.map((leg, legIndex) => (
-                <div key={legIndex}>
-                  <p><strong>출발지:</strong> {leg.start_address}</p>
-                  <p><strong>도착지:</strong> {leg.end_address}</p>
-                  <p><strong>거리:</strong> {leg.distance.text}</p>
-                  <p><strong>소요 시간:</strong> {leg.duration.text}</p>
-                  {leg.steps.map((step, stepIndex) => (
-                    <div key={stepIndex} style={{ marginBottom: '10px', paddingLeft: '10px', borderLeft: '2px solid #4CAF50' }}>
-                      <p dangerouslySetInnerHTML={{ __html: step.instructions }} style={{ margin: '5px 0' }}></p>
-                      <p style={{ margin: '5px 0' }}><strong>거리:</strong> {step.distance.text}</p>
-                      <p style={{ margin: '5px 0' }}><strong>소요 시간:</strong> {step.duration.text}</p>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          ))}
+        <div  className="scrollable-content" style={{ maxHeight: '600px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
+          <MapContainer>
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={center}
+              zoom={13}
+              onLoad={handleLoad}
+            >
+              {selectedRoute && <DirectionsRenderer directions={{ ...directionsResponse, routes: [selectedRoute] }} />}
+            </GoogleMap>
+          </MapContainer>
+          <div style={{ marginTop: '20px' }}>
+            {routes.map((route, index) => (
+              <RouteCard key={index}>
+                <h3 style={{ marginBottom: '10px' }}>경로 {index + 1}</h3>
+                <Button
+                  style={{ marginBottom: "12px" }}
+                  onClick={() => setSelectedRoute(route)}
+                >
+                  이 경로 보기
+                </Button>
+                {route.legs.map((leg, legIndex) => (
+                  <div key={legIndex}>
+                    <p><strong>출발지:</strong> {leg.start_address}</p>
+                    <p><strong>도착지:</strong> {leg.end_address}</p>
+                    <p><strong>거리:</strong> {leg.distance.text}</p>
+                    <p><strong>소요 시간:</strong> {leg.duration.text}</p>
+                    {leg.steps.map((step, stepIndex) => (
+                      <div key={stepIndex} style={{ marginBottom: '10px', paddingLeft: '10px', borderLeft: '2px solid #4CAF50' }}>
+                        <p dangerouslySetInnerHTML={{ __html: step.instructions }} style={{ margin: '5px 0' }}></p>
+                        <p style={{ margin: '5px 0' }}><strong>거리:</strong> {step.distance.text}</p>
+                        <p style={{ margin: '5px 0' }}><strong>소요 시간:</strong> {step.duration.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </RouteCard>
+            ))}
+          </div>
         </div>
-      </div>
-    </LoadScript>
-    </div>
+      </LoadScript>
+    </Container>
   );
 };
+const Container = styled.div`
+  max-height: 800px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+`;
 
+const MapContainer = styled.div`
+  margin-top: 20px;
+  padding: 0;
+  margin: 0;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const Input = styled.input`
+  padding: 10px;
+  width:350px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 5px; /* 이미지를 오른쪽에 위치시키기 위해 여백 추가 */
+  margin-left: 25px;
+`;
+
+const StyledButton = styled.button`
+  padding: 10px 30px;
+  background-color: #476EFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 10px auto;
+  width: 50%;
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;
+
+const RouteCard = styled.div`
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+`;
+
+const LocationButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 5px;
+`;
+
+const LocationImage = styled.img`
+  width: 24px; /* 이미지 크기 조절 */
+  height: 24px;
+`;
+
+const containerStyle = {
+  width: '100%',
+  height: '500px'
+};
+
+const center = {
+  lat: 37.5665,
+  lng: 126.9780
+};
 export default MapComponent;

@@ -17,28 +17,23 @@ function SettingPassword(props) {
     };
 
     const handleVerifyPassword = async (values) => {
-        //const isMatch = await verifyCurrentPassword(values.currentPassword);
-
-        Axios.post('/api/card/checkpinnumber',{
-            cardId : 3,  // 임시데이터(향후 수정 요망)
-            pinNumber : values.currentPassword
-        })
-        .then((response)=>{
-            setIsVerified(response);
-        })
-        .catch((error)=>{
-            setIsVerified(false);
-            alert('현재 PIN번호가 일치하지 않습니다.');
-        })
-
-
-
-
-        // if (isMatch) {
-        //     setIsVerified(true);
-        // } else {
-        //     alert("현재 비밀번호가 일치하지 않습니다.");
-        // }
+        if(!values.currentPassword) {
+            alert("PIN번호를 입력해주세요.");
+        }else if(values.currentPassword.length !== 4){
+            alert("PIN번호는 4자리를 입력하여야합니다.")
+        }else{
+            Axios.post('/api/card/checkpinnumber',{
+                cardId : props.card.cardId,
+                pinNumber : values.currentPassword
+            })
+            .then((response)=>{
+                setIsVerified(response);
+            })
+            .catch((error)=>{
+                setIsVerified(false);
+                alert('현재 PIN번호가 일치하지 않습니다.');
+            })
+        }
     };
 
     return (
@@ -51,7 +46,7 @@ function SettingPassword(props) {
                     <FormikForm>
                         <div className="mb-3">
                             <Form.Label className="text-uppercase" htmlFor="currentPassword">
-                                현재 비밀번호를 입력해주세요.
+                                현재 PIN번호를 입력해주세요.(4자리)
                             </Form.Label>
                             <Field
                                 id="currentPassword"
@@ -59,11 +54,12 @@ function SettingPassword(props) {
                                 type="password"
                                 placeholder="Current Password"
                                 className="form-control"
+                                maxLength="4"
                             />
                         </div>
                         <div className="mb-3">
                             <Button variant="primary" type="submit">
-                                비밀번호 확인
+                                PIN번호 확인
                             </Button>
                         </div>
                     </FormikForm>
@@ -78,16 +74,23 @@ function SettingPassword(props) {
                     onSubmit={async (values) => {
                         await new Promise((r) => setTimeout(r, 500))
 
+                        if (values.currentPassword && values.currentPassword.length === 4){
+
+                        }
 
                         if(!values.password1 || !values.password2){
-                            alert("비밀번호를 모두 입력해주세요.")
+                            alert("PIN번호를 모두 입력해주세요.")
                         }
                         else if(values.password1 !== values.password2){
-                            alert("입력하신 비밀번호가 동일하지 않습니다.")
-                        }else{
-
+                            alert("입력하신 PIN번호가 동일하지 않습니다.")
+                        }
+                        else if(values.password1.length !== 4 || values.password2.length !== 4){
+                            alert("PIN번호는 4자리를 입력하셔야합니다.")
+                        }
+                        else{
+                            //console.log(props.card.cardId);
                             Axios.post('/api/card/changepinnumber',{
-                                cardId : 3, // 임시데이터(향후 수정예정)
+                                cardId : String(props.card.cardId),
                                 pinNumber : values.password1
                             })
                             .then(()=>{
@@ -103,7 +106,7 @@ function SettingPassword(props) {
                     <FormikForm>
                         <div className="mb-3">
                             <Form.Label className="text-uppercase" htmlFor="password1">
-                                변경하시고자 하는 비밀번호를 입력해주세요.
+                                변경하고자하는 PIN번호를 입력해주세요.(4자리)
                             </Form.Label>
                             <Field
                                 id="password1"
@@ -111,12 +114,13 @@ function SettingPassword(props) {
                                 type="password"
                                 placeholder="New Password"
                                 className="form-control"
+                                maxLength="4"
                             />
                         </div>
 
                         <div className="mb-3">
                             <Form.Label className="text-uppercase" htmlFor="password2">
-                                변경하시고자 하는 비밀번호를 다시 입력해주세요.
+                                변경하고자하는 PIN번호를 재입력해주세요.(4자리)
                             </Form.Label>
                             <Field
                                 id="password2"
@@ -124,11 +128,12 @@ function SettingPassword(props) {
                                 type="password"
                                 placeholder="Again New Password"
                                 className="form-control"
+                                maxLength="4"
                             />
                         </div>
                         <div className="mb-3">
                             <Button variant="primary" type="submit">
-                                변경신청
+                                PIN번호 변경
                             </Button>
                         </div>
                     </FormikForm>

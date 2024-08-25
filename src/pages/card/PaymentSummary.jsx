@@ -1,8 +1,9 @@
 import Axios from 'axios';
 import Preloader from 'bootstrap-template/components/Preloader';
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 
 function PaymentSummary(props) {
@@ -18,7 +19,10 @@ function PaymentSummary(props) {
     // be
     setLoading(true);
 
-    Axios.post("/api/card/immediatepayment",{cardId:6})
+    Axios.post("/api/payment/immediatepayment",{
+      cardId:props.card.cardId,
+      paymentDate:props.card.paymentDate
+    })
     .then(()=>{
       setTimeout(() => {
         // 성공 처리
@@ -39,15 +43,21 @@ function PaymentSummary(props) {
 
 
   useEffect(()=>{
-    Axios.get("/api/card/get/6")
+    console.log(props.card.paymentDate);
+    Axios.post('/api/payment/detailpayment',{
+      cardId:props.card.cardId,
+      paymentDate:props.card.paymentDate
+      })
     .then((response)=>{
-      setExpectedAmount(response.data.cardBalance);
-      setExpectedPayDate(response.data.paymentDate);
+      setExpectedAmount(response.data);
+      setExpectedPayDate(props.card.paymentDate);
     })
-    .catch((error)=>{alert('결제 예상 금액 가져오는데 문제 발생')})
+    .catch((error)=>{alert('결제 예상 금액 가져오는데 문제 발생')
+      console.log(error);
+    })
 
     // 최근 결제 내역 확인하기 
-    Axios.post("/api/payment/recentpayment",{cardId:1})
+    Axios.post("/api/payment/recentpayment",{cardId:props.card.cardId})
     .then((response)=>{
       setRecentPay(response.data.paymentPrice);
       setRecentPayDate(response.data.paymentDate.replace(/T/g, ' '));
@@ -59,14 +69,14 @@ function PaymentSummary(props) {
     })
     .catch(()=>{
     })
-  },[])
+  },[props.card]);
 
   return (
-    <Container>
+    <Container style={{width:'400px'}}>
       {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />}
       <Card>
         <Title>{formatDate(expectedPayDate)}  결제예상금액</Title>
-        <Amount>{Number(expectedAmount).toLocaleString()}</Amount>
+        <Amount>{Number(expectedAmount).toLocaleString()}원</Amount>
         <br/>
         <PaymentButton onClick={()=>{
           paymentHandler();
@@ -77,7 +87,7 @@ function PaymentSummary(props) {
         <p style={{marginBottom:'0px'}}>최근 <span style={{fontWeight:'bold'}}>{recentPayLocation}</span>에서 <span style={{fontWeight:'bold'}}>{Number(recentPay).toLocaleString()}</span>원 결제하셨어요.</p>
         <p style={{marginTop:'0px'}}>{recentPayDate}</p>
         <ActivityDetail>
-          <a href='#' style={{textDecoration: 'underline', color: '#476EFF' }}>최근 이용내역 보러가기</a>
+          <Link to="/chart1" style={{textDecoration: 'underline', color: '#476EFF' }}>최근 이용내역 보러가기</Link>
         </ActivityDetail>
       </RecentActivity>
     </Container>
@@ -86,7 +96,7 @@ function PaymentSummary(props) {
 
 function formatDate(dateString) {
   const date = new Date(dateString);
-  const options = { month: 'long', day: 'numeric' }; // 'long'을 사용하면 '5월' 형식으로 표시
+  const options = { month: 'long', day: 'numeric' };
   return date.toLocaleDateString('ko-KR', options);
 }
 
@@ -108,11 +118,6 @@ const Amount = styled.h2`
   font-size: 32px;
   font-weight: bold;
   margin: 0;
-`;
-
-const SubTitle = styled.p`
-  color: #666;
-  margin: 5px 0;
 `;
 
 
