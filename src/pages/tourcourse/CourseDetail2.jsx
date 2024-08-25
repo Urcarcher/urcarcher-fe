@@ -44,6 +44,14 @@ const CourseDetail = () => {
         setCourse(courseData);
         setCertifications(certifications);
         setLoading(false);
+
+        const completedSet = new Set();
+        certifications.forEach(cert => {
+          completedSet.add(cert.placeId);
+        });
+        setCompletedItems(completedSet);
+
+        setLoading(false);
   
         // 카카오맵 스크립트 로드 및 기본 지도 표시
         const script = document.createElement('script');
@@ -258,8 +266,27 @@ const CourseDetail = () => {
         .catch((err)=>{
           console.log(err);
         })
-        setModalMessage(`[${placeName}] \n 인증이 완료되었습니다.`);
-        setVerificationImage(require('../../assets/success.png'));
+
+        setCompletedItems((prev) => {
+          const updatedSet = new Set(prev).add(placeId);
+    
+          // 전체 코스의 장소 수와 인증된 장소 수를 비교
+          if (updatedSet.size === course.length) {
+            // 모든 장소가 인증된 경우 (코스 완료)
+            setModalMessage(`[${courseName}] \n해당 코스의 모든 인증이 완료되었습니다.`);
+            setVerificationImage(require('../../assets/Heart2.png')); // 새로운 이미지로 변경
+          } else {
+            // 특정 장소 인증만 완료된 경우
+            setModalMessage(`[${placeName}] \n 인증이 완료되었습니다.`);
+            setVerificationImage(require('../../assets/success.png'));
+          }
+    
+          return updatedSet;
+        });
+
+        // setModalMessage(`[${placeName}] \n 인증이 완료되었습니다.`);
+        // setVerificationImage(require('../../assets/success.png'));
+        // setCompletedItems((prev) => new Set(prev).add(placeId));
       
     } else {
         
