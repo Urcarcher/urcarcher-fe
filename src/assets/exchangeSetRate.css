@@ -8,7 +8,7 @@
 
 .set_rate_table {
     width: 85%;
-    /* height: 250px; */
+    /* height: 400px; */
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 40px;
@@ -35,30 +35,72 @@
 } */
 
 .set_rate_list {
+    font-family: 'NanumSquareNeoBold';
     width: 100%;
-    height: 175px;
+    height: 260px;
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 20px;
     border-radius: 7px;
-    text-align: left;
+    /* text-align: left; */
     /* border: 1px solid #476EFF; */
     border: 1px solid #CCCCCC;
 }
 
+.set_rate_list_select {
+    font-family: 'NanumSquareNeoBold';
+    width: 100%;
+    height: 260px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 7px;
+    /* text-align: left; */
+    /* border: 1px solid #476EFF; */
+    border: 1px solid #476EFF;
+}
+
+.set_rate_btn {
+    font-family: 'NanumSquareNeoExtraBold';
+    font-size: 15px;
+    width: 100%;
+    height: 35px;
+    color: white;
+    background-color: #476EFF;
+    border: none;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.set_rate_btn:hover {
+    transform: translateY(-2px);
+}
+
 .set_rate_left {
     width: 110px;
+    height: 30px;
     float: left;
     text-align: left;
+    line-height: 40px;
     /* border: 1px solid red; */
 }
 
 .set_rate_right {
-    width: 150px;
+    width: 200px;
+    height: 30px;
     float: right;
     color: #476EFF;
     text-align: right;
+    /* border: 1px solid red; */
+}
+
+.set_rate_option {
+    width: 100%;
+    height: 30px;
+    margin: 0 auto;
+    float: left;
     /* border: 1px solid red; */
 }
 
@@ -72,6 +114,19 @@
     /* border: 1px solid red; */
 }
 
+.set_rate_date_box {
+    width: 85%;
+    height: 120px;
+    margin: 0 auto;
+    /* border: 1px solid blue; */
+}
+
+.set_rate_box_left {
+    color: #476EFF;
+    text-align: left;
+    padding-left: 23px;
+}
+
 .MuiPaper-root {
     width: 350px !important;
     max-height: 310px !important;
@@ -82,7 +137,88 @@
     max-height: 310px;
 }
 
-.set_rate_cur input {
-    border: none;
+.css-19qh8xo-MuiInputBase-input-MuiOutlinedInput-input {
+    width: 100% !important;
+}
+
+.css-1pysi21-MuiFormLabel-root-MuiInputLabel-root {
+    font-family: 'NanumSquareNeoBold' !important;
+}
+
+.set_rate_cur {
+    width: 85%;
+    height: 120px;
+    margin: 0 auto;
+    margin-top: 30px;
+    /* border: 1px solid red; */
+    
+}
+
+.set_cur_option {
+    width: 100%;
+    height: 30px;
+    margin: 0 auto;
+    float: left;
+    /* border: 1px solid red; */
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.set_cur_option input {
+    font-family: 'NanumSquareNeoBold';
+    font-size: 1rem;
+    font-weight: 400;
+    width: 260px;
+    height: 40px;
+    padding: 10px;
     background-color: white;
+    /* border-radius: 5px; */
+    border: none;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.set_rate_pay {
+    width: 315px;
+    height: 40px;
+    margin: 0 auto;
+    margin-top: -20px;
+    /* border-radius: 7px; */
+    /* border: 1px solid #CCCCCC; */
+}
+
+.set_rate_pay p {
+    line-height: 40px;
+    padding-left: -20px;
+}
+
+.set_rate_pay_text {
+    font-family: 'NanumSquareNeoBold';
+    font-size: 1rem;
+    font-weight: 400;
+    padding-left: 10px;
+    text-align: left;
+    color: #282C34;
+}
+
+.set_rate_fix_box {
+    width: 85%;
+    height: 50px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.set_rate_fix_btn {
+    font-family: 'NanumSquareNeoExtraBold';
+    font-size: 15px;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 50px;
+    color: white;
+    background-color: #476EFF;
+    border: none;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.set_rate_fix_btn:hover {
+    transform: translateY(-2px);
 }

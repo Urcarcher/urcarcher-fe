@@ -1,8 +1,23 @@
 import React from 'react';
 import 'assets/exchangeSetList.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function ExchangeSetList({ reserveInfo }) {
     console.log("예약 조회 페이지 data", reserveInfo);
+
+    const navi = useNavigate();
+
+    const deleteHandle = () => {
+        axios.delete(`/api/exchange/rate/delete/${reserveInfo.setId}`)
+        .then((response) => {
+            navi("/exchange");
+        })
+        .catch(error => {
+            console.log(error);
+            alert("다시 시도해 주세요");
+        });
+    };
 
     return (
         <div className="ex_set_list_wrapper">
@@ -38,7 +53,7 @@ function ExchangeSetList({ reserveInfo }) {
                 <h4>예약일이 되면 자동 충전돼요</h4>
             </div>
             <div className="ex_set_list_btn">
-                <button className="set_delete_btn">삭제</button>
+                <button className="set_delete_btn" onClick={deleteHandle}>삭제</button>
                 <button className="set_put_btn">변경</button>
             </div>
         </div>

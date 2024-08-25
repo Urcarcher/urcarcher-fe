@@ -85,7 +85,7 @@ function ExchangeCurrency(props) {
         const numCur = Number(inputVal.replace(/[^0-9]/g, ""));
 
         setCurrency(numCur.toLocaleString());
-        setInputWidth(inputVal.length * 15); // 동적으로 input 길이 변경
+        setInputWidth(inputVal.length * 20); // 동적으로 input 길이 변경
 
         if (exchangeCurInfo[nation] && exchangeCurInfo[nation].rate && exchangeCurInfo[nation].buy) {
             // 쉼표 제거 후 문자열을 숫자로 변환 (NaN 발생)
