@@ -57,7 +57,8 @@
     margin-bottom: 30px;
     border-radius: 7px;
     text-align: left;
-    border: 1px solid #476EFF;box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+    border: 1px solid #476EFF;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
 }
 
 .choice button {

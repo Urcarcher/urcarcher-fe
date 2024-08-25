@@ -19,12 +19,16 @@ function ExchangeSetList({ reserveInfo }) {
         });
     };
 
+    const homeHandle = () => {
+        navi("/exchange");
+    };
+
     return (
         <div className="ex_set_list_wrapper">
             <div className="ex_set_list_table">
                 <h5>대한민국 KRW</h5>
                 <div className="ex_set_list_col">
-                    <p className="ex_set_list_p">기준환율 (시가)</p>
+                    <p className="ex_set_list_p">예약환율 (시가)</p>
                     <h5>1달러 = {reserveInfo.setRate}</h5>
                 </div>
                 <div className="ex_set_list_col">
@@ -54,7 +58,7 @@ function ExchangeSetList({ reserveInfo }) {
             </div>
             <div className="ex_set_list_btn">
                 <button className="set_delete_btn" onClick={deleteHandle}>삭제</button>
-                <button className="set_put_btn">변경</button>
+                <button className="set_home_btn" onClick={homeHandle}>확인</button>
             </div>
         </div>
     );

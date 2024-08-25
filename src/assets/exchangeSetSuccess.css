@@ -1,12 +1,20 @@
-.ex_set_list_wrapper {
+.ex_setting_wrapper {
     width: 80%;
-    height: 400px;
+    height: 75px;
     margin: 0 auto;
-    margin-top: 90px;
+    margin-top: 50px;
     /* border: 1px solid red; */
 }
 
-.ex_set_list_table {
+.ex_setting_table_box {
+    width: 80%;
+    height: 75px;
+    margin: 0 auto;
+    margin-top: 50px;
+    /* border: 1px solid red; */
+}
+
+.ex_setting_table {
     width: 100%;
     height: 340px;
     padding: 30px;
@@ -16,24 +24,22 @@
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
 }
 
-.ex_set_list_p {
+.ex_setting_col {
+    width: 100%;
+    height: 70px;
+}
+
+.ex_setting_p {
     color: #CCCCCC;
     font-size: 13px;
     margin-bottom: 5px;
 }
 
-.ex_set_list_col {
-    width: 100%;
-    height: 70px;
-    /* margin-top: 30px; */
-    /* border: 1px solid red; */
-}
-
-.ex_set_list_text {
+.ex_setting_box_text {
     margin-top: 50px;
 }
 
-.ex_set_list_btn {
+.ex_setting_btn_box {
     font-family: 'NanumSquareNeoExtraBold';
     font-size: 15px;
     width: 100%;
@@ -42,7 +48,7 @@
     /* border: 1px solid red; */
 }
 
-.set_delete_btn {
+.set_setting_info_btn {
     /* width: 40%;
     height: 100%;
     float: left;
@@ -62,11 +68,11 @@
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
 }
 
-.set_delete_btn:hover {
+.set_setting_info_btn:hover {
     transform: translateY(-2px);
 }
 
-.set_home_btn {
+.set_setting_home_btn {
     /* width: 40%;
     height: 100%;
     float: right;
@@ -86,6 +92,6 @@
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
 }
 
-.set_home_btn:hover {
+.set_setting_home_btn:hover {
     transform: translateY(-2px);
 }

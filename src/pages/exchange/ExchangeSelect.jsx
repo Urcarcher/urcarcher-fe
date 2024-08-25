@@ -16,6 +16,10 @@ function ExchangeSelect(props) {
         navi("/exchange/card", { state: { selectBtn } });
     };
 
+    const historyHandle = () => {
+        navi("/exchange/history/card");
+    }
+
     return (
         <div className="contents">
             <div className="exchange_select_wrapper">
@@ -34,7 +38,7 @@ function ExchangeSelect(props) {
                     <img src={exchangeMoney} alt="돈 아이콘"/>
                 </div>
                 <div className="select_btn_wrapper">
-                    <button className="select_info_btn">내역보기</button>
+                    <button className="select_info_btn" onClick={historyHandle}>내역보기</button>
                     <button id="currency" className="select_cur_btn" onClick={exchangeHandle}>충전하기</button>
                 </div>
                 <div className="exchange_select_title2">

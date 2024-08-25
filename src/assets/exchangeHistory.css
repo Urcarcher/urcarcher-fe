@@ -1,0 +1,105 @@
+.ex_history_wrpper {
+    width: 90%;
+    height: 110px;
+    margin: 0 auto;
+    text-align: left;
+    padding: 20px;
+    padding-top: 30px;
+    border-bottom: 1px solid #CCCC;
+}
+
+.ex_history_wrpper span {
+    font-family: 'NanumSquareNeoExtraBold';
+}
+
+.ex_history_wrpper h3 {
+    font-family: 'NanumSquareNeoHeavy';
+}
+
+.ex_history_btn_wrpper {
+    width: 65px;
+    height: 35px;
+    float: right;
+    position: relative;
+    bottom: 42px;
+    /* border: 1px solid red; */
+}
+
+.ex_go_change_btn {
+    width: 100%;
+    height: 100%;
+    color: white;
+    background-color: #476EFF;
+    border: none;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.ex_history_type_btn {
+    font-family: 'NanumSquareNeoBold';
+    width: 40%;
+    height: 30px;
+    float: left;
+    margin-top: 30px;
+    margin-left: 10px;
+    /* border: 1px solid red; */
+}
+
+.ex_type_select {
+    border: none;
+    background-color: white;
+    color: black;
+}
+
+.ex_type_un_select {
+    border: none;
+    background-color: white;
+    color: #CCCC;
+}
+
+.ex_history_list {
+    width: 90%;
+    height: 535px;
+    float: left;
+    margin-top: 25px;
+    margin-left: 10px;
+    margin-bottom: 40px;
+    overflow-y: scroll;
+}
+
+.ex_history_date {
+    width: 100%;
+    height: 35px;
+    text-align: left;
+    line-height: 35px;
+    margin-left: 20px;
+    padding-left: 20px;
+    color: #CCCC;
+    background-color: #F5F5F5;
+}
+
+.ex_history_title {
+    font-family: 'NanumSquareNeoExtraBold';
+    width: 190px;
+    height: 50px;
+    /* float: left; */
+    text-align: left;
+    line-height: 50px;
+    margin-left: 10px;
+    padding-left: 20px;
+    /* border: 1px solid red; */
+}
+
+.ex_history_cur {
+    font-family: 'NanumSquareNeoExtraBold';
+    width: 130px;
+    height: 50px;
+    float: right;
+    text-align: right;
+    line-height: 50px;
+    padding-right: 10px;
+    position: relative;
+    bottom: 67px;
+    color: #476EFF;
+    /* border: 1px solid red; */
+}
