@@ -57,6 +57,7 @@ function Card6(props) {
                     src={require(`../../assets/Card${produceCardOffer.card_type_id}.png`)}
                     alt=""
                     width={'180px'}
+                    height={'270px'}
                     style={{
                         boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
                         borderRadius: '15px'

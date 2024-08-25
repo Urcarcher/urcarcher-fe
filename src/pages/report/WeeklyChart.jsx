@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Chart } from "react-google-charts";
 import '../../assets/WeeklyChart.css';
 import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const initialData = [
   ["요일", "소비 금액", { role: "style" }, { role: "annotation" }],
@@ -69,6 +70,9 @@ const WeeklyChart = () => {
   const [filteredUsage, setFilteredUsage] = useState([]);
   const [filter, setFilter] = useState("total");
   const [memberId, setMemberId] = useState('');
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     axios.get('/api/t/test')
@@ -170,8 +174,23 @@ const WeeklyChart = () => {
 
   return (
     <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
-      <div className="chart-container" style={{ marginTop: '100px', marginBottom: '100px' }}>
-        <div style={{ justifyContent: 'flex-start', display: 'flex', margin: '10px 20px', fontSize: '20px', position: 'relative' }}>
+      <div className="header-menu">
+        <div
+          className={`menu-item ${location.pathname === '/chart2' ? 'active' : ''}`}
+          onClick={() => navigate('/chart2')}
+        >
+          소비 리포트
+        </div>
+        <div
+           className={`menu-item ${location.pathname === '/chart1' ? 'active' : ''}`}
+          onClick={() => navigate('/chart1')}
+        >
+          소비 패턴 분석
+        </div>
+      </div>
+
+      <div className="chart-container" style={{ marginTop: '20px' }}>
+        <div style={{ justifyContent: 'flex-start', display: 'flex', margin: '10px 20px', fontSize: '20px', position: 'relative', fontWeight: 'bolder'  }}>
           <select
             value={selectedMonthWeek}
             onChange={(e) => setSelectedMonthWeek(e.target.value)}
@@ -179,6 +198,7 @@ const WeeklyChart = () => {
               border: 'none',
               outline: 'none',
               backgroundPositionX: '5px',
+              fontWeight: 'bold' 
             }}>
             {generateMonthWeekOptions()}
           </select>
@@ -195,17 +215,24 @@ const WeeklyChart = () => {
           loader={<div>Loading Chart...</div>}
         />
 
-        <div style={{ display: 'flex', gap: '15px', margin: 'auto 20px' }}>
-          <span 
-            onClick={() => setFilter("total")} 
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '15px', margin: 'auto 20px' }}>
+          <div
+            onClick={() => setFilter("total")}
             style={{
               cursor: 'pointer',
               color: filter === "total" ? '#064AFF' : '#000',
-              fontWeight: filter === "total" ? 'bold' : 'normal'
+              fontWeight: filter === "total" ? 'bold' : 'normal',
+              width: '100%',  // 이 div의 너비를 부모에 맞추기
+              display: 'flex',  // flex 속성 추가
+              justifyContent: 'space-between'  // 자식 요소들을 공간 양 끝에 배치
             }}
           >
-            총 소비 내역
-          </span>
+            <div>총 소비 내역</div>
+            <div style={{ color: 'gray' }}
+              onClick={() => navigate('/usage')}>
+              카드 사용 내역 {'>'} </div>
+          </div>
+
           {/* <span 
             onClick={() => setFilter("income")} 
             style={{
@@ -237,7 +264,7 @@ const WeeklyChart = () => {
                 </div>
                 <div style={{ flex: 1, marginLeft: '20px' }}>
                   <div style={{ fontWeight: 'bold', textAlign: 'start' }}>{usage.storeName}</div>
-                  <div style={{textAlign: 'start'}}>{new Date(usage.paymentDate).toLocaleString()}</div>
+                  <div style={{ textAlign: 'start' }}>{new Date(usage.paymentDate).toLocaleString()}</div>
                 </div>
                 <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice}원</div>
               </div>

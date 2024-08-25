@@ -74,7 +74,7 @@ function Menu({onClose, isLoggedIn, userName}) {
                   { id: 1, text: "카드 신청", link: "/card1" },
                   { id: 2, text: "환율 조회 및 예측", link: "/exchange" },
                   { id: 3, text: "여행 코스 추천", link: "/courseList" },
-                  { id: 4, text: "소비 리포트", link: "/chart1" },
+                  { id: 4, text: "소비 리포트", link: "/chart2" },
                 ]}
               />
               <MenuCategory 
@@ -84,7 +84,7 @@ function Menu({onClose, isLoggedIn, userName}) {
                   { id: 6, text: "카드 신청", link: "/card1" },
                   { id: 7, text: "카드 분실 신고", link: "/cardmanagement" },
                   { id: 8, text: "사용 내역 조회", link: "/usage" },
-                  { id: 9, text: "소비 리포트", link: "/chart1" },
+                  { id: 9, text: "소비 패턴 분석", link: "/chart1" },
                   { id: 10, text: "환율 조회 및 예측", link: "/exchange" },
                   { id: 11, text: "환전하기", link: "/exchange" },
                 ]}

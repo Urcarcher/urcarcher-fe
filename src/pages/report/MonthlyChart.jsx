@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Chart } from 'react-google-charts';
+import { useLocation, useNavigate } from 'react-router-dom';
+import '../../assets/WeeklyChart.css';
 
 const MonthlyChart = () => {
     const [selectedMonth, setSelectedMonth] = useState(() => {
@@ -11,6 +13,9 @@ const MonthlyChart = () => {
     const [chartData, setChartData] = useState([['Category', 'Amount']]);
     const [categoryStats, setCategoryStats] = useState([]);
     const [memberId, setMemberId] = useState('');
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const categoryMapping = {
         "MT1": "생활편의",
@@ -43,13 +48,12 @@ const MonthlyChart = () => {
     };
 
     const categoryImages = {
-        "생활편의": require('../../assets/fork.png'),
-        "교육/문화": require('../../assets/fork.png'),
-        "교통": require('../../assets/fork.png'),
-        "금융/공공서비스": require('../../assets/fork.png'),
-        "식비/건강": require('../../assets/fork.png'),
-        "관광/여가": require('../../assets/fork.png'),
-        "기타": require('../../assets/fork.png') // 기타 카테고리에 대한 이미지
+        "생활편의": require('../../assets/conv.png'),
+        "교육/문화": require('../../assets/education.png'),
+        "교통": require('../../assets/bus.png'),
+        "금융/공공서비스": require('../../assets/etc.png'),
+        "식비/건강": require('../../assets/food.png'),
+        "관광/여가": require('../../assets/travel.png'),
     };
 
     useEffect(() => {
@@ -148,13 +152,28 @@ const MonthlyChart = () => {
     }));
 
     return (
-        <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
-            <div style={{ marginTop: '100px', marginBottom: '150px' }}>
+        <div className="scrollable-content" style={{ maxHeight: '1036px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
+            <div className="header-menu" >
+                <div
+                    className={`menu-item ${location.pathname === '/chart2' ? 'active' : ''}`}
+                    onClick={() => navigate('/chart2')}
+                >
+                    소비 리포트
+                </div>
+                <div
+                    className={`menu-item ${location.pathname === '/chart1' ? 'active' : ''}`}
+                    onClick={() => navigate('/chart1')}
+                >
+                    소비 패턴 분석
+                </div>
+            </div>
+
+            <div style={{ marginTop: '20px' }}>
                 <div style={{ fontSize: '20px', justifyContent: 'flex-start', display: 'flex', marginLeft: '20px', fontWeight: 'bolder' }}>
                     <select
                         value={selectedMonth.split('-')[1]}
                         onChange={handleMonthChange}
-                        style={{ border: 'none', outline: 'none' }}
+                        style={{ border: 'none', outline: 'none', fontWeight: 'bold' }}
                     >
                         {generateMonthOptions()}
                     </select>
@@ -177,7 +196,7 @@ const MonthlyChart = () => {
                     />
                 </div>
 
-                <div style={{ position: 'absolute', top: '420px', width: '100%' }}>
+                <div style={{ position: 'absolute', top: '498px', width: '95%' }}>
                     {categoryStats.length > 0 ? (
                         categoryStats.map((stat, index) => (
                             <div key={index} style={{ margin: '30px 20px', display: 'flex', justifyContent: 'space-between' }}>
