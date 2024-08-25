@@ -39,7 +39,7 @@ function CurrencyRateList(props) {
     });
 
     //환율 표시 국가
-    const exchangeRates = [  // [!]소켓 연결 후 test속성 삭제
+    const exchangeRates = [
         { country: '미국', currency: 'USD', symbol: '$', flag: US },  
         { country: '일본', currency: 'JPY', symbol: '￥', flag: JP },
         { country: '중국', currency: 'CNY', symbol: 'Y', flag: CN },
@@ -59,11 +59,11 @@ function CurrencyRateList(props) {
                     </p>
                 </div>
                     {/* ?. : 연산자 앞 속성 null/undefined일 경우 속성에 접근 중단, .rate : 소켓에서 받아오는 환율 값 */}
-                    {/* <p>
-                        KRW {exchangeCurInfo[rate.currency]?.rate || 'Loading...'} <span>=</span> 1{rate.symbol}
-                    </p> */}
-                    {/* 화면 테스트용 */}
-                    <p className='rate-txt' >KRW {exchangeRateInfos[rate.currency]?.rate || exchangeRateInfos.rate || 'Loading...'} <span>=</span> 1{rate.symbol}</p>
+                    <p className='rate-txt'>
+                        KRW {exchangeRateInfos[rate.currency]?.rate || exchangeRateInfos.rate || '0'} 
+                        <span style={{color:'#333'}}>=</span> 
+                        1{rate.symbol}
+                    </p>
                 </li>
             ))}
             </ul>

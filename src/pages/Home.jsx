@@ -6,13 +6,15 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { options_GET } from 'services/CommonService';
 import cookie from 'react-cookies';
+import Footer from 'components/Footer';
+import LoadingSpinner from 'components/LoadingSpinner';
 
 
 function Home(props) {
     
     const [mainCardInfo, setMainCardInfo] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    
     //1. 로그인 회원 정보   
     const [memberId, setMemberId] = useState('');  //bleakwinter (신용카드) happy(선불카트) - 테스트ID
     const [name, setName] = useState('');
@@ -24,38 +26,55 @@ function Home(props) {
               if(resp.data.isAuthorized == true) {
                 setMemberId(resp.data.memberId);
                 setName(resp.data.name);
+
+            }else{
+                  setLoading(false);
               }
             })
             .catch((err)=>{
               console.log(err);
+              setLoading(false);
             });
+        } else {
+            setLoading(false); // 토큰이 없으면 로딩 종료
         }
     };
+    // isAuthorized();
 
-    isAuthorized();
-    //2. 회원이 소지하고 있는 첫 번째 카드 종류와 이번 달 카드 사용 금액 정보  (정보 없을 경우 예외 처리 필요)
-    useEffect(() => {
-
-        // memberId가 없으면 에러 처리
-        if (!memberId) {
-            console.log('Member ID is missing!');
-            setLoading(false); // memberId가 없을 경우에도 로딩 상태를 false로 설정
-            return;
-        }
-
-        axios.get(`/api/home/my-main-card/${memberId}`)
-            .then(response => {
-                console.log(response.data)
-                setMainCardInfo(response.data);
-                setLoading(false); // 데이터 로드 완료 후 로딩 상태를 false로 설정
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-                setLoading(false); // 에러 발생 시에도 로딩 상태를 false로 설정
-            });
-    }, [memberId]);
+    useEffect(()=>{
+        isAuthorized();
+    },[]);
 
     
+    //2. 회원이 소지하고 있는 첫 번째 카드 종류와 이번 달 카드 사용 금액 정보 
+    useEffect(() => {
+        
+        // memberId가 없으면 에러 처리
+        // if (!memberId) {
+        //     console.log('Member ID is missing!');
+        //     setLoading(false); // memberId가 없을 경우에도 로딩 상태를 false로 설정
+        //     return;
+        // }
+        
+        if (memberId) {
+            axios.get(`/api/home/my-main-card/${memberId}`)
+                .then(response => {
+                    setMainCardInfo(response.data);
+                    setLoading(false); // 데이터 로드 후 로딩 종료
+                })
+                .catch(error => {
+                    console.error('There was an error!', error);
+                    setLoading(false); // 에러 발생 시 로딩 종료
+                });
+        }
+
+    }, [memberId]);
+
+    //로딩 시 로딩 컴포넌트를 표시
+    if (loading) {
+        return <LoadingSpinner />;
+    }
+
     //3.실시간 환율 정보 : CurrencyRateList 컴포넌트에서 처리
     
     //현재 날짜
@@ -87,55 +106,61 @@ function Home(props) {
                 <div className='main-content'>
                     <h2 className='hidden'>card section</h2>
 
+                    {/* API 호출 렌더링 오류 수정 */}
                     <div className="card-type-wrap">
-                        {memberId ? ( //로그인 한 경우
-                            <>
-                                {loading ? (
-                                    <p className='card_balance'>Loading...</p>
-                                ) : mainCardInfo ? ( //로그인 후 카드 정보 있을 경우 
-                                    <>
-                                        <p className='card-type-text'>
-                                            <span>{mainCardInfo.cardUsage === "신용카드" ? mainCardInfo.card_number : mainCardInfo.cardName}</span>
-                                            <span className={mainCardInfo.cardUsage === null ? '' : 'type'}>{mainCardInfo.cardUsage}</span>
-                                        </p>
-                                        <p className='card_balance'>
-                                        {mainCardInfo.cardId === null ? (
-                                            '카드 발급 후 사용해주세요'
-                                        ) : (
-                                            mainCardInfo.cardUsage === "신용카드" ? '' : (
-                                                mainCardInfo.cardBalance ? mainCardInfo.cardBalance.toLocaleString() + '원' :  <Link to='/'>카드 충전</Link>
-                                            )
+                    {loading ? ( // 로딩 중일 때는 로딩 컴포넌트만 표시
+                        <LoadingSpinner /> 
+                    ) : (
+                        memberId ? ( // 로그인 한 경우
+                            mainCardInfo && mainCardInfo.cardId !== null ? ( // 로그인 후 카드 정보 있고, 카드 ID가 있을 경우 
+                                <>
+                                    {/* 1. 메인 카드 정보 */}
+                                    <p className='card-type-text'>
+                                        <span>{mainCardInfo.cardUsage === "신용카드" ? mainCardInfo.card_number : mainCardInfo.cardName}</span>
+                                        <span className={ !mainCardInfo.cardUsage ? 'hidden' : 'type'}>{mainCardInfo.cardUsage}</span>
+                                    </p>
+                                    <p className='card_balance'>
+                                        { mainCardInfo.cardUsage === "신용카드" ? '' : (  //신용카드이면 잔액 출력, 선불카드일 때 카드 충전 
+                                            mainCardInfo.cardBalance ? mainCardInfo.cardBalance.toLocaleString() + '원' :  <Link to='/'>카드 충전</Link>
                                         )}
-                                        </p>
-                                        <p className={mainCardInfo.cardUsage === "신용카드" ? 'hidden' : 'card-charge'}>충전</p>
-                                        <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-expiration-date' : 'hidden'}>만료일: {mainCardInfo.expiration_date}</p>
-                                        <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-name' : 'hidden'}>{mainCardInfo.name}</p>
-                                    </>
-                                ) : (
-                                    <p className='card_balance'>카드 정보가 없습니다.</p>
-                                )}
-                            </>
-                        ) : (
+                                    </p>
+                                    <p className={mainCardInfo.cardUsage === "신용카드" ||  !mainCardInfo.cardUsage ? 'hidden' : 'card-charge'}>충전</p>
+                                    <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-expiration-date' : 'hidden'}>만료일:  {mainCardInfo.expiration_date || ''}</p>
+                                    <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-name' : 'hidden'}> {mainCardInfo.name || ''} </p>
+                                </>
+                            ) : (// 로그인 후 카드 정보 없는 경우
+                                //<p className='card_balance'>카드 발급 후 사용해주세요!</p>
+                                <>
+                                    <p className='card_balance-no'>어카처의 다양한 서비스를 <br /> 이용해보세요</p>
+                                    <p className='member-sigup'>
+                                        <Link to='/card1'>&gt; 카드 신청하기</Link>
+                                    </p>
+                                </>  
+                            )
+                        ) : ( // 로그인하지 않은 경우
                             <>
                                 <p className='card_balance-no'>어카처의 다양한 서비스를 <br /> 이용해보세요</p>
                                 <p className='member-sigup'>
                                     <Link to='/signup'>&gt; 회원 가입</Link>
                                 </p>
-                             </>   
-                        )}
+                            </>   
+                        )
+                    )}
                     </div>
+
                     {memberId ? ( //로그인 한 경우
                         mainCardInfo ? ( //카드 정보 있는 경우
                             <div className='amount-used'>
-                                <p>이번달 사용 금액</p>
-                                <p>{mainCardInfo.totalPayment ? mainCardInfo.totalPayment.toLocaleString() + '원' : mainCardInfo.totalPayment + '원'}</p>
+                                <p>이번달 사용 금액</p> 
+                                {/* null 값 처리 */}
+                                <p>{mainCardInfo.totalPayment ? mainCardInfo.totalPayment.toLocaleString() + '원' : '0원'}</p>
                             </div>
                         ) : (
                             <div className='amount-used'>
                                 <p className='noCardInfo-text'>결제 내역 정보가 없습니다</p>
                             </div>
                         )
-                    ) : (
+                    ) : ( //로그인하지 않은 경우
                         <div className='amount-used-no'>
                             <p><Link to="/login">로그인 후 확인 가능합니다</Link></p>
                         </div>

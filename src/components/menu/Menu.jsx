@@ -49,7 +49,7 @@ function Menu({onClose, isLoggedIn, userName}) {
                   {isLoggedIn ? (
                       <>
                         <span>{userName}님</span>
-                        <Link to="/" onClick={handleLogout} >로그아웃</Link>
+                        <Link to="/" onClick={handleLogout} className='logout-txt' >로그아웃</Link>
                       </>
                     ) : (
                       <Link to="/login" onClick={handleLogin}>로그인</Link>
@@ -69,7 +69,7 @@ function Menu({onClose, isLoggedIn, userName}) {
               <div className="menu-section">
               <MenuCategory 
                 onClose={onClose}
-                title={[{id:11, title:"추천"}]} 
+                title={[{id:11, tit:"추천"}]} 
                 items={[
                   { id: 1, text: "카드 신청", link: "/card1" },
                   { id: 2, text: "환율 조회 및 예측", link: "/exchange" },
@@ -79,7 +79,7 @@ function Menu({onClose, isLoggedIn, userName}) {
               />
               <MenuCategory 
                 onClose={onClose}
-                title={[{id:12, title:"금융"}]} 
+                title={[{id:12, tit:"금융"}]} 
                 items={[
                   { id: 6, text: "카드 신청", link: "/card1" },
                   { id: 7, text: "카드 분실 신고", link: "/cardmanagement" },
@@ -91,7 +91,7 @@ function Menu({onClose, isLoggedIn, userName}) {
               />
               <MenuCategory 
                 onClose={onClose}
-                title={[{id:13, title:"관광"}]} 
+                title={[{id:13, tit:"관광"}]} 
                 items={[
                   { id:12, text: "관광지 추천", link: "/searchtour" },
                   { id:13,text: "결제 기반 장소 추천", link: "/maphome" },
@@ -103,7 +103,7 @@ function Menu({onClose, isLoggedIn, userName}) {
               />
               <MenuCategory 
                 onClose={onClose}
-                title={[{id:14, title:"고객 센터"}]} 
+                title={[{id:14, tit:"고객 센터"}]} 
                 items={[
                   { id:18, text: "자주 묻는 질문", link: "/" },
                 ]}

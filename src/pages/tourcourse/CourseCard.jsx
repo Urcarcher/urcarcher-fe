@@ -26,8 +26,7 @@ const CourseCard = ({ course }) => {
                 <div className="course-info">
                     <p className="course-region">{course.region}</p>
                     <div className ="course-name-wrap">
-                    <p className="course-name">{course.courseName}</p>
-
+                        <p className="course-name">{course.courseName}</p>
                     </div>
                 </div>
             </div>

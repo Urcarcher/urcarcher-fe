@@ -29,6 +29,7 @@
     margin: 10px 0;
     width: 100%;
     border-radius: 10px;
+    box-shadow: 0px 2px 3px #eee; /* 그림자 */
 }
 .card-type-wrap{
     height: 190px;
@@ -114,6 +115,7 @@ p.card_balance{
     transform: translate(-50%,-50%);
     font-weight: bold;
     font-size: 25px;
+    word-break: keep-all;
 }
 p.card-charge{
     position: absolute;
