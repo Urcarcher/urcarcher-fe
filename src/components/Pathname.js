@@ -34,8 +34,9 @@ export  const getTitle = (pathname) => {
             return '카드 선택';
         case '/exchange/set':
             return '자동 환전';
-        case '/exchange/history':
         case '/exchange/history/card':
+        case '/exchange/history':
+        case '/exchange/history/detail':
             return '환전 내역';
         case '/reservation':
             return '예매';

@@ -2,7 +2,7 @@ import 'assets/exchangeCard.css';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import 'assets/exchangeHistory.css';
 
 function ExchangeHistory(props) {
@@ -56,6 +56,11 @@ function ExchangeHistory(props) {
         }
     };    
 
+    // 상세 조회
+    const detailHandle = (exId) => {
+        navi("/exchange/history/detail", { state: { exId } });
+    };
+
     return (
         <div className="contents">
             <div className="ex_history_wrpper">
@@ -66,13 +71,12 @@ function ExchangeHistory(props) {
                 </div>
             </div>
             <div className="ex_history_type_btn">
-                {/* <button className="ex_type_un_select" onClick={() => typeHandle("all")}>전체</button> */}
                 <button className={historyFilter === cardHistory ? "ex_type_select" : "ex_type_un_select"} onClick={() => typeHandle("all")}>전체</button>
                 <button className={historyFilter === cardHistory ? "ex_type_un_select" : "ex_type_select"} onClick={() => typeHandle("week")}>최근 일주일</button>
             </div>
             <div className="ex_history_list">
                 {historyFilter !== null ? historyFilter.map((history) => (
-                    <div key={history.exId}>
+                    <div key={history.exId} onClick={() => detailHandle(history.exId)}>
                         <p className="ex_history_date">{dayjs(history.exDate).format("YYYY-MM-DD")}</p>
                         <p className="ex_history_title">
                             대한민국 KRW

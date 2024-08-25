@@ -35,6 +35,10 @@
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
 }
 
+.ex_go_change_btn:hover {
+    transform: translateY(-2px);
+}
+
 .ex_history_type_btn {
     font-family: 'NanumSquareNeoBold';
     width: 40%;
@@ -65,6 +69,7 @@
     margin-left: 10px;
     margin-bottom: 40px;
     overflow-y: scroll;
+    cursor: pointer;
 }
 
 .ex_history_date {
@@ -102,4 +107,72 @@
     bottom: 67px;
     color: #476EFF;
     /* border: 1px solid red; */
+}
+
+/* 상세 조회 css */
+.ex_history_detail_container {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    /* border: 1px solid red; */
+}
+
+.ex_history_detail_container h4 {
+    text-align: center;
+    margin: 0;
+}
+
+.ex_history_detail_content {
+    width: 80%;
+    height: 400px;
+    margin: 0 auto;
+    margin-top: 10px;
+    /* border: 1px solid red; */
+}
+
+.ex_history_detail_left {
+    font-family: 'NanumSquareNeoExtraBold';
+    width: 100px;
+    height: 40px;
+    float: left;
+    text-align: left;
+    line-height: 40px;
+    /* border: 1px solid green; */
+}
+
+.ex_history_detail_right {
+    font-family: 'NanumSquareNeoExtraBold';
+    width: 210px;
+    height: 40px;
+    float: right;
+    text-align: right;
+    line-height: 40px;
+    /* border: 1px solid green; */
+}
+
+.ex_history_detail_btn {
+    width: 85%;
+    height: 50px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.ex_history_go_btn {
+    font-family: 'NanumSquareNeoExtraBold';
+    font-size: 15px;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 50px;
+    color: white;
+    background-color: #476EFF;
+    border: none;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+}
+
+.ex_history_go_btn:hover {
+    transform: translateY(-2px);
 }
