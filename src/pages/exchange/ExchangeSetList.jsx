@@ -1,15 +1,34 @@
 import React from 'react';
 import 'assets/exchangeSetList.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function ExchangeSetList({ reserveInfo }) {
     console.log("예약 조회 페이지 data", reserveInfo);
+
+    const navi = useNavigate();
+
+    const deleteHandle = () => {
+        axios.delete(`/api/exchange/rate/delete/${reserveInfo.setId}`)
+        .then((response) => {
+            navi("/exchange");
+        })
+        .catch(error => {
+            console.log(error);
+            alert("다시 시도해 주세요");
+        });
+    };
+
+    const homeHandle = () => {
+        navi("/exchange");
+    };
 
     return (
         <div className="ex_set_list_wrapper">
             <div className="ex_set_list_table">
                 <h5>대한민국 KRW</h5>
                 <div className="ex_set_list_col">
-                    <p className="ex_set_list_p">기준환율 (시가)</p>
+                    <p className="ex_set_list_p">예약환율 (시가)</p>
                     <h5>1달러 = {reserveInfo.setRate}</h5>
                 </div>
                 <div className="ex_set_list_col">
@@ -38,8 +57,8 @@ function ExchangeSetList({ reserveInfo }) {
                 <h4>예약일이 되면 자동 충전돼요</h4>
             </div>
             <div className="ex_set_list_btn">
-                <button className="set_delete_btn">삭제</button>
-                <button className="set_put_btn">변경</button>
+                <button className="set_delete_btn" onClick={deleteHandle}>삭제</button>
+                <button className="set_home_btn" onClick={homeHandle}>확인</button>
             </div>
         </div>
     );

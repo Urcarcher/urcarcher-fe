@@ -33,7 +33,13 @@ export  const getTitle = (pathname) => {
         case '/exchange/card':
             return '카드 선택';
         case '/exchange/set':
+        case '/exchange/set/rate':
+        case '/exchange/set/success':
             return '자동 환전';
+        case '/exchange/history/card':
+        case '/exchange/history':
+        case '/exchange/history/detail':
+            return '환전 내역';
         case '/reservation':
             return '예매';
         case '/searchtour': 
