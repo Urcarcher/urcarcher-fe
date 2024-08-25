@@ -50,11 +50,10 @@
 }
 
 .arrow-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
-    color: white;
+    position: absolute !important;
+    top: 40% !important;
+    transform: translateY(-50%) !important;
+    color: rgb(88, 109, 194) !important;
     border: none;
     border-radius: 50%;
     width: 45px;
@@ -64,7 +63,8 @@
     font-size: 3rem;
     line-height: 40px;
     pointer-events: none; /* 클릭 이벤트 비활성화 */
-  }
+}
+
   
   .arrow-left {
     left: -28px;
@@ -103,17 +103,17 @@
 
 .arrow-button {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    top: 18% !important;
+    transform: translateY(-40%);
+    background-color: transparent !important;
     color: white;
     border: none;
     border-radius: 50%;
-    width: 45px;
-    height: 45px;
+    width: 60px;
+    height: 60px;
     cursor: pointer;
     z-index: 10;
-    font-size: 3rem;
+    font-size: 4rem;
     line-height: 40px;
     pointer-events: none; /* 클릭 이벤트 비활성화 */
 }

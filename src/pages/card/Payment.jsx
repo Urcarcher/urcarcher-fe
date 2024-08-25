@@ -1,13 +1,27 @@
-import Axios from 'axios';
-import CardOverlay from 'bootstrap-template/components/cards/CardOverlay';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import Preloader from 'bootstrap-template/components/Preloader';
 import { Button, Container, Form } from 'react-bootstrap';
 import Flickity from 'react-flickity-component';
-import styled from 'styled-components';
+import Axios from 'axios';
+import CardOverlay from 'bootstrap-template/components/cards/CardOverlay';
 
-function Payment(props) {
-    const [paymentMethod, setPaymentMethod] = useState('credit-card-general');
+function Payment() {
+    const location = useLocation();
+    const state = location.state;
+
+    const [paymentMethod, setPaymentMethod] = useState('credit-card-simple');
     const handlePaymentMethodChange = (e) => setPaymentMethod(e.currentTarget.value);
+    const [userId, setUserId] = useState(null);
+    const [myCard, setMyCard] = useState([]);
+    const [selectedCardIndex, setSelectedCardIndex] = useState(0); // 추가: 선택된 카드의 인덱스 관리
+    const [cardId, setCardId] = useState('');
+    const [payAmount, setPayAmount] = useState(0);
+    const [currentDate, setCurrentDate] = useState(new Date().toISOString());
+    const [cardTypeId, setCardTypeId] = useState(0);
+    const [loading, setLoading] = useState(false);
+    let navigate = useNavigate();
     const flickityOptions = {
         cellAlign: 'center',
         pageDots: false,
@@ -17,234 +31,304 @@ function Payment(props) {
         contain: false,
         initialIndex: 0 // 첫 번째 카드가 중앙에 오도록 설정
     };
-    // 임시 --- main 카드로 정해진 것 간편결제로 지정
-    const test = [{name:'card1', value:'test1', cardTypeId:11}];
+
+    useEffect(() => {
+        Axios.get("/api/t/test")
+            .then((response) => {
+                setUserId(response.data.memberId);
+            })
+            .catch((error) => {
+                alert("회원정보를 가져오는데 오류 발생");
+            });
+
+        if (userId) {
+            Axios.get(`/api/card/mycard/${userId}`)
+                .then((response) => {
+                    setMyCard(response.data);
+                    const cards = response.data.map(card => ({
+                        ...card,
+                        cardStatus: card.cardStatus
+                    }));
+                    setMyCard(cards);
+                    if (cards.length > 0) {
+                        setCardId(cards[0].cardId); // 첫 번째 카드의 ID를 기본 설정
+                    }
+                })
+                .catch((error) => {
+                    console.log("card정보 가져오는데 오류 발생");
+                    console.log(error);
+                });
+        }
+    }, [userId]);
+
+    useEffect(() => {
+        if (myCard.length > 0) {
+            const selectedCard = myCard[selectedCardIndex];
+            updatePayData(selectedCard);
+        }
+    }, [selectedCardIndex, myCard]);
+
+    function updatePayData(card) {
+        console.log(card.cardId);
+        console.log(state.price - (state.price * 0.1));
+        console.log(new Date().toISOString());
+
+        setCardId(card.cardId);
+        setCardTypeId(card.cardTypeId);
+        setPayAmount(state.price - (state.price * 0.1));
+        setCurrentDate(new Date().toISOString());
+    }
+
     return (
-        <div>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <Container>
-                <h1 className=''>상품 결제</h1>
-                <ProductCard>
-                    <ProductImage src={props.img}/>
-                    <ProductInfo>
-                        <ProductTitle>{props.title}</ProductTitle>
-                        <ProductOption>{props.option}</ProductOption>
-                    </ProductInfo>
-
-                    <PriceInfo>
-                        <DiscountTag>카드 혜택</DiscountTag>
-                        <OriginalPrice>{props.price}20,000원</OriginalPrice>
-                        <DiscountedPrice>10% 할인</DiscountedPrice>
-                    </PriceInfo>
-                </ProductCard>
+        <ScrollableContainer>
+          {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />}
+            <div>
                 <br/>
                 <br/>
-                <TotalAmount>
-                    <span>총 결제금액</span>
-                    <span>{props.price - (props.price*0.1)}100</span>
-                </TotalAmount>
-
                 <br/>
                 <br/>
+                <br/>
+                <Container>
+                    <h1 className=''>상품 결제</h1>
+                    <hr/>
+                    <br/>
+                    {state ? (
+                        <>
+                            <ProductCard>
+                                <ProductImage src={state.img}/>
+                                <ProductInfo>
+                                    <ProductTitle>{state.title}</ProductTitle>
+                                </ProductInfo>
 
-                <div>
-                    <h5>결제 수단</h5>
-                    <PaymentOptionsContainer>
-                        <PaymentOptionCard>
-                            <PaymentOption 
-                                type="radio" 
-                                id="credit-card-simple" 
-                                label="카드 간편결제" 
-                                value="credit-card-simple" 
-                                checked={paymentMethod === 'credit-card-simple'} 
-                                onChange={handlePaymentMethodChange} 
-                            />
-                        </PaymentOptionCard>
+                                <PriceInfo>
+                                    <DiscountTag>카드 혜택</DiscountTag>
+                                    <OriginalPrice>{(state.price).toLocaleString()}원</OriginalPrice>
+                                    <DiscountedPrice>10% 할인</DiscountedPrice>
+                                </PriceInfo>
+                            </ProductCard>
+                            <br/>
+                            <TotalAmount>
+                                <span>총 결제금액</span>
+                                <span>{(state.price - (state.price * 0.1)).toLocaleString()}원</span>
+                            </TotalAmount>
+                        </>
+                    ) : (
+                        <p>상품 정보가 없습니다.</p>
+                    )}
+                    <hr/>
+                    <br/>
+                    <br/>
 
-                        <FlickityStyled
-                        options={flickityOptions}
-                        flickityRef={(c) => {
-                            if (c) {
-                                console.log(c);
-                                //c.on('change', (index) => handleChange(index));
-                            }
-                        }}
-                    >
-                        {test.map((t, index) => (
-                            <CarouselCell key={t.cardTypeId}>
-                                <CardOverlay
-                                    className='my-custom-class'
-                                    img={ require(`../../assets/Card${t.cardTypeId}.png`)}
-                                    imgStyle={{width:'335px', height:'200px'}}
+                    <div>
+                        <h4>결제 수단</h4>
+                        <PaymentOptionsContainer>
+                            <PaymentOptionCard>
+                                <PaymentOption 
+                                    type="radio" 
+                                    id="credit-card-simple" 
+                                    label="카드 간편결제" 
+                                    value="credit-card-simple" 
+                                    checked={paymentMethod === 'credit-card-simple'} 
+                                    onChange={handlePaymentMethodChange} 
                                 />
-                            </CarouselCell>
-                        ))}
-                    </FlickityStyled>
+                            </PaymentOptionCard>
 
-                        <PaymentOptionCard>
-                            <PaymentOption 
-                                type="radio" 
-                                id="credit-card-general" 
-                                label="신용카드 일반결제" 
-                                value="credit-card-general" 
-                                checked={paymentMethod === 'credit-card-general'} 
-                                onChange={handlePaymentMethodChange} 
-                            />
-                        </PaymentOptionCard>
-                        
-                        <PaymentOptionCard>
-                            <PaymentOption 
-                                type="radio" 
-                                id="bank-transfer" 
-                                label="계좌이체" 
-                                value="bank-transfer" 
-                                checked={paymentMethod === 'bank-transfer'} 
-                                onChange={handlePaymentMethodChange} 
-                            />
-                        </PaymentOptionCard>
-                    </PaymentOptionsContainer>
-                </div>
-            </Container>
-
-            <Button onClick={()=>{
-                // 결제 성공시 성공팝업 띄우기
-                // Axios.post('',{
-                  
-                // })
-                // .then(()=>{
-                // })
-                // .catch(()=>{
-
-                // })
-
-                // 결제 실패시 실패 팝업 띄우기 
-
-            }} style={{width:'80%'}}>결제하기</Button>
-        </div>
+                            <FlickityStyled
+                                options={flickityOptions}
+                                flickityRef={(c) => {
+                                    if (c) {
+                                        c.on('select', () => {
+                                            setSelectedCardIndex(c.selectedIndex);
+                                        });
+                                    }
+                                }}
+                            >
+                                {myCard.map((card, index) => (
+                                    <CarouselCell key={card.cardId}>
+                                        <CardOverlay
+                                            className='my-custom-class'
+                                            img={require(`../../assets/Card${card.cardTypeId}_.png`)}
+                                            imgStyle={{width: '335px', height: '200px'}}
+                                        />
+                                        <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', marginLeft:'17px', fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
+                                          MyCard : {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "신용카드":"선불카드"}
+                                        </p>
+                                        <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', marginLeft:'17px', fontSize:'15px'}}>
+                                          {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "" : "MyMoney : " + parseFloat(card.cardBalance).toLocaleString()+"원"}
+                                        </p>
+                                        <br/>
+                                    </CarouselCell>
+                                ))}
+                            </FlickityStyled>
+                        </PaymentOptionsContainer>
+                    </div>
+                </Container>
+                <br/>
+                <Button onClick={() => {
+                  setLoading(true);
+                    Axios.post('/api/payment/insert',
+                      {
+                        paymentPrice: payAmount,
+                        paymentDate: currentDate,
+                        cardId: cardId,
+                        storeId: '11111111'
+                      })
+                      .then((response) => {
+                        if (cardTypeId !== 1 && cardTypeId !== 2) {
+                          // 선불카드라면
+                          Axios.post('/api/card/usepayment', 
+                          {
+                            cardId: cardId,
+                            cardBalance: payAmount
+                          }).then((response) => {
+                            console.log("잔액차감 정상적으로 작동");
+                          }).catch((error) => {
+                            console.log("잔액차감 비정상적으로 작동");
+                          })
+                        }
+                        setTimeout(() => {
+                          setLoading(false);
+                          console.log('Payment inserted successfully:', response.data);
+                          alert("예약금 결제 성공");
+                          navigate('/');
+                        }, 3000);
+                      })
+                      .catch((error) => {
+                          setTimeout(() => {
+                          setLoading(false);
+                          console.error('Error inserting payment:', error);
+                          alert("예약금 결제 실패");
+                        }, 3000);
+                      });
+                      
+                }} style={{width: '80%'}}>결제하기</Button>
+            </div>
+        </ScrollableContainer>
     );
 }
+
+const ScrollableContainer = styled.div`
+    max-height: 800px;
+    overflow-y: auto;
+    padding: 10px;
+    box-sizing: border-box;
+`;
+
 const CarouselCell = styled.div`
-  margin: 0 32px;
+    margin: 0 32px;
 `;
+
 const FlickityStyled = styled(Flickity)`
-  .flickity-slider .is-pointer-down,
-  .flickity-slider .flickity-prev-next-button:focus {
-    outline: none;
-    border: none;
-    box-shadow: none;
-  }
+    .flickity-slider .is-pointer-down,
+    .flickity-slider .flickity-prev-next-button:focus {
+        outline: none;
+        border: none;
+        box-shadow: none;
+    }
 
-  .flickity-button {
-    display: none; /* Flickity 버튼을 완전히 숨김 */
-  }
+    .flickity-button {
+        display: none; /* Flickity 버튼을 완전히 숨김 */
+    }
 `;
+
 const PaymentOptionCard = styled.div`
-  background-color: #f8f9fa;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: border 0.3s ease;
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: border 0.3s ease;
 
-  &:hover {
-    border: 1px solid #2ba64a;
-  }
+    &:hover {
+        border: 1px solid #2ba64a;
+    }
 
-  input {
-    margin-right: 10px;
-  }
+    input {
+        margin-right: 10px;
+    }
 
-  label {
-    margin-bottom: 0;
-    flex: 1;
-  }
+    label {
+        margin-bottom: 0;
+        flex: 1;
+    }
 `;
 
 const PaymentOptionsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 `;
 
 const PaymentOption = styled(Form.Check)`
-  margin-bottom: 0;
+    margin-bottom: 0;
 `;
 
 const ProductCard = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 15px;
-  background-color: white;
-  border-radius: 10px;
-  margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 10px;
 `;
 
 const ProductImage = styled.img`
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
+    width: 90px;
+    height: 90px;
+    border-radius: 8px;
 `;
 
 const ProductInfo = styled.div`
-  flex: 1;
-  margin-left: 15px;
+    flex: 1;
+    margin-left: 15px;
 `;
 
 const ProductTitle = styled.div`
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 8px;
-`;
-
-const ProductOption = styled.div`
-  font-size: 12px;
-  color: gray;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
 `;
 
 const PriceInfo = styled.div`
-  text-align: right;
+    text-align: right;
 `;
 
 const OriginalPrice = styled.div`
-  font-size: 12px;
-  color: gray;
-  text-decoration: line-through;
+    font-size: 12px;
+    color: gray;
+    text-decoration: line-through;
 `;
 
 const DiscountedPrice = styled.div`
-  font-size: 16px;
-  font-weight: bold;
-  color: #2ba64a;
+    font-size: 16px;
+    font-weight: bold;
+    color: #2ba64a;
 `;
 
 const DiscountTag = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 12px;
-  font-weight: bold;
-  color: white;
-  background-color: #476EFF;
-  padding: 2px 4px;
-  border-radius: 3px;
-  margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    background-color: #476EFF;
+    padding: 2px 4px;
+    border-radius: 3px;
+    margin-bottom: 5px;
 `;
 
 const TotalAmount = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
-  font-size: 18px;
-  padding: 15px;
-  background-color: #EDF0F7;
-  border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 15px;
+    background-color: #EDF0F7;
+    border-radius: 10px;
 `;
 
 export default Payment;

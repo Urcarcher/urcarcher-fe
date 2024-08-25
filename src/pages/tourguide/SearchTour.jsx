@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import CardOverlay from '../../bootstrap-template/components/cards/CardOverlay';
 import { Link } from 'react-router-dom';
-import { ButtonGroup, ToggleButton } from 'react-bootstrap';
+import { ButtonGroup } from 'react-bootstrap';
 
 function SearchTour(props) {
-    // contenttypeid = 12 : 관광 / 39 : 식당
-    //let contentTypeId = useState();
 
     let [contentTypeId, setContentTypeId] = useState('12');
 
@@ -13,11 +11,10 @@ function SearchTour(props) {
         { name: '관광지', value: '12' },
         { name: '맛집', value: '39' }
     ];
-    const handleRadioChange = (value) => {
+    // 버튼 클릭 헨들러 함수가 리렌더링될때마다 새로생성되지 않게 useCallback함수 사용
+    const handleRadioChange = useCallback((value) => {
         setContentTypeId(value);
-        // test -- 비동기 방식으로 작동하기때문에 기존의 값이 출력됨
-        // console.log(contentTypeId);
-    };
+    },[]);
 
 
     const cardsData = [
@@ -33,31 +30,42 @@ function SearchTour(props) {
         { title: 'GYEONG\nBUK', img:'/img/gyeongbuk.jpg', areaCode:'35' },
     ];
 
+
+    const buttonStyle = (isActive) => ({
+        width: '100px',
+        textAlign: 'center',
+        padding: '8px 10px',
+        fontSize: '14px',
+        cursor: 'pointer',
+        borderRadius: '20px',
+        margin: '0 5px',
+        backgroundColor: isActive ? '#476EFF' : '#f8f9fa',
+        color: isActive ? 'white' : '#007bff',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        transition: 'background-color 0.3s, color 0.3s',
+        border: 'none',  // 테두리 제거
+    });
+
     return (
         <>
         <br/>
         <br/>
         <br/>
-        <hr/>
+        <br/>
+        <br/>
         <p style={{textAlign:'left', padding:'10px'}}>원하시는 카테고리를 선택하신 뒤 지역을 선택해주세요</p>
-        <ButtonGroup className="mb-3">
-                {radios.map((radio, idx) => (
-                    <ToggleButton
-                        key={idx}
-                        id={`radio-${idx}`}
-                        type="radio"
-                        variant={contentTypeId === radio.value ? 'primary' : 'outline-secondary'}
-                        name="radio"
-                        value={radio.value}
-                        checked={contentTypeId === radio.value}
-                        onChange={(e) => handleRadioChange(e.currentTarget.value)}
-                        className="px-3 py-2"
-                    >
-                        {radio.name}
-                    </ToggleButton>
-                ))}
+        <ButtonGroup className="mb-3 d-flex justify-content-center">
+            {radios.map((radio, idx) => (
+                <button
+                    key={idx}
+                    style={buttonStyle(contentTypeId === radio.value)}
+                    onClick={() => handleRadioChange(radio.value)}
+                >
+                    {radio.name}
+                </button>
+            ))}
         </ButtonGroup>
-        <div  className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
+        <div  className="scrollable-content" style={{ maxHeight: '600px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
             

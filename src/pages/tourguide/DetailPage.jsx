@@ -93,7 +93,7 @@ function DetailPage() {
           type === 'tour' ? ''
           :
           <Button style={{width:'110px'}} onClick={()=>{
-            navigate(`/reservation1`, { state: { title : item.title, location : item.addr1 } });
+            navigate(`/reservation1`, { state: { title : item.title, location : item.addr1, img:item.firstimage } });
           }}>
             예약 및 결제
           </Button>

@@ -9,7 +9,7 @@ function CancelCard(props) {
                 passwordContent={'카드 비밀번호를 입력해주세요.'}
                 buttonContent={'카드해지 신청'}
                 setShowModal={props.setShowModal}
-                cardId={['deleteCard', 6]}/>
+                cardId={['deleteCard', props.card.cardId]}/>
         </div>
     );
 }
