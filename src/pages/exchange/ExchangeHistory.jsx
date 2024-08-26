@@ -12,6 +12,7 @@ function ExchangeHistory(props) {
     const userCard = location.state.selectCard;
     const [exCard, setExCard] = useState(userCard);
     const [cardHistory, setCardHistory] = useState([]);
+    const [loading, setLoading] = useState(true); // 환전 내역 로딩 상태
 
     console.log("유저 카드 정보", exCard);
     
@@ -28,8 +29,25 @@ function ExchangeHistory(props) {
         })
         .catch((error) => {
             console.log("환전 내역 조회 실패", error);
+        })
+        .finally(() => {
+            setLoading(false); // 환전 내역 로딩 완료
         });
     }, []);
+
+    // 환전 내역 없으면 뒤로가기
+    useEffect(() => {
+        if(!loading && cardHistory.length === 0) {
+            alert("환전 내역이 없어요! 충전 후 확인해 주세요");
+            navi(-1);
+            return;
+        }
+    }, [cardHistory, loading]);
+
+    // 로딩 중이거나 카드가 없으면 컴포넌트 렌더링 막기
+    if (loading || cardHistory.length === 0) {
+        return null; // 아무것도 렌더링하지 않음
+    }
 
     // 충전 버튼
     const exchangeHandle = () => {

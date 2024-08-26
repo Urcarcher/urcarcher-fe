@@ -10,7 +10,7 @@ import { options_GET } from 'services/CommonService';
 
 function ExchangeSelect(props) {
     // 로그인 유저 정보
-    const [memberId, setMemberId] = useState(''); // bleakwinter (신용카드) happy (선불카드)
+    const [memberId, setMemberId] = useState('');
     const [name, setName] = useState('');
 
     const [loading, setLoading] = useState(true);
@@ -40,8 +40,8 @@ function ExchangeSelect(props) {
         isAuthorized();
     },[]);
 
-    console.log("로그인 유저 ID 확인", memberId);
-    console.log("로그인 유저 name 확인", name);
+    console.log("로그인 유저 id", memberId);
+    console.log("로그인 유저 name", name);
 
     const navi = useNavigate();
 
@@ -51,11 +51,19 @@ function ExchangeSelect(props) {
         const selectBtn = event.currentTarget.id;
         // alert(selectBtn);
 
+        if (!memberId && !name) {
+            alert("로그인 후 이용 가능해요");
+            return;
+        }
         navi("/exchange/card", { state: { selectBtn } });
     };
 
     // 환전 내역
     const historyHandle = () => {
+        if (!memberId && !name) {
+            alert("로그인 후 이용 가능해요");
+            return;
+        }
         navi("/exchange/history/card");
     }
 

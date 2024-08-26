@@ -1,9 +1,24 @@
 .set_rate_wrapper {
     width: 100%;
     height: 700px;
-    margin-top: 60px;
+    margin-top: 50px;
     overflow-y: scroll;
     /* border: 1px solid red; */
+}
+
+.set_rate_graph_box {
+    width: 200px;
+    height: 30px;
+    margin: 0 auto;
+    /* margin-top: 30px; */
+}
+
+.set_rate_graph_btn {
+    width: 100%;
+    height: 100%;
+    border: none;
+    /* border-bottom: 1px solid #CCCCCC; */
+    background-color: white;
 }
 
 .set_rate_table {
@@ -39,7 +54,7 @@
     width: 100%;
     height: 260px;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-bottom: 20px;
     padding: 20px;
     border-radius: 7px;

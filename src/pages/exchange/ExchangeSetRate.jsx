@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import 'assets/exchangeSetRate.css';
 
+// import 'react-datepicker/dist/react-datepicker.css';
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -52,7 +53,7 @@ function ExchangeSetRate(props) {
     const showRateHandle = (event) => {
         const showDate = event.currentTarget.value;
         console.log("그래프 날짜(월)", showDate);
-        // alert("확인");
+        // alert(event);
 
         // 월 선택이므로 잘라서 비교
         setSelectDate(showDate.slice(0, 7));
@@ -212,12 +213,14 @@ function ExchangeSetRate(props) {
     return (
         <div className="contents">
             <div className="set_rate_wrapper">
-                <h3>예약 환율 지정</h3>
+                <h3>
+                    <span style={{ color: "#476EFF" }}>예약 환율</span> 지정
+                </h3>
                 <div>
                     <RateGraph onClick={showRateHandle}/>
-                    <div>
+                    <div className="set_rate_graph_box">
                         {/* 그래프 리스트 반복문 있다 가정하고 버튼 value 넣기 */}
-                        <button value={"2024-08-01"} onClick={showRateHandle}>그래프에 있는 환율 예측일</button>
+                        <button className="set_rate_graph_btn" value={"2024-08-01"} onClick={showRateHandle}>클릭해서 환율 예측일 상세보기</button>
                     </div>
                 </div>
 
@@ -286,8 +289,8 @@ function ExchangeSetRate(props) {
                         </div>
                     </div>
                     <div className="set_rate_pay">
-                        <p className="set_rate_box_left">* 예상 원화 금액
-                            <span className="set_rate_pay_text">{selectAmount}</span>
+                        <p className="set_rate_box_left">* 예상 원화 금액 
+                            <span className="set_rate_pay_text">KRW 1 = {selectAmount}</span>
                         </p>
                     </div>
                     <div className="set_rate_fix_box">

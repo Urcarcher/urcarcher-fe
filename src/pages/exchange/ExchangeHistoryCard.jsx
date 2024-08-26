@@ -9,13 +9,11 @@ function ExchangeHistoryCard(props) {
     const [cardList, setCardList] = useState([]);
     const [selectCard, setSelectCard] = useState(null);
 
+    const [loading, setLoading] = useState(true); // 카드 리스트 로딩 상태
+    const [typeCheck, setTypeCheck] = useState(false); // 선불 카드 확인
+
     // 카드 리스트 조회
     useEffect(() => {
-        if (!cardList) {
-            alert("카드를 먼저 발급받아주세요");
-            return;
-        }
-
         // axios.get("https://urcarcher-local.kro.kr:8443/api/exchange/list")
         axios.get("/api/exchange/list")
             .then((response) => {
@@ -24,8 +22,29 @@ function ExchangeHistoryCard(props) {
             })
             .catch((error) => {
                 console.error("카드 조회 실패", error);
+            })
+            .finally(() => {
+                setLoading(false); // 카드 리스트 로딩 완료
             });
     }, []);
+
+    // 선불 카드 여부 체크
+    useEffect(() => {
+        if (!loading) {
+            const userCard = cardList.some(card => card.cardUsage.includes("선불카드"));
+            setTypeCheck(userCard);
+
+            if (cardList.length === 0 || !userCard) {
+                alert("선불 카드를 먼저 신청해 주세요");
+                navi("/");
+            }
+        }
+    }, [cardList, loading]);
+
+    // 로딩 중이거나 선불 카드가 없으면 컴포넌트 렌더링 막기
+    if (loading || cardList.length === 0 || !typeCheck) {
+        return null; // 아무것도 렌더링하지 않음
+    }
 
     // 카드 선택
     const cardSelectHandle = (card) => {
