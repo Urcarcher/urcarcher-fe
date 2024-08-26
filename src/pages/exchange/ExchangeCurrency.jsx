@@ -2,8 +2,12 @@ import axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import 'assets/exchangeCurrency.css';
-import krw from 'assets/icon-nation/icon-kr.png'
-import usd from 'assets/icon-nation/icon-us.png'
+import KRW from 'assets/icon-nation/icon-kr.png'
+import USD from 'assets/icon-nation/icon-us.png'
+import JPY from 'assets/icon-nation/icon-jp.png'
+import CNY from 'assets/icon-nation/icon-cn.png'
+import cookie from 'react-cookies';
+import { options_GET } from 'services/CommonService';
 
 function ExchangeCurrency(props) {
     const [exchangeCurInfo, setExchangeCurInfo] = useState({});
@@ -19,13 +23,15 @@ function ExchangeCurrency(props) {
     console.log("선택한 카드 아이디 받기", exCard.cardId);
     // console.log(typeof exCard);
     
-    const [nation, setNation] = useState("USD"); // 사용자 국적 임시 data
+    const [nation, setNation] = useState(""); // 사용자 국적
+    const exchangeType = [{nt: "USD", cr: "$"}, {nt: "JPY", cr: "￥"}, {nt: "CNY", cr: "Y"}]; // 통화 기호
+    const curImg = {USD : USD, JPY : JPY, CNY : CNY};
 
     const [focused, setFocused] = useState(false);
     const [inputWidth, setInputWidth] = useState(200); // 글자 너비 기본값 (15px)
     const [currency, setCurrency] = useState(0); // 사용자가 입력한 KRW
     const [calculateAmount, setCalculateAmount] = useState(0); // 예상 원화
-
+    
     const navi = useNavigate();
 
     // 처음 렌더링 될 때만 웹소켓 연결
@@ -57,6 +63,28 @@ function ExchangeCurrency(props) {
             setExchangeCurInfo(updateExchangeCurInfos);
         }
     }, [wscData, exchangeCurInfo]);
+
+    // 로그인 유저 국적 조회
+    useEffect(() => {
+        axios.get("/api/exchange/find")
+        .then((response) => {
+            console.log(response.data);
+            setNation(response.data);
+        })
+        .catch((error) => {
+            console.log("국적 조회 실패", error);
+        });
+    }, []);
+
+    // 국적 별 통화 기호
+    const curSymbol = (nation) => {
+        const foundCur = exchangeType.find(cur => cur.nt === nation);
+        // 배열에 유저의 국적과 일치하는 국적이 없으면 $ 보이도록
+        return foundCur ? foundCur.cr : "$";
+    };
+
+    // 국적 별 이미지 url
+    const imgUrl = curImg[nation] || KRW; // 기본값 태국기
 
     // input 클릭 시 초기화
     const focusHandle = () => {
@@ -173,7 +201,7 @@ function ExchangeCurrency(props) {
             </div>
             <div className="exCur_wrapper">
                 <div className="ex_cur_img">
-                    <img src={krw} alt="KRW"/>
+                    <img src={KRW} alt="KRW"/>
                 </div>
                 <div className="ex_cur_text">
                     <h5>대한민국 KRW</h5>
@@ -193,15 +221,15 @@ function ExchangeCurrency(props) {
             </div>
             <div className="exAmt_wrapper">
                 <div className="ex_cur_img">
-                    <img src={usd} alt="USD"/>
+                    <img src={imgUrl} alt="{nation}"/>
                 </div>
                 <div className="ex_cur_nation">
-                    <h5>{nation} (사용자의 국적)</h5>
+                    <h5>{nation}</h5>
                 </div>
                 <div className="ex_cur_nation">
-                    <p className="exAmt_text">{calculateAmount}달러</p>
+                    <p className="exAmt_text">{calculateAmount}</p>
                     {exchangeCurInfo[nation] ? 
-                    (<p style={{ color: "#BFBFBF" }}>1달러 = {exchangeCurInfo[nation].rate}원</p>) : (<p style={{ color: "#BFBFBF" }}>환율 정보를 찾고 있어요</p>)}
+                    (<p style={{ color: "#BFBFBF" }}>1 { curSymbol(nation) } = {exchangeCurInfo[nation].rate}원</p>) : (<p style={{ color: "#BFBFBF" }}>환율 정보를 찾고 있어요</p>)}
                 </div>
             </div>
             <div className="exRate_wrapper">
@@ -210,7 +238,7 @@ function ExchangeCurrency(props) {
                     <div className="exRate_col">
                         <p className="exRate_left_text">적용환율</p>
                         {exchangeCurInfo[nation] ? 
-                        (<p className="exRate_right_text">KRW {exchangeCurInfo[nation].rate} = 1달러</p>) : (<p className="exRate_right_text">환율 정보를 찾고 있어요</p>)}
+                        (<p className="exRate_right_text">KRW {exchangeCurInfo[nation].rate} = 1 { curSymbol(nation) }</p>) : (<p className="exRate_right_text">환율 정보를 찾고 있어요</p>)}
                     </div>
                     <div className="exRate_col">
                         <p className="exRate_left_text">우대사항</p>
@@ -219,7 +247,7 @@ function ExchangeCurrency(props) {
                     <div className="exRate_line"></div>
                     <div className="exRate_col">
                         <p className="exRate_left_text">원화 예상 금액</p>
-                        <p className="exRate_right_text">{calculateAmount}달러</p>
+                        <p className="exRate_right_text">{calculateAmount} { curSymbol(nation) }</p>
                     </div>
                 </div>
             </div>

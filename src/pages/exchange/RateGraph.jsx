@@ -114,7 +114,7 @@ const CustomXAxisTick = ({ x, y, payload, onClick }) => {
 function RateGraph({ showRateHandle }) {
     return (
         <div className="graph_wrapper">
-            <LineChart className="lineChart_box" width={400} height={300} data={data}>
+            <LineChart className="lineChart_box" width={600} height={300} data={data}>
             <CartesianGrid className="cartesianGrid_box" strokeDasharray="3 3" />
             <XAxis 
                 dataKey="name" 
