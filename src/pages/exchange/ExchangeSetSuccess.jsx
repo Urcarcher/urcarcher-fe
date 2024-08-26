@@ -9,10 +9,12 @@ function ExchangeSetSuccess(props) {
     const settingData = location.state.successData;
     console.log(settingData);
 
+    // 홈 버튼
     const homeHandle = () => {
         navi("/exchange");
     };
 
+    // 환전 내역
     const inforListHandle = () => {
         navi("/exchange/history");
     };

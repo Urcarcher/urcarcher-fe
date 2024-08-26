@@ -18,6 +18,7 @@ function ExchangeSet(props) {
 
     const [reserveInfo, setReserveInfo] = useState({}); // 예약 정보
 
+    // 카드에 예약 내역이 있는지 조회
     useEffect(() => {
         axios.get(`/api/exchange/rate/detail/${reserveCard.cardId}`)
             .then((response) => {

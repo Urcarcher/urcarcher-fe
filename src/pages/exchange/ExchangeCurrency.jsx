@@ -12,7 +12,6 @@ function ExchangeCurrency(props) {
 
     // 이전 페이지에서 보낸 선택한 카드 정보
     const location = useLocation();
-    // const exCard = { ...location.state };
     const cardId = location.state.selectCard;
     const [exCard, setExCard] = useState(cardId);
 

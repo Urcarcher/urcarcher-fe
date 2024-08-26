@@ -3,8 +3,46 @@ import 'assets/exchangeSelect.css';
 import exchangeCard from 'assets/card.png'
 import exchangeMoney from 'assets/money.png'
 import exchangeArrow from 'assets/arrow.png'
+import { useEffect, useState } from 'react';
+import cookie from 'react-cookies';
+import axios from 'axios';
+import { options_GET } from 'services/CommonService';
 
 function ExchangeSelect(props) {
+    // 로그인 유저 정보
+    const [memberId, setMemberId] = useState('');
+    const [name, setName] = useState('');
+
+    const [loading, setLoading] = useState(true);
+
+    const isAuthorized = () => {
+        if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
+            axios(options_GET("/api/auth/authorizing", null))
+            .then((resp)=>{
+                if(resp.data.isAuthorized == true) {
+                    setMemberId(resp.data.memberId);
+                    setName(resp.data.name);
+                }else{
+                    setLoading(false);
+                }
+            })
+            .catch((err)=>{
+                console.log(err);
+                setLoading(false);
+            });
+        } else {
+            setLoading(false); // 토큰이 없으면 로딩 종료
+        }
+    };
+    // isAuthorized();
+
+    useEffect(()=>{
+        isAuthorized();
+    },[]);
+
+    console.log("로그인 유저 id", memberId);
+    console.log("로그인 유저 name", name);
+
     const navi = useNavigate();
 
     // 카드 선택 페이지로 이동
@@ -13,10 +51,19 @@ function ExchangeSelect(props) {
         const selectBtn = event.currentTarget.id;
         // alert(selectBtn);
 
+        if (!memberId && !name) {
+            alert("로그인 후 이용 가능해요");
+            return;
+        }
         navi("/exchange/card", { state: { selectBtn } });
     };
 
+    // 환전 내역
     const historyHandle = () => {
+        if (!memberId && !name) {
+            alert("로그인 후 이용 가능해요");
+            return;
+        }
         navi("/exchange/history/card");
     }
 

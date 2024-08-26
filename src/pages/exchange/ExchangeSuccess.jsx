@@ -21,7 +21,7 @@ function ExchangeSuccess(props) {
         navi("/");
     };
 
-    // 내역보기
+    // 내역 보기
     const historyHandle = () => {
         navi("/exchange/history/card");
     }
