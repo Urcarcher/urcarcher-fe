@@ -12,6 +12,7 @@ function ExchangeHistoryDetail(props) {
 
     console.log("상세 조회 아이디", historyNo);
 
+    // 환전 내역 상세 조회
     useEffect(() => {
         axios.get(`/api/exchange/detail/${historyNo}`)
         .then((response) => {

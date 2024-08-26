@@ -3,8 +3,46 @@ import 'assets/exchangeSelect.css';
 import exchangeCard from 'assets/card.png'
 import exchangeMoney from 'assets/money.png'
 import exchangeArrow from 'assets/arrow.png'
+import { useEffect, useState } from 'react';
+import cookie from 'react-cookies';
+import axios from 'axios';
+import { options_GET } from 'services/CommonService';
 
 function ExchangeSelect(props) {
+    // 로그인 유저 정보
+    const [memberId, setMemberId] = useState(''); // bleakwinter (신용카드) happy (선불카드)
+    const [name, setName] = useState('');
+
+    const [loading, setLoading] = useState(true);
+
+    const isAuthorized = () => {
+        if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
+            axios(options_GET("/api/auth/authorizing", null))
+            .then((resp)=>{
+                if(resp.data.isAuthorized == true) {
+                    setMemberId(resp.data.memberId);
+                    setName(resp.data.name);
+                }else{
+                    setLoading(false);
+                }
+            })
+            .catch((err)=>{
+                console.log(err);
+                setLoading(false);
+            });
+        } else {
+            setLoading(false); // 토큰이 없으면 로딩 종료
+        }
+    };
+    // isAuthorized();
+
+    useEffect(()=>{
+        isAuthorized();
+    },[]);
+
+    console.log("로그인 유저 ID 확인", memberId);
+    console.log("로그인 유저 name 확인", name);
+
     const navi = useNavigate();
 
     // 카드 선택 페이지로 이동
@@ -16,6 +54,7 @@ function ExchangeSelect(props) {
         navi("/exchange/card", { state: { selectBtn } });
     };
 
+    // 환전 내역
     const historyHandle = () => {
         navi("/exchange/history/card");
     }

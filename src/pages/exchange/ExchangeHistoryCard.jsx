@@ -27,8 +27,6 @@ function ExchangeHistoryCard(props) {
             });
     }, []);
 
-    // console.log("카드 리스트", cardList);
-
     // 카드 선택
     const cardSelectHandle = (card) => {
         console.log("선택한 카드 정보", card);
@@ -40,6 +38,7 @@ function ExchangeHistoryCard(props) {
         navi(-1);
     };
 
+    // 다음 버튼
     const nextHandle = () => {
         if (selectCard) {
             navi("/exchange/history", { state: { selectCard } });

@@ -7,19 +7,10 @@ function ExchangeCard(props) {
     // 이전 페이지에서 보낸 버튼 정보
     const location = useLocation();
     const choiceBtn = location.state.selectBtn;
+    
     // console.log("선택한 충전 버튼 종류", choiceBtn);
     
     const navi = useNavigate();
-
-    // 사용자의 카드 목록 임시 data
-    // const userCard = [
-    //     { id: 1, balance: 10000, type: "선불카드" },
-    //     { id: 2, balance: 50000, type: "선불카드" },
-    //     { id: 3, balance: 0, type: "신용카드" },
-    //     { id: 4, balance: 0, type: "선불카드" },
-    // ];
-
-    // const [cardList, setCardList] = useState(userCard);
     
     const [cardList, setCardList] = useState([]);
     const [selectCard, setSelectCard] = useState(null);

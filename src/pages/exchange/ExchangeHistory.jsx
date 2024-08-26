@@ -1,9 +1,9 @@
 import 'assets/exchangeCard.css';
+import 'assets/exchangeHistory.css';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import 'assets/exchangeHistory.css';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function ExchangeHistory(props) {
     const navi = useNavigate();
@@ -18,7 +18,7 @@ function ExchangeHistory(props) {
     const [dateFilter, setDateFilter] = useState("all");
     const [historyFilter, setHistoryFilter] = useState(cardHistory);
 
-    // 환전 내역 조회
+    // 환전 내역 전체 조회
     useEffect(() => {
         axios.get(`/api/exchange/list/${exCard.cardId}`)
         .then((response) => {
@@ -42,6 +42,7 @@ function ExchangeHistory(props) {
         dateHandle(event);
     };
 
+    // 버튼 타입으로 데이터 필터링
     const dateHandle = (event) => {
         if (event === "week") {
             const oneWeek = dayjs().subtract(7, "day").format("YYYY-MM-DD");
@@ -56,7 +57,7 @@ function ExchangeHistory(props) {
         }
     };    
 
-    // 상세 조회
+    // 환전 내역 상세 조회
     const detailHandle = (exId) => {
         navi("/exchange/history/detail", { state: { exId } });
     };

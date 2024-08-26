@@ -4,10 +4,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function ExchangeSetList({ reserveInfo }) {
+    const navi = useNavigate();
+    
     console.log("예약 조회 페이지 data", reserveInfo);
 
-    const navi = useNavigate();
-
+    // 삭제 버튼
     const deleteHandle = () => {
         axios.delete(`/api/exchange/rate/delete/${reserveInfo.setId}`)
         .then((response) => {
@@ -19,6 +20,7 @@ function ExchangeSetList({ reserveInfo }) {
         });
     };
 
+    // 홈 버튼
     const homeHandle = () => {
         navi("/exchange");
     };
