@@ -178,8 +178,8 @@ function Payment() {
                           // 선불카드라면
                           Axios.post('/api/card/usepayment', 
                           {
-                            cardId: cardId,
-                            cardBalance: payAmount
+                            cardId: String(cardId),
+                            cardBalance: String(payAmount)
                           }).then((response) => {
                             console.log("잔액차감 정상적으로 작동");
                           }).catch((error) => {

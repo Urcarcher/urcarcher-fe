@@ -5,7 +5,7 @@ import CardOverlay from '../../bootstrap-template/components/cards/CardOverlay';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 
 function TourGuide({
-  numOfRows = '5',
+  numOfRows = '10',
   MobileOS = 'ETC',
   MobileApp = 'AppTest',
   _type = 'json',
@@ -143,8 +143,7 @@ function TourGuide({
         제목순
     </button>
 </ButtonGroup>
-      
-      <div  className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
+      <div  className="scrollable-content" style={{ maxHeight: '600px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
       <ul style={{ padding: '0', listStyleType: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {tourData.map((item) => (
           <li key={item.contentid} style={{ margin: '15px 15px'}}>
