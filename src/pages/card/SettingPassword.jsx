@@ -23,8 +23,8 @@ function SettingPassword(props) {
             alert("PIN번호는 4자리를 입력하여야합니다.")
         }else{
             Axios.post('/api/card/checkpinnumber',{
-                cardId : props.card.cardId,
-                pinNumber : values.currentPassword
+                cardId : String(props.card.cardId),
+                pinNumber : String(values.currentPassword)
             })
             .then((response)=>{
                 setIsVerified(response);
@@ -91,7 +91,7 @@ function SettingPassword(props) {
                             //console.log(props.card.cardId);
                             Axios.post('/api/card/changepinnumber',{
                                 cardId : String(props.card.cardId),
-                                pinNumber : values.password1
+                                pinNumber : String(values.password1)
                             })
                             .then(()=>{
                                 alert('PIN 번호가 정상적으로 변경되었습니다.');
