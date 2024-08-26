@@ -21,8 +21,8 @@ export default function BasicForm(props) {
         // 카드삭제 및 비활성화
         if(props.cardId[0] === 'deleteCard'){
           Axios.post(`api/card/deletecard`,{
-              cardId : props.cardId[1],
-              password : values.password
+              cardId : String(props.cardId[1]),
+              password : String(values.password)
             })
           .then((response)=>{
             alert('카드가 삭제되었습니다.');
