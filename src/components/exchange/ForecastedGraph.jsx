@@ -12,10 +12,17 @@ import {
 } from "recharts";
 import axios from 'axios';
 
-const CustomXAxisTick = ({ x, y, payload, onClick }) => {
+const CustomXAxisTick = ({ x, y, payload, onClick, data }) => {
     const handleClick = () => {
         if (onClick) {
-            onClick(payload.value);  // payload.value를 onClick에 전달
+            // 기존
+            // onClick(payload.value); // payload.value를 onClick에 전달
+            
+            // 추가
+            // const selectedDate = payload.value; // 날짜
+            // const selectedItem = data.find(item => item["날짜"] === selectedDate);
+            // const openValue = selectedDate ? selectedItem["시가"] : "";
+            // onClick({ date: selectedDate, open: openValue });
         }
     };
 
@@ -42,8 +49,11 @@ function RateGraph( { getDate } ) {
     }
 
     const transport = (e) => {
-        console.log(e.currentTarget.dataset.date);
-        getDate(e.currentTarget.dataset.date);
+        // console.log(e.currentTarget.dataset.date);
+        getDate({ 
+            date: e.currentTarget.dataset.date, 
+            open: e.currentTarget.dataset.open
+        });
     }
 
     useEffect(() => {
@@ -144,21 +154,31 @@ function RateGraph( { getDate } ) {
                 </div>
             </div>
 
-            <div className='over-scroll'>
+            {/* <div className='over-scroll'>
                 <span>날짜</span>
                 <span>시가</span>
                 <span>종가</span>
                 <span>고가</span>
                 <span>저가</span>
                 <span>변동률</span>
-            </div>
+            </div> */}
 
             <div className='scroll-container'>
                 <div className='scroll-area'>
                     <table>
+                        <thead>
+                            <tr>
+                                <th>날짜</th>
+                                <th>시가</th>
+                                <th>종가</th>
+                                <th>고가</th>
+                                <th>저가</th>
+                                <th>변동률</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             {data.map((item, index) => (
-                            <tr key={index} onClick={transport} data-date={item.forecastedDate} >
+                            <tr key={index} onClick={transport} data-date={item.forecastedDate} data-open={item.시가} >
                                 <td>{item.forecastedDate}</td>
                                 <td>{item['시가']}</td>
                                 <td>{item['종가']}</td>
@@ -169,7 +189,7 @@ function RateGraph( { getDate } ) {
                             ))}
                         </tbody>
                     </table>
-                 </div>
+                </div>
             </div>
         </>
     );
