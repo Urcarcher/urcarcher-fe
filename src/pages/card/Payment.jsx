@@ -21,6 +21,7 @@ function Payment() {
     const [currentDate, setCurrentDate] = useState(new Date().toISOString());
     const [cardTypeId, setCardTypeId] = useState(0);
     const [loading, setLoading] = useState(false);
+    
     let navigate = useNavigate();
     const flickityOptions = {
         cellAlign: 'center',
@@ -81,7 +82,11 @@ function Payment() {
 
     return (
         <ScrollableContainer>
-          {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />}
+          {loading && 
+            <PreloaderWrapper>
+              <Preloader type={'pulse'} variant={'primary'} center={true} />
+            </PreloaderWrapper>
+          }
             <div>
                 <br/>
                 <br/>
@@ -89,7 +94,7 @@ function Payment() {
                 <br/>
                 <br/>
                 <Container>
-                    <h1 className=''>상품 결제</h1>
+                    <h2 className=''>상품 결제</h2>
                     <hr/>
                     <br/>
                     {state ? (
@@ -150,11 +155,11 @@ function Payment() {
                                             img={require(`../../assets/Card${card.cardTypeId}_.png`)}
                                             imgStyle={{width: '335px', height: '200px'}}
                                         />
-                                        <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', marginLeft:'17px', fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
-                                          MyCard : {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "신용카드":"선불카드"}
+                                        <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left',fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
+                                          {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "신용카드":"선불카드"}
                                         </p>
-                                        <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', marginLeft:'17px', fontSize:'15px'}}>
-                                          {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "" : "MyMoney : " + parseFloat(card.cardBalance).toLocaleString()+"원"}
+                                        <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', fontSize:'15px'}}>
+                                          {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "" : "잔액 | " + parseFloat(card.cardBalance).toLocaleString()+"원"}
                                         </p>
                                         <br/>
                                     </CarouselCell>
@@ -212,6 +217,7 @@ const ScrollableContainer = styled.div`
     overflow-y: auto;
     padding: 10px;
     box-sizing: border-box;
+    position: relative; /* 추가: 자식 요소들이 이 컨테이너를 기준으로 위치 */
 `;
 
 const CarouselCell = styled.div`
@@ -329,6 +335,19 @@ const TotalAmount = styled.div`
     padding: 15px;
     background-color: #EDF0F7;
     border-radius: 10px;
+`;
+
+const PreloaderWrapper = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.75); /* 반투명 배경 */
+    z-index: 1000;
 `;
 
 export default Payment;

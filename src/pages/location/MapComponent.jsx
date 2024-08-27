@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
 import LocationIcon from '../../assets/nowlocation.png'; // 이미지 경로 가져오기
 
-
 const MapComponent = (props) => {
   const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY_1;
   const { detailDestination } = useParams();
@@ -21,28 +20,35 @@ const MapComponent = (props) => {
   const getCurrentLocation = async () => {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const { latitude, longitude } = position.coords;
-          const geocoder = new window.google.maps.Geocoder();
-          const latLng = new window.google.maps.LatLng(latitude, longitude);
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            const geocoder = new window.google.maps.Geocoder();
+            const latLng = new window.google.maps.LatLng(latitude, longitude);
 
-          geocoder.geocode({ location: latLng }, (results, status) => {
-            if (status === 'OK') {
-              setOrigin(results[0].formatted_address);
-              resolve(results[0].formatted_address);
-            } else {
-              console.error('Geocoder failed due to: ' + status);
-              reject(status);
+            geocoder.geocode({ location: latLng }, (results, status) => {
+              if (status === 'OK') {
+                setOrigin(results[0].formatted_address);
+                resolve(results[0].formatted_address);
+              } else {
+                console.error('Geocoder failed due to: ' + status);
+                reject(status);
+              }
+            });
+          },
+          (error) => {
+            console.error('Error Code = ' + error.code + ' - ' + error.message);
+            if (error.code === error.PERMISSION_DENIED) {
+              alert("위치 권한이 필요합니다. 권한을 허용해 주세요.");
             }
-          });
-        }, (error) => {
-          console.error('Error Code = ' + error.code + ' - ' + error.message);
-          reject(error);
-        }, {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0,
-        });
+            reject(error);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0,
+          }
+        );
       } else {
         reject("Geolocation not supported");
       }
@@ -50,8 +56,12 @@ const MapComponent = (props) => {
   };
 
   const onLoadScriptHandler  = async () => {
-    await getCurrentLocation();
-    handleLoad();
+    try {
+      await getCurrentLocation();
+      handleLoad();
+    } catch (error) {
+      console.error("초기 위치를 가져오는데 실패했습니다: ", error);
+    }
   };
 
   const handleLoad = useCallback(() => {

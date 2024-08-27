@@ -22,7 +22,7 @@ const PaymentOptionLabel = styled.label`
   align-items: center;
   padding: 10px;
   font-size: 15px;
-  font-weight:bold;
+  font-weight: bold;
   border: 2px solid #cccccc;
   border-radius: 8px;
   cursor: pointer;
@@ -50,9 +50,9 @@ const CustomToggleButtonGroup = styled.div`
 
 const CustomToggleButton = styled.button`
   border-radius: 10px;
-  border: 2px solid ${({ active }) => (active ? '#476EFF' : '#cccccc')};
-  background-color: ${({ active }) => (active ? '#476EFF' : '#ffffff')};
-  color: ${({ active }) => (active ? '#ffffff' : '#333333')};
+  border: 2px solid ${({ active }) => (active === 'true' ? '#476EFF' : '#cccccc')};
+  background-color: ${({ active }) => (active === 'true' ? '#476EFF' : '#ffffff')};
+  color: ${({ active }) => (active === 'true' ? '#ffffff' : '#333333')};
   font-weight: bold;
   width: 80px;
   height: 50px;
@@ -62,8 +62,8 @@ const CustomToggleButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ active }) => (active ? '#365acb' : '#f1f1f1')};
-    border-color: ${({ active }) => (active ? '#365acb' : '#aaaaaa')};
+    background-color: ${({ active }) => (active === 'true' ? '#365acb' : '#f1f1f1')};
+    border-color: ${({ active }) => (active === 'true' ? '#365acb' : '#aaaaaa')};
   }
 
   &:focus {
@@ -97,6 +97,7 @@ function ChargePayment(props) {
 
   const handleRecharge = () => {
     setLoading(true);
+    const rechargeAmount = Number(amount === 'custom' ? customAmount : amount);
     Axios.post('/api/card/chargeamount', {
       cardId: String(props.card.cardId),
       cardBalance: String(amount === 'custom' ? customAmount : amount),
@@ -104,6 +105,8 @@ function ChargePayment(props) {
       .then(() => {
         setTimeout(() => {
           setLoading(false);
+          const updatedBalance = Number(nowRemainPay) + rechargeAmount;
+          props.onPaymentSuccess(props.card.cardId, updatedBalance);
           alert('충전이 완료되었습니다.');
           props.setShowModal(false);
         }, 3000);
@@ -136,14 +139,14 @@ function ChargePayment(props) {
         {['10000', '30000', '50000', '70000', '100000'].map((value) => (
           <CustomToggleButton
             key={value}
-            active={amount === value}
+            active={(amount === value).toString()}  // boolean 값을 string으로 변환하여 전달
             onClick={() => handleAmountChange(value)}
           >
             {parseInt(value, 10).toLocaleString()}원
           </CustomToggleButton>
         ))}
         <CustomToggleButton
-          active={amount === 'custom'}
+          active={(amount === 'custom').toString()}  // boolean 값을 string으로 변환하여 전달
           onClick={() => handleAmountChange('custom')}
         >
           기타
