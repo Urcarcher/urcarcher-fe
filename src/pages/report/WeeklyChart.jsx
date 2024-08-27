@@ -80,7 +80,6 @@ const WeeklyChart = () => {
         const memberData = response.data;
         setMemberId(memberData.memberId);
 
-        console.log('멤버아디', memberData.memberId);
 
         // memberId를 사용하여 결제 데이터 가져오기
         axios.post('/api/payment/by-member', { memberId: memberData.memberId })
