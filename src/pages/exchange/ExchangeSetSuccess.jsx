@@ -43,7 +43,7 @@ function ExchangeSetSuccess(props) {
 
     // 환전 내역
     const inforListHandle = () => {
-        navi("/exchange/history");
+        navi("/exchange/history/card");
     };
 
     return (
