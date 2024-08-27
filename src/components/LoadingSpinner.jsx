@@ -1,6 +1,6 @@
 import React from 'react';
 import 'assets/LoadingSpinner.css'; // 스타일링을 위한 CSS 파일을 추가
-import {BeatLoader} from 'react-spinners';
+// import {BeatLoader} from 'react-spinners';
 
 const LoadingSpinner = () => {
     return (

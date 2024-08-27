@@ -10,7 +10,7 @@ function MyMapHome(props) { //시작 페이지
     const navigator = new useNavigate();
 
     //로그인한 회원 이름 저장
-    //const [memberId, setMemberId] = useState('bleakwinter');  // 테스트할 회원 ID
+    // 테스트할 회원 ID : bleakwinter, 9911dbfl
     const [memberId, setMemberId] = useState(''); 
     const [name, setName] = useState('');
 
@@ -59,7 +59,8 @@ function MyMapHome(props) { //시작 페이지
                     </div>
                 </div>
                 <div className='maphome-btn inner'>
-                    <span>{name === ''? '회원' : name}님의 결제 내역으로 장소를 추천합니다</span>
+                   {/* <span>{name === ''? '회원' : name}님의 결제 내역으로 장소를 추천합니다</span>*/}
+                    <span>김유리님의 결제 내역으로 장소를 추천합니다</span>
                     <button onClick={goRankPage}>시작하기</button>
                 </div>
             </div>
