@@ -49,6 +49,10 @@ function Login() {
     signin({ memberId: username, password: password, agree: on});
   };
 
+  const goSignupPage = () => {
+    nav("/signup");
+  }
+
   return (
     <div className="align-items-center row contents">
       <div className="px-lg-4 col-lg-6">
@@ -93,7 +97,7 @@ function Login() {
 
             <div className="wantsign">
               <span>아직 회원이 아니신가요?</span>
-              <button>회원가입</button>
+              <button onClick={goSignupPage}>회원가입</button>
             </div>
           </div>
 

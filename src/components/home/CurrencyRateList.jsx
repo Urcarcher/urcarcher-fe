@@ -54,15 +54,15 @@ function CurrencyRateList(props) {
                     <p className='country-txt'>
                         <span className='country'>
                             <img src={rate.flag} alt={rate.country} className='countryIcon' />
-                            {rate.country} {rate.currency}
+                             {rate.country} {rate.currency}
                         </span>
                     </p>
                 </div>
                     {/* ?. : 연산자 앞 속성 null/undefined일 경우 속성에 접근 중단, .rate : 소켓에서 받아오는 환율 값 */}
                     <p className='rate-txt'>
                         KRW {exchangeRateInfos[rate.currency]?.rate || exchangeRateInfos.rate || '0'} 
-                        <span style={{color:'#333'}}>=</span> 
-                        1{rate.symbol}
+                        <span style={{color:'#333'}}> = </span> 
+                        1 {rate.symbol}
                     </p>
                 </li>
             ))}
