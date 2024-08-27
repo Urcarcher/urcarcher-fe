@@ -165,10 +165,6 @@
     margin-left: 30px;
 }
 
-.realtime input:focus {
-    outline: none !important;
-}
-
 .reading {
     position: absolute;
     width: 25px;
@@ -181,7 +177,18 @@
     height: 30px;
 }
 
-.mainlist-search-box input:focus {
+/* 변경, 추가 */
+/* .mainlist-search-box input:focus {
     border: none;
     outline: none;
+} */
+
+.mainlist-text-box {
+    width: 90%;
+    height: 90%;
+}
+
+.mainlist-text-box:focus {
+    padding-left: 10px;
+    transition: 0.4s;
 }
