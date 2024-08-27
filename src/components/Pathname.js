@@ -40,6 +40,8 @@ export  const getTitle = (pathname) => {
         case '/exchange/history':
         case '/exchange/history/detail':
             return '환전 내역';
+        case '/exchange/realtime/rate':
+            return '실시간 환율 조회';
         case '/reservation':
             return '예매';
         case '/searchtour': 
