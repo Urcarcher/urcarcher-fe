@@ -168,7 +168,7 @@ p.card-charge{
 }
 .member-sigup{
     position: absolute;
-    bottom: 35px;
+    bottom: 45px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #F4F7FC;
@@ -189,7 +189,7 @@ p.card-charge{
     left: 50%;
     transform: translate(-50%,-50%);
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .currentExchange{
