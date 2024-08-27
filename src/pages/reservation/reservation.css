@@ -55,7 +55,7 @@
     box-shadow: 0 0 15px #cccccc;
   }
   /* 카드 레이아웃 스타일 */
-  .card {
+  .reserve-card {
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -67,35 +67,35 @@
   }
   
   /* 카드 이미지 스타일 */
-  .card img {
+  .reserve-card img {
     width: 100%;
     height: auto;
   }
   
   /* 카드 내용 스타일 */
-  .card-body {
+  .reserve-card-body {
     padding: 15px;
   }
   
-  .card-title {
+  .reserve-card-title {
     font-size: 1.2em;
     margin-bottom: 10px;
   }
   
-  .card-subtitle {
+  .reserve-card-subtitle {
     font-size: 1em;
     margin-bottom: 10px;
     color: #6c757d;
   }
   
-  .card-text {
+  .reserve-card-text {
     margin-bottom: 10px;
     color: #555;
   }
   
-  .card-text.date, 
-  .card-text.venue, 
-  .card-text.status {
+  .reserve-card-text.date, 
+  .reserve-card-text.venue, 
+  .reserve-card-text.status {
     font-size: 0.9em;
   }
   

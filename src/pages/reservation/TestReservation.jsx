@@ -48,14 +48,14 @@ function ReservationInfo() {
         {data?.db.map((item) => (
           <div key={item.mt20id} className="col-lg-3 col-md-6 mb-4">
             <Link to={`./detail/${item.mt20id}`}>
-            <div className="card">
-              <img className="card-img-top rounded-0" src={item.poster} alt={`${item.prfnm} 포스터`} />
-              <div className="card-body">
-                <h5 className="card-title">{item.prfnm}</h5>
-                <h6 className="card-subtitle mb-2 text-muted">{item.genrenm}</h6>
-                <p className="card-text date">{item.prfpdfrom} ~ {item.prfpdto}</p>
-                <p className="card-text venue">{item.fcltynm}</p>
-                <p className="card-text status">{item.prfstate}</p>
+            <div className="reserve-card">
+              <img className="reserve-card-img-top rounded-0" src={item.poster} alt={`${item.prfnm} 포스터`} />
+              <div className="reserve-card-body">
+                <h5 className="reserve-card-title">{item.prfnm}</h5>
+                <h6 className="reserve-card-subtitle mb-2 text-muted">{item.genrenm}</h6>
+                <p className="reserve-card-text date">{item.prfpdfrom} ~ {item.prfpdto}</p>
+                <p className="reserve-card-text venue">{item.fcltynm}</p>
+                <p className="reserve-card-text status">{item.prfstate}</p>
               </div>
             </div>
             </Link>
