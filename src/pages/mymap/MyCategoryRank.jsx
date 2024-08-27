@@ -1,13 +1,10 @@
+import 'assets/Map.css';
 import axios from 'axios';
+import LoadingSpinner from 'components/LoadingSpinner';
+import CategoryRankList from 'components/mymap/CategoryRankList';
+import RandomImage from 'components/mymap/RandomImage';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import CategoryRankList from 'components/mymap/CategoryRankList';
-import NoResult from 'components/mymap/NoResult';
-import RandomImage from 'components/mymap/RandomImage';
-import 'assets/Map.css';
-import cookie from 'react-cookies';
-import { options_GET } from 'services/CommonService';
-import LoadingSpinner from 'components/LoadingSpinner';
 
 function MyCategoryRank(props) {
 
@@ -46,7 +43,9 @@ function MyCategoryRank(props) {
     const goHome = () => {
         navigator('/');
     }
-
+    const goBestStoreList = () => {
+        navigator('/maphome/beststorelist');
+    }
     if (loading) {
         return <LoadingSpinner />;
     }
@@ -73,10 +72,18 @@ function MyCategoryRank(props) {
                         <img src="/icon/white-exclamation-mark.png" alt="느낌표" 
                             style={{width:'30px', height:'150px'}}
                         />
-                        <h2 style={{margin:'20px 0'}}>결제 내역이 없습니다</h2> 
-                        <button className='mymap-btn'  onClick={goHome}>
-                            홈으로 돌아가기
-                        </button>
+                        <h2 style={{margin:'20px 0'}}>결제 내역이 없습니다.</h2> 
+                        <div>
+                            <button className='mymap-btn' onClick={goHome}>
+                                홈으로 돌아가기
+                            </button>
+                            <button className='mymap-btn' 
+                                    onClick={goBestStoreList}
+                                    style={{margin:'10px 0 0', backgroundColor:'#F77777'}}
+                            >
+                                인기 장소 둘러보기
+                            </button>
+                        </div>
                     </div>
                     
                 )}

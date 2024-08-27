@@ -1,10 +1,9 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import StoreInfoList from 'components/mymap/StoreInfoList';
 import 'assets/Map.css';
-import NoResult from 'components/mymap/NoResult';
-import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import LoadingSpinner from 'components/LoadingSpinner';
+import StoreInfoList from 'components/mymap/StoreInfoList';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function BestStoreList(props) {
 
@@ -50,7 +49,7 @@ function BestStoreList(props) {
                 <img src="/icon/white-exclamation-mark.png" alt="느낌표" 
                     style={{width:'30px', height:'150px'}}
                 />
-                <h2 style={{margin:'20px 0'}}>방문 내역이 없습니다</h2> 
+                <h2 style={{margin:'20px 0'}}>모든 방문 내역이 없습니다.</h2> 
                 <button 
                     className='mymap-btn'
                     onClick={goHome}>

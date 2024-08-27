@@ -59,8 +59,7 @@ function MyMapHome(props) { //시작 페이지
                     </div>
                 </div>
                 <div className='maphome-btn inner'>
-                   {/* <span>{name === ''? '회원' : name}님의 결제 내역으로 장소를 추천합니다</span>*/}
-                    <span>김유리님의 결제 내역으로 장소를 추천합니다</span>
+                    <span>{name === ''? '회원' : name}님의 결제 내역으로 장소를 추천합니다</span>
                     <button onClick={goRankPage}>시작하기</button>
                 </div>
             </div>

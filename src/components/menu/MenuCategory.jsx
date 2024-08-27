@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 function MenuCategory({ title, items , onClose }) {
-    console.log(items);
+    //console.log(items);
     return (
         <div className="menu-category-wrap">
             {title.map((t, index) => (
