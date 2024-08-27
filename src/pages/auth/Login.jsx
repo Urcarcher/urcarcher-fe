@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { signin } from "../../services/AuthService";
 import "pages/auth/Login.css";
 import googleLogo from "assets/googleLogo.png";
@@ -7,22 +7,35 @@ import { Link, useNavigate } from "react-router-dom";
 import cookie from 'react-cookies';
 import axios from 'axios';
 import { options_GET } from "services/CommonService";
+import LoadingSpinner from "components/LoadingSpinner";
 
 function Login() {
   const nav = useNavigate();
+  const [loading, setLoading] = useState(true);
 
-  if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
-    axios(options_GET("/api/auth/authorizing", null))
+  useEffect(()=>{
+    if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
+      axios(options_GET("/api/auth/authorizing", null))
       .then((resp)=>{
-        if(resp.data.isAuthorized == true) {
-          nav('/');
-        }
-      })
+          if(resp.data.isAuthorized == true) {
+              nav('/');
+          }
+          setLoading(false)
+        })
       .catch((err)=>{
         console.log(err);
+      }).finally(()=>{
+        setLoading(false); 
       });
-  }
+    } else {
+      setLoading(false);
+    }
+  }, [])
   
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   const googleOauth2Handler = () => {
     window.location.href = process.env.REACT_APP_GOOGLE_OAUTH2_HANDLING;
   }
