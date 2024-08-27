@@ -6,13 +6,15 @@ import CourseCard from './CourseCard';
 import '../../assets/CourseList.css';
 import '../../assets/RegionList.css';
 import '../../assets/SortOptions.css';
-
+import i18n from "locales/i18n";
+import { useTranslation } from 'react-i18next';
 const CourseList = () => {
     const { selectedRegion, courses, regions, handleRegionClick } = RegionSelect();
     const [sortOption, setSortOption] = useState('최신순');
     const [filteredCourses, setFilteredCourses] = useState([]);
     const [visibleCourses, setVisibleCourses] = useState([]);  
     const [hasMore, setHasMore] = useState(true);
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         let filtered = courses;
@@ -52,8 +54,13 @@ const CourseList = () => {
         }
     };
 
+  
+
     return (
+
+        
         <div className="inner-div" >
+
         <RegionList regions={regions} handleRegionClick={handleRegionClick}/>
         <SortOptions setSortOption={setSortOption} />
         <div className="course-list" onScroll={handleScroll} >

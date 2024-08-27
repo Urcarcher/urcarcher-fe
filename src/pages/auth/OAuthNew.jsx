@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import "pages/auth/OAuthNew.css";
 import { oauthNew } from 'services/AuthService';
-
+import { useTranslation } from 'react-i18next';
 function OAuthNew(props) {
   var loc = useLocation();
   const nav = useNavigate();

@@ -8,13 +8,21 @@ import { options_GET } from 'services/CommonService';
 import cookie from 'react-cookies';
 import Footer from 'components/Footer';
 import LoadingSpinner from 'components/LoadingSpinner';
-
+import { useTranslation } from 'react-i18next';
+//import Cookies from 'js-cookie';
 
 function Home(props) {
+
+    // const changeLanguage = (languageCode) => {
+    //     i18n.changeLanguage(languageCode);
+    //     Cookies.set('lang', languageCode);
+    // };
+    
     
     const [mainCardInfo, setMainCardInfo] = useState([]);
     const [loading, setLoading] = useState(true);
-    
+    const { t, i18n } = useTranslation();
+
     //1. 로그인 회원 정보   
     const [memberId, setMemberId] = useState('');  //bleakwinter (신용카드) happy(선불카트) - 테스트ID
     const [name, setName] = useState('');
@@ -97,10 +105,11 @@ function Home(props) {
              
                 {/* 로그인회원 이름으로 수정 */}
                 {memberId ? (
-                    <h5><span style={{color:'#476EFF'}}>{name}</span>님 반갑습니다!🙌</h5>
+              
+                    <h5><span style={{color:'#476EFF'}}>{name}</span>{t('Greeting')}🙌</h5>
                 ) : (
                     <h5>
-                        <Link to='/login'>🙌로그인하기</Link>
+                        <Link to='/login'>🙌{t('Login')}</Link>
                     </h5>
                 )}
                 <div className='main-content'>
@@ -131,17 +140,17 @@ function Home(props) {
                             ) : (// 로그인 후 카드 정보 없는 경우
                                 //<p className='card_balance'>카드 발급 후 사용해주세요!</p>
                                 <>
-                                    <p className='card_balance-no'>어카처의 다양한 서비스를 <br /> 이용해보세요</p>
+                                    <p className='card_balance-no'>{t('VariousService')}</p>
                                     <p className='member-sigup'>
-                                        <Link to='/card1'>&gt; 카드 신청하기</Link>
+                                        <Link to='/card1'>&gt; {t('ApplyCard')}</Link>
                                     </p>
                                 </>  
                             )
                         ) : ( // 로그인하지 않은 경우
                             <>
-                                <p className='card_balance-no'>어카처의 다양한 서비스를 <br /> 이용해보세요</p>
+                                <p className='card_balance-no'>{t('VariousService')}</p>
                                 <p className='member-sigup'>
-                                    <Link to='/signup'>&gt; 회원 가입</Link>
+                                    <Link to='/signup'>&gt; {t('SignUp')} </Link>
                                 </p>
                             </>   
                         )
@@ -151,7 +160,7 @@ function Home(props) {
                     {memberId ? ( //로그인 한 경우
                         mainCardInfo ? ( //카드 정보 있는 경우
                             <div className='amount-used'>
-                                <p>이번달 사용 금액</p> 
+                                <p>{t('SpendAmount')}</p> 
                                 {/* null 값 처리 */}
                                 <p>{mainCardInfo.totalPayment ? mainCardInfo.totalPayment.toLocaleString() + '원' : '0원'}</p>
                             </div>
@@ -162,17 +171,17 @@ function Home(props) {
                         )
                     ) : ( //로그인하지 않은 경우
                         <div className='amount-used-no'>
-                            <p><Link to="/login">로그인 후 확인 가능합니다</Link></p>
+                            <p><Link to="/login">{t('AfterLogin')}</Link></p>
                         </div>
                     )}
                     
                     <div className='card-signup'>
-                        <p><Link to="/card1">카드 신청</Link></p>
+                        <p><Link to="/card1">{t('ApplyCard2')}</Link></p>
                         <p><img src="icon/icon-credit-card.png" alt="카드신청" style={{width:"40px"}}/></p>
                     </div>
                 </div>
                 <div className='home-content-box'> 
-                    <h4 className='home-title'>서비스</h4>
+                    <h4 className='home-title'>{t('Service')}</h4>
                     <ServiceList />
                 </div>
                 <div className='home-title-wrap'> 

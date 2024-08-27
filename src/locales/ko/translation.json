@@ -1,0 +1,47 @@
+{
+
+    "Login" : "로그인하기",
+    "VariousService" : "다양한 서비스를 이용해보세요",
+    "SignUp" : "회원가입",
+    "AfterLogin" :  "로그인 후 확인 가능합니다",
+    
+
+    "Greeting" : "님 반갑습니다!",
+    "ApplyCard" : "카드 신청하기",
+    "ApplyCard2" : "카드 신청",
+    "Service" : "서비스",
+    "SpendAmount" : "이번달 사용금액",
+    "CurrentExchange" : "현재 환율",
+
+    "Rates" : "환율조회",
+    "Exchange" : "환전하기",
+    "Place" : "관광/맛집",
+    "TourCourse" : "여행코스",
+
+    "PrivacyPolicy" : "이용 약관 및 개인정보 처리 방침",
+    "Agree" : "서비스를 이용하시려면 약관에 동의해주세요",
+    "Collection" : "개인정보 수집 및 이용 (필수)",
+    "ConsentLocation" : "위치정보 이용 동의 (선택)",
+    "ConsentMatching" : "매칭 서비스 활용 동의 (선택) ",
+    "Look" : "보기",
+    "MandatoryAgree" : "개인정보 수집 및 이용 동의는 필수입니다.",
+    "Next" : "다음",
+    "AreadyAccount" : "이미 계정이 있으신가요?",
+    "SignUpSuccess" : "회원가입 완료",
+    "UsingNow" : "이용하기",
+
+    "Id" : "아이디",
+    "Pw" : "비밀번호",
+    "Login2" : "로그인",
+    "AutoLogIn" : "자동로그인",
+    "FindId" : "아이디 찾기",
+    "FindPw" : "비밀번호 찾기",
+    "YetMember" : "아직 회원이 아니신가요?",
+
+
+    "Sort Latest" : "최신순",
+    "Sort Most Viewed" : "조회순",
+    "Sort Verified" : "인증순"
+
+    
+}

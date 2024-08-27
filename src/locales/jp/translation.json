@@ -1,0 +1,41 @@
+{
+    "Login" : "ログイン",
+    "VariousService" : "様々なサービスを利用してみてください",
+    "SignUp" : "会員登録",
+    "AfterLogin" : "ログイン後に確認できます",
+    
+    "Greeting" : "さん、お会いできて嬉しいです！",
+    "ApplyCard" : "カードを申請する",
+    "ApplyCard2" : "カード申請",
+
+    "Service" : "サービス",
+    "SpendAmount" : "今月の利用金額",
+    "CurrentExchange" : "現在の為替レート",
+
+    "Rates" : "レート",
+    "Exchange" : "両替",
+    "Place" : "観光/グルメ",
+    "TourCourse" : "コース",
+
+    "PrivacyPolicy" : "規約とプライバシー",
+    "Agree" : "サービス利用に同意。",
+    "Collection" : "個人情報（必須）",
+    "ConsentLocation" : "位置情報（任意）",
+    "ConsentMatching" : "マッチングサービス（任意）",
+    "Look" : "表示",
+    "MandatoryAgree" : "個人情報への同意は必須。",
+    "Next" : "次へ",
+    "AreadyAccount" : "アカウントがありますか？",
+
+    "Id" : "ユーザー名",
+    "PW" : "パスワード",
+    "Login2" : "ログイン",
+    "AutoLogIn" : "自動ログイン",
+    "FindId" : "ユーザー名を探す",
+    "FindPw" : "パスワードを探す",
+    "YetMember" : "まだ会員ではありませんか?",
+    
+    "Sort Latest" : "最新順",
+    "Sort Most Viewed" : "閲覧数順",
+    "Sort Verified" : "認証順"
+}

@@ -1,0 +1,42 @@
+{
+
+    "Login" : "Login",
+    "VariousService" : "Explore various services",
+    "SignUp" : "Sign Up",
+    "AfterLogin" : "Available after logging in",
+    
+
+    "Greeting" : ", Nice to meet you!",
+    "ApplyCard" : "Apply for a Card",
+    "ApplyCard2" : "Card Application",
+    "SpendAmount" : "This Month's Spending",
+    "CurrentExchange" : "Current Exchange Rate",
+
+    "Rates" : "Rates",
+    "Exchange" : "Exchange",
+    "Place" : "Sights/Food",
+    "TourCourse" : "Itinerary",
+
+    "PrivacyPolicy" : "Terms & Privacy Policy",
+    "Agree" : "Agree to use the service.",
+    "Collection" : "Personal Info (Required)",
+    "ConsentLocation" : "Location Info (Optional)",
+    "ConsentMatching" : "Matching Service (Optional)",
+    "Look" : "View",
+    "MandatoryAgree" : "Agreement to personal info is required.",
+    "Next" : "Next",
+    "AreadyAccount" : "Already have an account?",
+
+    "Id" : "ID",
+    "PW" : "Password",
+    "Login2" : "Log In",
+    "AutoLogIn" : "Remember Me",
+    "FindId" : "Find ID",
+    "FindPw" : "Find Password",
+    "YetMember" : "Not a member yet?",
+
+    "Service" : "Service",
+    "Sort Latest" : "Latest",
+    "Sort Most Viewed" : "Most Viewed",
+    "Sort Verified" : "Verified"
+}
