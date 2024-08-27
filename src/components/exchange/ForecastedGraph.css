@@ -1,0 +1,90 @@
+.recharts-dot {
+    display: none;
+}
+
+.graph_wrapper {
+    width: auto;
+}
+
+.lineChart_box {
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+.legend-item-0 {
+    margin-right: 0 !important;
+    margin-top: 20px;
+}
+
+.gender > .forecast-price {
+    margin-top: 10px;
+    color: #476EFF;
+}
+
+.scroll-container,
+.scroll-area {
+  width: 100%;
+}
+
+.over-scroll {
+  width: 100%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #476EFF;
+
+}
+
+.over-scroll > span {
+  margin-right: 36px;
+}
+
+.over-scroll > span:nth-child(1) {
+  margin-left: 7px;
+}
+.over-scroll > span:nth-child(2) {
+  margin-left: 35px;
+}
+.over-scroll > span:nth-child(3) {
+  margin-right: 40px;
+}
+.over-scroll > span:nth-child(5) {
+  margin-left: 5px;
+}
+.over-scroll > span:nth-child(6) {
+  margin-right: 0;
+}
+
+.scroll-container {
+  overflow: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  height: 200px;
+}
+
+.scroll-area {
+  scroll-snap-align: start;
+  height: auto;
+}
+
+.scroll-area table {
+  border-collapse: separate;
+  background-color: rgba(71, 110, 255, .15);
+}
+
+.scroll-container,
+.scroll-area {
+  margin: 0;
+}
+
+.scroll-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
+
+.scroll-area tr {
+  cursor: pointer;
+}

@@ -93,7 +93,7 @@ a{
 }
 /* Header */
 header{
-  z-index: 100;
+  z-index: 80;
   position: fixed;
   width: 430px;
   height: 77px;

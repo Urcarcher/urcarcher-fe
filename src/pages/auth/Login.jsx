@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { signin } from "../../services/AuthService";
 import "pages/auth/Login.css";
 import googleLogo from "assets/googleLogo.png";
@@ -8,21 +8,35 @@ import cookie from 'react-cookies';
 import axios from 'axios';
 import { options_GET } from "services/CommonService";
 import { useTranslation } from 'react-i18next';
+import LoadingSpinner from "components/LoadingSpinner";
+
 function Login() {
   const nav = useNavigate();
+  const [loading, setLoading] = useState(true);
 
-  if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
-    axios(options_GET("/api/auth/authorizing", null))
+  useEffect(()=>{
+    if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
+      axios(options_GET("/api/auth/authorizing", null))
       .then((resp)=>{
-        if(resp.data.isAuthorized == true) {
-          nav('/');
-        }
-      })
+          if(resp.data.isAuthorized == true) {
+              nav('/');
+          }
+          setLoading(false)
+        })
       .catch((err)=>{
         console.log(err);
+      }).finally(()=>{
+        setLoading(false); 
       });
-  }
+    } else {
+      setLoading(false);
+    }
+  }, [])
   
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   const googleOauth2Handler = () => {
     window.location.href = process.env.REACT_APP_GOOGLE_OAUTH2_HANDLING;
   }
@@ -35,6 +49,10 @@ function Login() {
     const on = data.get("agree");
     signin({ memberId: username, password: password, agree: on});
   };
+
+  const goSignupPage = () => {
+    nav("/signup");
+  }
 
   return (
     <div className="align-items-center row contents">
@@ -81,6 +99,8 @@ function Login() {
             <div className="wantsign">
               <span>{('YetMember')}</span>
               <button>{('SignUp')}</button>
+              <span>아직 회원이 아니신가요?</span>
+              <button onClick={goSignupPage}>회원가입</button>
             </div>
           </div>
 

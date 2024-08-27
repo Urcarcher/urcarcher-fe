@@ -162,7 +162,7 @@ function ConsentForm() {
 
           <h4>제2조 (수집하는 개인정보 항목)</h4>
           <p>회사는 서비스 제공을 위해 다음과 같은 개인정보를 수집합니다:</p>
-          <ul>
+          <ul style={{margin:'0 0 10px', padding:'0'}}>
             <li>성명</li>
             <li>생년월일</li>
             <li>성별</li>
@@ -173,7 +173,7 @@ function ConsentForm() {
 
           <h4>제3조 (개인정보의 수집 및 이용 목적)</h4>
           <p>회사는 수집한 개인정보를 다음과 같은 목적을 위해 이용합니다:</p>
-          <ul>
+          <ul style={{margin:'0 0 10px', padding:'0'}}>
             <li>회원 가입 및 관리</li>
             <li>서비스 제공 및 계약 이행</li>
             <li>본인 확인 및 식별</li>

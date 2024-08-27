@@ -2,6 +2,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import 'assets/exchangeSuccess.css';
 import exchangeCard from 'assets/card.png'
 import exchangeMoney from 'assets/money.png'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function ExchangeSuccess(props) {
     const location = useLocation();
@@ -16,12 +18,34 @@ function ExchangeSuccess(props) {
 
     const navi = useNavigate();
 
+    const [nation, setNation] = useState(""); // 사용자 국적
+    const exchangeType = [{nt: "USD", cr: "$"}, {nt: "JPY", cr: "￥"}, {nt: "CNY", cr: "Y"}]; // 통화 기호
+
+    // 로그인 유저 국적 조회
+    useEffect(() => {
+        axios.get("/api/exchange/find")
+        .then((response) => {
+            console.log(response.data);
+            setNation(response.data);
+        })
+        .catch((error) => {
+            console.log("국적 조회 실패", error);
+        });
+    }, []);
+
+    // 국적 별 통화 기호
+    const curSymbol = (nation) => {
+        const foundCur = exchangeType.find(cur => cur.nt === nation);
+        // 배열에 유저의 국적과 일치하는 국적이 없으면 $ 보이도록
+        return foundCur ? foundCur.cr : "$";
+    };
+
     // 확인
     const homeHandle = () => {
         navi("/");
     };
 
-    // 내역보기
+    // 내역 보기
     const historyHandle = () => {
         navi("/exchange/history/card");
     }
@@ -45,7 +69,7 @@ function ExchangeSuccess(props) {
             <div className="ex_success_rate">
                 <div>
                     <p className="ex_success_left_p">적용환율</p>
-                    <p className="ex_success_right_p" style={{ color: "#476EFF" }}>KRW {exchangeData.exRate} = 1달러</p>
+                    <p className="ex_success_right_p" style={{ color: "#476EFF" }}>KRW {exchangeData.exRate} = 1 { curSymbol(nation) }</p>
                 </div>
                 <div>
                     <p className="ex_success_left_p">환율우대</p>
@@ -53,7 +77,7 @@ function ExchangeSuccess(props) {
                 </div>
                 <div>
                     <p className="ex_success_left_p">결제금액</p>
-                    <p className="ex_success_right_p">{exchangeData.exPay}달러</p>
+                    <p className="ex_success_right_p">{exchangeData.exPay} { curSymbol(nation) }</p>
                 </div>
                 <div>
                     <p className="ex_success_left_p">출금계좌</p>

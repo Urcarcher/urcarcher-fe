@@ -1,20 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import 'assets/exchangeSetSuccess.css';
+import cookie from 'react-cookies';
+import axios from 'axios';
+import { options_GET } from 'services/CommonService';
 
 function ExchangeSetSuccess(props) {
     const location = useLocation();
     const navi = useNavigate();
 
     const settingData = location.state.successData;
-    console.log(settingData);
+    const settingCard = location.state.successCard;
+    console.log("settingData", settingData);
+    console.log("settingCard", settingCard);
 
+    const [nation, setNation] = useState(""); // 사용자 국적
+    const exchangeType = [{nt: "USD", cr: "$"}, {nt: "JPY", cr: "￥"}, {nt: "CNY", cr: "Y"}]; // 통화 기호
+
+    // 로그인 유저 국적 조회
+    useEffect(() => {
+        axios.get("/api/exchange/find")
+        .then((response) => {
+            console.log(response.data);
+            setNation(response.data);
+        })
+        .catch((error) => {
+            console.log("국적 조회 실패", error);
+        });
+    }, []);
+
+    // 국적 별 통화 기호
+    const curSymbol = (nation) => {
+        const foundCur = exchangeType.find(cur => cur.nt === nation);
+        // 배열에 유저의 국적과 일치하는 국적이 없으면 $ 보이도록
+        return foundCur ? foundCur.cr : "$";
+    };
+
+    // 홈 버튼
     const homeHandle = () => {
         navi("/exchange");
     };
 
+    // 환전 내역
     const inforListHandle = () => {
-        navi("/exchange/history");
+        navi("/exchange/history/card");
     };
 
     return (
@@ -30,7 +59,7 @@ function ExchangeSetSuccess(props) {
                     <h5>대한민국 KRW</h5>
                     <div className="ex_setting_col">
                         <p className="ex_setting_p">예약환율 (시가)</p>
-                        <h5>1달러 = {settingData.setRate}</h5>
+                        <h5>1 { curSymbol(nation) } = {settingData.setRate}</h5>
                     </div>
                     <div className="ex_setting_col">
                         <p className="ex_setting_p">예약일</p>
@@ -48,7 +77,7 @@ function ExchangeSetSuccess(props) {
                         <p className="ex_setting_p">예상 원화</p>
                         <h5>
                             <span style={{ fontFamily: "NanumSquareNeoHeavy", color: "#476EFF" }}>
-                            USD {settingData.setPay}
+                            {nation} {settingData.setPay}
                             </span> 출금할 예정이에요
                         </h5>
                     </div>

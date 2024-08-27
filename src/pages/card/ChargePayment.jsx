@@ -98,8 +98,8 @@ function ChargePayment(props) {
   const handleRecharge = () => {
     setLoading(true);
     Axios.post('/api/card/chargeamount', {
-      cardId: props.card.cardId,
-      cardBalance: amount === 'custom' ? customAmount : amount,
+      cardId: String(props.card.cardId),
+      cardBalance: String(amount === 'custom' ? customAmount : amount),
     })
       .then(() => {
         setTimeout(() => {
@@ -118,7 +118,7 @@ function ChargePayment(props) {
   };
 
   useEffect(() => {
-    Axios.get(`/api/card/get/${props.card.cardId}`)
+    Axios.get(`/api/card/get/${String(props.card.cardId)}`)
       .then((response) => {
         setNowRemainPay(response.data.cardBalance);
       })

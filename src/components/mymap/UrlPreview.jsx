@@ -26,8 +26,25 @@ function UrlPreview({url}) {
 
     return (
         <div className="url-preview">
-            <div>
-                {metaData.imageUrl && <img src={metaData.imageUrl} style={{width: '100%', borderRadius: '10px 10px 0 0'}} />}
+            <div
+                style={{
+                    width: '100%',
+                    backgroundColor: metaData.imageUrl ? 'transparent' : '#f0f0f0', // imageUrl이 없을 때 배경색 설정
+                    borderRadius: '10px 10px 0 0',
+                    minHeight: '150px', // 이미지 영역의 최소 높이 설정
+                }}
+            >
+                {/* {metaData.imageUrl && <img src={metaData.imageUrl} style={{width: '100%', borderRadius: '10px 10px 0 0'}} />} */}
+                <img
+                    src={metaData.imageUrl || ""}
+                    style={{
+                        width: '100%',
+                        borderRadius: '10px 10px 0 0',
+                        minHeight: '150px', // 이미지 영역의 최소 높이 설정
+                        display: metaData.imageUrl ? 'block' : 'none' // imageUrl이 없을 때 img 태그 숨기기
+                    }}
+                    alt="Preview"
+                />
             </div>
         </div>
     );

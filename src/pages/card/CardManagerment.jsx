@@ -42,8 +42,8 @@ function CardManagerment(props) {
       setMyCard(updatedCards);
 
         Axios.post('/api/card/cardstatus', {
-            cardId: cardId,
-            isActive: event.target.checked
+            cardId: String(cardId),
+            isActive: String(event.target.checked)
         }).then(response => {
             console.log('카드 상태가 업데이트되었습니다.');
         }).catch(error => {

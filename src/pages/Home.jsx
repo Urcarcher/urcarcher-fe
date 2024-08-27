@@ -10,6 +10,8 @@ import Footer from 'components/Footer';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { useTranslation } from 'react-i18next';
 //import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
 
 function Home(props) {
 
@@ -22,9 +24,11 @@ function Home(props) {
     const [mainCardInfo, setMainCardInfo] = useState([]);
     const [loading, setLoading] = useState(true);
     const { t, i18n } = useTranslation();
+    
+     //bleakwinter (신용카드) happy(선불카트) - 테스트ID
 
     //1. 로그인 회원 정보   
-    const [memberId, setMemberId] = useState('');  //bleakwinter (신용카드) happy(선불카트) - 테스트ID
+    const [memberId, setMemberId] = useState(''); 
     const [name, setName] = useState('');
 
     const isAuthorized = () => {
@@ -52,7 +56,6 @@ function Home(props) {
     useEffect(()=>{
         isAuthorized();
     },[]);
-
     
     //2. 회원이 소지하고 있는 첫 번째 카드 종류와 이번 달 카드 사용 금액 정보 
     useEffect(() => {
@@ -100,10 +103,8 @@ function Home(props) {
 
     return (
         <div className="contents">
-            {/* <p><img src={Logo} alt="로고" /></p> */}
             <div className='home-container'>
-             
-                {/* 로그인회원 이름으로 수정 */}
+                <SelectLanguage />
                 {memberId ? (
               
                     <h5><span style={{color:'#476EFF'}}>{name}</span>{t('Greeting')}🙌</h5>

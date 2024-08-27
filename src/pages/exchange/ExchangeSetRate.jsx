@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import 'assets/exchangeSetRate.css';
 
+// import 'react-datepicker/dist/react-datepicker.css';
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -22,7 +23,27 @@ function ExchangeSetRate(props) {
     const navi = useNavigate();
     
     const [reserveList, setReserveList] = useState([]); // 사용자 환전 예약 정보
-    const [nation, setNation] = useState("USD"); // 사용자 국적 임시 data
+    const [nation, setNation] = useState(""); // 사용자 국적
+    const exchangeType = [{nt: "USD", cr: "$"}, {nt: "JPY", cr: "￥"}, {nt: "CNY", cr: "Y"}]; // 통화 기호
+    
+    // 로그인 유저 국적 조회
+    useEffect(() => {
+        axios.get("/api/exchange/find")
+        .then((response) => {
+            console.log(response.data);
+            setNation(response.data);
+        })
+        .catch((error) => {
+            console.log("국적 조회 실패", error);
+        });
+    }, []);
+
+    // 국적 별 통화 기호
+    const curSymbol = (nation) => {
+        const foundCur = exchangeType.find(cur => cur.nt === nation);
+        // 배열에 유저의 국적과 일치하는 국적이 없으면 $ 보이도록
+        return foundCur ? foundCur.cr : "$";
+    };
     
     // 예측 환율 임시 data
     const rate = [
@@ -52,7 +73,7 @@ function ExchangeSetRate(props) {
     const showRateHandle = (event) => {
         const showDate = event.currentTarget.value;
         console.log("그래프 날짜(월)", showDate);
-        // alert("확인");
+        // alert(event);
 
         // 월 선택이므로 잘라서 비교
         setSelectDate(showDate.slice(0, 7));
@@ -201,6 +222,7 @@ function ExchangeSetRate(props) {
                 state: {
                     successMsg: response.data,
                     successData: data,
+                    successCard: setCard
                 }
             });
         })
@@ -212,12 +234,14 @@ function ExchangeSetRate(props) {
     return (
         <div className="contents">
             <div className="set_rate_wrapper">
-                <h3>예약 환율 지정</h3>
+                <h3>
+                    <span style={{ color: "#476EFF" }}>예약 환율</span> 지정
+                </h3>
                 <div>
                     <RateGraph onClick={showRateHandle}/>
-                    <div>
+                    <div className="set_rate_graph_box">
                         {/* 그래프 리스트 반복문 있다 가정하고 버튼 value 넣기 */}
-                        <button value={"2024-08-01"} onClick={showRateHandle}>그래프에 있는 환율 예측일</button>
+                        <button className="set_rate_graph_btn" value={"2024-08-01"} onClick={showRateHandle}>클릭해서 환율 예측일 상세보기</button>
                     </div>
                 </div>
 
@@ -231,7 +255,7 @@ function ExchangeSetRate(props) {
                             <p className="set_rate_left">예측일</p>
                             <p className="set_rate_right">{rate.rDate}</p>
                             <p className="set_rate_left">시가</p>
-                            <p className="set_rate_right">{rate.rOpen}</p>
+                            <p className="set_rate_right">KRW {rate.rOpen}</p>
                             <p className="set_rate_left">여행 추천 시작일</p>
                             <p className="set_rate_right">{rate.rStart}</p>
                             <p className="set_rate_left">여행 추천 종료일</p>
@@ -263,7 +287,7 @@ function ExchangeSetRate(props) {
                                     onChange={(date) => dateChangeHandle(date)}
                                     minDate={dayjs().add(1, "day").startOf("day")}
                                     dateFormat="YYYY-MM-DD"
-                                    />
+                                />
                             </LocalizationProvider>
                         </div>
                     </div>
@@ -286,8 +310,8 @@ function ExchangeSetRate(props) {
                         </div>
                     </div>
                     <div className="set_rate_pay">
-                        <p className="set_rate_box_left">* 예상 원화 금액
-                            <span className="set_rate_pay_text">{selectAmount}</span>
+                        <p className="set_rate_box_left">* 예상 원화 금액 
+                            <span className="set_rate_pay_text">KRW 1 = {selectAmount} { curSymbol(nation) }</span>
                         </p>
                     </div>
                     <div className="set_rate_fix_box">

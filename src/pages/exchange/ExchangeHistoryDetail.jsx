@@ -12,6 +12,10 @@ function ExchangeHistoryDetail(props) {
 
     console.log("상세 조회 아이디", historyNo);
 
+    const [nation, setNation] = useState(""); // 사용자 국적
+    const exchangeType = [{nt: "USD", cr: "$"}, {nt: "JPY", cr: "￥"}, {nt: "CNY", cr: "Y"}]; // 통화 기호
+
+    // 환전 내역 상세 조회
     useEffect(() => {
         axios.get(`/api/exchange/detail/${historyNo}`)
         .then((response) => {
@@ -22,6 +26,25 @@ function ExchangeHistoryDetail(props) {
             console.log("상세 조회 실패", error);
         });
     }, []);
+
+    // 로그인 유저 국적 조회
+    useEffect(() => {
+        axios.get("/api/exchange/find")
+        .then((response) => {
+            console.log(response.data);
+            setNation(response.data);
+        })
+        .catch((error) => {
+            console.log("국적 조회 실패", error);
+        });
+    }, []);
+
+    // 국적 별 통화 기호
+    const curSymbol = (nation) => {
+        const foundCur = exchangeType.find(cur => cur.nt === nation);
+        // 배열에 유저의 국적과 일치하는 국적이 없으면 $ 보이도록
+        return foundCur ? foundCur.cr : "$";
+    };
 
     // 충전 버튼
     const exchangeHandle = () => {
@@ -56,15 +79,15 @@ function ExchangeHistoryDetail(props) {
                 </div>
                 <div>
                     <p className="ex_history_detail_left">원화금액</p>
-                    <p className="ex_history_detail_right">$ {detailHistory.exPay}</p>
+                    <p className="ex_history_detail_right">{ curSymbol(nation) } {detailHistory.exPay}</p>
                 </div>
                 <div>
                     <p className="ex_history_detail_left">충전 시 환율</p>
-                    <p className="ex_history_detail_right">KRW {detailHistory.exRate} = $ 1</p>
+                    <p className="ex_history_detail_right">KRW {detailHistory.exRate} = 1 { curSymbol(nation) }</p>
                 </div>
                 <div>
                     <p className="ex_history_detail_left">총 결제 금액</p>
-                    <p className="ex_history_detail_right">$ {detailHistory.exPay}</p>
+                    <p className="ex_history_detail_right">{ curSymbol(nation) } {detailHistory.exPay}</p>
                 </div>
                 <div>
                     <p className="ex_history_detail_left">출금계좌</p>

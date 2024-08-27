@@ -20,8 +20,8 @@ function PaymentSummary(props) {
     setLoading(true);
 
     Axios.post("/api/payment/immediatepayment",{
-      cardId:props.card.cardId,
-      paymentDate:props.card.paymentDate
+      cardId:String(props.card.cardId),
+      paymentDate:String(props.card.paymentDate)
     })
     .then(()=>{
       setTimeout(() => {
@@ -45,8 +45,8 @@ function PaymentSummary(props) {
   useEffect(()=>{
     console.log(props.card.paymentDate);
     Axios.post('/api/payment/detailpayment',{
-      cardId:props.card.cardId,
-      paymentDate:props.card.paymentDate
+      cardId:String(props.card.cardId),
+      paymentDate:String(props.card.paymentDate)
       })
     .then((response)=>{
       setExpectedAmount(response.data);
@@ -57,7 +57,7 @@ function PaymentSummary(props) {
     })
 
     // 최근 결제 내역 확인하기 
-    Axios.post("/api/payment/recentpayment",{cardId:props.card.cardId})
+    Axios.post("/api/payment/recentpayment",{cardId:String(props.card.cardId)})
     .then((response)=>{
       setRecentPay(response.data.paymentPrice);
       setRecentPayDate(response.data.paymentDate.replace(/T/g, ' '));

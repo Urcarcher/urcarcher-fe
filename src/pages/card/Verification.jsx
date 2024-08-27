@@ -5,6 +5,7 @@ import { Button, Form, Tab, Tabs } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProgressBar from './ProgressBar';
+
 function Verification() {
     let navigate = useNavigate();
 
@@ -19,7 +20,6 @@ function Verification() {
                 currentStage={'정보 입력'}
             />
             <div >
-            {/* <h3>신분증 정보</h3> */}
             <Tabs
                 defaultActiveKey="driver's license"
                 id="fill-tab-example"
@@ -27,7 +27,7 @@ function Verification() {
                 fill
                 >
                 <Tab eventKey="driver's license" title="운전면허증">
-                <br/>
+                    <br/>
                     <br/>
                     <CardOverlay
                         className="my-custom-class"
@@ -36,7 +36,13 @@ function Verification() {
                     />
                     <br/>
                     <br/>
-                    <Formik>
+                    <Formik
+                        initialValues={{ cert_drive: '', cert_idCard: '', cert_foriCard1: '', cert_foriCard2: '' }}
+                        onSubmit={(values) => {
+                            console.log(values);
+                            navigate('/card3');
+                        }}
+                    >
                         <FormikForm>
                             <Row>
                                 <SmallSelect aria-label="Default select example">
@@ -76,7 +82,7 @@ function Verification() {
                     <p style={{color:'red', fontWeight:'bold', textAlign:'left'}}>지역선택은 필수입니다.</p>
                 </Tab>
                 <Tab eventKey="ID Card" title="주민등록증">
-                <br/>
+                    <br/>
                     <br/>
                     <CardOverlay
                         className="my-custom-class"
@@ -85,7 +91,13 @@ function Verification() {
                     />
                     <br/>
                     <br/>
-                    <Formik>
+                    <Formik
+                        initialValues={{ cert_drive: '', cert_idCard: '', cert_foriCard1: '', cert_foriCard2: '' }}
+                        onSubmit={(values) => {
+                            console.log(values);
+                            navigate('/card3');
+                        }}
+                    >
                         <FormikForm>
                             <div className="mb-3">
                                 <Form.Label className="text-uppercase" htmlFor="cert_idCard">
@@ -113,7 +125,13 @@ function Verification() {
                     />
                     <br/>
                     <br/>
-                    <Formik>
+                    <Formik
+                        initialValues={{ cert_drive: '', cert_idCard: '', cert_foriCard1: '', cert_foriCard2: '' }}
+                        onSubmit={(values) => {
+                            console.log(values);
+                            navigate('/card3');
+                        }}
+                    >
                         <FormikForm>
                             <div className="mb-3">
                                 <Form.Label className="text-uppercase" htmlFor="cert_foriCard1">
@@ -171,10 +189,6 @@ const Container = styled.div`
   width: 400px;
   margin: 50px auto;
   font-family: Arial, sans-serif;
-`;
-const Title = styled.h1`
-  font-size: 20px;
-  margin-bottom: 20px;
 `;
 const Row = styled.div`
   display: flex;

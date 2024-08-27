@@ -9,7 +9,10 @@ function Card6(props) {
     const navigate = useNavigate(); 
 
     useEffect(() => {
-        console.log('Card data:', produceCardOffer);
+        if (!produceCardOffer || !produceCardOffer.card_type_id) {
+            console.error("Card type ID is missing or null");
+            return;
+        }
 
         const sendCardData = async () => {
             try {
@@ -53,18 +56,20 @@ function Card6(props) {
         <div style={{ marginTop: '160px', marginBottom: '100px' }}>
             <div style={{ margin: 'auto 50px' }}>
                 <h3 style={{ marginBottom: '60px' }}>카드 발급이 완료되었습니다</h3>
-                <img
-                    src={require(`../../assets/Card${produceCardOffer.card_type_id}.png`)}
-                    alt=""
-                    width={'180px'}
-                    height={'270px'}
-                    style={{
-                        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-                        borderRadius: '15px'
-                    }}
-                />
-                {/* 카드 데이터 확인 */}
-                {/* <pre>{JSON.stringify(produceCardOffer, null, 2)}</pre> */}
+                {produceCardOffer.card_type_id ? (
+                    <img
+                        src={require(`../../assets/Card${produceCardOffer.card_type_id}.png`)}
+                        alt="카드 이미지"
+                        width={'180px'}
+                        height={'270px'}
+                        style={{
+                            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+                            borderRadius: '15px'
+                        }}
+                    />
+                ) : (
+                    <p>카드 유형 ID가 존재하지 않습니다.</p>  // card_type_id가 없는 경우 메시지 출력
+                )}
                 <Button
                     variant="contained"
                     style={{
