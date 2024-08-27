@@ -7,6 +7,9 @@ import { useLocation } from 'react-router-dom';
 import arrow from '../../assets/arrow.png';
 import spot_arrow from '../../assets/spot_arrow.png';
 import { options_POST } from 'services/CommonService';
+import bgImgUrl from 'assets/course-bg.png';
+import tagImgUrl from 'assets/icon_cos_schedule.gif';
+
 const CourseDetail = () => {
   const nav = useNavigate();
   const location = useLocation();
@@ -301,27 +304,53 @@ const CourseDetail = () => {
     }, 200);
   };
 
+  
+
     return (
       <div className="course-detail">
-
-      <div className="detail-course-name">{courseName}</div>
-      <div className="course-items-container">
-      {Array(Math.ceil(course.length / 4)).fill().map((_, rowIndex) => (
-        <div key={rowIndex} className="row-container">
-          {course.slice(rowIndex * 4, (rowIndex + 1) * 4).map((item) => (
-            <div key={item.placeId} className="course-item">
-              <img
-                src={completedItems.has(item.placeId) ? require('../../assets/checked.png') : require('../../assets/default.png')}
-                alt="marker"
-                className="marker-image"
-                onClick={() => handleButtonClick(item)}
-              />
-              <h2>{item.placeName}</h2>
+        <div className='course-background' style={{width:'100%'}}>
+          <div className="detail-course-name">
+            <img src={bgImgUrl} alt="배경" style={{width:'100%'}} />
+            {/* 코스명 표시 */}
+            <p className='course-name-title'>
+              <span className='corse-number'>{course.length}코스</span>
+              <span>{courseName}</span>
+            </p>
+            <div className='course-tag-wrap'>
+                <div>
+                  <img src={tagImgUrl} alt="태그" style={{width:'40px', height:'40px', borderRadius:'50%'}} />
+                  <div className='course-tag-textwrap'  style={{textAlign:'left'}}>
+                    <p>지역</p>
+                    <p>제주</p>
+                  </div>
+                </div>
+                <div>
+                  <img src={tagImgUrl} alt="태그" style={{width:'40px', height:'40px', borderRadius:'50%'}} />
+                  <div className='course-tag-textwrap'  style={{textAlign:'left'}}>
+                    <p>태그</p>
+                    <p>#추천코스 #추천코스 #추천코스</p>
+                  </div>
+                </div>
             </div>
-          ))}
+          </div>
         </div>
-      ))}
-    </div>
+        <div className="course-items-container">
+        {Array(Math.ceil(course.length / 4)).fill().map((_, rowIndex) => (
+          <div key={rowIndex} className="row-container">
+            {course.slice(rowIndex * 4, (rowIndex + 1) * 4).map((item) => (
+              <div key={item.placeId} className="course-item">
+                <img
+                  src={completedItems.has(item.placeId) ? require('../../assets/checked.png') : require('../../assets/default.png')}
+                  alt="marker"
+                  className="marker-image"
+                  onClick={() => handleButtonClick(item)}
+                />
+                <h2>{item.placeName}</h2>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
 
       <div className="place-containers">
         {course.map((item) => (

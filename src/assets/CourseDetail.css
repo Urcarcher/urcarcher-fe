@@ -1,21 +1,13 @@
 .course-detail {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     height: 90vh; 
     overflow-y: auto; 
-    padding: 20px;
+    padding: 0 20px;
   }
   
   .course-items-container {
-    width: 90%;
+    width: 100%;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    flex-wrap: wrap; 
-    margin-top:100px;
-    padding-bottom: 200px;
+    padding: 240px 20px 70px;
   }
   
   .course-item {
@@ -105,7 +97,6 @@
 }
 
 .place-detail-content {
-  padding : 12px;
   text-align: justify;
   font-size: 12px;
   line-height: inherit;
@@ -143,10 +134,10 @@
 }
 
 .detail-course-name{
-  padding-top:130px;
   font-size: 28px;
-  padding:130px 10px 10px 10px;
   word-break: keep-all;
+  position: relative;
+  width: 100%;
 }
 
 #mainMap {
@@ -211,4 +202,60 @@
   border-top: 10px solid white; /* 말풍선 전체 배경색과 동일하게 설정 */
 
   filter: drop-shadow(0px 1px 2px #888);
+}
+
+.course-background{
+  width: 100%;
+  position: relative;
+  top: 120px;
+}
+
+.course-name-title{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-weight: bold;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+  word-break: keep-all;
+  padding: 0 30px;
+  font-size: 25px;
+}
+
+.course-tag-wrap{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  bottom: 15px;
+}
+.course-tag-wrap > div{
+  display: flex;
+  margin: 0 10px;
+}
+.course-tag-textwrap > p{
+  font-size: 12px;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  padding-left: 10px;
+}
+.course-tag-textwrap > p:first-child{
+  font-size: 10px;
+}
+.corse-number{
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 15px;
+  background-color: #ED4956;
+  padding: 0 15px;
+  margin: 0;
+  border-radius: 20px;
 }
