@@ -95,9 +95,9 @@ function ExchangeSelect(props) {
                 </div>
                 <div className="select_btn_wrapper2">
                     <button id="set" className="select_set_btn" onClick={exchangeHandle}>
-                        <p className="select_set_p">목표환율 자동충전</p>
+                        <p className="select_set_p">예약환율 자동충전</p>
                         <img src={exchangeArrow} alt="화살표 아이콘"/>
-                        <p>목표 환율 도달 시 자동 환전해줘요</p>
+                        <p>예약일이 되면 자동 환전해줘요</p>
                     </button>
                 </div>
             </div>
