@@ -7,7 +7,7 @@ function ServiceList () {
         {
           name: "환율 조회",
           imgSrc: "/img/home/service1.png",
-          link: "/",
+          link: "/exchange/realtime/rate",
         },
         {
           name: "환전하기",

@@ -1,0 +1,177 @@
+.App {
+    height: auto;
+}
+
+.realtime hr {
+    margin: 0 !important;
+}
+
+.realtime ul {
+    list-style: none;
+
+    display: block;
+    list-style-type: disc;
+
+    margin-bottom: 250px !important;
+}
+
+.realtime table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+}
+
+.realtime tr {
+    display: table-row;
+    vertical-align: inherit;
+    unicode-bidi: isolate;
+    border-color: inherit;
+}
+
+.mainlist-article {
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+.mainlist-list {
+    padding: 4px 20px;
+}
+
+.mainlist-list li {
+    box-sizing: border-box;
+    float: left;
+    width: 47%;
+    text-align: left;
+    margin: 8px 5px;
+    padding: 5px 5px;
+
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12),
+        0 2px 2px rgba(0, 0, 0, 0.12),
+        0 4px 4px rgba(0, 0, 0, 0.12),
+        0 8px 8px rgba(0, 0, 0, 0.12),
+        0 16px 16px rgba(0, 0, 0, 0.12);
+}
+
+.mainlist-itemname {
+    font-size: 14px;
+    line-height: 18px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 400;
+    color: #111;
+    letter-spacing: -.3px;
+}
+
+.mainlist-itemprice {
+    font-weight: 600;
+    font-size: 23px;
+    line-height: 26px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    padding-bottom: 2px;
+    color: #111;
+    letter-spacing: -.3px;
+}
+
+.mainlist-itemtime {
+    font-size: 11px;
+    line-height: 16px;
+    display: block;
+    padding-top: 2px;
+    color: #878787;
+    letter-spacing: -.3px;
+}
+
+.tableArea {
+    position: relative;
+    padding: 8px 0;
+    background-color: #fff;
+    letter-spacing: -.3px;
+}
+
+.tableArea table {
+    text-align: right;
+    letter-spacing: -.3px;
+}
+
+.tableArea td {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    border-top: 1px solid #eee;
+    padding: 12px 0;
+    vertical-align: middle;
+}
+
+.tableArea tr:first-child td {
+    border-top-color: transparent;
+}
+
+.tableArea td:first-child {
+    text-align: left;
+}
+
+.tableName {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tableTime {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    display: block;
+    color: #aaa;
+    white-space: nowrap;
+}
+
+.standard-round {
+    /* color: #097df3; */
+
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -.3px;
+    white-space: nowrap;
+}
+
+
+.standard-round-box {
+    display: inline-block;
+    min-width: 60px;
+    padding: 0;
+    border-radius: 4px;
+    font-weight: 600;
+    line-height: 32px;
+    color: #000;
+    /* background-color: #909aab; */
+    vertical-align: top;
+    text-align: center;
+}
+
+#search {
+    border: none !important;
+    display: inline-block !important;
+    width: 90%;
+
+    margin-left: 30px;
+}
+
+.realtime input:focus {
+    outline: none !important;
+}
+
+.reading {
+    position: absolute;
+
+    width: 7%;
+    height: auto;
+}

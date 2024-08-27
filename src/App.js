@@ -64,7 +64,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/login/loading' element={<OAuthLoading/>}/>
           <Route path='/login/new' element={<OAuthNew/>}/>
-          <Route path='/exchangeRate' element={<ExchangeRateList/>}/>
+          <Route path='/exchange/realtime/rate' element={<ExchangeRateList/>}/>
           <Route path='/test' element={<Test/>}/>
           <Route path='/card1' element={<Card1/>}/>
           <Route path='/card2' element={<Card2/>}/>
