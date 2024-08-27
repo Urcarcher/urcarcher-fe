@@ -1,0 +1,42 @@
+{
+    "Login" : "登录",
+    "VariousService" : "体验多种服务",
+    "SignUp" : "注册",
+    "AfterLogin" : "登录后可查看",
+    
+
+    "Greeting" : ", 很高兴见到你！",
+    "ApplyCard" : "申请卡片",
+    "ApplyCard2" : "卡片申请",
+    "Service" : "服务",
+    "SpendAmount" : "本月支出",
+    "CurrentExchange" : "当前汇率",
+
+    "Rates" : "汇率",
+    "Exchange" : "换钱",
+    "Place" : "旅游/美食",
+    "TourCourse" : "路线",
+
+    "PrivacyPolicy" : "条款和隐私",
+    "Agree" : "同意使用服务。",
+    "Collection" : "个人信息（必需）",
+    "ConsentLocation" : "位置信息（可选）",
+    "ConsentMatching" : "匹配服务（可选）",
+    "Look" : "查看",
+    "MandatoryAgree" : "同意个人信息是必需的。",
+    "Next" : "下一步",
+    "AreadyAccount" : "已有账号？",
+
+
+    "Id" : "账号",
+    "PW" : "密码",
+    "Login2" : "登录",
+    "AutoLogIn" : "自动登录",
+    "FindId" : "找回用户名",
+    "FindPw" : "找回密码",
+    "YetMember" : "还不是会员吗?",
+
+    "Sort Latest" : "最新",
+    "Sort Most Viewed" : "按浏览量排序",
+    "Sort Verified" : "按认证排序"
+}

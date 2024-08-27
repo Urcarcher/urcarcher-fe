@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import cookie from 'react-cookies';
 import axios from 'axios';
 import { options_GET } from "services/CommonService";
+import { useTranslation } from 'react-i18next';
 import LoadingSpinner from "components/LoadingSpinner";
 
 function Login() {
@@ -60,42 +61,44 @@ function Login() {
           <div className="p-lg-5 card-body">
             <form noValidate onSubmit={handleSubmit}>
               <div className="form-floating mb-3">
-                <input placeholder="아이디" id="username" name="username" className="form-control" />
-                <label className="form-label" for="email">아이디</label>
+                <input placeholder={('Id')} id="username" name="username" className="form-control" />
+                <label className="form-label" for="email">{('Id')}</label>
               </div>
 
               <div className="form-floating mb-3">
-                <input placeholder="비밀번호" type="password" id="password" name="password" className="form-control" />
-                <label className="form-label" for="password">비밀번호</label>
+                <input placeholder={('Pw')} type="password" id="password" name="password" className="form-control" />
+                <label className="form-label" for="password">{('Pw')}</label>
               </div>
 
-              <button type="submit" className="btn btn-primary btn-lg">로그인</button>
+              <button type="submit" className="btn btn-primary btn-lg">{('Login2')}</button>
 
               <div className="mb-3 form-check">
                 <div className="fc-1">
                   <input type="checkbox" id="agree" name="agree" className="form-check-input" />
-                  <label title="" for="agree" className="form-check-label">자동 로그인</label>
+                  <label title="" for="agree" className="form-check-label">{('AutoLogIn')}</label>
                 </div>
 
                 <div className="fc-2">
-                  <Link to="/find/id" className="findid">아이디 찾기</Link>
+                  <Link to="/find/id" className="findid">{('FindId')}</Link>
                   <label>|</label>
-                  <Link to="/find/pw">비밀번호 찾기</Link>
+                  <Link to="/find/pw">{('FindPw')}</Link>
                 </div>
               </div>
 
             </form>
             <button className="btn btn-primary btn-lg oauth" onClick={googleOauth2Handler}>
               <img className="logo" src={googleLogo}/>
-              Google 로그인
+              Google {('Login2')}
             </button>
             
             <button className="btn btn-primary btn-lg oauth">
               <img className="logo" src={appleLogo}/>
-              Apple 로그인
+              Apple {('Login2')}
             </button>
 
             <div className="wantsign">
+              <span>{('YetMember')}</span>
+              <button>{('SignUp')}</button>
               <span>아직 회원이 아니신가요?</span>
               <button onClick={goSignupPage}>회원가입</button>
             </div>
