@@ -108,7 +108,7 @@ function App() {
           <Route path='/verification' element={<Verification/>}></Route>
           <Route path='/cardPass' element={<CardPassword/>}></Route>
         </Routes>
-      <Footer />
+        <Footer />
     </BrowserRouter>
     </div>
   </CardProvider>
