@@ -103,9 +103,12 @@ span.type{
 .home-title{
     text-align: left;
     color: #414042;
+    margin: 0;
 }
 .rate-date{
     position: relative;
+    padding: 0;
+    margin: 0;
    
 }
 p.card_balance{
@@ -195,4 +198,6 @@ p.card-charge{
 .currentExchange{
     display: flex;
     flex-direction: row;
+    height: 25px;
+    line-height: 25px;
 }
