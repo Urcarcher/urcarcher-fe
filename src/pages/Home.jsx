@@ -9,21 +9,29 @@ import cookie from 'react-cookies';
 import Footer from 'components/Footer';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { useTranslation } from 'react-i18next';
-//import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
 
 function Home(props) {
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
 
-    // const changeLanguage = (languageCode) => {
-    //     i18n.changeLanguage(languageCode);
-    //     Cookies.set('lang', languageCode);
-    // };
-    
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
     
     const [mainCardInfo, setMainCardInfo] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { t, i18n } = useTranslation();
+    
     
      //bleakwinter (신용카드) happy(선불카트) - 테스트ID
 
@@ -55,6 +63,13 @@ function Home(props) {
 
     useEffect(()=>{
         isAuthorized();
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
     },[]);
     
     //2. 회원이 소지하고 있는 첫 번째 카드 종류와 이번 달 카드 사용 금액 정보 
@@ -104,7 +119,7 @@ function Home(props) {
     return (
         <div className="contents">
             <div className='home-container'>
-                <SelectLanguage />
+                <SelectLanguage changeLanguage={changeLanguage} />
                 {memberId ? (
               
                     <h5><span style={{color:'#476EFF'}}>{name}</span>{t('Greeting')}🙌</h5>
@@ -127,15 +142,15 @@ function Home(props) {
                                     {/* 1. 메인 카드 정보 */}
                                     <p className='card-type-text'>
                                         <span>{mainCardInfo.cardUsage === "신용카드" ? mainCardInfo.card_number : mainCardInfo.cardName}</span>
-                                        <span className={ !mainCardInfo.cardUsage ? 'hidden' : 'type'}>{mainCardInfo.cardUsage}</span>
+                                        <span className={ !mainCardInfo.cardUsage ? 'hidden' : 'type'}>{t('CreditCard')}</span>
                                     </p>
                                     <p className='card_balance'>
                                         { mainCardInfo.cardUsage === "신용카드" ? '' : (  //신용카드이면 잔액 출력, 선불카드일 때 카드 충전 
-                                            mainCardInfo.cardBalance ? mainCardInfo.cardBalance.toLocaleString() + '원' :  <Link to='/'>카드 충전</Link>
+                                            mainCardInfo.cardBalance ? mainCardInfo.cardBalance.toLocaleString() + " " + t('Won') :  <Link to='/'>{t('CardRecharge')}</Link>
                                         )}
                                     </p>
-                                    <p className={mainCardInfo.cardUsage === "신용카드" ||  !mainCardInfo.cardUsage ? 'hidden' : 'card-charge'}>충전</p>
-                                    <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-expiration-date' : 'hidden'}>만료일:  {mainCardInfo.expiration_date || ''}</p>
+                                    <p className={mainCardInfo.cardUsage === "신용카드" ||  !mainCardInfo.cardUsage ? 'hidden' : 'card-charge'}>{t('Charge')}</p>
+                                    <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-expiration-date' : 'hidden'}>{t('ExpirationDate')}:  {mainCardInfo.expiration_date || ''}</p>
                                     <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-name' : 'hidden'}> {mainCardInfo.name || ''} </p>
                                 </>
                             ) : (// 로그인 후 카드 정보 없는 경우
@@ -163,11 +178,11 @@ function Home(props) {
                             <div className='amount-used'>
                                 <p>{t('SpendAmount')}</p> 
                                 {/* null 값 처리 */}
-                                <p>{mainCardInfo.totalPayment ? mainCardInfo.totalPayment.toLocaleString() + '원' : '0원'}</p>
+                                <p>{mainCardInfo.totalPayment ? mainCardInfo.totalPayment.toLocaleString() + " " + t('Won') : 0 + " " + t('Won')}</p>
                             </div>
                         ) : (
                             <div className='amount-used'>
-                                <p className='noCardInfo-text'>결제 내역 정보가 없습니다</p>
+                                <p className='noCardInfo-text'>{t('NoHistory')}</p>
                             </div>
                         )
                     ) : ( //로그인하지 않은 경우
@@ -186,8 +201,10 @@ function Home(props) {
                     <ServiceList />
                 </div>
                 <div className='home-title-wrap'> 
-                    <h4 className='home-title'>현재 환율</h4> 
-                    <p className='rate-date'>({getCurrentDate()}기준)</p>
+                    <div className ="currentExchange">
+                    <h4 className='home-title'>{t('CurrentExchange')}</h4> 
+                    <p className='rate-date'>({getCurrentDate()})</p>
+                    </div>
                     <CurrencyRateList />
                 </div>
             </div>

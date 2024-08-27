@@ -4,7 +4,7 @@
     "SignUp" : "会員登録",
     "AfterLogin" : "ログイン後に確認できます",
     
-    "Greeting" : "さん、お会いできて嬉しいです！",
+    "Greeting" : " さん、初めまして！",
     "ApplyCard" : "カードを申請する",
     "ApplyCard2" : "カード申請",
 
@@ -17,6 +17,42 @@
     "Place" : "観光/グルメ",
     "TourCourse" : "コース",
 
+    "USA" : "アメリカ",
+    "China" : "中国",
+    "Japan" : "日本",
+
+    "AllInfo" : "すべての情報を入力してください。",
+    "ConsentCollection" : "個人情報の収集および利用に同意することは必須です。",
+    "MustComplete" : "必須規約を確認する必要があります。",
+    "NewMember" : "新規会員ですね！\n サービス利用のために追加情報を入力してください。",
+    "Email" : "メールアドレス",
+    "SocialNumber" : "住民登録番号",
+    "SelectNation" : "国籍を選択してください。",
+    "PhoneNumber" : "連絡先",
+    "Male" : "男性",
+    "Female" : "女性",
+    "Complete" : "完了",
+    "Close" : "閉じる",
+
+
+    "EnterId" : "IDを入力してください。",
+    "AlreadyId" : "このIDはすでに使用されています。",
+    "AvailableId" : "使用可能なIDです。",
+    "IdCheckError" : "IDチェック中にエラーが発生しました。",
+    "IdCheck" : "ID重複チェックをしてください。",
+    "MustPw" : "パスワードは8文字以上で、大文字、小文字、数字、特別な文字を含める必要があります。",
+    "Allfields" : "すべての項目を入力する必要があります。",
+    "CompleteIdCheck" : "ID重複チェックを完了する必要があります。",
+    "EnterSuccess" : "正常に入力されました。",
+    "EnterInfo" : "会員情報の入力",
+    "InputError" : "入力中にエラーが発生しました。",
+    "DuplicationCheck" : "ID重複チェック",
+    "PwCheck2" : "8文字以上、大文字、小文字、数字、特別な文字を含む",
+    "Name" : "名前",
+    "Enter" : "入力する",
+
+
+    "AllAgree" : "全ての規約を確認してください。",
     "PrivacyPolicy" : "規約とプライバシー",
     "Agree" : "サービス利用に同意。",
     "Collection" : "個人情報（必須）",
@@ -27,14 +63,23 @@
     "Next" : "次へ",
     "AreadyAccount" : "アカウントがありますか？",
 
+    "Won" : "won",
     "Id" : "ユーザー名",
-    "PW" : "パスワード",
+    "Pw" : "パスワード",
     "Login2" : "ログイン",
     "AutoLogIn" : "自動ログイン",
     "FindId" : "ユーザー名を探す",
     "FindPw" : "パスワードを探す",
     "YetMember" : "まだ会員ではありませんか?",
     
+
+    "CreditCard" : "クレジットカード",
+    "ExpirationDate" : "有効期限",
+    "NoHistory" : "支払い履歴がありません",
+
+    "CardRecharge" : "カードチャージ",
+    "Charge" : "チャージ",
+
     "Sort Latest" : "最新順",
     "Sort Most Viewed" : "閲覧数順",
     "Sort Verified" : "認証順"

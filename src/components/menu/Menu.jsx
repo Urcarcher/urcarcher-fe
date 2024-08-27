@@ -3,8 +3,25 @@ import MenuCategory from 'components/menu/MenuCategory';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { logout } from 'services/AuthService';
-
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
 function Menu({onClose, isLoggedIn, userName}) {
+
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
     const [isActive, setIsActive] = useState(false);
     
    // 로그인 (로그인 정보 API 로직 추가하기 ) 
@@ -19,6 +36,14 @@ function Menu({onClose, isLoggedIn, userName}) {
 
     //Esc키로 메뉴 닫기
     useEffect(() => {
+
+      const savedLanguage = Cookies.get('selectedLanguage');
+      if (savedLanguage) {
+          changeLanguage(savedLanguage); // 언어 변경
+      } else {
+          changeLanguage('Korea'); // 기본 언어 설정
+      }
+      
       const handleEscape = (event) => {
           if (event.key === 'Escape') {
               onClose();

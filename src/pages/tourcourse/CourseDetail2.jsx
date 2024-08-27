@@ -33,7 +33,7 @@ const CourseDetail = () => {
       .then((response) => {
 
         const { places, certifications } = response.data;
-
+        const certificationsSafe = certifications || [];
         const courseData = places.map(item => ({
         ...item,
         latitude: parseFloat(item.latitude).toFixed(6),
@@ -42,11 +42,11 @@ const CourseDetail = () => {
         console.log('Course data:', courseData);
         console.log('Certifications:', certifications);
         setCourse(courseData);
-        setCertifications(certifications);
+        setCertifications(certificationsSafe);
         setLoading(false);
 
         const completedSet = new Set();
-        certifications.forEach(cert => {
+        certificationsSafe.forEach(cert => {
           completedSet.add(cert.placeId);
         });
         setCompletedItems(completedSet);

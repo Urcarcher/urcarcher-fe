@@ -7,14 +7,39 @@ import { Link, useNavigate } from "react-router-dom";
 import cookie from 'react-cookies';
 import axios from 'axios';
 import { options_GET } from "services/CommonService";
-import { useTranslation } from 'react-i18next';
 import LoadingSpinner from "components/LoadingSpinner";
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
+
 
 function Login() {
+
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+  };
+    
+
+
   const nav = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(()=>{
+
+    
     if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
       axios(options_GET("/api/auth/authorizing", null))
       .then((resp)=>{
@@ -31,6 +56,15 @@ function Login() {
     } else {
       setLoading(false);
     }
+
+    const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+        
   }, [])
   
   if (loading) {
@@ -61,46 +95,45 @@ function Login() {
           <div className="p-lg-5 card-body">
             <form noValidate onSubmit={handleSubmit}>
               <div className="form-floating mb-3">
-                <input placeholder={('Id')} id="username" name="username" className="form-control" />
-                <label className="form-label" for="email">{('Id')}</label>
+                <input placeholder={t('Id')} id="username" name="username" className="form-control" />
+                <label className="form-label" for="email">{t('Id')}</label>
               </div>
 
               <div className="form-floating mb-3">
-                <input placeholder={('Pw')} type="password" id="password" name="password" className="form-control" />
-                <label className="form-label" for="password">{('Pw')}</label>
+                <input placeholder={t('Pw')} type="password" id="password" name="password" className="form-control" />
+                <label className="form-label" for="password">{t('Pw')}</label>
               </div>
 
-              <button type="submit" className="btn btn-primary btn-lg">{('Login2')}</button>
+              <button type="submit" className="btn btn-primary btn-lg">{t('Login2')}</button>
 
               <div className="mb-3 form-check">
                 <div className="fc-1">
                   <input type="checkbox" id="agree" name="agree" className="form-check-input" />
-                  <label title="" for="agree" className="form-check-label">{('AutoLogIn')}</label>
+                  <label title="" for="agree" className="form-check-label">{t('AutoLogIn')}</label>
                 </div>
 
                 <div className="fc-2">
-                  <Link to="/find/id" className="findid">{('FindId')}</Link>
+                  <Link to="/find/id" className="findid">{t('FindId')}</Link>
                   <label>|</label>
-                  <Link to="/find/pw">{('FindPw')}</Link>
+                  <Link to="/find/pw">{t('FindPw')}</Link>
                 </div>
               </div>
 
             </form>
             <button className="btn btn-primary btn-lg oauth" onClick={googleOauth2Handler}>
               <img className="logo" src={googleLogo}/>
-              Google {('Login2')}
+              Google {t('Login2')}
             </button>
             
             <button className="btn btn-primary btn-lg oauth">
               <img className="logo" src={appleLogo}/>
-              Apple {('Login2')}
+              Apple {t('Login2')}
             </button>
 
             <div className="wantsign">
-              <span>{('YetMember')}</span>
-              <button>{('SignUp')}</button>
-              <span>아직 회원이 아니신가요?</span>
-              <button onClick={goSignupPage}>회원가입</button>
+         
+              <span>{t('YetMember')}</span>
+              <button onClick={goSignupPage}>{t('SignUp')}</button>
             </div>
           </div>
 
