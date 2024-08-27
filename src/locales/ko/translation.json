@@ -80,10 +80,32 @@
     "ExpirationDate" : "만료일",
     "NoHistory" : "결제 내역 정보가 없습니다",
 
+    "LogOut" : "로그아웃",
+    "ReceiveReward" : "여행 코스 완성하면 한국 기념품 리워드 증정!",
+    "RecommendCourse" : "여행 코스 추천",
+    "ReportMenu" : "소비 리포트",
+    "LostCardMenu" : "카드 분실 신고",
+    "SpendingMenu" : "사용 내역 조회",
+    "PatternMenu" : "소비 패턴 분석",
+    "ExchangeMenu" : "환율 조회 및 예측",
+    "RecommendSpot" : "관광지 추천",
+
+    "Recommend" : "추천",
+    "Finance" : "금융",
+    "Tourism" : "관광",
+    "PaymentBased" : "결제 기반 장소 추천",
+    "BookActivities" : "문화 활동 예약 하기",
+    "Reward" : "리워드 지급",
+    "FindRoute" : "길찾기",
+    "CustomerCenter" : "고객 센터",
+    "FAQ" : "자주 묻는 질문",
+    
 
     "Sort Latest" : "최신순",
     "Sort Most Viewed" : "조회순",
     "Sort Verified" : "인증순"
+
+    
 
     
 }

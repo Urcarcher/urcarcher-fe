@@ -353,7 +353,7 @@ function UserInfoForm() {
                 <input 
                     className="my-btn" 
                     type="submit" 
-                    value={t('PhoneNumber')}
+                    value={t('Complete')}
                 />
             </form>
 

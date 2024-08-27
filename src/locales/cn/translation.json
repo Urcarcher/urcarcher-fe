@@ -78,6 +78,26 @@
     "ExpirationDate" : "有效期",
     "NoHistory" : "没有支付记录",
 
+    "LogOut" : "登出",
+    "ReceiveReward" : "完成旅游路线，赠送韩国纪念品奖励！",
+    "RecommendCourse" : "推荐旅行路线",
+    "ReportMenu" : "消费报告",
+    "LostCardMenu" : "报告丢失卡고",
+    "SpendingMenu" : "查看使用记录",
+    "PatternMenu" : "消费模式分析",
+    "ExchangeMenu" : "汇率查询与预测",
+    "RecommendSpot" : "推荐景点",
+
+    "Recommend" : "推荐",
+    "Finance" : "金融",
+    "Tourism" : "观光",
+    "PaymentBased" : "基于支付的地点推荐",
+    "BookActivities" : "预订文化活动",
+    "Reward" : "奖励支付",
+    "FindRoute" : "路线查找",
+    "CustomerCenter" : "客户中心",
+    "FAQ" : "常见问题",
+
     "Sort Latest" : "最新",
     "Sort Most Viewed" : "按浏览量排序",
     "Sort Verified" : "按认证排序"
