@@ -9,21 +9,29 @@ import cookie from 'react-cookies';
 import Footer from 'components/Footer';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { useTranslation } from 'react-i18next';
-//import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
 
 function Home(props) {
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
 
-    // const changeLanguage = (languageCode) => {
-    //     i18n.changeLanguage(languageCode);
-    //     Cookies.set('lang', languageCode);
-    // };
-    
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
     
     const [mainCardInfo, setMainCardInfo] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { t, i18n } = useTranslation();
+    
     
      //bleakwinter (신용카드) happy(선불카트) - 테스트ID
 
@@ -55,6 +63,13 @@ function Home(props) {
 
     useEffect(()=>{
         isAuthorized();
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
     },[]);
     
     //2. 회원이 소지하고 있는 첫 번째 카드 종류와 이번 달 카드 사용 금액 정보 
@@ -104,7 +119,7 @@ function Home(props) {
     return (
         <div className="contents">
             <div className='home-container'>
-                <SelectLanguage />
+                <SelectLanguage changeLanguage={changeLanguage} />
                 {memberId ? (
               
                     <h5><span style={{color:'#476EFF'}}>{name}</span>{t('Greeting')}🙌</h5>
@@ -186,8 +201,10 @@ function Home(props) {
                     <ServiceList />
                 </div>
                 <div className='home-title-wrap'> 
-                    <h4 className='home-title'>현재 환율</h4> 
-                    <p className='rate-date'>({getCurrentDate()}기준)</p>
+                    <div className ="currentExchange">
+                    <h4 className='home-title'>{t('CurrentExchange')}</h4> 
+                    <p className='rate-date'>({getCurrentDate()})</p>
+                    </div>
                     <CurrencyRateList />
                 </div>
             </div>

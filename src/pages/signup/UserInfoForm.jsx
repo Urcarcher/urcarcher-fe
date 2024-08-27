@@ -3,8 +3,30 @@ import { Button } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios'; // axios 임포트
 import "./signup.css"
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 function UserInfoForm() {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -54,16 +76,16 @@ function UserInfoForm() {
                 }
             });
             if (response.data) {
-                setIdCheckResult("ID가 이미 사용 중입니다.");
+                setIdCheckResult("이미 사용 중인 ID입니다.");
                 setIsIdAvailable(false);
             } else {
-                setIdCheckResult("ID 사용 가능.");
+                setIdCheckResult("ID 사용 가능");
                 setIsIdAvailable(true);
             }
             setIsIdChecked(true); // ID 체크 완료 상태로 설정
         } catch (error) {
-            console.error("ID 중복 체크 중 오류 발생:", error);
-            setIdCheckResult("ID 중복 체크 중 오류 발생.");
+            console.error("ID 중복 체크 중 오류 발생", error);
+            setIdCheckResult("ID 중복 체크 중 오류 발생");
             setIsIdAvailable(false);
             //setIsIdChecked(true); // ID 체크 완료 상태로 설정
         }
@@ -88,6 +110,15 @@ function UserInfoForm() {
 
     useEffect(() => {
         console.log(userInfo);
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+        
     }, [userInfo]);
 
     const handleSubmit = (e) => {
