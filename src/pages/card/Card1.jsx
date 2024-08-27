@@ -6,12 +6,15 @@ import { useCardContext } from './CardContext';
 import { useNavigate } from 'react-router-dom';
 import CardOverlay from 'bootstrap-template/components/cards/CardOverlay';
 import ProgressBar from './ProgressBar';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 function Card1() {
-    const [selectedCard, setSelectedCard] = useState(null);
-    const [cards, setCards] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [selectedCard, setSelectedCard] = useState(null); // 선택된 카드 저장
+    const [cards, setCards] = useState([]); // API에서 가져온 카드 목록을 저장
+    const [cardInfo, setCardInfo] = useState([]); // 멤버가 보유한 카드 정보
+    const [memberId, setMemberId] = useState(''); // 멤버 ID를 저장
+    const [isLoading, setIsLoading] = useState(true); // 데이터 로딩 상태를 관리
+    const [showModal, setShowModal] = useState(false); // 모달 창 상태
 
     const { produceCardOffer, setProduceCardOffer } = useCardContext();
     let navigate = useNavigate();
@@ -25,19 +28,35 @@ function Card1() {
     };
 
     useEffect(() => {
-        axios.get('/api/cards')
-            .then(response => {
-                console.log('Fetched cards:', response.data);
-                setCards(response.data);
-                if (response.data.length > 0) {
-                    setSelectedCard(response.data[0]);
+        const fetchData = async () => {
+            setIsLoading(true); // 로딩 상태 활성화
+            try {
+                
+                // 전체 카드 목록 가져오기
+                const allCardsResponse = await axios.get('/api/cards');
+                setCards(allCardsResponse.data);
+                if (allCardsResponse.data.length > 0) {
+                    setSelectedCard(allCardsResponse.data[0]); // 첫 번째 카드 선택
                 }
-                setIsLoading(false);  // 데이터 로드 완료
-            })
-            .catch(error => {
-                console.error('There was an error fetching the cards!', error);
-                setIsLoading(false);  // 데이터 로드 실패
-            });
+                const memberResponse = await axios.get('/api/t/test');
+                const memberData = memberResponse.data;
+                setMemberId(memberData.memberId); // 멤버 ID 설정
+
+                // 멤버의 카드 정보 가져오기
+                const cardResponse = await axios.get(`/api/card/mycard/${String(memberData.memberId)}`);
+                const cards = cardResponse.data;
+                setCardInfo(cards);
+                console.log("멤버가 발급한 카드 정보:", cards)
+
+
+                setIsLoading(false); // 로딩 상태 비활성화
+            } catch (error) {
+                console.error('Error fetching data:', error.response || error.message);
+                setIsLoading(false); // 오류 발생 시에도 로딩 상태 비활성화
+            }
+        };
+
+        fetchData(); // 데이터 가져오기 함수 실행
     }, []);
 
     const handleChange = (index) => {
@@ -48,7 +67,27 @@ function Card1() {
         }
     };
 
-    // 카드 별 혜택 정의
+    // 이미 발급된 카드인지 여부 판단
+    const isDuplicateCard = () => {
+        return cardInfo.some(card => card.cardTypeId === selectedCard.cardTypeId);
+    };
+
+    const handleApplyClick = () => {
+        if (selectedCard && !isDuplicateCard()) { // 선택된 카드가 중복된 카드가 아니면
+            setProduceCardOffer(prevState => ({
+                ...prevState,
+                card_type_id: selectedCard.cardTypeId // 선택된 카드 타입 
+            }));
+            setTimeout(() => navigate('/card2'), 300);
+        } else {
+            setShowModal(true); // 모달 창을 표시
+        }
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false); // 모달 창을 닫음
+    };
+
     const getCardBenefits = (cardTypeId) => {
         switch (cardTypeId) {
             case 1:
@@ -104,7 +143,7 @@ function Card1() {
             />
 
             {selectedCard && (
-                <div style={{ textAlign: 'left',fontWeight: 'bolder', margin: 'auto 110px', marginTop: '30px', fontSize: '18px' }}>
+                <div style={{ textAlign: 'left', fontWeight: 'bolder', margin: 'auto 110px', marginTop: '30px', fontSize: '18px' }}>
                     {selectedCard.cardName}
                 </div>
             )}
@@ -150,25 +189,21 @@ function Card1() {
                         textAlign: 'center',
                         margin: '20px auto'
                     }}>
-                        {/* <div style={{display: 'flex', justifyContent: 'space-between'}}> */}
-                        
-                            <div style={{
-                                fontSize: '14px',
-                                color: '#476EFF',
-                                fontWeight: 'bold',
-                            }}>
-                                {selectedCard.cardUsage}
-                            </div>
-                            <div style={{
-                                fontSize: '12px',
-                                fontWeight: 'bold',
-                                marginTop: '5px'
-                            }}>
-                                {selectedCard.annualFee}원&nbsp;
-                                <span style={{ fontSize: '11px', color: '#999' }}>(연회비)</span>
-                            </div>
-                        {/* </div> */}
-
+                        <div style={{
+                            fontSize: '14px',
+                            color: '#476EFF',
+                            fontWeight: 'bold',
+                        }}>
+                            {selectedCard.cardUsage}
+                        </div>
+                        <div style={{
+                            fontSize: '12px',
+                            fontWeight: 'bold',
+                            marginTop: '5px'
+                        }}>
+                            {selectedCard.annualFee}원&nbsp;
+                            <span style={{ fontSize: '11px', color: '#999' }}>(연회비)</span>
+                        </div>
 
                         <ul style={{
                             listStyle: 'none',
@@ -183,28 +218,34 @@ function Card1() {
                             style={{
                                 width: '80%',
                                 padding: '12px',
-                                backgroundColor: '#007BFF',
+                                backgroundColor: isDuplicateCard() ? '#999' : '#007BFF',
                                 color: 'white',
                                 border: 'none',
                                 borderRadius: '8px',
                                 fontSize: '16px',
                                 fontWeight: 'bold',
+                                cursor: isDuplicateCard() ? 'not-allowed' : 'pointer',
                             }}
-                            onClick={() => {
-                                if (selectedCard) {
-                                    setProduceCardOffer(prevState => ({
-                                        ...prevState,
-                                        card_type_id: selectedCard.cardTypeId // 선택된 카드 타입 
-                                    }));
-                                    setTimeout(() => navigate('/card2'), 300);
-                                } else {
-                                    console.log('카드가 선택되지 않았습니다.');
-                                }
-                            }}>신청하기</Button>
+                            onClick={handleApplyClick}
+                        >신청하기</Button>
                     </div>
                 )}
             </div>
             <br />
+
+            <Modal show={showModal} onHide={handleCloseModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>카드 신청 오류</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    이미 발급된 카드입니다.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" onClick={handleCloseModal}>
+                        확인
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
             <div className='menubar'></div>
         </div>
