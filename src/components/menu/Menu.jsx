@@ -107,7 +107,7 @@ function Menu({onClose, isLoggedIn, userName}) {
                 title={[{id:12, tit:"금융"}]} 
                 items={[
                   { id: 6, text: "카드 신청", link: "/card1" },
-                  { id: 7, text: "카드 분실 신고", link: "/cardmanagement" },
+                  { id: 7, text: "카드 관리", link: "/cardmanagement" },
                   { id: 8, text: "사용 내역 조회", link: "/usage" },
                   { id: 9, text: "소비 패턴 분석", link: "/chart1" },
                   { id: 10, text: "환율 조회 및 예측", link: "/exchange/realtime/rate" },
