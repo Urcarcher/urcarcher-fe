@@ -56,7 +56,7 @@ function ExchangeRateList(props) {
     
                 <div className="mainlist-search-box">
                     <img className="reading" src={reading}/>
-                    <input placeholder={"국가 검색"} id="search" name="search" autoComplete="off" />
+                    <input placeholder={"국가 검색"} id="search" name="search" autoComplete="off" className='mainlist-text-box' />
                 </div>
                 <hr/>
                     
