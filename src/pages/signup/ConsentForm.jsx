@@ -114,7 +114,7 @@ function ConsentForm() {
                       <Button
                         variant="link"
                         onClick={() => handleShowModal("information")}
-                        style={{ marginLeft: "10px" }}
+                        style={{ color: "#fff", marginTop : "10px"}}
                       >
                         {t('Look')}
                       </Button>
@@ -131,7 +131,7 @@ function ConsentForm() {
                       <Button
                         variant="link"
                         onClick={() => handleShowModal("location")}
-                        style={{ marginLeft: "10px" }}
+                        style={{ color: "#fff", marginTop : "10px"}}
                       >
                         {t('Look')}
                       </Button>
@@ -144,11 +144,11 @@ function ConsentForm() {
                         checked={consentData.matchingConsent}
                         onChange={handleChange}
                       />
-                      &nbsp{t('ConsentMatching')}&nbsp;
+                      &nbsp;{t('ConsentMatching')}&nbsp;
                       <Button
                         variant="link"
                         onClick={() => handleShowModal("matching")}
-                        style={{ marginLeft: "10px" }}
+                        style={{ color: "#fff", marginTop : "10px"}}
                       >
                         {t('Look')}
                       </Button>
@@ -165,7 +165,7 @@ function ConsentForm() {
                   <div className="px-lg-5 py-lg-4 card-footer">
                     <div className="text-sm text-muted">
                     {t('AreadyAccount')}
-                      <a href="/login">&nbsp;{t('Login2')}</a>
+                      <a href="/login">{t('Login2')}</a>
                     </div>
                   </div>
                 </div>
@@ -231,7 +231,7 @@ function ConsentForm() {
             variant="secondary"
             onClick={() => handleModalClose("information")}
           >
-            닫기
+            {t('Close')}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -287,7 +287,7 @@ function ConsentForm() {
             variant="secondary"
             onClick={() => handleModalClose("location")}
           >
-            닫기
+            {t('Close')}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -342,7 +342,7 @@ function ConsentForm() {
             variant="secondary"
             onClick={() => handleModalClose("matching")}
           >
-            닫기
+            {t('Close')}
           </Button>
         </Modal.Footer>
       </Modal>

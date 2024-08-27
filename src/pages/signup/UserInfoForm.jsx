@@ -64,7 +64,7 @@ function UserInfoForm() {
     // ID 중복 체크 함수
     const checkIdAvailability = async () => {
         if (!userInfo.memberId.trim()) {
-            setIdCheckResult("ID를 입력해 주세요.");
+            setIdCheckResult(t('EnterId'));
             setIsIdAvailable(false);
             return;
         }
@@ -76,16 +76,16 @@ function UserInfoForm() {
                 }
             });
             if (response.data) {
-                setIdCheckResult("이미 사용 중인 ID입니다.");
+                setIdCheckResult(t('AlreadyId'));
                 setIsIdAvailable(false);
             } else {
-                setIdCheckResult("ID 사용 가능");
+                setIdCheckResult(t('AvailableId'));
                 setIsIdAvailable(true);
             }
             setIsIdChecked(true); // ID 체크 완료 상태로 설정
         } catch (error) {
             console.error("ID 중복 체크 중 오류 발생", error);
-            setIdCheckResult("ID 중복 체크 중 오류 발생");
+            setIdCheckResult(t('IdCheckError'));
             setIsIdAvailable(false);
             //setIsIdChecked(true); // ID 체크 완료 상태로 설정
         }
@@ -118,7 +118,7 @@ function UserInfoForm() {
             changeLanguage('Korea'); // 기본 언어 설정
         }
 
-        
+
     }, [userInfo]);
 
     const handleSubmit = (e) => {
@@ -133,24 +133,24 @@ function UserInfoForm() {
         const isEmptyField = requiredFields.some(field => !userInfo[field]);
 
         if (!isIdAvailable) {
-            alert("ID 중복체크 해주세요.");
+            alert(t('IdCheck'));
             return;
         }
 
         // 비밀번호 유효성 검사
         if (!validatePassword(userInfo.password)) {
-            alert("비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자 및 특수 문자를 포함해야 합니다.");
+            alert(t('MustPw'));
             return; // 유효하지 않으면 제출 중단
         }
 
         if (isEmptyField) {
-            alert("모든 필드를 채워야 합니다.");
+            alert(t('Allfields'));
             return;
         }
 
         // ID 체크가 완료되지 않았을 때
         if (!isIdChecked) {
-            alert("ID 중복 체크를 완료해야 합니다.");
+            alert(t('CompleteIdCheck'));
             return;
         }
 
@@ -160,12 +160,12 @@ function UserInfoForm() {
             data: userInfo,
         })
         .then((res) => {
-            alert(`성공적으로 입력되었습니다.`);
+            alert(t('EnterSuccess'));
             navigate("/signup/success");
         })
         .catch((error) => {
             console.error("서버 오류:", error);
-            alert("입력 중 오류가 발생했습니다.");
+            alert(t('InputError'));
         });
     };
 
@@ -178,7 +178,7 @@ function UserInfoForm() {
               <div className="px-lg-4 col-lg-6">
                 <div className="card">
                   <div className="p-lg-5 card-body">
-                  <h3 className="mb-4">회원 정보 입력</h3>
+                  <h3 className="mb-4">{t('EnterInfo')}</h3>
                   <hr></hr>
             <form id="signup" onSubmit={handleSubmit} className="container">
                 <div className="form-floating mb-3">
@@ -191,9 +191,9 @@ function UserInfoForm() {
                         onChange={handleChange} 
                     />
                     <label className="form-label" htmlFor="memberId">
-                          아이디
+                    {t('Id')}
                         </label>
-                    <Button type="button" onClick={checkIdAvailability}>ID 중복 체크</Button>
+                    <Button type="button" onClick={checkIdAvailability}>{t('DuplicationCheck')}</Button>
                     {idCheckResult && <div>{idCheckResult}</div>}
                 </div>
                 <div className="form-floating mb-3">
@@ -206,9 +206,9 @@ function UserInfoForm() {
                         onChange={handleChange} 
                     />
                     <label className="form-label" htmlFor="memberId">
-                          비밀번호
+                    {t('Pw')}
                         </label>
-                    <small> * 최소 8자 이상, 대문자, 소문자, 숫자 및 특수 문자를 포함</small>
+                    <small> *{t('PwCheck2')}</small>
                 </div>
                 <div className="form-floating mb-3">
                     <input 
@@ -220,7 +220,7 @@ function UserInfoForm() {
                         onChange={handleChange} 
                     />
                     <label className="form-label" htmlFor="memberId">
-                    이름
+                    {t('Name')}
                         </label>
                 </div>
                 <div className="form-floating mb-3">
@@ -233,7 +233,7 @@ function UserInfoForm() {
                         onChange={handleChange} 
                     />
                     <label className="form-label" htmlFor="memberId">
-                    주민등록번호
+                    {t('SocialNumber')}
                         </label>
                 </div>
                 <div className="col-md-12 mb-3 ">
@@ -244,7 +244,7 @@ function UserInfoForm() {
                         value="male" 
                         checked={userInfo.gender === 'male'} 
                         onChange={handleChange} 
-                    /> 남성
+                    /> {t('Male')}
                     <input 
                         type="radio" 
                         name="gender" 
@@ -252,7 +252,7 @@ function UserInfoForm() {
                         value="female" 
                         checked={userInfo.gender === 'female'} 
                         onChange={handleChange} 
-                    /> 여성
+                    /> {t('Female')}
                 </div>
                 <div className="col-md-12 mb-3">
                     <select 
@@ -261,7 +261,7 @@ function UserInfoForm() {
                         value={userInfo.nationality} 
                         onChange={handleChange}
                     >
-                        <option value="">국적을 선택하세요</option>
+                        <option value="">{t('SelectNation')}</option>
                         <option value="KR">Korea (한국)</option>
                         <option value="US">United States (미국)</option>
                         <option value="EU">Eurozone (유로존 국가들)</option>
@@ -333,7 +333,7 @@ function UserInfoForm() {
                         onChange={handleChange} 
                     />
                     <label className="form-label" htmlFor="memberId">
-                    이메일
+                    {t('Email')}
                         </label>
                 </div>
                 <div className="form-floating mb-3"> 
@@ -346,14 +346,14 @@ function UserInfoForm() {
                         onChange={handleChange} 
                     />
                     <label className="form-label" htmlFor="memberId">
-                    연락처
+                    {t('PhoneNumber')}
                         </label>
                 </div>
 
                 <input 
                     className="my-btn" 
                     type="submit" 
-                    value="입력하기" 
+                    value={t('PhoneNumber')}
                 />
             </form>
 

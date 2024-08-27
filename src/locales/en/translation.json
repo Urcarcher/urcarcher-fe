@@ -6,7 +6,7 @@
     "AfterLogin" : "Available after logging in",
     
 
-    "Greeting" : ", Nice to meet you!",
+    "Greeting" : ", Nice to meet you",
     "ApplyCard" : "Apply for a Card",
     "ApplyCard2" : "Card Application",
     "SpendAmount" : "This Month's Spending",
@@ -72,6 +72,13 @@
     "FindId" : "Find ID",
     "FindPw" : "Find Password",
     "YetMember" : "Not a member yet?",
+
+    "CreditCard" : "Credit Card",
+    "ExpirationDate" : "Expiration Date",
+    "NoHistory" : "No Payment History Available",
+
+    "CardRecharge" : "Card Recharge",
+    "Charge" : "Recharge",
 
     "Service" : "Service",
     "Sort Latest" : "Latest",

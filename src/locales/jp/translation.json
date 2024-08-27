@@ -72,6 +72,14 @@
     "FindPw" : "パスワードを探す",
     "YetMember" : "まだ会員ではありませんか?",
     
+
+    "CreditCard" : "クレジットカード",
+    "ExpirationDate" : "有効期限",
+    "NoHistory" : "支払い履歴がありません",
+
+    "CardRecharge" : "カードチャージ",
+    "Charge" : "チャージ",
+
     "Sort Latest" : "最新順",
     "Sort Most Viewed" : "閲覧数順",
     "Sort Verified" : "認証順"

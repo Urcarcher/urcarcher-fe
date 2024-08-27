@@ -71,6 +71,13 @@
     "FindPw" : "找回密码",
     "YetMember" : "还不是会员吗?",
 
+    "CardRecharge" : "卡充值",
+    "Charge" : "充值",
+
+    "CreditCard" : "信用卡",
+    "ExpirationDate" : "有效期",
+    "NoHistory" : "没有支付记录",
+
     "Sort Latest" : "最新",
     "Sort Most Viewed" : "按浏览量排序",
     "Sort Verified" : "按认证排序"

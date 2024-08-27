@@ -142,15 +142,15 @@ function Home(props) {
                                     {/* 1. 메인 카드 정보 */}
                                     <p className='card-type-text'>
                                         <span>{mainCardInfo.cardUsage === "신용카드" ? mainCardInfo.card_number : mainCardInfo.cardName}</span>
-                                        <span className={ !mainCardInfo.cardUsage ? 'hidden' : 'type'}>{mainCardInfo.cardUsage}</span>
+                                        <span className={ !mainCardInfo.cardUsage ? 'hidden' : 'type'}>{t('CreditCard')}</span>
                                     </p>
                                     <p className='card_balance'>
                                         { mainCardInfo.cardUsage === "신용카드" ? '' : (  //신용카드이면 잔액 출력, 선불카드일 때 카드 충전 
-                                            mainCardInfo.cardBalance ? mainCardInfo.cardBalance.toLocaleString() + '원' :  <Link to='/'>카드 충전</Link>
+                                            mainCardInfo.cardBalance ? mainCardInfo.cardBalance.toLocaleString() + " " + t('Won') :  <Link to='/'>{t('CardRecharge')}</Link>
                                         )}
                                     </p>
-                                    <p className={mainCardInfo.cardUsage === "신용카드" ||  !mainCardInfo.cardUsage ? 'hidden' : 'card-charge'}>충전</p>
-                                    <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-expiration-date' : 'hidden'}>만료일:  {mainCardInfo.expiration_date || ''}</p>
+                                    <p className={mainCardInfo.cardUsage === "신용카드" ||  !mainCardInfo.cardUsage ? 'hidden' : 'card-charge'}>{t('Charge')}</p>
+                                    <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-expiration-date' : 'hidden'}>{t('ExpirationDate')}:  {mainCardInfo.expiration_date || ''}</p>
                                     <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-name' : 'hidden'}> {mainCardInfo.name || ''} </p>
                                 </>
                             ) : (// 로그인 후 카드 정보 없는 경우
@@ -178,11 +178,11 @@ function Home(props) {
                             <div className='amount-used'>
                                 <p>{t('SpendAmount')}</p> 
                                 {/* null 값 처리 */}
-                                <p>{mainCardInfo.totalPayment ? mainCardInfo.totalPayment.toLocaleString() + '원' : '0원'}</p>
+                                <p>{mainCardInfo.totalPayment ? mainCardInfo.totalPayment.toLocaleString() + " " + t('Won') : 0 + " " + t('Won')}</p>
                             </div>
                         ) : (
                             <div className='amount-used'>
-                                <p className='noCardInfo-text'>결제 내역 정보가 없습니다</p>
+                                <p className='noCardInfo-text'>{t('NoHistory')}</p>
                             </div>
                         )
                     ) : ( //로그인하지 않은 경우
