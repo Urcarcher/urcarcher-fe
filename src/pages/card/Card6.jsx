@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
-import { useCardContext } from './CardContext';
+import React, { useEffect, useState } from 'react';
+import { generateRandomCardNumber, generateRandomCVVCode, getCurrentDate, getExpirationDate, useCardContext } from './CardContext';
 import axios from 'axios';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 function Card6(props) {
-    const { produceCardOffer } = useCardContext();
+    const { produceCardOffer, setProduceCardOffer } = useCardContext();
     const navigate = useNavigate(); 
+    const [displayCardOffer, setDisplayCardOffer] = useState(produceCardOffer); // 초기 상태 저장용
 
     useEffect(() => {
         if (!produceCardOffer || !produceCardOffer.card_type_id) {
@@ -24,12 +25,13 @@ function Card6(props) {
                     cardStatus: produceCardOffer.card_status,
                     issueDate: produceCardOffer.issue_date,
                     expirationDate: produceCardOffer.expiration_date,
+                    // cardPassword: '11',
                     cardPassword: produceCardOffer.card_password,
                     cardPickup: produceCardOffer.card_pickup,
                     pickupDate: produceCardOffer.pickup_date,
                     cardAccount: produceCardOffer.card_account,
                     paymentBank: produceCardOffer.payment_bank,
-                    paymentDate: `2024-08-${produceCardOffer.payment_date}`,  // YYYY-MM-DD 형식으로 변환
+                    paymentDate: produceCardOffer.payment_date ? `2024-08-${produceCardOffer.payment_date}` : null, // 날짜 형식 변환 또는 null 처리
                     transportation: produceCardOffer.transportation,
                     cardTypeId: produceCardOffer.card_type_id,
                     memberId: produceCardOffer.member_id,
@@ -43,22 +45,44 @@ function Card6(props) {
                     },
                 });
 
-                console.log('Server response:', response.data);
+                // 초기화 전에 현재 상태를 displayCardOffer에 저장
+                setDisplayCardOffer(produceCardOffer);
+
+                 // 상태 초기화
+                 setProduceCardOffer({
+                    "card_id": null,
+                    "card_account": null,
+                    "card_balance": 0, 
+                    "card_number": generateRandomCardNumber(), // 새로운 카드 번호 생성
+                    "card_password": null,
+                    "card_pickup": null,
+                    "card_status": true,
+                    "cvv_code": generateRandomCVVCode(), // 새로운 CVV 코드 생성
+                    "expiration_date": getExpirationDate(), // 새로운 만료일 설정
+                    "issue_date": getCurrentDate(), // 새로운 발급일 설정
+                    "payment_bank": null,
+                    "payment_date": null,
+                    "pickup_date": null,
+                    "transportation": null,
+                    "card_type_id": null,
+                    "member_id": null
+                });
+
             } catch (error) {
                 console.error('Error sending card data:', error);
             }
         };
 
         sendCardData();
-    }, [produceCardOffer]);
+    }, [produceCardOffer, setProduceCardOffer]);
 
     return (
         <div style={{ marginTop: '160px', marginBottom: '100px' }}>
             <div style={{ margin: 'auto 50px' }}>
                 <h3 style={{ marginBottom: '60px' }}>카드 발급이 완료되었습니다</h3>
-                {produceCardOffer.card_type_id ? (
+                {displayCardOffer.card_type_id ? (
                     <img
-                        src={require(`../../assets/Card${produceCardOffer.card_type_id}.png`)}
+                        src={require(`../../assets/Card${displayCardOffer.card_type_id}.png`)}
                         alt="카드 이미지"
                         width={'180px'}
                         height={'270px'}

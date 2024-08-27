@@ -24,18 +24,7 @@ function Card2() {
     let navigate = useNavigate();
 
     useEffect(() => {
-        // "bleakwinter" 회원의 데이터를 가져오는 API 호출
-        // axios.get('/api/card/bleakwinter')// 로그인된 id로 나중에 수정하기
-        //     .then(response => {
-        //         const memberData = response.data;
-        //         setPhoneNumber(memberData.phoneNumber);
-        //         setRegistrationNumber(memberData.registrationNumber);
-        //         setName(memberData.name);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error fetching member data:', error);
-        //     });
-
+        
         Axios.get('/api/t/test')
         .then((response)=>{
             const memberData = response.data;

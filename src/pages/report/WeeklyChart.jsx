@@ -112,7 +112,7 @@ const WeeklyChart = () => {
       const month = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
       const week = getWeekOfMonth(date);
       return month === selectedMonth && week.toString() === selectedWeek;
-    });
+    }).sort((a, b) => new Date(b.paymentDate) - new Date(a.paymentDate)); // 최신순 정렬
 
     // 요일별 소비 금액 집계
     const dayTotals = filteredData.reduce((acc, curr) => {

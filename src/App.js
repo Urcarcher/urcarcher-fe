@@ -51,6 +51,8 @@ import ExchangeHistory from 'pages/exchange/ExchangeHistory';
 import ExchangeHistoryCard from 'pages/exchange/ExchangeHistoryCard';
 import ExchangeHistoryDetail from 'pages/exchange/ExchangeHistoryDetail';
 import ReservationDetail from 'pages/reservation/ReservationDetail';
+import SettingPassword from 'pages/card/SettingPassword';
+import CardPassword from 'pages/card/CardPassword';
 
 
 function App() {
@@ -104,6 +106,7 @@ function App() {
           <Route path='/cardmanagement' element={<CardManagerment/>}></Route>
           <Route path='/paymentpage' element={<Payment/>}></Route>
           <Route path='/verification' element={<Verification/>}></Route>
+          <Route path='/cardPass' element={<CardPassword/>}></Route>
         </Routes>
       <Footer />
     </BrowserRouter>

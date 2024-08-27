@@ -62,7 +62,8 @@ const CardForm = () => {
           if (produceCardOffer.card_type_id === 1 || produceCardOffer.card_type_id === 2){
             setTimeout(() => navigate('/card5'), 300);
           }else{
-              setTimeout(() => navigate('/card6'), 300);
+              // setTimeout(() => navigate('/card6'), 300);
+              setTimeout(() => navigate('/cardPass'), 300);
           }
         }}
       >
