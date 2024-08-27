@@ -53,6 +53,7 @@ function ExchangeSelect(props) {
 
         if (!memberId && !name) {
             alert("로그인 후 이용 가능해요");
+            navi("/");
             return;
         }
         navi("/exchange/card", { state: { selectBtn } });
@@ -62,6 +63,7 @@ function ExchangeSelect(props) {
     const historyHandle = () => {
         if (!memberId && !name) {
             alert("로그인 후 이용 가능해요");
+            navi("/");
             return;
         }
         navi("/exchange/history/card");

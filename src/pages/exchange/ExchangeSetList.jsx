@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'assets/exchangeSetList.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,28 @@ function ExchangeSetList({ reserveInfo }) {
     const navi = useNavigate();
     
     console.log("예약 조회 페이지 data", reserveInfo);
+
+    const [nation, setNation] = useState(""); // 사용자 국적
+    const exchangeType = [{nt: "USD", cr: "$"}, {nt: "JPY", cr: "￥"}, {nt: "CNY", cr: "Y"}]; // 통화 기호
+
+    // 로그인 유저 국적 조회
+    useEffect(() => {
+        axios.get("/api/exchange/find")
+        .then((response) => {
+            console.log(response.data);
+            setNation(response.data);
+        })
+        .catch((error) => {
+            console.log("국적 조회 실패", error);
+        });
+    }, []);
+
+    // 국적 별 통화 기호
+    const curSymbol = (nation) => {
+        const foundCur = exchangeType.find(cur => cur.nt === nation);
+        // 배열에 유저의 국적과 일치하는 국적이 없으면 $ 보이도록
+        return foundCur ? foundCur.cr : "$";
+    };
 
     // 삭제 버튼
     const deleteHandle = () => {
@@ -31,7 +53,7 @@ function ExchangeSetList({ reserveInfo }) {
                 <h5>대한민국 KRW</h5>
                 <div className="ex_set_list_col">
                     <p className="ex_set_list_p">예약환율 (시가)</p>
-                    <h5>1달러 = {reserveInfo.setRate}</h5>
+                    <h5>1 { curSymbol(nation) } = {reserveInfo.setRate}</h5>
                 </div>
                 <div className="ex_set_list_col">
                     <p className="ex_set_list_p">예약일</p>
@@ -49,7 +71,7 @@ function ExchangeSetList({ reserveInfo }) {
                     <p className="ex_set_list_p">예상 원화</p>
                     <h5>
                         <span style={{ fontFamily: "NanumSquareNeoHeavy", color: "#476EFF" }}>
-                        USD {reserveInfo.setPay}
+                        {nation} {reserveInfo.setPay}
                         </span> 출금할 예정이에요
                     </h5>
                 </div>

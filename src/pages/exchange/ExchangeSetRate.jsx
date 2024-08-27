@@ -23,7 +23,27 @@ function ExchangeSetRate(props) {
     const navi = useNavigate();
     
     const [reserveList, setReserveList] = useState([]); // 사용자 환전 예약 정보
-    const [nation, setNation] = useState("USD"); // 사용자 국적 임시 data
+    const [nation, setNation] = useState(""); // 사용자 국적
+    const exchangeType = [{nt: "USD", cr: "$"}, {nt: "JPY", cr: "￥"}, {nt: "CNY", cr: "Y"}]; // 통화 기호
+    
+    // 로그인 유저 국적 조회
+    useEffect(() => {
+        axios.get("/api/exchange/find")
+        .then((response) => {
+            console.log(response.data);
+            setNation(response.data);
+        })
+        .catch((error) => {
+            console.log("국적 조회 실패", error);
+        });
+    }, []);
+
+    // 국적 별 통화 기호
+    const curSymbol = (nation) => {
+        const foundCur = exchangeType.find(cur => cur.nt === nation);
+        // 배열에 유저의 국적과 일치하는 국적이 없으면 $ 보이도록
+        return foundCur ? foundCur.cr : "$";
+    };
     
     // 예측 환율 임시 data
     const rate = [
@@ -202,6 +222,7 @@ function ExchangeSetRate(props) {
                 state: {
                     successMsg: response.data,
                     successData: data,
+                    successCard: setCard
                 }
             });
         })
@@ -234,7 +255,7 @@ function ExchangeSetRate(props) {
                             <p className="set_rate_left">예측일</p>
                             <p className="set_rate_right">{rate.rDate}</p>
                             <p className="set_rate_left">시가</p>
-                            <p className="set_rate_right">{rate.rOpen}</p>
+                            <p className="set_rate_right">KRW {rate.rOpen}</p>
                             <p className="set_rate_left">여행 추천 시작일</p>
                             <p className="set_rate_right">{rate.rStart}</p>
                             <p className="set_rate_left">여행 추천 종료일</p>
@@ -290,7 +311,7 @@ function ExchangeSetRate(props) {
                     </div>
                     <div className="set_rate_pay">
                         <p className="set_rate_box_left">* 예상 원화 금액 
-                            <span className="set_rate_pay_text">KRW 1 = {selectAmount}</span>
+                            <span className="set_rate_pay_text">KRW 1 = {selectAmount} { curSymbol(nation) }</span>
                         </p>
                     </div>
                     <div className="set_rate_fix_box">
