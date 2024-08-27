@@ -66,7 +66,7 @@ function UsageHistory(props) {
             case 4:
                 return "TourPass";
             case 5:
-                return "트래블러";
+                return "Seoul Plus";
             default:
                 console.log("카드이름가져오는데 오류발생");
                 return "Unknown Card";

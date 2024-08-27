@@ -92,38 +92,38 @@ function Card1() {
         switch (cardTypeId) {
             case 1:
                 return [
-                    "주요 관광지 입장권 할인",
+                    "주요 관광지 입장료 최대 20% 할인",
                     "공항 픽업 및 셔틀 서비스 할인",
-                    "지정된 레스토랑 및 카페에서 10% 할인",
-                    "환전 수수료 면제 및 특별 환율 제공"
+                    "특정 가맹점에서 캐시백 3% 제공",
+                    // "환전 수수료 면제 및 특별 환율 제공"
                 ];
             case 2:
                 return [
-                    "호텔 숙박비 할인",
-                    "무료 SIM 카드 제공",
+                    "대중교통 요금 10% 할인",
+                    "무료 가이드 투어 1회 제공",
                     "여행자 보험 무료 가입",
-                    "관광지 티켓 사전 예약 서비스"
+                    // "관광지 티켓 사전 예약 서비스"
                 ];
             case 3:
                 return [
-                    "대중교통 및 택시 할인",
+                    "전통 공연 티켓 20% 할인",
                     "공항 라운지 무료 이용",
                     "뮤지컬 및 공연 티켓 할인",
-                    "VIP 라운지 이용권 제공"
+                    // "VIP 라운지 이용권 제공"
                 ];
             case 4:
                 return [
                     "박물관, 갤러리, 역사적 명소 입장료 할인",
                     "여행자 보험 무료 제공",
                     "주요 관광지 티켓 구매 시 할인 혜택",
-                    "Wi-Fi 핫스팟 무료 이용"
+                    // "쇼핑 결제 금액 5% 캐시백"
                 ];
             case 5:
                 return [
                     "환승 및 렌트카 서비스 할인",
-                    "카페 및 코워킹 스페이스 할인",
-                    "여행 및 라이프스타일 관련 월간 혜택 제공",
-                    "문화 체험 프로그램 할인"
+                    "전국 주요 관광지 할인 최대 20%",
+                    "여행 및 라이프스타일 월간 혜택 제공",
+                    // "문화 체험 프로그램 할인"
                 ];
             default:
                 return [
@@ -190,7 +190,7 @@ function Card1() {
                         margin: '20px auto'
                     }}>
                         <div style={{
-                            fontSize: '14px',
+                            fontSize: '16px',
                             color: '#476EFF',
                             fontWeight: 'bold',
                         }}>
@@ -199,7 +199,7 @@ function Card1() {
                         <div style={{
                             fontSize: '12px',
                             fontWeight: 'bold',
-                            marginTop: '5px'
+                            marginTop: '5px',
                         }}>
                             {selectedCard.annualFee}원&nbsp;
                             <span style={{ fontSize: '11px', color: '#999' }}>(연회비)</span>

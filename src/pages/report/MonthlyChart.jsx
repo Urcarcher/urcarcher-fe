@@ -110,9 +110,11 @@ const MonthlyChart = () => {
 
         // 실제 데이터를 반영하여 금액을 집계
         data.forEach(item => {
-            const category = categoryMapping[item.categoryCode] || '기타';
-            categoryTotals[category] += item.paymentPrice;
-            totalAmount += item.paymentPrice;
+            const category = categoryMapping[item.categoryCode];
+            if (category) {  // "기타" 카테고리 제외
+                categoryTotals[category] += item.paymentPrice;
+                totalAmount += item.paymentPrice;
+            }
         });
 
         const formattedChartData = [['Category', 'Amount']];
@@ -152,7 +154,7 @@ const MonthlyChart = () => {
     }));
 
     return (
-        <div className="scrollable-content" style={{ maxHeight: '1036px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
+        <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
             <div className="header-menu" >
                 <div
                     className={`menu-item ${location.pathname === '/chart2' ? 'active' : ''}`}
@@ -192,23 +194,29 @@ const MonthlyChart = () => {
                         }}
                         width="480px"
                         height="350px"
-                        legendToggle
+                    // legendToggle
                     />
                 </div>
 
-                <div style={{ position: 'absolute', top: '498px', width: '95%' }}>
-                    {categoryStats.length > 0 ? (
-                        categoryStats.map((stat, index) => (
-                            <div key={index} style={{ margin: '30px 20px', display: 'flex', justifyContent: 'space-between' }}>
-                                <img src={categoryImages[stat.category] || categoryImages['기타']} alt={stat.category} style={{ width: '40px', height: '40px' }} />
-                                <div style={{ position: 'absolute', left: '20%', textAlign: 'center' }}><strong>{stat.category}</strong></div>
-                                <div style={{ fontWeight: 'bold' }}>{stat.amount.toLocaleString()}원&nbsp; | &nbsp; {stat.percentage}%</div>
-                            </div>
-                        ))
-                    ) : (
-                        <div>카테고리 정보가 없습니다.</div>
-                    )}
-                </div>
+                {categoryStats.length > 0 ? (
+                    categoryStats.map((stat, index) => (
+                        <div
+                            key={index}
+                            style={{
+                                margin: index === 0 ? '0px 10px' : '25px 10px', // 첫 번째 요소에만 '0px 10px' 적용
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between'
+                            }}
+                        >
+                            <img src={categoryImages[stat.category]} alt={stat.category} style={{ width: '40px', height: '40px', marginRight: '10px' }} />
+                            <div style={{ flex: 1, textAlign: 'left', fontWeight: 'bold' }}><strong>{stat.category}</strong></div>
+                            <div style={{ fontWeight: 'bold', textAlign: 'right', marginLeft: 'auto' }}>{stat.amount.toLocaleString()}원&nbsp; | &nbsp; {stat.percentage}%</div>
+                        </div>
+                    ))
+                ) : (
+                    <div>카테고리 정보가 없습니다.</div>
+                )}
             </div>
         </div>
     );

@@ -35,6 +35,14 @@ const Card5 = () => {
     },
   };
 
+  // 계좌번호 포맷 함수
+  const formatAccountNumber = (value) => {
+    return value
+      .replace(/[^0-9]/g, '')          // 숫자 외의 문자 제거
+      .replace(/(\d{3})(\d{2})(\d{6})/, '$1-$2-$3')  // 형식 적용
+      .replace(/(-\d{6})\d+?$/, '$1');  // 추가 입력 방지
+  };
+
   return (
     <div style={{ marginTop: '140px'}}>
       <ProgressBar
@@ -79,12 +87,13 @@ const Card5 = () => {
                   backgroundColor: '#f9f9f9',
                   fontSize: '16px',
                 }}
+                
               />
               <label 
                 className="form-label"
                 style={values.accountNumber ? { ...styles.formLabel, ...styles.labelFocused } : styles.formLabel}
               >
-                계좌번호
+                계좌번호 (-를 포함해 입력)
               </label>
             </div>
             
