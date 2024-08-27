@@ -84,8 +84,17 @@ function PaymentSummary(props) {
       </Card>
 
       <RecentActivity>
-        <p style={{marginBottom:'0px'}}>최근 <span style={{fontWeight:'bold'}}>{recentPayLocation}</span>에서 <span style={{fontWeight:'bold'}}>{Number(recentPay).toLocaleString()}</span>원 결제하셨어요.</p>
+        <p style={{marginBottom:'0px'}}>
+        {recentPayLocation ? (
+          <>
+            최근 <span style={{ fontWeight: 'bold' }}>{recentPayLocation}</span>에서 
+            <span style={{ fontWeight: 'bold' }}> {Number(recentPay).toLocaleString()} </span>원 결제하셨어요.
+          </>
+        ) : (
+          ''
+        )}</p>
         <p style={{marginTop:'0px'}}>{recentPayDate}</p>
+
         <ActivityDetail>
           <Link to="/chart1" style={{textDecoration: 'underline', color: '#476EFF' }}>최근 이용내역 보러가기</Link>
         </ActivityDetail>

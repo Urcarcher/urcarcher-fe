@@ -45,17 +45,18 @@ function Reservation() {
     })
   },[reservePerson])
 
+
   return (
     <ScrollableContainer>
       <br/>
       <br/>
       <br/>
       <br/>
-      <StyledContainer>
-        <h2>장소 : {recv.title}</h2>
+      <StyledContainer style={{fontFamily: 'NanumSquareNeo'}}>
+        <h3 style={{marginBottom: '30px'}}> {recv.title}</h3>
         <StyledRow>
           <StyledCol>
-            <Header>인원을 선택해 주세요</Header>
+            <Header style={{textAlign: 'left'}}>인원을 선택해 주세요</Header>
             <PeopleSelect>
               {['1명', '2명', '3명', '4명', '5명이상'].map((people, index) => (
                 <CustomButton
@@ -72,7 +73,7 @@ function Reservation() {
         <Divider />
         <StyledRow>
           <StyledCol>
-            <Header>날짜를 선택해 주세요</Header>
+            <Header style={{textAlign: 'left'}}>날짜를 선택해 주세요</Header>
             <Calendar
               onChange={handleDateChange}
               value={selectedDate}
@@ -82,7 +83,7 @@ function Reservation() {
         </StyledRow>
         <StyledRow>
           <StyledCol>
-            <Header>시간을 선택해 주세요</Header>
+            <Header style={{textAlign: 'left'}}>시간을 선택해 주세요</Header>
             <TimeSelect>
               {['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'].map((time, index) => (
                 <CustomButton
@@ -99,7 +100,7 @@ function Reservation() {
         <StyledRow>
           <StyledCol>
             <Divider />
-            <Header>예약 시 확인해 주세요</Header>
+            <Header>※ 예약 시 확인해 주세요</Header>
             <Notice>당일 취소 불가합니다. 하루전 전화 취소 부탁드립니다.</Notice>
             <Notice>
               해당 가맹점 Urcarchar 카드 결제시 <Discount>10%할인</Discount>
