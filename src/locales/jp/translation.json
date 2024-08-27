@@ -4,7 +4,7 @@
     "SignUp" : "会員登録",
     "AfterLogin" : "ログイン後に確認できます",
     
-    "Greeting" : " さん、初めまして！",
+    "Greeting" : ", 初めまして！",
     "ApplyCard" : "カードを申請する",
     "ApplyCard2" : "カード申請",
 
@@ -79,6 +79,27 @@
 
     "CardRecharge" : "カードチャージ",
     "Charge" : "チャージ",
+
+    "LogOut" : "ログアウト",
+    "ReceiveReward" : "旅行コースを完成すると、韓国のお土産をプレゼント！",
+    "RecommendCourse" : "旅行コースのおすすめ",
+    "ReportMenu" : " 消費レポート",
+    "LostCardMenu" : "カード紛失の報告",
+    "SpendingMenu" : "利用履歴の照会",
+    "PatternMenu" : "消費パターン分析",
+    "ExchangeMenu" : "為替レートの照会と予測",
+    "RecommendSpot" : "観光地のおすすめ",
+
+    "Recommend" : "おすすめ",
+    "Finance" : "金融",
+    "Tourism" : "観光",
+    "PaymentBased" : "決済ベースの場所のおすすめ",
+    "BookActivities" : "文化活動の予約",
+    "Reward" : "旅行コースのおすすめ",
+    "FindRoute" : "道順を探す",
+    "CustomerCenter" : "カスタマーセンター",
+    "FAQ" : "よくある質問",
+  
 
     "Sort Latest" : "最新順",
     "Sort Most Viewed" : "閲覧数順",
