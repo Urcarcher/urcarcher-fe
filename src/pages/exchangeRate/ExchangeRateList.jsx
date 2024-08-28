@@ -82,7 +82,7 @@ function ExchangeRateList(props) {
                                 <td>
                                     <div className='standard-round'>
                                         <span className='standard-round-box'>
-                                            {exchangeRateInfos[item] ? `${exchangeRateInfos[item].round}회차 ${exchangeRateInfos[item].standard}` : ''}
+                                            {exchangeRateInfos[item] ? `${exchangeRateInfos[item].round}차 ${exchangeRateInfos[item].standard}` : ''}
                                         </span>
                                     </div>
                                 </td>
