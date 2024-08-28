@@ -64,9 +64,11 @@
     justify-content: space-between;
     align-items: center;
     height: 40px;
+    line-height: 40px;
 }
 .menu-name{
     font-weight: bold;
+    margin: 0;
 }
 .menu-category-list li:hover .menu-name{
     color: #336bff;
