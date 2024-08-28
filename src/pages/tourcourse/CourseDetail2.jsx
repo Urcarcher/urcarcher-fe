@@ -7,8 +7,9 @@ import { useLocation } from 'react-router-dom';
 import arrow from '../../assets/arrow.png';
 import spot_arrow from '../../assets/spot_arrow.png';
 import { options_POST } from 'services/CommonService';
-import bgImgUrl from 'assets/course-bg.png';
-import tagImgUrl from 'assets/icon_cos_schedule.gif';
+import RegionImgUrl from 'assets/icon_cos_schedule.gif';
+import tagImgUrl from 'assets/ico_schedule_tag.png';
+
 
 const CourseDetail = () => {
   const nav = useNavigate();
@@ -25,6 +26,7 @@ const CourseDetail = () => {
   const [longitude, setLongitude] = useState(null);
   const [completedItems, setCompletedItems] = useState(new Set());
   const [verificationImage, setVerificationImage] = useState('');
+  
 
   useEffect(() => {
     if(courseName === '') {
@@ -304,31 +306,41 @@ const CourseDetail = () => {
     }, 200);
   };
 
-  
+  // 마지막 아이템의 이미지 URL 가져오기
+  const lastItem = course[course.length - 1];
+  const bgImgUrl = lastItem ? lastItem.placeImg : '';
 
     return (
       <div className="course-detail">
         <div className='course-background' style={{width:'100%'}}>
-          <div className="detail-course-name">
-            <img src={bgImgUrl} alt="배경" style={{width:'100%'}} />
+          <div className="detail-course-name"
+              style={{
+              backgroundImage: `url(${bgImgUrl})`,
+              // backgroundSize: 'cover', // 배경 이미지를 요소 크기에 맞춤
+              // backgroundPosition: 'center', // 배경 이미지를 가운데 정렬
+              // width: '100%', // 전체 너비
+              // height: '260px',
+            }}
+          >
+            {/* <img src={bgImgUrl} alt="배경" style={{width:'100%'}} /> */}
             {/* 코스명 표시 */}
             <p className='course-name-title'>
               <span className='corse-number'>{course.length}코스</span>
-              <span>{courseName}</span>
+              <span className='course-title'>{courseName}</span>
             </p>
             <div className='course-tag-wrap'>
                 <div>
-                  <img src={tagImgUrl} alt="태그" style={{width:'40px', height:'40px', borderRadius:'50%'}} />
+                  <img src={RegionImgUrl} alt="태그" style={{width:'30px', height:'30px', borderRadius:'50%'}} />
                   <div className='course-tag-textwrap'  style={{textAlign:'left'}}>
                     <p>지역</p>
                     <p>제주</p>
                   </div>
                 </div>
                 <div>
-                  <img src={tagImgUrl} alt="태그" style={{width:'40px', height:'40px', borderRadius:'50%'}} />
+                  <img src={tagImgUrl} alt="태그" style={{width:'30px', height:'30px', borderRadius:'50%'}} />
                   <div className='course-tag-textwrap'  style={{textAlign:'left'}}>
                     <p>태그</p>
-                    <p>#추천코스 #추천코스 #추천코스</p>
+                    <p>#추천코스 #가볼만한곳 #관광지</p>
                   </div>
                 </div>
             </div>
@@ -358,7 +370,7 @@ const CourseDetail = () => {
             <div className="place-container">
             <img src={item.placeImg} alt={`${item.placeName} 이미지`} className="place-image" />
             <div className="place-details">
-              <h2 className="place-name">{item.placeName}</h2>
+              <h2 className="place-name">🚩 {item.placeName}</h2>
               <p className="place-address">{item.address}</p>
               <p className="place-content">{item.content}</p>
             </div>
