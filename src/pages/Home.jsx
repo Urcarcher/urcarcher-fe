@@ -115,7 +115,7 @@ function Home(props) {
     const goChargePage = () => {
         navigator("/cardmanagement");
     }
-
+    console.log(mainCardInfo);
     return (
         <div className="contents">
             <div className='home-container'>
@@ -142,7 +142,12 @@ function Home(props) {
                                     {/* 1. 메인 카드 정보 */}
                                     <p className='card-type-text'>
                                         <span>{mainCardInfo.cardUsage === "신용카드" ? mainCardInfo.card_number : mainCardInfo.cardName}</span>
-                                        <span className={ !mainCardInfo.cardUsage ? 'hidden' : 'type'}>{t('CreditCard')}</span>
+                                        <span className={ !mainCardInfo.cardUsage  ? 'hidden'  : 'type' }>
+                                            {
+                                                mainCardInfo.cardUsage === '신용카드'  ? t('CreditCard')  
+                                                : mainCardInfo.cardUsage === '선불카드' ? t('PrepaidCard') : ''
+                                            }
+                                        </span>
                                     </p>
                                     <p className='card_balance'>
                                         { mainCardInfo.cardUsage === "신용카드" ? '' : (  //신용카드이면 잔액 출력, 선불카드일 때 카드 충전 
