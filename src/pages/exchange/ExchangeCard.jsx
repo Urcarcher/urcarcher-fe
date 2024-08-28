@@ -110,11 +110,13 @@ function ExchangeCard(props) {
                         }}
                         onClick={() => cardSelectHandle(card)}
                     >
-                        <p>{card.cardUsage}</p>
-                        <p className="exCard_balance">잔액 {card.cardBalance.toLocaleString()}원</p>
-                        {/* <p className="exCard_text">연결 계좌에서 바로 충전 가능!</p> */}
-                        <p className="exCard_text">{card.cardNumber}</p>
-                        {/* <button className="exCard_btn" onClick={() => cardSelectHandle(card)}>선택</button> */}
+                        <div className="exCard_user_box">
+                            <p>{card.cardUsage}</p>
+                            <p className="exCard_balance">잔액 {card.cardBalance.toLocaleString()}원</p>
+                            {/* <p className="exCard_text">연결 계좌에서 바로 충전 가능!</p> */}
+                            <p className="exCard_text">{card.cardNumber}</p>
+                            {/* <button className="exCard_btn" onClick={() => cardSelectHandle(card)}>선택</button> */}
+                        </div>
                     </div>
                 ))}
             </div>
