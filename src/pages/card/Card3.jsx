@@ -187,9 +187,9 @@ function Card3() {
 
             <div style={{ margin: 'auto 50px' }}>
                 <div className="text-center" style={{ marginBottom: '50px' }}>
-                    <h4 style={{ marginTop: '65px', textAlign: 'left' }}>카드 발급 관련 동의사항</h4>
+                    <h4 style={{ marginTop: '65px', textAlign: 'left' }}>{t('CardIssuance')}</h4>
                     <p style={{ color: '#6c757d', textAlign: 'left' }}>
-                        본인인증 서비스를 위한 인증 업체 약관을 동의해 주세요. 거부 시 본인인증이 불가하여 서비스를 이용하실 수 없습니다.
+                    {t('AgreeVerification')}
                     </p>
                 </div>
 
@@ -206,10 +206,10 @@ function Card3() {
                                     required
                                 />
                                 <label className="form-check-label">
-                                    [필수] 개인정보 수집 및 이용 동의
+                                {t('Collection')}
                                 </label>
                             </div>
-                            <Button variant="link" size="sm" onClick={() => openModal('serviceTOS')} style={{ color: '#476EFF' }}>보기</Button>
+                            <Button variant="link" size="sm" onClick={() => openModal('serviceTOS')} style={{ color: '#476EFF' }}>{t('Look')}</Button>
                         </div>
                         <div className="d-flex justify-content-between align-items-center my-2">
                             <div className="form-check">
@@ -222,10 +222,10 @@ function Card3() {
                                     required
                                 />
                                 <label className="form-check-label">
-                                    [필수] 고유식별 정보처리 동의
+                                {t('ConsentIdentifying')}
                                 </label>
                             </div>
-                            <Button variant="link" size="sm" onClick={() => openModal('personalTOS')} style={{ color: '#476EFF' }}>보기</Button>
+                            <Button variant="link" size="sm" onClick={() => openModal('personalTOS')} style={{ color: '#476EFF' }}>{t('Look')}</Button>
                         </div>
                         <div className="d-flex justify-content-between align-items-center my-2">
                             <div className="form-check">
@@ -237,10 +237,10 @@ function Card3() {
                                     onChange={handleCheckboxChange}
                                 />
                                 <label className="form-check-label">
-                                    [필수] 마케팅 정보 수신 동의
+                                {t('ConsentMarketing')}
                                 </label>
                             </div>
-                            <Button variant="link" size="sm" onClick={() => openModal('marketingTOS')} style={{ color: '#476EFF' }}>보기</Button>
+                            <Button variant="link" size="sm" onClick={() => openModal('marketingTOS')} style={{ color: '#476EFF' }}>{t('Look')}</Button>
                         </div>
                         <div className="d-flex justify-content-between align-items-center my-2">
                             <div className="form-check">
@@ -252,10 +252,10 @@ function Card3() {
                                     onChange={handleCheckboxChange}
                                 />
                                 <label className="form-check-label">
-                                    [필수] 제3자 정보 제공 동의
+                                {t('ConsentInformation')}
                                 </label>
                             </div>
-                            <Button variant="link" size="sm" onClick={() => openModal('thirdPartyTOS')} style={{ color: '#476EFF' }}>보기</Button>
+                            <Button variant="link" size="sm" onClick={() => openModal('thirdPartyTOS')} style={{ color: '#476EFF' }}>{t('Look')}</Button>
                         </div>
                     </div>
                     <div className="text-center mt-4" style={{}}>
@@ -269,8 +269,8 @@ function Card3() {
                             fontSize: '16px',
                             fontWeight: 'bold',
                             marginTop: '20px'
-                        }}>
-                            다음
+                        }}> 
+                          {t('Next')}
                         </Button>
                     </div>
                 </form>
@@ -278,14 +278,14 @@ function Card3() {
 
             <Modal show={isModalOpen} onHide={closeModal} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>약관 내용</Modal.Title>
+                    <Modal.Title>{t('TAC')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div dangerouslySetInnerHTML={{ __html: modalContent }} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={closeModal}>
-                        닫기
+                    {t('Next')}
                     </Button>
                 </Modal.Footer>
             </Modal>

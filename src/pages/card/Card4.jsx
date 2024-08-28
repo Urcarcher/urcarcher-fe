@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form as FormikForm, Field } from 'formik';
 import ProgressBar from './ProgressBar';
@@ -6,12 +6,33 @@ import { Button } from 'react-bootstrap';
 import { useCardContext } from './CardContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DaumPostcode from './DaumPostcode';  // 주소 컴포넌트 import
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 const CardForm = () => {
   const { produceCardOffer, setProduceCardOffer } = useCardContext();
   let navigate = useNavigate();
 
   const [pickupMethod, setPickupMethod] = useState('address'); // 초기값은 'address'
+
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
 
   const styles = {
     formGroupWithLabel: {
@@ -37,6 +58,17 @@ const CardForm = () => {
       borderRadius: '4px',
     },
   };
+
+  useEffect(()=>{
+   
+    const savedLanguage = Cookies.get('selectedLanguage');
+    if (savedLanguage) {
+        changeLanguage(savedLanguage); // 언어 변경
+    } else {
+        changeLanguage('Korea'); // 기본 언어 설정
+    }
+},[]);
+
 
   return (
     <div style={{ marginTop: '140px'}}>
@@ -69,12 +101,12 @@ const CardForm = () => {
       >
         {({ handleSubmit, values, setFieldValue }) => (
           <FormikForm onSubmit={handleSubmit} style={{margin: 'auto 50px' }}>
-            <h4 style={{ marginTop: '60px', textAlign:'left', fontWeight: 'bold'}}>이제 다 되었어요!</h4>
-            <h4 style={{ textAlign:'left', fontWeight: 'bold' }}>카드 수령정보를 입력해주세요</h4>
+            <h4 style={{ marginTop: '60px', textAlign:'left', fontWeight: 'bold'}}>{t('AllSet')}</h4>
+            <h4 style={{ textAlign:'left', fontWeight: 'bold' }}>{t('EnterReceipt')}</h4>
             <br/>
 
             <div style={{ marginBottom: '24px',  textAlign:'left' }}>
-              <div style={{marginBottom: '8px'}}>카드 수령처</div>
+              <div style={{marginBottom: '8px'}}>{t('CardPickUp')}</div>
               <label>
                 <Field 
                   type="radio" 
@@ -83,7 +115,7 @@ const CardForm = () => {
                   checked={pickupMethod === 'address'} 
                   onChange={() => setPickupMethod('address')}
                 /> 
-                &nbsp;주소로 수령
+                &nbsp;{t('AtAddress')}
               </label>
               <label style={{ marginLeft: '20px' }}>
                 <Field 
@@ -93,7 +125,7 @@ const CardForm = () => {
                   checked={pickupMethod === 'airport'} 
                   onChange={() => setPickupMethod('airport')}
                 /> 
-                &nbsp;공항에서 수령
+                &nbsp;{t('AtAirport')}
               </label>
             </div>
 
@@ -126,7 +158,7 @@ const CardForm = () => {
                 className="form-label"
                 style={values.date ? { ...styles.formLabel, ...styles.labelFocused } : styles.formLabel}
               >
-                날짜 선택
+                {t('SelectDate')}
               </label>
             </div>
 
@@ -142,7 +174,7 @@ const CardForm = () => {
                 fontWeight: 'bold',
                 marginTop: '20px'
               }}>
-                다음
+                {t('Next')}
               </Button>
             </div>
           </FormikForm>

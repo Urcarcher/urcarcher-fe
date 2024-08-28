@@ -5,10 +5,33 @@ import ProgressBar from './ProgressBar';
 import { Button, Form } from 'react-bootstrap';
 import { useCardContext } from './CardContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+import { useEffect, useState } from 'react';
+
 
 const Card5 = () => {
   const { produceCardOffer, setProduceCardOffer } = useCardContext();
   let navigate = useNavigate();
+
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+    
+
 
   const styles = {
     formGroupWithLabel: {
@@ -43,6 +66,17 @@ const Card5 = () => {
       .replace(/(-\d{6})\d+?$/, '$1');  // 추가 입력 방지
   };
 
+  useEffect(()=>{
+   
+    const savedLanguage = Cookies.get('selectedLanguage');
+    if (savedLanguage) {
+        changeLanguage(savedLanguage); // 언어 변경
+    } else {
+        changeLanguage('Korea'); // 기본 언어 설정
+    }
+},[]);
+
+
   return (
     <div style={{ marginTop: '140px'}}>
       <ProgressBar
@@ -72,8 +106,8 @@ const Card5 = () => {
       >
         {({ handleSubmit, values }) => (
           <FormikForm onSubmit={handleSubmit}>
-            <h4 style={{ marginTop: '30px', textAlign:'left', fontWeight: 'bold'}}>결제 정보 및 </h4>
-            <h4 style={{ textAlign:'left', fontWeight: 'bold', marginBottom: '20px'}}>카드 비밀번호를 입력해 주세요</h4>
+            <h4 style={{ marginTop: '30px', textAlign:'left', fontWeight: 'bold'}}>{t('PayInfo&')} </h4>
+            <h4 style={{ textAlign:'left', fontWeight: 'bold', marginBottom: '20px'}}>{t('EnterCardPin')}</h4>
             
             <div style={styles.formGroupWithLabel}>
               <Field
@@ -93,7 +127,7 @@ const Card5 = () => {
                 className="form-label"
                 style={values.accountNumber ? { ...styles.formLabel, ...styles.labelFocused } : styles.formLabel}
               >
-                계좌번호 (-를 포함해 입력)
+                {t('EnterAccount')}
               </label>
             </div>
             
@@ -121,7 +155,7 @@ const Card5 = () => {
                 className="form-label"
                 style={values.bank ? { ...styles.formLabel, ...styles.labelFocused } : styles.formLabel}
               >
-                결제은행
+                {t('PaymentBank')}
               </label>
             </div>
 
@@ -149,14 +183,14 @@ const Card5 = () => {
                 className="form-label"
                 style={values.paymentDate ? { ...styles.formLabel, ...styles.labelFocused } : styles.formLabel}
               >
-                결제일
+                {t('PaymentDate')}
               </label>
             </div>
 
             <div style={{ marginBottom: '24px', fontSize: '12px', color: '#888', textAlign:'left' }}>
-              <span style={{fontWeight:'bold'}}>결제일별 이용기간</span> <br />
-              일시불/할부: 전결제일 18일 ~ 전결제일 17일 <br />
-              단기카드대출(현금서비스): 전결제일 2일 ~ 전결제일 1일
+              <span style={{fontWeight:'bold'}}>{t('UsagePeriod')}</span> <br />
+              {t('PayPeriod1')} <br />
+              {t('PayPeriod2')} 
             </div>
             
             <div style={styles.formGroupWithLabel}>
@@ -179,7 +213,7 @@ const Card5 = () => {
                 className="form-label"
                 style={values.cardPassword ? { ...styles.formLabel, ...styles.labelFocused } : styles.formLabel}
               >
-                비밀번호
+                {t('Pw')} 
               </label>
             </div>
 
@@ -203,7 +237,7 @@ const Card5 = () => {
                 className="form-label"
                 style={values.cardPassword2 ? { ...styles.formLabel, ...styles.labelFocused } : styles.formLabel}
               >
-                비밀번호 재확인
+                {t('Re-enterPIN')} 
               </label>
             </div>
 
@@ -221,7 +255,7 @@ const Card5 = () => {
                 fontWeight: 'bold',
               }}
             >
-              다음
+              {t('Next')} 
             </Button>
           </FormikForm>
         )}

@@ -1,8 +1,39 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { Field } from 'formik';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 const DaumPostcode = ({ setFieldValue }) => {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         const script = document.createElement('script');
         script.src = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
         script.async = true;
@@ -43,7 +74,7 @@ const DaumPostcode = ({ setFieldValue }) => {
              style={{ marginBottom: '20px', padding: '10px', backgroundColor: '#007BFF', color: 'white', border: 'none', borderRadius: '5px',
                 display: 'flex', justifyContent: 'flex-start'
               }}>
-                주소 검색
+                {t('AddressSearch')}
             </button>
             <Field
                 id="address"
@@ -56,7 +87,7 @@ const DaumPostcode = ({ setFieldValue }) => {
                     borderColor: '#ced4da',
                     marginBottom: '12px'
                 }}
-                placeholder="기본 주소"
+                placeholder={t('PrimaryAddress')}
             />
             <Field
                 id="detailAddress"
@@ -68,7 +99,7 @@ const DaumPostcode = ({ setFieldValue }) => {
                     color: '#333',
                     borderColor: '#ced4da',
                 }}
-                placeholder="상세 주소"
+                placeholder={t('DetailedAddress')}
             />
         </div>
     );

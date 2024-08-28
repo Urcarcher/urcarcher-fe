@@ -4,9 +4,31 @@ import React, { useEffect, useState } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 
 function PaymentSummary(props) {
+
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
   const [loading, setLoading] = useState(false);
   const [expectedAmount, setExpectedAmount ] = useState();
   const [expectedPayDate, setExpectedPayDate] = useState();
@@ -27,7 +49,7 @@ function PaymentSummary(props) {
       setTimeout(() => {
         // 성공 처리
         setLoading(false);
-        alert("즉시결제가 성공적으로 완료되었습니다.")
+        alert(t('ImmediatePaymentSuccess'))
         props.setShowModal(false);
       }, 3000);
     })
@@ -35,7 +57,7 @@ function PaymentSummary(props) {
       setTimeout(() => {
         // 실패 처리
         setLoading(false);
-        alert("즉시결제가 실패하였습니다.")
+        alert(t('ImmediatePaymentFailure'))
         props.setShowModal(false);
       }, 3000);
     })
@@ -43,6 +65,15 @@ function PaymentSummary(props) {
 
 
   useEffect(()=>{
+
+    const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
     console.log(props.card.paymentDate);
     Axios.post('/api/payment/detailpayment',{
       cardId:String(props.card.cardId),
@@ -52,7 +83,7 @@ function PaymentSummary(props) {
       setExpectedAmount(response.data);
       setExpectedPayDate(props.card.paymentDate);
     })
-    .catch((error)=>{alert('결제 예상 금액 가져오는데 문제 발생')
+    .catch((error)=>{alert(t('ErrorFetchingEstimatedAmount'))
       console.log(error);
     })
 
@@ -75,20 +106,20 @@ function PaymentSummary(props) {
     <Container style={{width:'400px'}}>
       {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />}
       <Card>
-        <Title>{formatDate(expectedPayDate)}  결제예상금액</Title>
-        <Amount>{Number(expectedAmount).toLocaleString()}원</Amount>
+        <Title>{formatDate(expectedPayDate)}  {t('EstimatedPaymentAmount')}</Title>
+        <Amount>{Number(expectedAmount).toLocaleString()}+" "+{t('Won')}</Amount>
         <br/>
         <PaymentButton onClick={()=>{
           paymentHandler();
-        }}>즉시결제</PaymentButton>
+        }}>{t('ImmediatePayment')}</PaymentButton>
       </Card>
 
       <RecentActivity>
         <p style={{marginBottom:'0px'}}>
         {recentPayLocation ? (
           <>
-            최근 <span style={{ fontWeight: 'bold' }}>{recentPayLocation}</span>에서 
-            <span style={{ fontWeight: 'bold' }}> {Number(recentPay).toLocaleString()} </span>원 결제하셨어요.
+            {t('Recent')} <span style={{ fontWeight: 'bold' }}>{recentPayLocation}</span>{t('From')}
+            <span style={{ fontWeight: 'bold' }}> {Number(recentPay).toLocaleString()} </span>{t('Won')}+" "+{t('PaymentCompleted')}
           </>
         ) : (
           ''
@@ -96,7 +127,7 @@ function PaymentSummary(props) {
         <p style={{marginTop:'0px'}}>{recentPayDate}</p>
 
         <ActivityDetail>
-          <Link to="/chart1" style={{textDecoration: 'underline', color: '#476EFF' }}>최근 이용내역 보러가기</Link>
+          <Link to="/chart1" style={{textDecoration: 'underline', color: '#476EFF' }}>{t('ViewRecentTransactions')}</Link>
         </ActivityDetail>
       </RecentActivity>
     </Container>

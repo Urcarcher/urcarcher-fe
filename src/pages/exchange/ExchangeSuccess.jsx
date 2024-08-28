@@ -4,8 +4,28 @@ import exchangeCard from 'assets/card.png'
 import exchangeMoney from 'assets/money.png'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
 
 function ExchangeSuccess(props) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
     const location = useLocation();
 
     const exchangeMsg = location.state.successMsg; // 충전 금액 메세지
@@ -23,6 +43,15 @@ function ExchangeSuccess(props) {
 
     // 로그인 유저 국적 조회
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         axios.get("/api/exchange/find")
         .then((response) => {
             console.log(response.data);
@@ -61,36 +90,36 @@ function ExchangeSuccess(props) {
                 </div>
                 <div className="ex_success_title">
                     <h3>
-                        <span style={{ color: "#476EFF" }}>{exchangeMsg}</span> 을
+                        <span style={{ color: "#476EFF" }}>{exchangeMsg}</span> {t('ParticleEul')}
                     </h3>
-                    <h3>채웠어요</h3>
+                    <h3>{t('Filled')}</h3>
                 </div>
             </div>
             <div className="ex_success_rate">
                 <div>
-                    <p className="ex_success_left_p">적용환율</p>
+                    <p className="ex_success_left_p">{t('AppliedExchangeRate')}</p>
                     <p className="ex_success_right_p" style={{ color: "#476EFF" }}>KRW {exchangeData.exRate} = 1 { curSymbol(nation) }</p>
                 </div>
                 <div>
-                    <p className="ex_success_left_p">환율우대</p>
+                    <p className="ex_success_left_p">{t('ExchangeRateDiscount')}</p>
                     <p className="ex_success_right_p">90%</p>
                 </div>
                 <div>
-                    <p className="ex_success_left_p">결제금액</p>
+                    <p className="ex_success_left_p">{t('TotalPaymentAmount')}</p>
                     <p className="ex_success_right_p">{exchangeData.exPay} { curSymbol(nation) }</p>
                 </div>
                 <div>
-                    <p className="ex_success_left_p">출금계좌</p>
+                    <p className="ex_success_left_p">{t('WithdrawalAccount')}</p>
                     <p className="ex_success_right_p">Citi Bank</p>
                 </div>
                 <div>
-                    <p className="ex_success_left_p">KRW 잔액</p>
+                    <p className="ex_success_left_p">KRW {t('Balance')}</p>
                     <p className="ex_success_right_p">￦ {exchangeBalance.toLocaleString()}</p>
                 </div>
             </div>
             <div className="ex_success_btn_wrapper">
-                <button className="success_info_btn" onClick={historyHandle}>내역보기</button>
-                <button className="success_check_btn" onClick={homeHandle}>확인</button>
+                <button className="success_info_btn" onClick={historyHandle}>{t('ViewHistory')}</button>
+                <button className="success_check_btn" onClick={homeHandle}>{t('Confirm')}</button>
             </div>
         </div>
     );

@@ -4,8 +4,29 @@ import ExchangeSetNull from './ExchangeSetNull';
 import ExchangeSetList from './ExchangeSetList';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 function ExchangeSet(props) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
     // 이전 페이지에서 보낸 선택한 카드 정보
     const location = useLocation();
     const setCard = location.state.selectCard;
@@ -20,6 +41,15 @@ function ExchangeSet(props) {
 
     // 카드에 예약 내역이 있는지 조회
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         axios.get(`/api/exchange/rate/detail/${reserveCard.cardId}`)
             .then((response) => {
                 setReserveInfo(response.data);
@@ -39,9 +69,9 @@ function ExchangeSet(props) {
         <div className="contents">
             <div className="exchange_set_wrapper">
                 <h3>
-                    어카처에서 <span style={{ color: "#476EFF" }}>예측한 환율 시세</span>로 
+                    어카처{t('From')} <span style={{ color: "#476EFF" }}>{t('PredictedExchangeRate')}</span>{t('With')}
                 </h3>
-                <h3>자동 충전해요</h3>
+                <h3>{t('AutoRecharge2')}</h3>
             </div>
             <>
                 {Object.keys(reserveInfo).length === 0 ? (

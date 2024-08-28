@@ -7,8 +7,31 @@ import Card2 from 'assets/Card2_.png'
 import Card3 from 'assets/Card3_.png'
 import Card4 from 'assets/Card4_.png'
 import Card5 from 'assets/Card5_.png'
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 function ExchangeCard(props) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+    
+
+
     // 이전 페이지에서 보낸 버튼 정보
     const location = useLocation();
     const choiceBtn = location.state.selectBtn;
@@ -26,6 +49,15 @@ function ExchangeCard(props) {
     
     // 카드 리스트 조회
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+        
         // axios.get("https://urcarcher-local.kro.kr:8443/api/exchange/list")
         axios.get("/api/exchange/list")
             .then((response) => {
@@ -47,7 +79,7 @@ function ExchangeCard(props) {
             setTypeCheck(userCard);
 
             if (cardList.length === 0 || !userCard) {
-                alert("선불 카드를 먼저 신청해 주세요");
+                alert(t('ApplyForPrepaidCardFirst'));
                 navi("/");
             }
         }
@@ -89,7 +121,7 @@ function ExchangeCard(props) {
             }
             navi(location, { state: { selectCard } });
         } else {
-            alert("충전하실 카드를 선택해 주세요");
+            alert(t('SelectCardToRecharge'));
         }
     };
 
@@ -97,7 +129,7 @@ function ExchangeCard(props) {
         <div className="contents">
             <div className="exCard_title">
                 <h3>
-                    어떤 카드에 <span style={{ color: "#476EFF" }}>충전</span>할까요?
+                {t('WhichCard')} <span style={{ color: "#476EFF" }}>{t('Charge')}</span>{t('DoYouWantToRecharge')}
                 </h3>
             </div>
             <div className="exCard_wrapper">
@@ -112,7 +144,7 @@ function ExchangeCard(props) {
                     >
                         <div className="exCard_user_box">
                             <p>{card.cardUsage}</p>
-                            <p className="exCard_balance">잔액 {card.cardBalance.toLocaleString()}원</p>
+                            <p className="exCard_balance">{t('Balance')}{card.cardBalance.toLocaleString()}+" "+{t('Won')}</p>
                             {/* <p className="exCard_text">연결 계좌에서 바로 충전 가능!</p> */}
                             <p className="exCard_text">{card.cardNumber}</p>
                             {/* <button className="exCard_btn" onClick={() => cardSelectHandle(card)}>선택</button> */}
@@ -121,8 +153,8 @@ function ExchangeCard(props) {
                 ))}
             </div>
             <div className="exCard_btn_container">
-                <button className="exCard_back_btn" onClick={backHandle}>취소</button>
-                <button className="exCard_next_btn" onClick={nextHandle}>다음</button>
+                <button className="exCard_back_btn" onClick={backHandle}>{t('Cancel')}</button>
+                <button className="exCard_next_btn" onClick={nextHandle}>{t('Next')}</button>
             </div>
         </div>
     );

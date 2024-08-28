@@ -3,13 +3,41 @@ import { generateRandomCardNumber, generateRandomCVVCode, getCurrentDate, getExp
 import axios from 'axios';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
+
 
 function Card6(props) {
     const { produceCardOffer, setProduceCardOffer } = useCardContext();
     const navigate = useNavigate(); 
     const [displayCardOffer, setDisplayCardOffer] = useState(produceCardOffer); // 초기 상태 저장용
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
 
     useEffect(() => {
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         if (!produceCardOffer || !produceCardOffer.card_type_id) {
             console.error("Card type ID is missing or null");
             return;
@@ -79,7 +107,7 @@ function Card6(props) {
     return (
         <div style={{ marginTop: '160px', marginBottom: '100px' }}>
             <div style={{ margin: 'auto 50px' }}>
-                <h3 style={{ marginBottom: '60px' }}>카드 발급이 완료되었습니다</h3>
+                <h3 style={{ marginBottom: '60px' }}>{t('CompletedCard')}</h3>
                 {displayCardOffer.card_type_id ? (
                     <img
                         src={require(`../../assets/Card${displayCardOffer.card_type_id}.png`)}
@@ -92,7 +120,7 @@ function Card6(props) {
                         }}
                     />
                 ) : (
-                    <p>카드 유형 ID가 존재하지 않습니다.</p>  // card_type_id가 없는 경우 메시지 출력
+                    <p>{t('NotExist')}</p>  // card_type_id가 없는 경우 메시지 출력
                 )}
                 <Button
                     variant="contained"
@@ -109,7 +137,7 @@ function Card6(props) {
                     }}
                      onClick={() => navigate('/')}
                 >
-                    홈으로
+                    {t('Home')}
                 </Button>
             </div>
         </div>
