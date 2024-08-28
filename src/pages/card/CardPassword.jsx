@@ -5,10 +5,30 @@ import ProgressBar from './ProgressBar';
 import { Button, Form } from 'react-bootstrap';
 import { useCardContext } from './CardContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+import { useEffect, useState } from 'react';
 
 const CardPassword = () => {
   const { produceCardOffer, setProduceCardOffer } = useCardContext();
   let navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+    
 
   const styles = {
     formGroupWithLabel: {
@@ -34,6 +54,16 @@ const CardPassword = () => {
       borderRadius: '4px',
     },
   };
+  
+useEffect(()=>{
+   
+  const savedLanguage = Cookies.get('selectedLanguage');
+  if (savedLanguage) {
+      changeLanguage(savedLanguage); // 언어 변경
+  } else {
+      changeLanguage('Korea'); // 기본 언어 설정
+  }
+},[]);
 
   return (
     <div style={{ marginTop: '140px'}}>
@@ -64,7 +94,7 @@ const CardPassword = () => {
       >
         {({ handleSubmit, values }) => (
           <FormikForm onSubmit={handleSubmit}>
-            <h4 style={{ textAlign:'left', fontWeight: 'bold', marginBottom: '30px', marginTop: '65px'}}>카드 비밀번호를 입력해 주세요</h4>
+            <h4 style={{ textAlign:'left', fontWeight: 'bold', marginBottom: '30px', marginTop: '65px'}}>{t('EnterCardPin')}</h4>
        
             
             <div style={styles.formGroupWithLabel}>
@@ -87,7 +117,7 @@ const CardPassword = () => {
                 className="form-label"
                 style={values.cardPassword ? { ...styles.formLabel, ...styles.labelFocused } : styles.formLabel}
               >
-                비밀번호
+                {t('Pw')}
               </label>
             </div>
 
@@ -111,7 +141,7 @@ const CardPassword = () => {
                 className="form-label"
                 style={values.cardPassword2 ? { ...styles.formLabel, ...styles.labelFocused } : styles.formLabel}
               >
-                비밀번호 재확인
+                {t('Re-enterPIN')}
               </label>
             </div>
 
@@ -129,7 +159,7 @@ const CardPassword = () => {
                 fontWeight: 'bold',
               }}
             >
-              다음
+              {t('Next')}
             </Button>
           </FormikForm>
         )}

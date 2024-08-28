@@ -4,8 +4,29 @@ import 'assets/exchangeSetSuccess.css';
 import cookie from 'react-cookies';
 import axios from 'axios';
 import { options_GET } from 'services/CommonService';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
 
 function ExchangeSetSuccess(props) {
+
+    
+const { t, i18n } = useTranslation();
+const changeLanguage = (selectedLanguage) => {
+    
+    const languageMap = {
+        Korea: 'ko',
+        English: 'en',
+        Japan: 'jp',
+        China: 'cn'
+    };
+
+    const languageCode = languageMap[selectedLanguage] 
+    i18n.changeLanguage(languageCode);
+   
+};
+
     const location = useLocation();
     const navi = useNavigate();
 
@@ -19,6 +40,15 @@ function ExchangeSetSuccess(props) {
 
     // 로그인 유저 국적 조회
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         axios.get("/api/exchange/find")
         .then((response) => {
             console.log(response.data);
@@ -50,45 +80,45 @@ function ExchangeSetSuccess(props) {
         <div className="contents">
             <div className="ex_setting_wrapper">
                 <h3>
-                    <span style={{ color: "#476EFF" }}>예약 환전이</span>
+                    <span style={{ color: "#476EFF" }}>{t('ReservationExchange')}</span>
                 </h3>
-                <h3>설정되었어요</h3>
+                <h3>{t('HasBeenSet')}</h3>
             </div>
             <div className="ex_setting_table_box">
                 <div className="ex_setting_table">
                     <h5>대한민국 KRW</h5>
                     <div className="ex_setting_col">
-                        <p className="ex_setting_p">예약환율 (시가)</p>
+                        <p className="ex_setting_p">{t('ReservedExchangeRate')}</p>
                         <h5>1 { curSymbol(nation) } = {settingData.setRate}</h5>
                     </div>
                     <div className="ex_setting_col">
-                        <p className="ex_setting_p">예약일</p>
+                        <p className="ex_setting_p">{t('ReservationDate')}</p>
                         <h5>{settingData.setDate}</h5>
                     </div>
                     <div className="ex_setting_col">
-                        <p className="ex_setting_p">자동으로</p>
+                        <p className="ex_setting_p">{t('Automatically')}</p>
                         <h5>
                             <span style={{ fontFamily: "NanumSquareNeoHeavy", color: "#476EFF" }}>
                                 KRW {settingData.setCur.toLocaleString()}
-                            </span> 충전하고
+                            </span> {t('RechargeAnd')}
                         </h5>
                     </div>
                     <div className="ex_setting_col">
-                        <p className="ex_setting_p">예상 원화</p>
+                        <p className="ex_setting_p">{t('EstimatedKRW')}</p>
                         <h5>
                             <span style={{ fontFamily: "NanumSquareNeoHeavy", color: "#476EFF" }}>
                             {nation} {settingData.setPay}
-                            </span> 출금할 예정이에요
+                            </span> {t('WillWithdraw')}
                         </h5>
                     </div>
                 </div>
                 <div className="ex_setting_box_text">
-                    <h4>자동 충전이 설정되었어요</h4>
-                    <h4>예약일이 되면 자동 충전돼요</h4>
+                    <h4>{t('AutoRechargeSet')}</h4>
+                    <h4>{t('AutoRechargeOnReservationDate')}</h4>
                 </div>
                 <div className="ex_setting_btn_box">
-                <button className="set_setting_info_btn" onClick={inforListHandle}>내역보기</button>
-                <button className="set_setting_home_btn" onClick={homeHandle}>확인</button>
+                <button className="set_setting_info_btn" onClick={inforListHandle}>{t('ViewHistory')}</button>
+                <button className="set_setting_home_btn" onClick={homeHandle}>{t('Confrim')}</button>
             </div>
             </div>
 

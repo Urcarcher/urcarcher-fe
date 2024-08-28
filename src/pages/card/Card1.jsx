@@ -21,10 +21,10 @@ function Card1() {
     const [memberId, setMemberId] = useState(''); // 멤버 ID를 저장
     const [isLoading, setIsLoading] = useState(true); // 데이터 로딩 상태를 관리
     const [showModal, setShowModal] = useState(false); // 모달 창 상태
-
     const { produceCardOffer, setProduceCardOffer } = useCardContext();
+    const [translatedCardName, setTranslatedCardName] = useState('card');
     let navigate = useNavigate();
-
+    
     const { t, i18n } = useTranslation();
     const changeLanguage = (selectedLanguage) => {
         
@@ -49,9 +49,13 @@ function Card1() {
         selectedAttraction: 0.03,
         friction: 0.15,
     };
-
+    console.log("selectedCard:",selectedCard);
+    //translatedCardName(selectedCard.cardName.replace('카드', t('Card')));
+    const translatedCardName1 = (event) => {
+        return selectedCard.cardName.replace('카드', t('Card'));
+    }  
     useEffect(() => {
-
+        
         const savedLanguage = Cookies.get('selectedLanguage');
         if (savedLanguage) {
             changeLanguage(savedLanguage); // 언어 변경
@@ -68,6 +72,7 @@ function Card1() {
                 setCards(allCardsResponse.data);
                 if (allCardsResponse.data.length > 0) {
                     setSelectedCard(allCardsResponse.data[0]); // 첫 번째 카드 선택
+                   
                 }
                 const memberResponse = await axios.get('/api/t/test');
                 const memberData = memberResponse.data;
@@ -81,21 +86,26 @@ function Card1() {
 
 
                 setIsLoading(false); // 로딩 상태 비활성화
+            
+                
             } catch (error) {
                 console.error('Error fetching data:', error.response || error.message);
                 setIsLoading(false); // 오류 발생 시에도 로딩 상태 비활성화
             }
+            
         };
 
         fetchData(); // 데이터 가져오기 함수 실행
     }, []);
-
+    
     const handleChange = (index) => {
         if (cards.length > 0 && index < cards.length) {
             setSelectedCard(cards[index]);
+
         } else {
             console.log("카드 데이터가 아직 로드되지 않았습니다.");
         }
+        
     };
 
     // 이미 발급된 카드인지 여부 판단
@@ -118,6 +128,8 @@ function Card1() {
     const handleCloseModal = () => {
         setShowModal(false); // 모달 창을 닫음
     };
+
+    
 
     const getCardBenefits = (cardTypeId) => {
         switch (cardTypeId) {
@@ -174,8 +186,8 @@ function Card1() {
             />
 
             {selectedCard && (
-                <div style={{ textAlign: 'left', fontWeight: 'bolder', margin: 'auto 110px', marginTop: '30px', fontSize: '18px' }}>
-                    {selectedCard.cardName} 
+                <div style={{ minWidth: "90%",textAlign: 'left', fontWeight: 'bolder', margin: 'auto 110px', marginTop: '30px', fontSize: '18px' }}>
+                    {translatedCardName1(selectedCard.cardName)}
                     
                 </div>
             )}

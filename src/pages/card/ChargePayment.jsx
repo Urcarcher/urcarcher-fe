@@ -3,6 +3,11 @@ import Preloader from 'bootstrap-template/components/Preloader';
 import React, { useEffect, useState } from 'react';
 import { Container, Form, FormControl, Button } from 'react-bootstrap';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 // Styled components
 const RechargeButton = styled(Button)`
@@ -73,6 +78,23 @@ const CustomToggleButton = styled.button`
 `;
 
 function ChargePayment(props) {
+
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
   const [nowRemainPay, setNowRemainPay] = useState(); 
   const [amount, setAmount] = useState('10000');
   const [customAmount, setCustomAmount] = useState('');
@@ -168,19 +190,28 @@ function ChargePayment(props) {
 
   // 컴포넌트 마운트 시 사용자 잔액 불러오기
   useEffect(() => {
+
+    const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
     Axios.get(`/api/card/get/${String(props.card.cardId)}`)
       .then((response) => {
         setNowRemainPay(response.data.cardBalance);
       })
       .catch((error) => {
-        alert('사용자 잔액 불러오는데 에러발생함');
+        alert('사용자 잔액 불러오는데 에러가 발생했습니다');
       });
   }, [props.card.cardId]);
 
   return (
     <Container>
       {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />}
-      <h5>충전 금액</h5>
+      <h5>{t('RechargeAmount')}</h5>
       <br/>
       <CustomToggleButtonGroup>
         {['10000', '30000', '50000', '70000', '100000'].map((value) => (
@@ -189,20 +220,20 @@ function ChargePayment(props) {
             active={(amount === value).toString()}  // boolean 값을 string으로 변환하여 전달
             onClick={() => handleAmountChange(value)}
           >
-            {parseInt(value, 10).toLocaleString()}원
+            {parseInt(value, 10).toLocaleString()}+ " " + {t('Won')}
           </CustomToggleButton>
         ))}
         <CustomToggleButton
           active={(amount === 'custom').toString()}  // boolean 값을 string으로 변환하여 전달
           onClick={() => handleAmountChange('custom')}
         >
-          직접 입력
+          {t('EnterManually')}
         </CustomToggleButton>
       </CustomToggleButtonGroup>
       {amount === 'custom' && (
         <FormControl
           type="number"
-          placeholder="금액을 입력하세요"
+          placeholder={t('EnterAmount')}
           value={customAmount}
           onChange={handleCustomAmountChange}
           className="mt-2"
@@ -210,7 +241,7 @@ function ChargePayment(props) {
       )}
       <br/>
       <br/>
-      <h5>결제 수단</h5>
+      <h5>{t('PaymentMethod')}</h5>
       <PaymentOptionContainer>
         <PaymentOptionLabel>
           <PaymentOptionInput
@@ -220,7 +251,7 @@ function ChargePayment(props) {
             checked={paymentMethod === 'credit-card-simple'}
             onChange={handlePaymentMethodChange}
           />
-          신용카드 일반결제
+          {t('CreditCardPayment')}
         </PaymentOptionLabel>
         {/* <PaymentOptionLabel>
           <PaymentOptionInput
@@ -240,7 +271,7 @@ function ChargePayment(props) {
             checked={paymentMethod === 'bank-transfer'}
             onChange={handlePaymentMethodChange}
           />
-          계좌이체
+          {t('BankTransfer')}
         </PaymentOptionLabel>
         <PaymentOptionLabel>
           <PaymentOptionInput
@@ -250,23 +281,23 @@ function ChargePayment(props) {
             checked={paymentMethod === 'virtual-account'}
             onChange={handlePaymentMethodChange}
           />
-          무통장입금
+          {t('DirectDeposit')}
         </PaymentOptionLabel>
       </PaymentOptionContainer>
 
       <div className="my-3 text-muted">
-        재충전 이후 거래 이력이 없는 경우, 충전일로부터 최대 7일 내 온라인에서 충전 취소가 가능합니다.
+      {t('CancelPayment')}
       </div>
 
-      <h5>충전 후 예상 총 카드 잔액</h5>
+      <h5>{t('AfterRecharge')}</h5>
       <div className="my-3">
         <h2 style={{fontWeight:'bold'}}>
           {(Number(nowRemainPay) + Number(amount === 'custom' ? customAmount : amount)).toLocaleString()}
-          원
+          +" " +{t('Won')}
         </h2>
       </div>
 
-      <RechargeButton onClick={handleRecharge}>충전하기</RechargeButton>
+      <RechargeButton onClick={handleRecharge}>{t('Recharge')}</RechargeButton>
     </Container>
   );
 }

@@ -2,8 +2,30 @@ import React, { useEffect, useState } from 'react';
 import 'assets/exchangeSetList.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 function ExchangeSetList({ reserveInfo }) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
     const navi = useNavigate();
     
     console.log("예약 조회 페이지 data", reserveInfo);
@@ -13,6 +35,14 @@ function ExchangeSetList({ reserveInfo }) {
 
     // 로그인 유저 국적 조회
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
         axios.get("/api/exchange/find")
         .then((response) => {
             console.log(response.data);
@@ -38,7 +68,7 @@ function ExchangeSetList({ reserveInfo }) {
         })
         .catch(error => {
             console.log(error);
-            alert("다시 시도해 주세요");
+            alert(t('PleaseTryAgain'));
         });
     };
 
@@ -52,37 +82,37 @@ function ExchangeSetList({ reserveInfo }) {
             <div className="ex_set_list_table">
                 <h5>대한민국 KRW</h5>
                 <div className="ex_set_list_col">
-                    <p className="ex_set_list_p">예약환율 (시가)</p>
+                    <p className="ex_set_list_p">{t('ReservedExchangeRate')}</p>
                     <h5>1 { curSymbol(nation) } = {reserveInfo.setRate}</h5>
                 </div>
                 <div className="ex_set_list_col">
-                    <p className="ex_set_list_p">예약일</p>
+                    <p className="ex_set_list_p">{t('ReservationDate')}</p>
                     <h5>{reserveInfo.setDate}</h5>
                 </div>
                 <div className="ex_set_list_col">
-                    <p className="ex_set_list_p">자동으로</p>
+                    <p className="ex_set_list_p">{t('Automatically')}</p>
                     <h5>
                         <span style={{ fontFamily: "NanumSquareNeoHeavy", color: "#476EFF" }}>
                             KRW {reserveInfo.setCur.toLocaleString()}
-                        </span> 충전하고
+                        </span> {t('RechargeAnd')}
                     </h5>
                 </div>
                 <div className="ex_set_list_col">
-                    <p className="ex_set_list_p">예상 원화</p>
+                    <p className="ex_set_list_p">{t('EstimatedKRW')}</p>
                     <h5>
                         <span style={{ fontFamily: "NanumSquareNeoHeavy", color: "#476EFF" }}>
                         {nation} {reserveInfo.setPay}
-                        </span> 출금할 예정이에요
+                        </span> {t('WillWithdraw')}
                     </h5>
                 </div>
             </div>
             <div className="ex_set_list_text">
-                <h4>자동 충전이 설정되어 있어요</h4>
-                <h4>예약일이 되면 자동 충전돼요</h4>
+                <h4>{t('AutoRechargeSet')}</h4>
+                <h4>{t('AutoRechargeOnReservationDate')}</h4>
             </div>
             <div className="ex_set_list_btn">
-                <button className="set_delete_btn" onClick={deleteHandle}>삭제</button>
-                <button className="set_home_btn" onClick={homeHandle}>확인</button>
+                <button className="set_delete_btn" onClick={deleteHandle}>{t('Delete')}</button>
+                <button className="set_home_btn" onClick={homeHandle}>{t('Confrim')}</button>
             </div>
         </div>
     );

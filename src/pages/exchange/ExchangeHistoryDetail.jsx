@@ -3,8 +3,31 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import 'assets/exchangeHistory.css';
 import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 function ExchangeHistoryDetail(props) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+    
+
+    
     const navi = useNavigate();
     const location = useLocation();
     const historyNo = location.state.exId;
@@ -17,6 +40,15 @@ function ExchangeHistoryDetail(props) {
 
     // 환전 내역 상세 조회
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         axios.get(`/api/exchange/detail/${historyNo}`)
         .then((response) => {
             setDetailHistory(response.data);
@@ -66,40 +98,40 @@ function ExchangeHistoryDetail(props) {
                 </div>
             </div>
             <div className="ex_history_detail_container">
-                <h4>{detailHistory.setId === null ? "🪙 금액을 충전했어요" : "🪙 예약환율 자동충전에 성공했어요"}</h4>
+                <h4>{detailHistory.setId === null ? "🪙" + t('AmountRecharged') : "🪙" + t('AutoRechargeSuccess')}</h4>
             </div>
             <div className="ex_history_detail_content">
                 <div>
-                    <p className="ex_history_detail_left">충전일시</p>
+                    <p className="ex_history_detail_left">{t('RechargeDateTime')}</p>
                     <p className="ex_history_detail_right">{dayjs(detailHistory.exDate).format("YYYY-MM-DD")}</p>
                 </div>
                 <div>
-                    <p className="ex_history_detail_left">충전금액</p>
+                    <p className="ex_history_detail_left">{t('RechargeAmount')}</p>
                     <p className="ex_history_detail_right">￦ {Number(detailHistory.exCur).toLocaleString()}</p>
                 </div>
                 <div>
-                    <p className="ex_history_detail_left">원화금액</p>
+                    <p className="ex_history_detail_left">{t('KRWAmount')}</p>
                     <p className="ex_history_detail_right">{ curSymbol(nation) } {detailHistory.exPay}</p>
                 </div>
                 <div>
-                    <p className="ex_history_detail_left">충전 시 환율</p>
+                    <p className="ex_history_detail_left">{t('RechargeExchangeRate')}</p>
                     <p className="ex_history_detail_right">KRW {detailHistory.exRate} = 1 { curSymbol(nation) }</p>
                 </div>
                 <div>
-                    <p className="ex_history_detail_left">총 결제 금액</p>
+                    <p className="ex_history_detail_left">{t('TotalPaymentAmount')}</p>
                     <p className="ex_history_detail_right">{ curSymbol(nation) } {detailHistory.exPay}</p>
                 </div>
                 <div>
-                    <p className="ex_history_detail_left">출금계좌</p>
+                    <p className="ex_history_detail_left">{t('WithdrawalAccount')}</p>
                     <p className="ex_history_detail_right">Citi Bank</p>
                 </div>
                 <div>
-                    <p className="ex_history_detail_left">충전상세</p>
-                    <p className="ex_history_detail_right">{detailHistory.setId === null ? "바로충전" : "자동충전"}</p>
+                    <p className="ex_history_detail_left">{t('RechargeDetails')}</p>
+                    <p className="ex_history_detail_right">{detailHistory.setId === null ? t('InstantRecharge') :  t('AutoRecharge') }</p>
                 </div>
             </div>
             <div className="ex_history_detail_btn">
-                <button onClick={backHandle} className="ex_history_go_btn">목록보기</button>
+                <button onClick={backHandle} className="ex_history_go_btn">{t('ViewList')}</button>
             </div>
         </div>
     );

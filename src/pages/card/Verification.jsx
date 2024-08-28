@@ -5,8 +5,40 @@ import { Button, Form, Tab, Tabs } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProgressBar from './ProgressBar';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+import { useEffect, useState } from 'react';
 
 function Verification() {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+    useEffect(()=>{
+   
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+    },[]);
+
+
     let navigate = useNavigate();
 
     return (
@@ -26,7 +58,7 @@ function Verification() {
                 className="mb-3"
                 fill
                 >
-                <Tab eventKey="driver's license" title="운전면허증">
+                <Tab eventKey="driver's license" title={t('DriverLicense')}>
                     <br/>
                     <br/>
                     <CardOverlay
@@ -46,7 +78,7 @@ function Verification() {
                         <FormikForm>
                             <Row>
                                 <SmallSelect aria-label="Default select example">
-                                    <option>선택</option>
+                                    <option>{t('Select')}</option>
                                     <option value="11">11-서울</option>
                                     <option value="12">12-부산</option>
                                     <option value="13">13-경기</option>
@@ -70,7 +102,7 @@ function Verification() {
                                         id="cert_drive"
                                         name="cert_drive"
                                         type="text"
-                                        placeholder="면허번호를 입력해주세요."
+                                        placeholder={t('EnterLicenseNumber')}
                                         className="form-control"
                                     />
                                 </div>
@@ -78,10 +110,10 @@ function Verification() {
                             <br/>
                         </FormikForm>
                     </Formik>
-                    <p style={{fontWeight:'bold', textAlign:'left', margin:'0'}}>지역이나 앞 두자리 숫자를 선택 바랍니다.</p>
-                    <p style={{color:'red', fontWeight:'bold', textAlign:'left'}}>지역선택은 필수입니다.</p>
+                    <p style={{fontWeight:'bold', textAlign:'left', margin:'0'}}>{t('SelectRegionOrFirstTwoDigits')}</p>
+                    <p style={{color:'red', fontWeight:'bold', textAlign:'left'}}>{t('RegionSelectionRequired')}</p>
                 </Tab>
-                <Tab eventKey="ID Card" title="주민등록증">
+                <Tab eventKey="ID Card" title={t('ResidentRegistrationCard')}>
                     <br/>
                     <br/>
                     <CardOverlay
@@ -101,13 +133,13 @@ function Verification() {
                         <FormikForm>
                             <div className="mb-3">
                                 <Form.Label className="text-uppercase" htmlFor="cert_idCard">
-                                    발급일자 입력
+                                {t('EnterIssueDate')}
                                 </Form.Label>
                                 <Field
                                     id="cert_idCard"
                                     name="cert_idCard"
                                     type="text"
-                                    placeholder="발급일자를 입력해주세요."
+                                    placeholder= {t('PleaseEnterIssueDate')}
                                     className="form-control"
                                 />
                             </div>
@@ -115,7 +147,7 @@ function Verification() {
                         </FormikForm>
                     </Formik>
                 </Tab>
-                <Tab eventKey="alien registration card" title="외국인 등록증">
+                <Tab eventKey="alien registration card" title={t('ForeignerRegistrationCard')}>
                     <br/>
                     <br/>
                     <CardOverlay
@@ -135,26 +167,26 @@ function Verification() {
                         <FormikForm>
                             <div className="mb-3">
                                 <Form.Label className="text-uppercase" htmlFor="cert_foriCard1">
-                                    발급일자 입력
+                                {t('EnterIssueDate')}
                                 </Form.Label>
                                 <Field
                                     id="cert_foriCard1"
                                     name="cert_foriCard1"
                                     type="text"
-                                    placeholder="발급일자를 입력해주세요."
+                                    placeholder={t('PleaseEnterIssueDate')}
                                     className="form-control"
                                 />
                             </div>
                             <br/>
                             <div className="mb-3">
                                 <Form.Label className="text-uppercase" htmlFor="cert_foriCard2">
-                                    일련번호(신분증 뒷면) 입력
+                                {t('EnterSerialNumber')}
                                 </Form.Label>
                                 <Field
                                     id="cert_foriCard2"
                                     name="cert_foriCard2"
                                     type="text"
-                                    placeholder="일련번호(신분증 뒷면)를 입력해주세요."
+                                    placeholder={t('PleaseEnterSerialNumber')}
                                     className="form-control"
                                 />
                             </div>
@@ -177,7 +209,7 @@ function Verification() {
                     navigate('/card3');
                 }}
                 >
-            신분증 확인
+            {t('VerifyIDCard')}
             </Button>
             </div>
         </Container>
