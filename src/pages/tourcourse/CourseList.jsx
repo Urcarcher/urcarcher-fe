@@ -61,7 +61,7 @@ const CourseList = () => {
         
         <div className="inner-div" >
 
-        <RegionList regions={regions} handleRegionClick={handleRegionClick}/>
+        <RegionList regions={regions} handleRegionClick={handleRegionClick}  selectedRegion={selectedRegion} />
         <SortOptions setSortOption={setSortOption} />
         <div className="course-list" onScroll={handleScroll} >
             {visibleCourses.map(course => (

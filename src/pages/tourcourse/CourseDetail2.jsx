@@ -314,16 +314,7 @@ const CourseDetail = () => {
     return (
       <div className="course-detail">
         <div className='course-background' style={{width:'100%'}}>
-          <div className="detail-course-name"
-              style={{
-              backgroundImage: `url(${bgImgUrl})`,
-              // backgroundSize: 'cover', // 배경 이미지를 요소 크기에 맞춤
-              // backgroundPosition: 'center', // 배경 이미지를 가운데 정렬
-              // width: '100%', // 전체 너비
-              // height: '260px',
-            }}
-          >
-            {/* <img src={bgImgUrl} alt="배경" style={{width:'100%'}} /> */}
+          <div className="detail-course-name" style={{ backgroundImage: `url(${bgImgUrl})`}}>
             {/* 코스명 표시 */}
             <p className='course-name-title'>
               <span className='corse-number'>{course.length}코스</span>
@@ -334,14 +325,14 @@ const CourseDetail = () => {
                   <img src={RegionImgUrl} alt="태그" style={{width:'30px', height:'30px', borderRadius:'50%'}} />
                   <div className='course-tag-textwrap'  style={{textAlign:'left'}}>
                     <p>지역</p>
-                    <p>제주</p>
+                    <p>{region}</p>
                   </div>
                 </div>
                 <div>
                   <img src={tagImgUrl} alt="태그" style={{width:'30px', height:'30px', borderRadius:'50%'}} />
                   <div className='course-tag-textwrap'  style={{textAlign:'left'}}>
                     <p>태그</p>
-                    <p>#추천코스 #가볼만한곳 #관광지</p>
+                    <p>#추천코스 #{region}가볼만한곳 #관광지</p>
                   </div>
                 </div>
             </div>

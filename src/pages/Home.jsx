@@ -3,7 +3,7 @@ import axios from 'axios';
 import CurrencyRateList from 'components/home/CurrencyRateList';
 import ServiceList from 'components/home/ServiceList ';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { options_GET } from 'services/CommonService';
 import cookie from 'react-cookies';
 import Footer from 'components/Footer';
@@ -14,6 +14,13 @@ import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
 
 function Home(props) {
+
+    const navigator = new useNavigate();
+    //bleakwinter (신용카드) happy(선불카트) - 테스트ID
+    const [memberId, setMemberId] = useState(''); 
+    const [name, setName] = useState('');
+    const [mainCardInfo, setMainCardInfo] = useState([]);
+    const [loading, setLoading] = useState(true);
     const { t, i18n } = useTranslation();
     const changeLanguage = (selectedLanguage) => {
         
@@ -29,16 +36,7 @@ function Home(props) {
        
     };
     
-    const [mainCardInfo, setMainCardInfo] = useState([]);
-    const [loading, setLoading] = useState(true);
-    
-    
-     //bleakwinter (신용카드) happy(선불카트) - 테스트ID
-
-    //1. 로그인 회원 정보   
-    const [memberId, setMemberId] = useState(''); 
-    const [name, setName] = useState('');
-
+     //1. 로그인 회원 정보   
     const isAuthorized = () => {
         if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
           axios(options_GET("/api/auth/authorizing", null))
@@ -74,16 +72,14 @@ function Home(props) {
     
     //2. 회원이 소지하고 있는 첫 번째 카드 종류와 이번 달 카드 사용 금액 정보 
     useEffect(() => {
-        
         // memberId가 없으면 에러 처리
         // if (!memberId) {
         //     console.log('Member ID is missing!');
         //     setLoading(false); // memberId가 없을 경우에도 로딩 상태를 false로 설정
         //     return;
         // }
-        
         if (memberId) {
-            axios.get(`/api/home/my-main-card/${memberId}`)
+                axios.get(`/api/home/my-main-card/${memberId}`)
                 .then(response => {
                     setMainCardInfo(response.data);
                     setLoading(false); // 데이터 로드 후 로딩 종료
@@ -115,6 +111,10 @@ function Home(props) {
       
         return `${formattedMonth}.${formattedDay}`;
     };
+
+    const goChargePage = () => {
+        navigator("/cardmanagement");
+    }
 
     return (
         <div className="contents">
@@ -149,7 +149,12 @@ function Home(props) {
                                             mainCardInfo.cardBalance ? mainCardInfo.cardBalance.toLocaleString() + " " + t('Won') :  <Link to='/'>{t('CardRecharge')}</Link>
                                         )}
                                     </p>
-                                    <p className={mainCardInfo.cardUsage === "신용카드" ||  !mainCardInfo.cardUsage ? 'hidden' : 'card-charge'}>{t('Charge')}</p>
+                                    <p 
+                                        className={mainCardInfo.cardUsage === "신용카드" ||  !mainCardInfo.cardUsage ? 'hidden' : 'card-charge'}
+                                        onClick={goChargePage}
+                                    >
+                                        {t('Charge')}
+                                    </p>
                                     <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-expiration-date' : 'hidden'}>{t('ExpirationDate')}:  {mainCardInfo.expiration_date || ''}</p>
                                     <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-name' : 'hidden'}> {mainCardInfo.name || ''} </p>
                                 </>

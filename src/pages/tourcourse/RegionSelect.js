@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const useCourseList = () => {
+    const regions = ['전체','서울', '경기', '인천', '대전', '대구', '부산', '충청', '강원', '전라', '경상', '제주'];
     const [selectedRegion, setSelectedRegion] = useState(null);
     const [courses, setCourses] = useState([]);
 
@@ -24,7 +25,7 @@ const useCourseList = () => {
             setSelectedRegion(region);
         }
     };
-    const regions = ['전체','서울', '경기', '인천', '대전', '대구', '부산', '충청', '강원', '전라', '경상', '제주'];
+   
 
     return {
         selectedRegion,

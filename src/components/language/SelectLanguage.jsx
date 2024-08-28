@@ -4,11 +4,10 @@ import Japan_Icon from 'assets/icon-nation/icon-jp.png';
 import China_Icon from 'assets/icon-nation/icon-cn.png';
 import Korea_Icon from 'assets/icon-nation/icon-kr.png';
 import Cookies from 'js-cookie'; 
+
 function SelectLanguage(props) {  //Home.jsx 연결
 
-    
-
-    /* 디자인-2 모달창 */
+    /* 모달창 */
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState('Korea');
     const [isModalOpen, setIsModalOpen] = useState(false); 
@@ -33,8 +32,8 @@ function SelectLanguage(props) {  //Home.jsx 연결
     }, []);
 
     const toggleDropdown = () => {
-        // setIsOpen(!isOpen);
-        setSelectedOption(setSelectedOption);
+        setIsOpen(!isOpen);  // *
+        // setSelectedOption(setSelectedOption); //*
         setIsModalOpen(true);
     };
 
@@ -53,7 +52,20 @@ function SelectLanguage(props) {  //Home.jsx 연결
             setIsModalOpen(false);
         }
     };
-
+    const getDisplayLanguage = (option) => {
+        switch (option) {
+            case 'Korea':
+                return '한국어';
+            case 'Japan':
+                return '日本語';
+            case 'China':
+                return '中文';
+            case 'English':
+                return 'English';
+            default:
+                return option;
+        }
+    };
     return (
         <div className="lang-custom-dropdown">
             {/* 모달창 */}
@@ -63,10 +75,16 @@ function SelectLanguage(props) {  //Home.jsx 연결
                         <h3 style={{textAlign:'left', wordBreak:'keep-all'}}>여러분의 언어를 선택하세요</h3>
                         <h5>현재 언어</h5>
                         <div className="lang-modal-list">
+                        {/* 조건 추가 */}
+                        {selectedOption && (
                             <p className='lang-active'>
                                 <img src={countryIcons[selectedOption]} alt="나라" style={{width:'30px' }} /> 
-                                <span style={{display:'block', lineHeight:'30px'}}>{selectedOption === 'Korea' ? '한국어' : selectedOption}</span>
+                                <span style={{display:'block', lineHeight:'30px'}}>
+                                    {/* {selectedOption === 'Korea' ? '한국어' : selectedOption} */}
+                                    {getDisplayLanguage(selectedOption)}
+                                </span>
                             </p>
+                        )}
                         </div>
                         <h5>언어 선택</h5>
                         <div className="lang-modal-list">

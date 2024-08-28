@@ -5,6 +5,9 @@
     text-decoration: none;
     color: #333;
 }
+.card-signup a:hover{
+    text-decoration: none;
+}
 .home-logo{
     margin: 0 auto;
 }
@@ -58,7 +61,7 @@ span.type{
 .amount-used, .card-signup{
     display: flex;
     justify-content: space-between;
-    padding: 0 10px;
+    padding: 0 15px;
 }
 .amount-used{
     height: 70px;
@@ -97,6 +100,9 @@ span.type{
     color: #333;
     font-weight: bold;
 }
+.service-list > li >a > img:hover{
+    transform: scale3d(0.9, 0.9, 1.2);
+}
 .home-title-wrap{
     position: relative;
 }
@@ -131,6 +137,7 @@ p.card-charge{
     border-radius: 15px;
     height: 20px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 .home-rate-list{
     margin: 0;
@@ -181,10 +188,22 @@ p.card-charge{
     height: 27px;
     line-height: 27px;
     box-sizing: border-box;
+    transition: all 0.3s;
+    cursor: pointer;
 }
 .member-sigup > a {
     color: #333;
     font-weight: bold;
+    font-size: 14px;
+}
+.member-sigup > a:hover {
+    text-decoration: none;
+}
+.member-sigup:hover{
+    background-color: #002e7c;
+}
+.member-sigup:hover a{
+    color: #fff;
 }
 .card_balance-no{
     white-space: nowrap;
@@ -194,6 +213,8 @@ p.card-charge{
     transform: translate(-50%,-50%);
     font-weight: bold;
     font-size: 20px;
+    width: 80%;
+    white-space: normal;
 }
 
 .currentExchange{
