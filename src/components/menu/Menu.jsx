@@ -86,9 +86,10 @@ function Menu({onClose, isLoggedIn, userName}) {
                   )}
                   </h3>
                   <div className="menu-banner">
-                    <div className='menu-banner-text'>
+                    <p className='menu-banner-text'>
+                  
                     {t('ReceiveReward')}
-                    </div>
+                    </p>
                     <p>
                       <img src="/icon/gift.png" alt="부채" />
                     </p>

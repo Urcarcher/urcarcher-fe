@@ -76,7 +76,7 @@
     "CreditCard" : "クレジットカード",
     "ExpirationDate" : "有効期限",
     "NoHistory" : "支払い履歴がありません",
-
+    "PrepaidCard" : "プリペイドカード ",
     "CardRecharge" : "カードチャージ",
     "Charge" : "チャージ",
 
@@ -100,6 +100,39 @@
     "CustomerCenter" : "カスタマーセンター",
     "FAQ" : "よくある質問",
   
+    "Card" : "カード",
+    "AnnualFee" : "(年会費)",
+    "20%Discount" : "主要観光地の入場料が最大20%割引",
+    "PickUpDiscount" : "空港ピックアップおよびシャトルサービスの割引",
+    "Cashback" : "特定加盟店で3%キャッシュバック提供",
+    "Apply" : "申込む",
+    "10%Discount" : "公共交通料金10%割引",
+    "FreeGuide" : "無料ガイドツアー1回提供",
+    "FreeInsuracne" : "旅行者保険無料加入",
+    "TraditionalDiscount" : "伝統公演チケット20%割引",
+    "FreeLounges" : "空港ラウンジ無料利用",
+    "MusicalDiscount" : "ミュージカルおよび公演チケット割引",
+    "PlaceDiscount" : "博物館、ギャラリー、歴史的名所の入場料割引",
+    "TicketDiscount" : "主要観光地チケット購入時の割引特典",
+    "RentDiscount" : "乗り換え及びレンタカーサービスの割引",
+    "MontlyBenefits" : "旅行およびライフスタイルの月間特典提供",
+
+    "ErrorApplication" : "カード申請エラー",
+    "AreadyBeen" : "すでに発行されたカードです。",
+    "Confrim" : "確認",
+
+    "VerifyInfo" : "申請者情報を確認してください",
+    "EnterName" : "名前を入力してください",
+    "EnterPhoneNumber" : "ハイフンを除いて携帯電話番号を入力してください",
+    "Verify" : "認証",
+    "EnterVerify" : "認証番号を入力",
+    "EnterVerify2" : "認証番号を入力してください",
+    "SuccessVerify" : "認証成功！",
+    "FailVerify" : "認証失敗！もう一度お試しください",
+    "RegistrationNumber" : "住民または外国人登録番号",
+    "EnterNumber" : "ハイフンを含む13桁の数字を入力してください",
+    "ApplyPostpaid" : "後払い交通機能を申請",
+
 
     "Sort Latest" : "最新順",
     "Sort Most Viewed" : "閲覧数順",

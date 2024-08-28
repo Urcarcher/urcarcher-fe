@@ -4,8 +4,30 @@ import ProgressBar from './ProgressBar';
 import { Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 function Card3() {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
     const [formData, setFormData] = useState({
         serviceTOS: false,
         personalTOS: false,
@@ -20,6 +42,15 @@ function Card3() {
     let navigate = useNavigate();
 
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         updateButtonState();
     }, [formData]);
 
@@ -41,7 +72,7 @@ function Card3() {
         if (buttonEnabled) {
             setTimeout(() => navigate('/card4'), 300);
         } else {
-            alert('모든 필수 항목에 동의해야 합니다.');
+            alert(t('AllAgree'));
         }
     };
 

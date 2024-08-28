@@ -7,6 +7,12 @@ import { useNavigate } from 'react-router-dom';
 import CardOverlay from 'bootstrap-template/components/cards/CardOverlay';
 import ProgressBar from './ProgressBar';
 import { Button, Modal } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
+
 
 function Card1() {
     const [selectedCard, setSelectedCard] = useState(null); // 선택된 카드 저장
@@ -19,6 +25,23 @@ function Card1() {
     const { produceCardOffer, setProduceCardOffer } = useCardContext();
     let navigate = useNavigate();
 
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+    
+
+
     const flickityOptions = {
         cellAlign: 'center',
         pageDots: false,
@@ -28,6 +51,14 @@ function Card1() {
     };
 
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
         const fetchData = async () => {
             setIsLoading(true); // 로딩 상태 활성화
             try {
@@ -92,37 +123,37 @@ function Card1() {
         switch (cardTypeId) {
             case 1:
                 return [
-                    "주요 관광지 입장료 최대 20% 할인",
-                    "공항 픽업 및 셔틀 서비스 할인",
-                    "특정 가맹점에서 캐시백 3% 제공",
+                    t('20%Discount'),
+                    t('PickUpDiscount'),
+                    t('Cashback'),
                     // "환전 수수료 면제 및 특별 환율 제공"
                 ];
             case 2:
                 return [
-                    "대중교통 요금 10% 할인",
-                    "무료 가이드 투어 1회 제공",
-                    "여행자 보험 무료 가입",
+                    t('10%Discount'),
+                    t('FreeGuide'),
+                    t('FreeInsuracne'),
                     // "관광지 티켓 사전 예약 서비스"
                 ];
             case 3:
                 return [
-                    "전통 공연 티켓 20% 할인",
-                    "공항 라운지 무료 이용",
-                    "뮤지컬 및 공연 티켓 할인",
+                    t('TraditionalDiscount'),
+                    t('FreeLounges'),
+                    t('MusicalDiscount'),
                     // "VIP 라운지 이용권 제공"
                 ];
             case 4:
                 return [
-                    "박물관, 갤러리, 역사적 명소 입장료 할인",
-                    "여행자 보험 무료 제공",
-                    "주요 관광지 티켓 구매 시 할인 혜택",
+                    t('PlaceDiscount'),
+                    t('FreeInsuracne'),
+                    t('TicketDiscount'),
                     // "쇼핑 결제 금액 5% 캐시백"
                 ];
             case 5:
                 return [
-                    "환승 및 렌트카 서비스 할인",
-                    "전국 주요 관광지 할인 최대 20%",
-                    "여행 및 라이프스타일 월간 혜택 제공",
+                    t('RentDiscount'),
+                    t('20%Discount'),
+                    t('MontlyBenefits'),
                     // "문화 체험 프로그램 할인"
                 ];
             default:
@@ -144,7 +175,8 @@ function Card1() {
 
             {selectedCard && (
                 <div style={{ textAlign: 'left', fontWeight: 'bolder', margin: 'auto 110px', marginTop: '30px', fontSize: '18px' }}>
-                    {selectedCard.cardName}
+                    {selectedCard.cardName} 
+                    
                 </div>
             )}
 
@@ -194,15 +226,15 @@ function Card1() {
                             color: '#476EFF',
                             fontWeight: 'bold',
                         }}>
-                            {selectedCard.cardUsage}
+                           {selectedCard.cardUsage === '신용카드' ? t('CreditCard') : t('PrepaidCard')}
                         </div>
                         <div style={{
                             fontSize: '12px',
                             fontWeight: 'bold',
                             marginTop: '5px',
                         }}>
-                            {selectedCard.annualFee}원&nbsp;
-                            <span style={{ fontSize: '11px', color: '#999' }}>(연회비)</span>
+                            {selectedCard.annualFee} {t('Won')}&nbsp;
+                            <span style={{ fontSize: '11px', color: '#999' }}>{t('AnnualFee')}</span>
                         </div>
 
                         <ul style={{
@@ -227,7 +259,7 @@ function Card1() {
                                 cursor: isDuplicateCard() ? 'not-allowed' : 'pointer',
                             }}
                             onClick={handleApplyClick}
-                        >신청하기</Button>
+                        >{t('Apply')}</Button>
                     </div>
                 )}
             </div>
@@ -235,14 +267,14 @@ function Card1() {
 
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>카드 신청 오류</Modal.Title>
+                    <Modal.Title>{t('ErrorApplication')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    이미 발급된 카드입니다.
+                {t('AreadyBeen')}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={handleCloseModal}>
-                        확인
+                    {t('Confrim')}
                     </Button>
                 </Modal.Footer>
             </Modal>

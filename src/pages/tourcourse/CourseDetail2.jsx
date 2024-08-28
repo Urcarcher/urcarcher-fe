@@ -22,6 +22,7 @@ const CourseDetail = () => {
   const [verificationModalOpen, setVerificationModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [courseName, setCourseName] = useState(location.state?.courseName || '');
+  const [region, setRegion] = useState(location.state?.courseRegion || '');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [completedItems, setCompletedItems] = useState(new Set());
@@ -33,7 +34,7 @@ const CourseDetail = () => {
       nav("/CourseList");
       return;
     } 
-
+    
     axios.get(`/api/course/${courseId}`)
       .then((response) => {
 
@@ -49,7 +50,7 @@ const CourseDetail = () => {
         setCourse(courseData);
         setCertifications(certificationsSafe);
         setLoading(false);
-
+        console.log("지역:", region)
         const completedSet = new Set();
         certificationsSafe.forEach(cert => {
           completedSet.add(cert.placeId);
