@@ -112,6 +112,7 @@ span.type{
    
 }
 p.card_balance{
+    width: max-content;
     position: absolute;
     top: 50%;
     left: 50%;
