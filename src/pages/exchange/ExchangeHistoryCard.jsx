@@ -2,6 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'assets/exchangeCard.css';
+import Card1 from 'assets/Card1_.png'
+import Card2 from 'assets/Card2_.png'
+import Card3 from 'assets/Card3_.png'
+import Card4 from 'assets/Card4_.png'
+import Card5 from 'assets/Card5_.png'
 
 function ExchangeHistoryCard(props) {
     const navi = useNavigate();
@@ -11,6 +16,7 @@ function ExchangeHistoryCard(props) {
 
     const [loading, setLoading] = useState(true); // 카드 리스트 로딩 상태
     const [typeCheck, setTypeCheck] = useState(false); // 선불 카드 확인
+    const cardImg = {1 : Card1, 2 : Card2, 3 : Card3, 4 : Card4, 5 : Card5}; // 카드 별 이미지
 
     // 카드 리스트 조회
     useEffect(() => {
@@ -46,6 +52,12 @@ function ExchangeHistoryCard(props) {
         return null; // 아무것도 렌더링하지 않음
     }
 
+    // 카드 별 이미지
+    const imgUrl = (cardTypeId) => {
+        // console.log(cardTypeId);
+        return cardImg[cardTypeId];
+    };
+
     // 카드 선택
     const cardSelectHandle = (card) => {
         console.log("선택한 카드 정보", card);
@@ -78,12 +90,17 @@ function ExchangeHistoryCard(props) {
                 {cardList.map((card) => (
                     <div key={card.cardId}
                         className={selectCard?.cardId === card.cardId ? "choice" : "unChoice"}
-                        style={{ display: card.cardUsage === "선불카드" ? "block" : "none" }}
+                        style={{ display: card.cardUsage === "선불카드" ? "block" : "none",
+                            backgroundImage: `url(${imgUrl(card.cardTypeId)})`
+                        }}
+                        onClick={() => cardSelectHandle(card)}
                     >
-                        <p>{card.cardUsage}</p>
-                        <p className="exCard_balance">잔액 {card.cardBalance.toLocaleString()}원</p>
-                        <p className="exCard_text">{card.cardNumber}</p>
-                        <button className="exCard_btn" onClick={() => cardSelectHandle(card)}>선택</button>
+                        <div className="exCard_user_box">
+                            <p>{card.cardUsage}</p>
+                            <p className="exCard_balance">잔액 {card.cardBalance.toLocaleString()}원</p>
+                            <p className="exCard_text">{card.cardNumber}</p>
+                            {/* <button className="exCard_btn" onClick={() => cardSelectHandle(card)}>선택</button> */}
+                        </div>
                     </div>
                 ))}
             </div>
