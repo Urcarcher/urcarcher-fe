@@ -216,20 +216,22 @@ function ExchangeSetRate(props) {
 
     // 환전 예약 isnert
     const insertHandle = () => {
+        /*
         if (!selectRate) {
             alert(t('SetReservationAfterSelectingPrediction'));
             return;
         }
         
-        // if (!reserveDate) {
-        //     alert("환전 예약일을 선택해 주세요");
-        //     return;
-        // }
+        if (!reserveDate) {
+            alert("환전 예약일을 선택해 주세요");
+            return;
+        }
         
         if (!selectAmount) {
             alert(t('EnterAmountAboveZero'));
             return;
         }
+        */
 
         const data = {
             cardId: exCard.cardId,

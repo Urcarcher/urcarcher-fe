@@ -89,6 +89,8 @@
     padding: 8px 0;
     background-color: #fff;
     letter-spacing: -.3px;
+    height: 450px;
+    overflow-y: scroll;
 }
 
 .tableArea table {
