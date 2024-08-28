@@ -1,4 +1,4 @@
-/* 08-23 최신 수정 */
+/* 08-28 수정 */
 .course-name-box{
     position: absolute;
     width: 100%;
@@ -40,7 +40,9 @@
     margin: 10px; 
     cursor: pointer;
 }
-
+.course-card:active {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
 .course-card:hover {
     transform: translateY(-5px);
 }
