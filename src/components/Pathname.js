@@ -1,4 +1,3 @@
-// 경로에 따라 제목을 설정하는 함수 
 export  const getTitle = (pathname) => {
 
     const cleanedPathname = pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;

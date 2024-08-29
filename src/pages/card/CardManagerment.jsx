@@ -78,19 +78,19 @@ function CardManagerment(props) {
         switch (content) {
             case "1":
                 setModalContent(<PaymentSummary setShowModal={setShowModal} card={card} />);
-                setModalTitle('결제 예상 금액 (신용카드 전용)');
+                setModalTitle(t('EstimatedAmount'));
                 break;
             case "2":
                 setModalContent(<ChargePayment setShowModal={setShowModal} card={card} onPaymentSuccess={handlePaymentSuccess} />);
-                setModalTitle('금액 충전 (선불카드 전용)');
+                setModalTitle(t('LoadAmount'));
                 break;
             case "3":
                 setModalContent(<SettingPassword setShowModal={setShowModal} card={card} />);
-                setModalTitle('PIN 번호 설정');
+                setModalTitle(t('SetPINNumber'));
                 break;
             case "5":
                 setModalContent(<CancelCard setShowModal={setShowModal} card={card} />);
-                setModalTitle('카드해지');
+                setModalTitle(t('CancelCard'));
                 break;
             default:
                 console.log("올바른 선택지가 아닙니다");
@@ -123,7 +123,7 @@ function CardManagerment(props) {
                 setUserId(response.data.memberId);
             })
             .catch((error) => {
-                alert("회원정보를 가져오는데 오류 발생");
+                alert(t('ErrorRetrieving'));
             });
 
         if (userId) {
@@ -169,10 +169,10 @@ function CardManagerment(props) {
                                 />
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                   <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
-                                    {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "신용카드":"선불카드"}
+                                    {(card.cardTypeId === 1 || card.cardTypeId === 2) ? t('CreditCard'):t('PrepaidCard')}
                                   </p>
                                   <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
-                                    {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "" : "잔액 | " + parseFloat(card.cardBalance).toLocaleString()+ " " + t('Won')}
+                                    {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "" : t('Balance') +" | " + parseFloat(card.cardBalance).toLocaleString()+t('Won')}
                                   </p>
                                 </div>
 
