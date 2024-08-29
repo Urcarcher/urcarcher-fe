@@ -51,6 +51,8 @@ import ExchangeHistory from 'pages/exchange/ExchangeHistory';
 import ExchangeHistoryCard from 'pages/exchange/ExchangeHistoryCard';
 import ExchangeHistoryDetail from 'pages/exchange/ExchangeHistoryDetail';
 import ReservationDetail from 'pages/reservation/ReservationDetail';
+import Reserve from 'pages/reservation/Reserve';
+import ReservePayment from 'pages/reservation/ReservePayment';
 
 
 function App() {
@@ -98,6 +100,8 @@ function App() {
           <Route path='/detail/:type/:id' element={<DetailPage/>}/>
           <Route path='/reservation' element={<TestReservation/>}/>
           <Route path='/reservation/detail/:id' element={<ReservationDetail/>}/>
+          <Route path='/reserve' element={<Reserve/>}/>
+          <Route path='/reservePayment' element={<ReservePayment/>}></Route>
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
           <Route path='/reservation1' element={<Reservation/>}/>

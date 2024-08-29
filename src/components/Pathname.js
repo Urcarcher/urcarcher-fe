@@ -41,7 +41,7 @@ export  const getTitle = (pathname) => {
         case '/exchange/history/detail':
             return '환전 내역';
         case '/reservation':
-            return '예매';
+            return '문화 활동 예매';
         case '/searchtour': 
             return '관광지 및 맛집 추천';
         case '/MapComponent':  
@@ -75,6 +75,10 @@ export  const handleDynamicPaths = (pathname) => {
     if (/^\/MapComponent\/[^\/]+$/.test(pathname)) {
         return '길 찾기';
     }
+
+    if (/^\/reservation\/detail/.test(pathname)) {
+        return '문화 활동 예매';
+      }
     return '기타';
 }
 

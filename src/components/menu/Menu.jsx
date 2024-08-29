@@ -95,7 +95,7 @@ function Menu({onClose, isLoggedIn, userName}) {
                 items={[
                   { id:12, text: "관광지 추천", link: "/searchtour" },
                   { id:13,text: "결제 기반 장소 추천", link: "/maphome" },
-                  { id:14,text: "문화 활동 예약 하기", link: "/" },
+                  { id:14,text: "문화 활동 예약 하기", link: "/reservation" },
                   { id:15,text: "여행 코스 추천", link: "/courseList" },
                   { id:16,text: "리워드 지급", link: "/courseList" },
                   { id:17,text: "길찾기", link: "/MapComponent" },
