@@ -33,7 +33,7 @@ function MyMapHome(props) { //시작 페이지
 
     //로그인한 회원 이름 저장
     // 테스트할 회원 ID : bleakwinter, 9911dbfl
-    const [memberId, setMemberId] = useState(''); 
+    const [memberId, setMemberId] = useState('9911dbfl'); 
     const [name, setName] = useState('');
 
     const isAuthorized = () => {
@@ -85,14 +85,19 @@ function MyMapHome(props) { //시작 페이지
                         <p>{t('DrawnWithPaymentHistory')}</p>
                         <p>{t('MyOwnMap')}</p>
                     </div>
-                    <div>
+                    <div className='map-img-wrap'>
                         <img src='/icon/map-main-img.png' alt="지도이미지" />
                     </div>
+                    <div className='maphome-btn inner'>
+                        <span>{name === ''? '회원' : name}{t('RecommendPlacesBasedOnPaymentHistory')}</span>
+                        <button onClick={goRankPage}>{t('GetStarted')}</button>
+                    </div> 
                 </div>
-                <div className='maphome-btn inner'>
+        {/*     <div className='maphome-btn inner'>
                     <span>{name === ''? '회원' : name}{t('RecommendPlacesBasedOnPaymentHistory')}</span>
                     <button onClick={goRankPage}>{t('GetStarted')}</button>
-                </div>
+                </div> 
+            */}
             </div>
         </div>
     );

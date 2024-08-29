@@ -79,7 +79,12 @@
   height: 100vh;
   background: linear-gradient(#F4F7FC, #D6EBFF);
   font-family: 'NanumSquareNeo',sans-serif ;
+  position: relative;
 }
+.maphome-btn{
+  margin-top: 60px;
+}
+
 /* 버튼 스타일 공통 */
 .mymap-btn{
   cursor: pointer;
@@ -135,7 +140,7 @@
   margin: 0;
 }
 .maphome_textwrap > p:last-child{
-  font-size: 60px;
+  font-size: 50px;
   color: #476EFF;
 }
 
@@ -143,7 +148,7 @@
   position: relative;
   top: 45%;
   transform: translateY(-50%);
-  margin-bottom: -70px;
+  /* margin-bottom: -70px; */
 }
 .maphome_textwrap{
   animation: slideUp 1s ease-out; /* 1초 동안 애니메이션 적용 */
@@ -358,4 +363,29 @@ p.phone{
   transform: translate(-50%, -50%);
   width: 100%;
   height: 400px;
+}
+
+
+@media (max-width: 413px) { /* iPhone XR */
+  .mymaphome-wrap{
+    height: 130vh;
+  }
+  .maphome_textwrap > p {
+    font-size: 20px;
+  }
+  .maphome_textwrap > p:last-child {
+    font-size: 48px;
+  }
+  .map-img-wrap > img{
+    width: 200px;
+    height: 200px;
+  }
+  .mymaphome-wrap > div {
+    top: 40%;
+  }
+}
+@media screen and (max-Width: 375px) { /* iPhone SE */
+  .maphome_textwrap > p:last-child {
+    font-size: 38px;
+}
 }

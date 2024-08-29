@@ -228,7 +228,8 @@ function CardManagerment(props) {
                   <CardOverlay
                     className="my-custom-class" 
                     img={myImage}
-                    imgStyle={{ height: '110px', width: '390px', objectFit: 'cover', backgroundColor:'#f3f6fb', margin:'-10px -15px' }}
+                    // imgStyle={{ height: '110px', width: '390px', objectFit: 'cover', backgroundColor:'#f3f6fb', margin:'-10px -15px' }} //기존
+                    imgStyle={{ height: '110px', width: '100%', objectFit: 'cover', backgroundColor:'#f3f6fb', margin:'0 auto' }}
                   />
                 <br /><br /><br /><br /><br /><br />
             </CardDetailsContainer>

@@ -53,7 +53,7 @@ function SearchTour(props) {
         <br/>
         <br/>
         <br/>
-        <p style={{textAlign:'left', padding:'10px'}}>원하시는 카테고리를 선택하신 뒤 지역을 선택해주세요</p>
+        <p style={{textAlign:'center', padding:'10px'}}>원하시는 카테고리를 선택하신 뒤 지역을 선택해주세요</p>
         <ButtonGroup className="mb-3 d-flex justify-content-center">
             {radios.map((radio, idx) => (
                 <button
