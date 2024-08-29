@@ -1,9 +1,31 @@
-import React, { useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { Formik, Form as FormikForm, Field } from "formik";
 import { Form, Button } from "react-bootstrap";
 import Axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 function SettingPassword(props) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
     const [isVerified, setIsVerified] = useState(false);  // 비밀번호 검증 상태를 저장
 
     // 현재 비밀번호 확인 함수 (여기서 실제 DB 확인 로직이 필요)
@@ -18,9 +40,9 @@ function SettingPassword(props) {
 
     const handleVerifyPassword = async (values) => {
         if(!values.currentPassword) {
-            alert("PIN번호를 입력해주세요.");
+            alert(t('EnterPIN2'));
         }else if(values.currentPassword.length !== 4){
-            alert("PIN번호는 4자리를 입력하여야합니다.")
+            alert(t('PINMustBe4Digits'))
         }else{
             Axios.post('/api/card/checkpinnumber',{
                 cardId : String(props.card.cardId),
@@ -31,10 +53,22 @@ function SettingPassword(props) {
             })
             .catch((error)=>{
                 setIsVerified(false);
-                alert('현재 PIN번호가 일치하지 않습니다.');
+                alert(t('CurrentPINNotMatching'));
             })
         }
     };
+
+    
+    useEffect(()=>{
+    
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+    },[]);
+
 
     return (
         <div>
@@ -46,7 +80,7 @@ function SettingPassword(props) {
                     <FormikForm>
                         <div className="mb-3">
                             <Form.Label className="text-uppercase" htmlFor="currentPassword">
-                                현재 PIN번호를 입력해주세요.(4자리)
+                            {t('EnterCurrentPIN')}
                             </Form.Label>
                             <Field
                                 id="currentPassword"
@@ -59,7 +93,7 @@ function SettingPassword(props) {
                         </div>
                         <div className="mb-3">
                             <Button variant="primary" type="submit">
-                                PIN번호 확인
+                            {t('ConfirmPIN')}
                             </Button>
                         </div>
                     </FormikForm>
@@ -79,13 +113,13 @@ function SettingPassword(props) {
                         }
 
                         if(!values.password1 || !values.password2){
-                            alert("PIN번호를 모두 입력해주세요.")
+                            alert(t('EnterAllPIN'))
                         }
                         else if(values.password1 !== values.password2){
-                            alert("입력하신 PIN번호가 동일하지 않습니다.")
+                            alert(t('EnterAllPIN'))
                         }
                         else if(values.password1.length !== 4 || values.password2.length !== 4){
-                            alert("PIN번호는 4자리를 입력하셔야합니다.")
+                            alert(t('PINMustBe4Digits'))
                         }
                         else{
                             //console.log(props.card.cardId);
@@ -94,11 +128,11 @@ function SettingPassword(props) {
                                 pinNumber : String(values.password1)
                             })
                             .then(()=>{
-                                alert('PIN 번호가 정상적으로 변경되었습니다.');
+                                alert(t('PINChangeSuccess'));
                                 props.setShowModal(false)
                             })
                             .catch(()=>{
-                                alert('PIN 번호 변경에 실패하였습니다.');
+                                alert(t('PINChangeFailure'));
                             })
                         }
                     }}
@@ -106,7 +140,7 @@ function SettingPassword(props) {
                     <FormikForm>
                         <div className="mb-3">
                             <Form.Label className="text-uppercase" htmlFor="password1">
-                                변경하고자하는 PIN번호를 입력해주세요.(4자리)
+                            {t('EnterNewPIN')}
                             </Form.Label>
                             <Field
                                 id="password1"
@@ -120,7 +154,7 @@ function SettingPassword(props) {
 
                         <div className="mb-3">
                             <Form.Label className="text-uppercase" htmlFor="password2">
-                                변경하고자하는 PIN번호를 재입력해주세요.(4자리)
+                            {t('ReEnterNewPIN')}
                             </Form.Label>
                             <Field
                                 id="password2"
@@ -133,7 +167,7 @@ function SettingPassword(props) {
                         </div>
                         <div className="mb-3">
                             <Button variant="primary" type="submit">
-                                PIN번호 변경
+                            {t('ChangePIN')}
                             </Button>
                         </div>
                     </FormikForm>

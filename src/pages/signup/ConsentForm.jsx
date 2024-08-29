@@ -1,10 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "assets/Test.css";
 import "./signup.css"
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
+
 
 function ConsentForm() {
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
   const navi = useNavigate();
   const [consentData, setConsentData] = useState({
     informationConsent: false,
@@ -32,7 +54,7 @@ function ConsentForm() {
 
   const clickHandler = () => {
     if (!consentData.informationConsent) {
-      setErrorMessage("개인정보 수집 및 이용 동의는 필수입니다.");
+      setErrorMessage(t('MandatoryAgree'));
       return;
     }
     if (
@@ -40,7 +62,7 @@ function ConsentForm() {
       !viewedTerms.location ||
       !viewedTerms.matching
     ) {
-      setErrorMessage("모든 약관을 확인해야 다음 단계로 진행할 수 있습니다.");
+      setErrorMessage(t('AllAgree'));
       return;
     }
     navi("/signup/userinfo", { state: { consentData } });
@@ -54,6 +76,16 @@ function ConsentForm() {
     handleCloseModal();
   };
 
+  useEffect(()=>{
+   
+    const savedLanguage = Cookies.get('selectedLanguage');
+    if (savedLanguage) {
+        changeLanguage(savedLanguage); // 언어 변경
+    } else {
+        changeLanguage('Korea'); // 기본 언어 설정
+    }
+},[]);
+
   return (
     <div className="contents">
       <div className="d-flex align-items-stretch">
@@ -63,9 +95,9 @@ function ConsentForm() {
               <div className="px-lg-4 col-lg-6">
                 <div className="card">
                   <div className="p-lg-5 card-body">
-                    <h3 className="mb-4">이용 약관 및 <br></br>개인정보처리방침</h3>
+                    <h3 className="mb-4">{t('PrivacyPolicy')}</h3>
                     <p className="text-muted text-sm mb-3">
-                      서비스를 이용하시려면 약관에 동의해주세요
+                    {t('Agree')}
                     </p>
                     <hr></hr>
 
@@ -78,13 +110,13 @@ function ConsentForm() {
                         onChange={handleChange}
                       />
                       <label htmlFor="agree" className="form-check-label"></label>
-                      &nbsp;개인정보 수집 및 이용 (필수)&nbsp;
+                      &nbsp;{t('Collection')}&nbsp;
                       <Button
                         variant="link"
                         onClick={() => handleShowModal("information")}
-                        style={{ marginLeft: "10px" }}
+                        style={{ color: "#fff", marginTop : "10px"}}
                       >
-                        보기
+                        {t('Look')}
                       </Button>
                     </div>
                     <div className="mb-3 form-check">
@@ -95,13 +127,13 @@ function ConsentForm() {
                         checked={consentData.locationConsent}
                         onChange={handleChange}
                       />
-                      &nbsp;위치정보 이용 동의 (선택)&nbsp;
+                      &nbsp; {t('ConsentLocation')}&nbsp;
                       <Button
                         variant="link"
                         onClick={() => handleShowModal("location")}
-                        style={{ marginLeft: "10px" }}
+                        style={{ color: "#fff", marginTop : "10px"}}
                       >
-                        보기
+                        {t('Look')}
                       </Button>
                     </div>
                     <div className="mb-3 form-check">
@@ -112,13 +144,13 @@ function ConsentForm() {
                         checked={consentData.matchingConsent}
                         onChange={handleChange}
                       />
-                      &nbsp;매칭 서비스 활용 동의 (선택)&nbsp;
+                      &nbsp;{t('ConsentMatching')}&nbsp;
                       <Button
                         variant="link"
                         onClick={() => handleShowModal("matching")}
-                        style={{ marginLeft: "10px" }}
+                        style={{ color: "#fff", marginTop : "10px"}}
                       >
-                        보기
+                        {t('Look')}
                       </Button>
                     </div>
 
@@ -127,13 +159,13 @@ function ConsentForm() {
                     )}
 
                     <Button className="my-btn" onClick={clickHandler}>
-                      다음
+                    {t('Next')}
                     </Button>
                   </div>
                   <div className="px-lg-5 py-lg-4 card-footer">
                     <div className="text-sm text-muted">
-                      이미 계정이 있으신가요?
-                      <a href="/login">&nbsp;로그인</a>
+                    {t('AreadyAccount')}
+                      <a href="/login">{t('Login2')}</a>
                     </div>
                   </div>
                 </div>
@@ -162,7 +194,7 @@ function ConsentForm() {
 
           <h4>제2조 (수집하는 개인정보 항목)</h4>
           <p>회사는 서비스 제공을 위해 다음과 같은 개인정보를 수집합니다:</p>
-          <ul>
+          <ul style={{margin:'0 0 10px', padding:'0'}}>
             <li>성명</li>
             <li>생년월일</li>
             <li>성별</li>
@@ -173,7 +205,7 @@ function ConsentForm() {
 
           <h4>제3조 (개인정보의 수집 및 이용 목적)</h4>
           <p>회사는 수집한 개인정보를 다음과 같은 목적을 위해 이용합니다:</p>
-          <ul>
+          <ul style={{margin:'0 0 10px', padding:'0'}}>
             <li>회원 가입 및 관리</li>
             <li>서비스 제공 및 계약 이행</li>
             <li>본인 확인 및 식별</li>
@@ -199,7 +231,7 @@ function ConsentForm() {
             variant="secondary"
             onClick={() => handleModalClose("information")}
           >
-            닫기
+            {t('Close')}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -255,7 +287,7 @@ function ConsentForm() {
             variant="secondary"
             onClick={() => handleModalClose("location")}
           >
-            닫기
+            {t('Close')}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -310,7 +342,7 @@ function ConsentForm() {
             variant="secondary"
             onClick={() => handleModalClose("matching")}
           >
-            닫기
+            {t('Close')}
           </Button>
         </Modal.Footer>
       </Modal>

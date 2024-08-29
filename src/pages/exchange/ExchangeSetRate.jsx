@@ -8,10 +8,31 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from 'dayjs';
 import axios from 'axios';
-import RateGraph from './RateGraph';
+import ForecastedGraph from 'components/exchange/ForecastedGraph';
+import 'components/exchange/ForecastedGraph.css';
 // import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
 
 function ExchangeSetRate(props) {
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+    
     // 이전 페이지에서 보낸 선택한 카드 정보
     const location = useLocation();
     const setCard = location.state.reserveCard;
@@ -28,9 +49,18 @@ function ExchangeSetRate(props) {
     
     // 로그인 유저 국적 조회
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         axios.get("/api/exchange/find")
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             setNation(response.data);
         })
         .catch((error) => {
@@ -46,16 +76,16 @@ function ExchangeSetRate(props) {
     };
     
     // 예측 환율 임시 data
-    const rate = [
-        // 예측 날짜, 시가, 여행 추천 시작일, 여행 추천 종료일 (국가 별 예측 정보가 있다고 가정)
-        { rDate: "2024-08-24", rOpen: "1336.40", rStart: "2024-08-21", rEnd: "2024-08-27", rNation: "USD" },
-        { rDate: "2024-08-26", rOpen: "1330.30", rStart: "2024-08-22", rEnd: "2024-08-27", rNation: "USD" }
-    ];
+    // const rate = [
+    //     // 예측 날짜, 시가, 여행 추천 시작일, 여행 추천 종료일 (국가 별 예측 정보가 있다고 가정)
+    //     { rDate: "2024-08-24", rOpen: "1336.40", rStart: "2024-08-21", rEnd: "2024-08-27", rNation: "USD" },
+    //     { rDate: "2024-08-26", rOpen: "1330.30", rStart: "2024-08-22", rEnd: "2024-08-27", rNation: "USD" }
+    // ];
 
     const [isView, setIsView] = useState(false); // toggle 효과
-    const [rateList, setRateList] = useState(rate);
+    // const [rateList, setRateList] = useState(rate);
     const [selectDate, setSelectDate] = useState(null); // 선택한 그래프 예측일(월)
-    const [selectRate, setSelectRate] = useState(null); // 선택한 예측 정보
+    const [selectRate, setSelectRate] = useState(null); // 선택한 환율
     
     // DatePicker
     // const [startDate, setStartDate] = useState(new Date());
@@ -115,7 +145,7 @@ function ExchangeSetRate(props) {
                 setCleared(true);
                 setReserveDate(null); // 선택 날짜 초기화
 
-                alert("당일 예약은 불가능해요");
+                alert(t('SameDayReservationNotAllowed'));
                 return;
             }
 
@@ -131,20 +161,20 @@ function ExchangeSetRate(props) {
                     setCleared(true);
                     setReserveDate(null); // 선택 날짜 초기화
 
-                    alert("추천 시작일과 종료일 사이의 날짜만 가능해요");
+                    alert(t('OnlyDatesBetweenStartAndEnd'));
                     return;
                 }
             } else {
                 setCleared(true);
                 setReserveDate(null); // 선택 날짜 초기화
                 
-                alert("예측 정보를 먼저 선택해 주세요");
+                alert(t('SelectPredictionInfoFirst'));
                 return;
             }
         }
     };
 
-    console.log("예약일 선택", reserveDate);
+    // console.log("예약일 선택", reserveDate);
 
     // input 클릭 시 초기화
     const focusHandle = () => {
@@ -176,7 +206,8 @@ function ExchangeSetRate(props) {
 
         if (selectRate) {
             // 예상 원화 계산
-            const calculatAmt = (numValue / selectRate.rOpen).toFixed(2);
+            // const calculatAmt = (numValue / selectRate.rOpen).toFixed(2);
+            const calculatAmt = (numValue / selectRate).toFixed(2);
             setSelectAmount(calculatAmt);
         } else {
             setSelectAmount(0);
@@ -185,8 +216,9 @@ function ExchangeSetRate(props) {
 
     // 환전 예약 isnert
     const insertHandle = () => {
+        /*
         if (!selectRate) {
-            alert("예측 정보 선택 후 예약 정보를 설정해 주세요");
+            alert(t('SetReservationAfterSelectingPrediction'));
             return;
         }
         
@@ -196,15 +228,17 @@ function ExchangeSetRate(props) {
         }
         
         if (!selectAmount) {
-            alert("0원 이상의 충전하실 금액을 입력해 주세요");
+            alert(t('EnterAmountAboveZero'));
             return;
         }
+        */
 
         const data = {
             cardId: exCard.cardId,
-            setRate: parseFloat(selectRate.rOpen.replace(/,/g, "")), // 예약환율
+            // setRate: parseFloat(selectRate.rOpen.replace(/,/g, "")), // 예약환율
+            // setRate: parseFloat(selectRate.replace(/,/g, "")), // 예약환율
             setCur: parseFloat(selectCur.replace(/,/g, "")), // 예약금액
-            setPay: parseFloat(selectAmount), // 결제금액
+            // setPay: parseFloat(selectAmount), // 결제금액
             setDate: reserveDate, // 예약일
             setStatus: "N"
         };
@@ -231,22 +265,30 @@ function ExchangeSetRate(props) {
         });
     };
 
+    // 예측 날짜 선택
+    const handleClick = (data) =>  {
+        // console.log("data 타입 확인", typeof data);
+        console.log("선택한 data 정보", data);
+
+        setReserveDate(data.date); // 날짜
+        setSelectRate(data.open); // 시가
+    };
+
     return (
         <div className="contents">
             <div className="set_rate_wrapper">
                 <h3>
-                    <span style={{ color: "#476EFF" }}>예약 환율</span> 지정
+                    <span style={{ color: "#476EFF" }}>{t('ReservedExchangeRate2')}</span> {t('Designated')}
                 </h3>
                 <div>
-                    <RateGraph onClick={showRateHandle}/>
-                    <div className="set_rate_graph_box">
-                        {/* 그래프 리스트 반복문 있다 가정하고 버튼 value 넣기 */}
+                    <ForecastedGraph getDate={handleClick}/>
+                    {/* <div className="set_rate_graph_box">
                         <button className="set_rate_graph_btn" value={"2024-08-01"} onClick={showRateHandle}>클릭해서 환율 예측일 상세보기</button>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="set_rate_table" style={{ height: isView === true ? "600px" : "0px"}}>
-                    <h5>예약할 환율을 선택해 주세요</h5>
+                    {/* <h5>예약할 환율을 선택해 주세요</h5>
                     {rateList.map((rate) => (
                         <div key={rate.rDate}
                             className={selectRate?.rDate === rate.rDate ? "set_rate_list_select" : "set_rate_list"}
@@ -262,19 +304,19 @@ function ExchangeSetRate(props) {
                             <p className="set_rate_right">{rate.rEnd}</p>
                             <button className="set_rate_btn" onClick={() => selectRateHandle(rate)}>선택</button>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
 
                 <div>
-                    <h5>설정한 예약일에 자동으로 환전해 드려요</h5>
+                    <h5>{t('AutoExchangeOnReservationDate')}</h5>
                 </div>
                 <div className="set_rate_value">
                     <div className="set_rate_date_box">
-                        <p className="set_rate_box_left">* 여행 추천 시작일 ~ 종료일 사이 예약일 선택</p>
-                        <div className="set_rate_option">
+                        <p className="set_rate_box_left">* {t('SelectedExchangeReservationDate')}</p>
+                        {/* <div className="set_rate_option">
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
-                                    label="환전 예약일 선택"
+                                    label="예측 날짜 선택"
                                     showDaysOutsideCurrentMonth
                                     slotProps={{
                                         textField: {
@@ -289,33 +331,37 @@ function ExchangeSetRate(props) {
                                     dateFormat="YYYY-MM-DD"
                                 />
                             </LocalizationProvider>
-                        </div>
+                        </div> */}
+                        <p className="set_rate_left_text">{reserveDate !== "" ? reserveDate : t('SelectReservationDate')}</p>
+                        <p className="set_rate_box_left">*  {t('SelectedReservationRate')}</p>
+                        <p className="set_rate_left_text">{nation} 1 = {selectRate !== null ? selectRate + " ￦" : t('SelectReservationRate')}</p>
                     </div>
                     <div className="set_rate_cur">
                         <p className="set_rate_box_left">
-                            * 환전 금액
+                            * {t('ExchangeAmount')}
                         </p>
                         <div className="set_cur_option">
                             <input
                                 type="text"
-                                value={selectCur === 0 || selectCur === null ? "환율 선택 후 금액 입력 가능" : selectCur}
+                                value={selectCur === 0 || selectCur === null ? t('EnterAmountToRecharge') : selectCur}
+                                // value={selectCur}
                                 onFocus={focusHandle}
                                 onKeyDown={keyDownHandle}
                                 onChange={numberHandle}
                                 // style={{ width: `${inputWidth}px`, color: selectCur === 0 || selectCur === null ? "#BFBFBF" : "black" }}
                                 style={{ color: selectCur === 0 || selectCur === null ? "#BFBFBF" : "black" }}
                                 autoComplete="off"
-                                disabled={!selectRate}
+                                // disabled={!selectRate}
                                 />
                         </div>
                     </div>
                     <div className="set_rate_pay">
-                        <p className="set_rate_box_left">* 예상 원화 금액 
+                        <p className="set_rate_box_left">* {t('EstimatedKRW')}
                             <span className="set_rate_pay_text">KRW 1 = {selectAmount} { curSymbol(nation) }</span>
                         </p>
                     </div>
                     <div className="set_rate_fix_box">
-                        <button className="set_rate_fix_btn" onClick={insertHandle}>설정하기</button>
+                        <button className="set_rate_fix_btn" onClick={insertHandle}> {t('Set')}</button>
                     </div>
                 </div>
             </div>

@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 
 const CourseCard = ({ course }) => {
     const navigate = useNavigate();
-
+    
     const handleClick = () => {
-        navigate(`/course/${course.courseId}`, { state: { courseName: course.courseName } });
+        navigate(`/course/${course.courseId}`, { state: { courseName: course.courseName, courseRegion: course.region } });
     };
-
+    
     // 이미지 URL 정리
     const imageUrl = course.courseImg.replace(/^"|"$/g, '');
 

@@ -4,8 +4,30 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
 
 function ExchangeHistory(props) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+    
+
+
     const navi = useNavigate();
     const location = useLocation();
 
@@ -21,6 +43,15 @@ function ExchangeHistory(props) {
 
     // 환전 내역 전체 조회
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         axios.get(`/api/exchange/list/${exCard.cardId}`)
         .then((response) => {
             setCardHistory(response.data);
@@ -86,12 +117,12 @@ function ExchangeHistory(props) {
                 <span>대한민국 KRW</span>
                 <h3>￦ {exCard.cardBalance.toLocaleString()}</h3>
                 <div className="ex_history_btn_wrpper">
-                    <button className="ex_go_change_btn" onClick={exchangeHandle}>충전</button>
+                    <button className="ex_go_change_btn" onClick={exchangeHandle}>{t('Charge')}</button>
                 </div>
             </div>
             <div className="ex_history_type_btn">
-                <button className={historyFilter === cardHistory ? "ex_type_select" : "ex_type_un_select"} onClick={() => typeHandle("all")}>전체</button>
-                <button className={historyFilter === cardHistory ? "ex_type_un_select" : "ex_type_select"} onClick={() => typeHandle("week")}>최근 일주일</button>
+                <button className={historyFilter === cardHistory ? "ex_type_select" : "ex_type_un_select"} onClick={() => typeHandle("all")}>{t('All')}</button>
+                <button className={historyFilter === cardHistory ? "ex_type_un_select" : "ex_type_select"} onClick={() => typeHandle("week")}>{t('LastWeek')}</button>
             </div>
             <div className="ex_history_list">
                 {historyFilter !== null ? historyFilter.map((history) => (
@@ -100,12 +131,12 @@ function ExchangeHistory(props) {
                         <p className="ex_history_title">
                             대한민국 KRW
                             <span style={{ fontFamily: "NanumSquareNeoBold", color: "#CCCC", marginLeft: 10 }}>
-                                {history.setId === null ? "충전" : "자동충전"}
+                                {history.setId === null ? t('Charge') : t('AutoRecharge')}
                             </span>
                         </p>
                         <p className="ex_history_cur">+ ￦ {history.exCur.toLocaleString()}</p>
                     </div>
-                )) : "충전 내역이 없어요"}
+                )) : t('NoRechargeHistory')}
             </div>
         </div>
     );

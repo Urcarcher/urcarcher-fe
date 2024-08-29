@@ -3,16 +3,45 @@ import { Button, Modal } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import "pages/auth/OAuthNew.css";
 import { oauthNew } from 'services/AuthService';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 function OAuthNew(props) {
   var loc = useLocation();
   const nav = useNavigate();
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+    
 
   const [email, setEmail] = useState("");
   const [showModal, setShowModal] = useState(null); // 현재 열린 모달을 추적
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(()=>{
+
+    const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
     try {
       if(loc.state.role == "GUEST") {
         setEmail(loc.state.email);
@@ -66,18 +95,18 @@ function OAuthNew(props) {
     const isEmptyField = requiredFields.some(field => !userInfo[field]);
 
     if (isEmptyField) {
-      alert("모든 정보를 입력해주세요.");
+      alert(t('AllInfo'));
       return;
     }
 
     if (!userInfo.informationConsent) {
-      setErrorMessage("개인정보 수집 및 이용 동의는 필수에요.");
+      setErrorMessage(t('ConsentCollection'));
       return;
     }
     if (
       !viewedTerms.information
     ) {
-      setErrorMessage("필수 약관을 확인해야 완료할 수 있어요.");
+      setErrorMessage(t('MustComplete'));
       return;
     }
     
@@ -103,23 +132,18 @@ function OAuthNew(props) {
               <div className="card">
                 <div className="p-lg-5 card-body">
                   <h3 className="mb-4">
-                    신규 회원이시군요 !
-                    <br />
-                    <br />
-                    서비스 이용을 위해
-                    <br />
-                    추가 정보를 입력해주세요.
+                    {t('MustComplete')}
                   </h3>
                   <hr></hr>
                   <form noValidate onSubmit={handleSubmit}>
                     <div className="form-floating mb-3">
                       <input id="email" name="email" className="form-control" value={email} disabled />
-                      <label className="form-label" for="email">이메일</label>
+                      <label className="form-label" for="email">{t('Email')}</label>
                     </div>
 
                     <div className="form-floating mb-3">
-                      <input placeholder="주민등록번호" id="registrationNumber" name="registrationNumber" className="form-control" onChange={handleInfoChange} />
-                      <label className="form-label" for="password">주민등록번호</label>
+                      <input placeholder={t('SocialNumber')} id="registrationNumber" name="registrationNumber" className="form-control" onChange={handleInfoChange} />
+                      <label className="form-label" for="password">{t('SocialNumber')}</label>
                     </div>
 
                     <div className="col-md-12 mb-3">
@@ -129,7 +153,7 @@ function OAuthNew(props) {
                         value={userInfo.nationality}
                         onChange={handleInfoChange}
                       >
-                        <option value="">국적을 선택하세요</option>
+                        <option value="">{t('SelectNation')}</option>
                         <option value="KR">Korea (한국)</option>
                         <option value="US">United States (미국)</option>
                         <option value="EU">Eurozone (유로존 국가들)</option>
@@ -193,8 +217,8 @@ function OAuthNew(props) {
                     </div>
 
                     <div className="form-floating mb-3">
-                      <input placeholder="연락처" id="phoneNumber" name="phoneNumber" className="form-control" onChange={handleInfoChange} />
-                      <label className="form-label" for="phoneNumber">연락처</label>
+                      <input placeholder={t('PhoneNumber')} id="phoneNumber" name="phoneNumber" className="form-control" onChange={handleInfoChange} />
+                      <label className="form-label" for="phoneNumber">{t('PhoneNumber')}</label>
                     </div>
 
                     <div className="col-md-12 mb-3 gender">
@@ -207,7 +231,7 @@ function OAuthNew(props) {
                           checked={userInfo.gender === 'male'}
                           onChange={handleInfoChange}
                         />
-                        <label>남성</label>
+                        <label>{t('Male')}</label>
                         <input
                           type="radio"
                           name="gender"
@@ -216,7 +240,7 @@ function OAuthNew(props) {
                           checked={userInfo.gender === 'female'}
                           onChange={handleInfoChange}
                         />
-                        <label>여성</label>
+                        <label>{t('Female')}</label>
                       </div>
                     </div>
 
@@ -230,7 +254,7 @@ function OAuthNew(props) {
                       />
 
                       <label htmlFor="agree" className="form-check-label">
-                        &nbsp;개인정보 수집 및 이용 (필수)&nbsp;
+                        {t('Collection')}
                       </label>
 
                       <Button
@@ -238,7 +262,7 @@ function OAuthNew(props) {
                         onClick={() => handleShowModal("information")}
                         className='agree-btn'
                       >
-                        보기
+                        {t('Look')}
                       </Button>
                     </div>
 
@@ -252,7 +276,7 @@ function OAuthNew(props) {
                       />
 
                       <label htmlFor="agree" className="form-check-label">
-                        &nbsp;위치정보 이용 동의 (선택)&nbsp;
+                        {t('ConsentLocation')}
                       </label>
                       
                       <Button
@@ -260,7 +284,7 @@ function OAuthNew(props) {
                         onClick={() => handleShowModal("location")}
                         className='agree-btn'
                       >
-                        보기
+                        {t('Look')}
                       </Button>
                     </div>
 
@@ -274,7 +298,7 @@ function OAuthNew(props) {
                       />
 
                       <label htmlFor="agree" className="form-check-label">
-                       &nbsp;매칭 서비스 활용 동의 (선택)&nbsp;
+                       {t('ConsentMatching')}
                       </label>
                       
                       <Button
@@ -282,12 +306,12 @@ function OAuthNew(props) {
                         onClick={() => handleShowModal("matching")}
                         className='agree-btn'
                       >
-                        보기
+                        {t('Look')}
                       </Button>
                     </div>
 
                     <Button className="my-btn" type='submit'>
-                      완료
+                    {t('Complete')}
                     </Button>
                   </form>
 
@@ -414,7 +438,7 @@ function OAuthNew(props) {
             variant="secondary"
             onClick={() => handleModalClose("location")}
           >
-            닫기
+            {t('Close')}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -469,7 +493,7 @@ function OAuthNew(props) {
             variant="secondary"
             onClick={() => handleModalClose("matching")}
           >
-            닫기
+            {t('Close')}
           </Button>
         </Modal.Footer>
       </Modal>

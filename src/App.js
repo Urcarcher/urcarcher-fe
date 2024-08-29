@@ -53,7 +53,8 @@ import ExchangeHistoryDetail from 'pages/exchange/ExchangeHistoryDetail';
 import ReservationDetail from 'pages/reservation/ReservationDetail';
 import Reserve from 'pages/reservation/Reserve';
 import ReservePayment from 'pages/reservation/ReservePayment';
-
+import SettingPassword from 'pages/card/SettingPassword';
+import CardPassword from 'pages/card/CardPassword';
 
 function App() {
   return (
@@ -66,7 +67,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/login/loading' element={<OAuthLoading/>}/>
           <Route path='/login/new' element={<OAuthNew/>}/>
-          <Route path='/exchangeRate' element={<ExchangeRateList/>}/>
+          <Route path='/exchange/realtime/rate' element={<ExchangeRateList/>}/>
           <Route path='/test' element={<Test/>}/>
           <Route path='/card1' element={<Card1/>}/>
           <Route path='/card2' element={<Card2/>}/>
@@ -108,8 +109,9 @@ function App() {
           <Route path='/cardmanagement' element={<CardManagerment/>}></Route>
           <Route path='/paymentpage' element={<Payment/>}></Route>
           <Route path='/verification' element={<Verification/>}></Route>
+          <Route path='/cardPass' element={<CardPassword/>}></Route>
         </Routes>
-      <Footer />
+        <Footer />
     </BrowserRouter>
     </div>
   </CardProvider>

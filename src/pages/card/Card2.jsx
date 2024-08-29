@@ -5,6 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ProgressBar from './ProgressBar';
 import Axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
+
 
 function Card2() {
     const [idNum, setIdNum] = useState('');
@@ -20,22 +26,33 @@ function Card2() {
     const [verificationCode, setVerificationCode] = useState('');  // 입력된 인증번호
     const [isVerificationSent, setIsVerificationSent] = useState(false); // 인증번호 발송 여부
     const [isVerificationSuccessful, setIsVerificationSuccessful] = useState(null); // 인증 성공 여부
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
 
     let navigate = useNavigate();
 
     useEffect(() => {
-        // "bleakwinter" 회원의 데이터를 가져오는 API 호출
-        // axios.get('/api/card/bleakwinter')// 로그인된 id로 나중에 수정하기
-        //     .then(response => {
-        //         const memberData = response.data;
-        //         setPhoneNumber(memberData.phoneNumber);
-        //         setRegistrationNumber(memberData.registrationNumber);
-        //         setName(memberData.name);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error fetching member data:', error);
-        //     });
 
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+        
         Axios.get('/api/t/test')
         .then((response)=>{
             const memberData = response.data;
@@ -137,12 +154,12 @@ function Card2() {
                 currentStage={'정보 입력'}
             />
             <div className="submit-container" id="regist-container" style={{ margin: 'auto 50px'}}>
-                <h4 style={{marginTop: '65px', textAlign:'left', marginBottom: '30px'}}>신청인 정보를 확인해주세요</h4>
+                <h4 style={{marginTop: '65px', textAlign:'left', marginBottom: '30px'}}>{t('VerifyInfo')}</h4>
                 <div style={{ marginBottom: '30px'}}>
-                    <div style={{ justifyContent: 'flex-start', display: 'flex' }}>이름</div>
+                    <div style={{ justifyContent: 'flex-start', display: 'flex' }}>{t('Name')}</div>
                     <Input
                         id="name"
-                        placeholder="이름을 입력하세요"
+                        placeholder={t('EnterName')}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         style={{ width: '100%' }}
@@ -151,10 +168,10 @@ function Card2() {
                 </div>
 
                 <div style={{ marginBottom: '30px' }}>
-                    <div style={{ justifyContent: 'flex-start', display: 'flex' }}>휴대전화 번호</div>
+                    <div style={{ justifyContent: 'flex-start', display: 'flex' }}>{t('PhoneNumber')}</div>
                     <Input
                         id="phone"
-                        placeholder="-를 빼고 휴대전화 번호를 입력하세요"
+                        placeholder={t('EnterPhoneNumber')}
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         style={{ width: '80%' }}
@@ -164,7 +181,7 @@ function Card2() {
                         color="primary"
                         onClick={handleVerificationRequest}
                     >
-                        인증
+                        {t('Verify')}
                     </Button>
                     <br />
                 </div>
@@ -172,10 +189,10 @@ function Card2() {
             {/* 인증번호 입력 필드 및 확인 버튼, 인증번호 발송 후에만 표시 */}
                 {isVerificationSent && (
                     <div style={{ marginBottom: '30px' }}>
-                        <div style={{ justifyContent: 'flex-start', display: 'flex' }}>인증번호 입력</div>
+                        <div style={{ justifyContent: 'flex-start', display: 'flex' }}>{t('EnterPhoneNumber')}</div>
                         <Input
                             id="verification-code"
-                            placeholder="인증번호를 입력하세요"
+                            placeholder={t('EnterPhoneNumber')}
                             value={verificationCode}
                             onChange={handleVerificationCodeChange}
                             style={{ width: '80%' }}
@@ -185,15 +202,15 @@ function Card2() {
                             color="primary"
                             onClick={handleVerificationSubmit}
                         >
-                            확인
+                            {t('Verify')}
                         </Button>
                     </div>
                 )}
 
                 <div style={{ marginBottom: '30px' }}>
-                    <div style={{ justifyContent: 'flex-start', display: 'flex' }}>주민/외국인등록번호</div>
+                    <div style={{ justifyContent: 'flex-start', display: 'flex' }}>{t('RegistrationNumber')}</div>
                     <Input
-                        placeholder={'-포함 숫자 13자리 입력'}
+                        placeholder={t('EnterNumber')}
                         maxLength={14}
                         value={maskingNum || registrationNumber}
                         onChange={handleIdNumChange}
@@ -212,7 +229,7 @@ function Card2() {
                                 style={{ marginLeft: '0 !important' }}
                             />
                         }
-                        label="후불교통기능 신청"
+                        label={t('ApplyPostpaid')}
                         labelPlacement="start" // 라벨을 스위치 앞에 위치시킴
                         style={{ marginLeft: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}
                     />
@@ -232,7 +249,7 @@ function Card2() {
                       }}
                     onClick={handleSubmit}
                 >
-                    다음
+                    {t('Next')}
                 </Button>
             </div>
         </div>

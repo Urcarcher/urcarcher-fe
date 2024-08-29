@@ -1,31 +1,34 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import 'pages/exchangeRate/ExchangeRateList.css';
+import LoadingSpinner from "components/LoadingSpinner";
+import reading from "assets/reading.png";
 
 function ExchangeRateList(props) {
     const [exchangeRateInfos, setExchangeRateInfos] = useState({});
     const [socketData, setSocketData] = useState();
-    const [date, setDate] = useState();
-    const [standard, setStandard] = useState();
-    const [round, setRound] = useState();
+    const [loading, setLoading] = useState(true);
 
     const wss = useRef(null);
+    const mainlist = ['USD', 'EUR', 'JPY', 'CNY']
 
-    useEffect(()=>{
+    useEffect(() => {
         wsLogin();
     }, []);
 
-    useEffect(()=>{
-        if(socketData !== undefined) {
+    useEffect(() => {
+        if (socketData !== undefined) {
             let id = socketData.exchangeType;
             let datas = socketData;
             exchangeRateInfos[id] = datas;
-            setDate(exchangeRateInfos[id].date);
-            setStandard(exchangeRateInfos[id].standard);
-            setRound(exchangeRateInfos[id].round);
             setExchangeRateInfos(exchangeRateInfos);
+            
+            if(Object.keys(exchangeRateInfos).length == 58) {
+                setLoading(false);
+            }
         }
     }, [socketData]);
 
-    const wsLogin = useCallback(()=>{
+    const wsLogin = useCallback(() => {
         wss.current = new WebSocket(process.env.REACT_APP_WEBSOCKET_SERVICE_URL);
 
         wss.current.onmessage = (message) => {
@@ -34,39 +37,62 @@ function ExchangeRateList(props) {
         };
     });
 
+    if(loading) return <LoadingSpinner />;
+
     return (
-        <div>
-            <h3>{date}</h3>
-            <h3>{standard}</h3>
-            <h3>고시회차 {round}회</h3>
-            <thead>
-                <tr>
-                    <th rowSpan={2}>통화명</th>
-                    <th rowSpan={2}>매매기준율</th>
-                    <th colSpan={2}>현찰</th>
-                    <th colSpan={2}>송금</th>
-                    <th rowSpan={2}>미화환산율</th>
-                </tr>
-                <tr>
-                    <th>사실 때</th>
-                    <th>파실 때</th>
-                    <th>보내실 때</th>
-                    <th>받으실 때</th>
-                </tr>
-            </thead>
-            <tbody>
-                {Object.keys(exchangeRateInfos).map((key)=>(
-                    <tr key={key}>
-                        <td>{exchangeRateInfos[key].exchangeName}</td>
-                        <td>{exchangeRateInfos[key].rate}</td>
-                        <td>{exchangeRateInfos[key].buy}</td>
-                        <td>{exchangeRateInfos[key].sell}</td>
-                        <td>{exchangeRateInfos[key].give}</td>
-                        <td>{exchangeRateInfos[key].take}</td>
-                        <td>{exchangeRateInfos[key].dollarIndex}</td>
-                    </tr>
-                ))}
-            </tbody>
+        <div className='contents'>
+            <div className='realtime'>
+                <div className='mainlist-article'>
+                    <ul className='mainlist-list'>
+                        {mainlist.map((item, index)=>(
+                        <li key={index}>
+                            <span className='mainlist-itemname'>{exchangeRateInfos[item] ? exchangeRateInfos[item].exchangeName : ''}</span>
+                            <span className='mainlist-itemprice'>{exchangeRateInfos[item] ? exchangeRateInfos[item].rate : ''}</span>
+                            <span className='mainlist-itemtime'>{exchangeRateInfos[item] ? exchangeRateInfos[item].date : ''}</span>
+                        </li>
+                        ))}
+                    </ul>
+                </div>
+    
+                <div className="mainlist-search-box">
+                    <img className="reading" src={reading}/>
+                    <input placeholder={"국가 검색"} id="search" name="search" autoComplete="off" className='mainlist-text-box' />
+                </div>
+                <hr/>
+                    
+                <div className='tableArea'>
+                    <table>
+                        <tbody>
+                            {Object.keys(exchangeRateInfos).map((item)=>(
+                            <tr key={item}>
+                                <td>
+                                    <span className='tableName'>
+                                        {exchangeRateInfos[item] ? exchangeRateInfos[item].exchangeName : ''}
+                                    </span>
+    
+                                    <span className='tableTime'>
+                                        {exchangeRateInfos[item] ? exchangeRateInfos[item].date : ''}
+                                    </span>
+                                </td>
+    
+                                <td>
+                                    {exchangeRateInfos[item] ? exchangeRateInfos[item].rate : ''}
+                                </td>
+    
+                                <td>
+                                    <div className='standard-round'>
+                                        <span className='standard-round-box'>
+                                            {exchangeRateInfos[item] ? `${exchangeRateInfos[item].round}차 ${exchangeRateInfos[item].standard}` : ''}
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     );
 }

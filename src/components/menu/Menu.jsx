@@ -3,8 +3,30 @@ import MenuCategory from 'components/menu/MenuCategory';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { logout } from 'services/AuthService';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
+
 
 function Menu({onClose, isLoggedIn, userName}) {
+
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
     const [isActive, setIsActive] = useState(false);
     
    // 로그인 (로그인 정보 API 로직 추가하기 ) 
@@ -19,6 +41,14 @@ function Menu({onClose, isLoggedIn, userName}) {
 
     //Esc키로 메뉴 닫기
     useEffect(() => {
+
+      const savedLanguage = Cookies.get('selectedLanguage');
+      if (savedLanguage) {
+          changeLanguage(savedLanguage); // 언어 변경
+      } else {
+          changeLanguage('Korea'); // 기본 언어 설정
+      }
+      
       const handleEscape = (event) => {
           if (event.key === 'Escape') {
               onClose();
@@ -48,18 +78,18 @@ function Menu({onClose, isLoggedIn, userName}) {
                   <h3>
                   {isLoggedIn ? (
                       <>
-                        <span>{userName}님</span>
-                        <Link to="/" onClick={handleLogout} className='logout-txt' >로그아웃</Link>
+                        <span>{userName}</span>
+                        <Link to="/" onClick={handleLogout} className='logout-txt' >{t('LogOut')}</Link>
                       </>
                     ) : (
-                      <Link to="/login" onClick={handleLogin}>로그인</Link>
+                      <Link to="/login" onClick={handleLogin}>{t('Login2')}</Link>
                   )}
                   </h3>
                   <div className="menu-banner">
-                    <div className='menu-banner-text'>
-                      <p>여행 코스 완성하면</p>
-                      <p>한국 기념품 리워드 증정!</p>
-                    </div>
+                    <p className='menu-banner-text'>
+                  
+                    {t('ReceiveReward')}
+                    </p>
                     <p>
                       <img src="/icon/gift.png" alt="부채" />
                     </p>
@@ -69,43 +99,43 @@ function Menu({onClose, isLoggedIn, userName}) {
               <div className="menu-section">
               <MenuCategory 
                 onClose={onClose}
-                title={[{id:11, tit:"추천"}]} 
+                title={[{id:11, tit:t('Recommend')}]} 
                 items={[
-                  { id: 1, text: "카드 신청", link: "/card1" },
-                  { id: 2, text: "환율 조회 및 예측", link: "/exchange" },
-                  { id: 3, text: "여행 코스 추천", link: "/courseList" },
-                  { id: 4, text: "소비 리포트", link: "/chart2" },
+                  { id: 1, text: t('ApplyCard2'), link: "/card1" },
+                  { id: 2, text: t('Exchange'), link: "/exchange" },
+                  { id: 3, text: t('RecommendCourse'), link: "/courseList" },
+                  { id: 4, text: t('ReportMenu'), link: "/chart2" },
                 ]}
               />
               <MenuCategory 
                 onClose={onClose}
-                title={[{id:12, tit:"금융"}]} 
+                title={[{id:12, tit:t('Finance')}]} 
                 items={[
-                  { id: 6, text: "카드 신청", link: "/card1" },
-                  { id: 7, text: "카드 분실 신고", link: "/cardmanagement" },
-                  { id: 8, text: "사용 내역 조회", link: "/usage" },
-                  { id: 9, text: "소비 패턴 분석", link: "/chart1" },
-                  { id: 10, text: "환율 조회 및 예측", link: "/exchange" },
-                  { id: 11, text: "환전하기", link: "/exchange" },
+                  { id: 6, text: t('ApplyCard2'), link: "/card1" },
+                  { id: 7, text: t('LostCardMenu'), link: "/cardmanagement" },
+                  { id: 8, text: t('SpendingMenu'), link: "/usage" },
+                  { id: 9, text: t('PatternMenu'), link: "/chart1" },
+                  { id: 10, text: t('ExchangeMenu'), link: "/exchange/realtime/rate" },
+                  { id: 11, text: t('Exchange'), link: "/exchange" },
                 ]}
               />
               <MenuCategory 
                 onClose={onClose}
-                title={[{id:13, tit:"관광"}]} 
+                title={[{id:13, tit:t('Tourism')}]} 
                 items={[
-                  { id:12, text: "관광지 추천", link: "/searchtour" },
-                  { id:13,text: "결제 기반 장소 추천", link: "/maphome" },
-                  { id:14,text: "문화 활동 예약 하기", link: "/reservation" },
-                  { id:15,text: "여행 코스 추천", link: "/courseList" },
-                  { id:16,text: "리워드 지급", link: "/courseList" },
-                  { id:17,text: "길찾기", link: "/MapComponent" },
+                  { id:12, text: t('RecommendSpot'), link: "/searchtour" },
+                  { id:13,text: t('PaymentBased'), link: "/maphome" },
+                  { id:14,text: t('BookActivities'), link: "/" },
+                  { id:15,text: t('RecommendCourse'), link: "/courseList" },
+                  { id:16,text:  t('Reward'), link: "/courseList" },
+                  { id:17,text: t('FindRoute'), link: "/MapComponent" },
                 ]}
               />
               <MenuCategory 
                 onClose={onClose}
-                title={[{id:14, tit:"고객 센터"}]} 
+                title={[{id:14, tit:t('CustomerCenter')}]} 
                 items={[
-                  { id:18, text: "자주 묻는 질문", link: "/" },
+                  { id:18, text: t('FAQ'), link: "/" },
                 ]}
               />
             </div>

@@ -8,8 +8,30 @@ import JPY from 'assets/icon-nation/icon-jp.png'
 import CNY from 'assets/icon-nation/icon-cn.png'
 import cookie from 'react-cookies';
 import { options_GET } from 'services/CommonService';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 function ExchangeCurrency(props) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
     const [exchangeCurInfo, setExchangeCurInfo] = useState({});
     const [wscData, setWscData] = useState();
     const cwsc = useRef(null);
@@ -36,6 +58,15 @@ function ExchangeCurrency(props) {
 
     // 처음 렌더링 될 때만 웹소켓 연결
     useEffect(()=>{
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         wsConnect();
     }, []);
 
@@ -150,17 +181,17 @@ function ExchangeCurrency(props) {
     // 환전 내역에 insert
     const insertHandle = () => {
         if (!currency || parseFloat(currency.replace(/,/g, "")) <= 0) {
-            alert("0원 이상의 충전하실 금액을 입력해 주세요");
+            alert(t('EnterAmountAboveZero'));
             return;
         }
 
         if (!exchangeCurInfo || !exchangeCurInfo[nation] || !exchangeCurInfo[nation].rate) {
-            alert("환율 정보를 찾고 있어요. 다시 시도해 주세요");
+            alert(t('FindingExchangeRateInfo'));
             return;
         }
     
         if (!calculateAmount || parseFloat(calculateAmount) <= 0) {
-            alert("예상 원화 금액을 계산할 수 없어요. 다시 시도해 주세요");
+            alert(t('CannotCalculateEstimatedKRW'));
             return;
         }
 
@@ -197,7 +228,7 @@ function ExchangeCurrency(props) {
     return (
         <div className="contents">
             <div className="exCur_title">
-                <h3>얼마를 <span style={{ color: "#476EFF" }}>충전</span>할까요?</h3>
+                <h3>{t('HowMuch')} <span style={{ color: "#476EFF" }}>{t('Charge')}</span>{t('DoYouWantToRecharge')}</h3>
             </div>
             <div className="exCur_wrapper">
                 <div className="ex_cur_img">
@@ -210,7 +241,7 @@ function ExchangeCurrency(props) {
                     <input
                         name="exCur"
                         type="text"
-                        value={currency === 0 || currency === null ? "충전할 금액 입력" : currency}
+                        value={currency === 0 || currency === null ? t('EnterAmountToRecharge') : currency}
                         onFocus={focusHandle}
                         onKeyDown={keyDownHandle}
                         onChange={numberHandle}
@@ -229,30 +260,30 @@ function ExchangeCurrency(props) {
                 <div className="ex_cur_nation">
                     <p className="exAmt_text">{calculateAmount}</p>
                     {exchangeCurInfo[nation] ? 
-                    (<p style={{ color: "#BFBFBF" }}>1 { curSymbol(nation) } = {exchangeCurInfo[nation].rate}원</p>) : (<p style={{ color: "#BFBFBF" }}>환율 정보를 찾고 있어요</p>)}
+                    (<p style={{ color: "#BFBFBF" }}>1 { curSymbol(nation) } = {exchangeCurInfo[nation].rate}+ " " +{t('Won')}</p>) : (<p style={{ color: "#BFBFBF" }}>{t('FindingExchangeRateInfo2')}</p>)}
                 </div>
             </div>
             <div className="exRate_wrapper">
-                <p style={{ fontFamily: "NanumSquareNeoExtraBold", textAlign: "left", marginLeft: "20px" }}>환율우대</p>
+                <p style={{ fontFamily: "NanumSquareNeoExtraBold", textAlign: "left", marginLeft: "20px" }}>{t('ExchangeRateDiscount')}</p>
                 <div className="exRate_table">
                     <div className="exRate_col">
-                        <p className="exRate_left_text">적용환율</p>
+                        <p className="exRate_left_text">{t('AppliedExchangeRate')}</p>
                         {exchangeCurInfo[nation] ? 
-                        (<p className="exRate_right_text">KRW {exchangeCurInfo[nation].rate} = 1 { curSymbol(nation) }</p>) : (<p className="exRate_right_text">환율 정보를 찾고 있어요</p>)}
+                        (<p className="exRate_right_text">KRW {exchangeCurInfo[nation].rate} = 1 { curSymbol(nation) }</p>) : (<p className="exRate_right_text">{t('FindingExchangeRateInfo2')}</p>)}
                     </div>
                     <div className="exRate_col">
-                        <p className="exRate_left_text">우대사항</p>
-                        <p className="exRate_right_text">환율우대 90%</p>
+                        <p className="exRate_left_text">{t('PreferentialTerms')}</p>
+                        <p className="exRate_right_text">{t('ExchangeRateDiscount')} 90%</p>
                     </div>
                     <div className="exRate_line"></div>
                     <div className="exRate_col">
-                        <p className="exRate_left_text">원화 예상 금액</p>
+                        <p className="exRate_left_text">{t('EstimatedAmountInKRW')}</p>
                         <p className="exRate_right_text">{calculateAmount} { curSymbol(nation) }</p>
                     </div>
                 </div>
             </div>
             <div className="exRate_plus_wrapper">
-                <button className="exRate_plus_btn" onClick={insertHandle}>충전하기</button>
+                <button className="exRate_plus_btn" onClick={insertHandle}>{t('Recharge')}</button>
             </div>
         </div>
     );

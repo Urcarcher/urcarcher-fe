@@ -10,8 +10,31 @@ import CancelCard from './CancelCard';
 import PaymentSummary from './PaymentSummary';
 import Axios from 'axios';
 import myImage from 'assets/question.jpg';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
+
 
 function CardManagerment(props) {
+
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
     const [myCard, setMyCard] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
@@ -58,7 +81,7 @@ function CardManagerment(props) {
                 setModalTitle('결제 예상 금액 (신용카드 전용)');
                 break;
             case "2":
-                setModalContent(<ChargePayment setShowModal={setShowModal} card={card} />);
+                setModalContent(<ChargePayment setShowModal={setShowModal} card={card} onPaymentSuccess={handlePaymentSuccess} />);
                 setModalTitle('금액 충전 (선불카드 전용)');
                 break;
             case "3":
@@ -70,13 +93,31 @@ function CardManagerment(props) {
                 setModalTitle('카드해지');
                 break;
             default:
-                console.log("올바른 선택지가 아닙니다.");
+                console.log("올바른 선택지가 아닙니다");
         }
 
         setShowModal(true);
     };
+    const handlePaymentSuccess = (cardId, updatedBalance) => {
+      const updatedCards = myCard.map(card => {
+          if (card.cardId === cardId) {
+              return { ...card, cardBalance: updatedBalance };
+          }
+          return card;
+      });
+      setMyCard(updatedCards); // 상태 업데이트
+  };
+  
 
     useEffect(() => {
+
+      const savedLanguage = Cookies.get('selectedLanguage');
+      if (savedLanguage) {
+          changeLanguage(savedLanguage); // 언어 변경
+      } else {
+          changeLanguage('Korea'); // 기본 언어 설정
+      }
+
         Axios.get("/api/t/test")
             .then((response) => {
                 setUserId(response.data.memberId);
@@ -94,6 +135,7 @@ function CardManagerment(props) {
                       cardStatus: card.cardStatus
                   }));
                   setMyCard(cards);
+                  console.log(cards)
                 })
                 .catch((error) => {
                     console.log("card정보 가져오는데 오류 발생");
@@ -119,22 +161,24 @@ function CardManagerment(props) {
                         }}
                     >
                         {myCard.map((card, index) => (
-                            <CarouselCell key={card.cardId}>
+                            <CarouselCell key={card.cardId}> 
                                 <CardOverlay
                                     className='my-custom-class'
                                     img={require(`../../assets/Card${card.cardTypeId}_.png`)}
-                                    imgStyle={{ width: '335px', height: '200px' }}
+                                    imgStyle={{ width: '335px', height: '200px',  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)' }}
                                 />
-                                <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', marginLeft:'17px', fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
-                                  MyCard : {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "신용카드":"선불카드"}
-                                </p>
-                                <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', marginLeft:'17px', fontSize:'15px'}}>
-                                  {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "" : "MyMoney : " + parseFloat(card.cardBalance).toLocaleString()+"원"}
-                                </p>
+                                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                  <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
+                                    {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "신용카드":"선불카드"}
+                                  </p>
+                                  <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
+                                    {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "" : "잔액 | " + parseFloat(card.cardBalance).toLocaleString()+ " " + t('Won')}
+                                  </p>
+                                </div>
 
                                 <ListGroup variant="flush" className="options-section">
                                     <OptionItem>
-                                        <span className="option-text" style={{ color: '#064AFF' }}><strong>카드번호</strong></span>
+                                        <span className="option-text" style={{ color: '#064AFF' }}><strong>{t('CardNumber')}</strong></span>
                                         <MaskedCardInfo>{card.cardNumber.replace(/(\d{4})(?=\d)/g, '$1-')}</MaskedCardInfo>
                                     </OptionItem>
                                     <OptionItem
@@ -144,20 +188,20 @@ function CardManagerment(props) {
                                             color: (card.cardTypeId === 1 || card.cardTypeId === 2) ? '#333' : '#ccc'
                                         }}
                                     >
-                                        결제 예상 금액 (신용카드 전용)
+                                        {t('EstimatedAmount')}
                                     </OptionItem>
                                     <OptionItem onClick={() => card.cardTypeId !== 1 && card.cardTypeId !== 2 && handleOptionClick("2", card)}
                                     style={{
                                         cursor: card.cardTypeId !== 1 && card.cardTypeId !== 2 ? 'pointer' : 'not-allowed',
                                         color: card.cardTypeId !== 1 && card.cardTypeId !== 2 ? '#333' : '#ccc'
                                     }}>
-                                        금액 충전 (선불카드 전용)
+                                        {t('LoadAmount')}
                                     </OptionItem>
                                     <OptionItem onClick={() => handleOptionClick("3", card)}>
-                                        PIN 번호 설정
+                                    {t('SetPINNumber')}
                                     </OptionItem>
                                     <OptionItem>
-                                        <span>카드활성화</span>
+                                        <span>{t('ActivateCard')}</span>
                                   
                                         <ToggleSwitch>
                                             <input
@@ -170,7 +214,7 @@ function CardManagerment(props) {
                                         </ToggleSwitch>
                                     </OptionItem>
                                     <OptionItem onClick={() => handleOptionClick("5", card)}>
-                                        카드해지
+                                    {t('CancelCard')}
                                     </OptionItem>
                                 </ListGroup>
                             </CarouselCell>
@@ -198,7 +242,7 @@ function CardManagerment(props) {
                 </Modal.Body>
                 <Modal.Footer>
                 <ModalCloseButton onClick={() => setShowModal(false)}>
-                  닫기
+                {t('Close')}
                 </ModalCloseButton>
                 </Modal.Footer>
             </Modal>

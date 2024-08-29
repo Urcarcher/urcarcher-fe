@@ -26,7 +26,7 @@
     /* height: 400px; */
     margin: 0 auto;
     margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     /* padding: 10px; */
     border-radius: 7px;
     overflow-y: scroll;
@@ -104,6 +104,12 @@
     /* border: 1px solid red; */
 }
 
+.set_rate_left_text {
+    font-family: 'NanumSquareNeoBold';
+    text-align: left;
+    padding-left: 35px;
+}
+
 .set_rate_right {
     width: 200px;
     height: 30px;
@@ -139,6 +145,7 @@
 }
 
 .set_rate_box_left {
+    font-family: 'NanumSquareNeoBold';
     color: #476EFF;
     text-align: left;
     padding-left: 23px;
@@ -228,7 +235,7 @@
     font-size: 15px;
     width: 100%;
     height: 100%;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     color: white;
     background-color: #476EFF;
     border: none;

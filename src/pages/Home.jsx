@@ -3,22 +3,40 @@ import axios from 'axios';
 import CurrencyRateList from 'components/home/CurrencyRateList';
 import ServiceList from 'components/home/ServiceList ';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { options_GET } from 'services/CommonService';
 import cookie from 'react-cookies';
 import Footer from 'components/Footer';
 import LoadingSpinner from 'components/LoadingSpinner';
-
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
 
 function Home(props) {
-    
+
+    const navigator = new useNavigate();
+    //bleakwinter (신용카드) happy(선불카트) - 테스트ID
+    const [memberId, setMemberId] = useState(''); 
+    const [name, setName] = useState('');
     const [mainCardInfo, setMainCardInfo] = useState([]);
     const [loading, setLoading] = useState(true);
-    
-    //1. 로그인 회원 정보   
-    const [memberId, setMemberId] = useState('');  //bleakwinter (신용카드) happy(선불카트) - 테스트ID
-    const [name, setName] = useState('');
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
 
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+    
+     //1. 로그인 회원 정보   
     const isAuthorized = () => {
         if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
           axios(options_GET("/api/auth/authorizing", null))
@@ -43,21 +61,25 @@ function Home(props) {
 
     useEffect(()=>{
         isAuthorized();
-    },[]);
 
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+    },[]);
     
     //2. 회원이 소지하고 있는 첫 번째 카드 종류와 이번 달 카드 사용 금액 정보 
     useEffect(() => {
-        
         // memberId가 없으면 에러 처리
         // if (!memberId) {
         //     console.log('Member ID is missing!');
         //     setLoading(false); // memberId가 없을 경우에도 로딩 상태를 false로 설정
         //     return;
         // }
-        
         if (memberId) {
-            axios.get(`/api/home/my-main-card/${memberId}`)
+                axios.get(`/api/home/my-main-card/${memberId}`)
                 .then(response => {
                     setMainCardInfo(response.data);
                     setLoading(false); // 데이터 로드 후 로딩 종료
@@ -90,17 +112,20 @@ function Home(props) {
         return `${formattedMonth}.${formattedDay}`;
     };
 
+    const goChargePage = () => {
+        navigator("/cardmanagement");
+    }
+    console.log(mainCardInfo);
     return (
         <div className="contents">
-            {/* <p><img src={Logo} alt="로고" /></p> */}
             <div className='home-container'>
-             
-                {/* 로그인회원 이름으로 수정 */}
+                <SelectLanguage changeLanguage={changeLanguage} />
                 {memberId ? (
-                    <h5><span style={{color:'#476EFF'}}>{name}</span>님 반갑습니다!🙌</h5>
+              
+                    <h5><span style={{color:'#476EFF'}}>{name}</span>{t('Greeting')}🙌</h5>
                 ) : (
                     <h5>
-                        <Link to='/login'>🙌로그인하기</Link>
+                        <Link to='/login'>🙌{t('Login')}</Link>
                     </h5>
                 )}
                 <div className='main-content'>
@@ -117,31 +142,41 @@ function Home(props) {
                                     {/* 1. 메인 카드 정보 */}
                                     <p className='card-type-text'>
                                         <span>{mainCardInfo.cardUsage === "신용카드" ? mainCardInfo.card_number : mainCardInfo.cardName}</span>
-                                        <span className={ !mainCardInfo.cardUsage ? 'hidden' : 'type'}>{mainCardInfo.cardUsage}</span>
+                                        <span className={ !mainCardInfo.cardUsage  ? 'hidden'  : 'type' }>
+                                            {
+                                                mainCardInfo.cardUsage === '신용카드'  ? t('CreditCard')  
+                                                : mainCardInfo.cardUsage === '선불카드' ? t('PrepaidCard') : ''
+                                            }
+                                        </span>
                                     </p>
                                     <p className='card_balance'>
                                         { mainCardInfo.cardUsage === "신용카드" ? '' : (  //신용카드이면 잔액 출력, 선불카드일 때 카드 충전 
-                                            mainCardInfo.cardBalance ? mainCardInfo.cardBalance.toLocaleString() + '원' :  <Link to='/'>카드 충전</Link>
+                                            mainCardInfo.cardBalance ? mainCardInfo.cardBalance.toLocaleString() + " " + t('Won') :  <Link to='/'>{t('CardRecharge')}</Link>
                                         )}
                                     </p>
-                                    <p className={mainCardInfo.cardUsage === "신용카드" ||  !mainCardInfo.cardUsage ? 'hidden' : 'card-charge'}>충전</p>
-                                    <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-expiration-date' : 'hidden'}>만료일:  {mainCardInfo.expiration_date || ''}</p>
+                                    <p 
+                                        className={mainCardInfo.cardUsage === "신용카드" ||  !mainCardInfo.cardUsage ? 'hidden' : 'card-charge'}
+                                        onClick={goChargePage}
+                                    >
+                                        {t('Charge')}
+                                    </p>
+                                    <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-expiration-date' : 'hidden'}>{t('ExpirationDate')}:  {mainCardInfo.expiration_date || ''}</p>
                                     <p className={mainCardInfo.cardUsage === "신용카드" ? 'mycard-name' : 'hidden'}> {mainCardInfo.name || ''} </p>
                                 </>
                             ) : (// 로그인 후 카드 정보 없는 경우
                                 //<p className='card_balance'>카드 발급 후 사용해주세요!</p>
                                 <>
-                                    <p className='card_balance-no'>어카처의 다양한 서비스를 <br /> 이용해보세요</p>
+                                    <p className='card_balance-no'>{t('VariousService')}</p>
                                     <p className='member-sigup'>
-                                        <Link to='/card1'>&gt; 카드 신청하기</Link>
+                                        <Link to='/card1'>&gt; {t('ApplyCard')}</Link>
                                     </p>
                                 </>  
                             )
                         ) : ( // 로그인하지 않은 경우
                             <>
-                                <p className='card_balance-no'>어카처의 다양한 서비스를 <br /> 이용해보세요</p>
+                                <p className='card_balance-no'>{t('VariousService')}</p>
                                 <p className='member-sigup'>
-                                    <Link to='/signup'>&gt; 회원 가입</Link>
+                                    <Link to='/signup'>&gt; {t('SignUp')} </Link>
                                 </p>
                             </>   
                         )
@@ -151,33 +186,35 @@ function Home(props) {
                     {memberId ? ( //로그인 한 경우
                         mainCardInfo ? ( //카드 정보 있는 경우
                             <div className='amount-used'>
-                                <p>이번달 사용 금액</p> 
+                                <p>{t('SpendAmount')}</p> 
                                 {/* null 값 처리 */}
-                                <p>{mainCardInfo.totalPayment ? mainCardInfo.totalPayment.toLocaleString() + '원' : '0원'}</p>
+                                <p>{mainCardInfo.totalPayment ? mainCardInfo.totalPayment.toLocaleString() + " " + t('Won') : 0 + " " + t('Won')}</p>
                             </div>
                         ) : (
                             <div className='amount-used'>
-                                <p className='noCardInfo-text'>결제 내역 정보가 없습니다</p>
+                                <p className='noCardInfo-text'>{t('NoHistory')}</p>
                             </div>
                         )
                     ) : ( //로그인하지 않은 경우
                         <div className='amount-used-no'>
-                            <p><Link to="/login">로그인 후 확인 가능합니다</Link></p>
+                            <p><Link to="/login">{t('AfterLogin')}</Link></p>
                         </div>
                     )}
                     
                     <div className='card-signup'>
-                        <p><Link to="/card1">카드 신청</Link></p>
+                        <p><Link to="/card1">{t('ApplyCard2')}</Link></p>
                         <p><img src="icon/icon-credit-card.png" alt="카드신청" style={{width:"40px"}}/></p>
                     </div>
                 </div>
                 <div className='home-content-box'> 
-                    <h4 className='home-title'>서비스</h4>
+                    <h4 className='home-title'>{t('Service')}</h4>
                     <ServiceList />
                 </div>
                 <div className='home-title-wrap'> 
-                    <h4 className='home-title'>현재 환율</h4> 
-                    <p className='rate-date'>({getCurrentDate()}기준)</p>
+                    <div className ="currentExchange">
+                    <h4 className='home-title'>{t('CurrentExchange')}</h4> 
+                    <p className='rate-date'>({getCurrentDate()})</p>
+                    </div>
                     <CurrencyRateList />
                 </div>
             </div>

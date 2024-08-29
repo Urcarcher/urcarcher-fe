@@ -1,12 +1,33 @@
-import React, { useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { GoogleMap, LoadScript, DirectionsRenderer, Autocomplete } from '@react-google-maps/api';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
 import LocationIcon from '../../assets/nowlocation.png'; // 이미지 경로 가져오기
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
 
 
 const MapComponent = (props) => {
+
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
   const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY_1;
   const { detailDestination } = useParams();
   
@@ -21,28 +42,35 @@ const MapComponent = (props) => {
   const getCurrentLocation = async () => {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const { latitude, longitude } = position.coords;
-          const geocoder = new window.google.maps.Geocoder();
-          const latLng = new window.google.maps.LatLng(latitude, longitude);
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            const geocoder = new window.google.maps.Geocoder();
+            const latLng = new window.google.maps.LatLng(latitude, longitude);
 
-          geocoder.geocode({ location: latLng }, (results, status) => {
-            if (status === 'OK') {
-              setOrigin(results[0].formatted_address);
-              resolve(results[0].formatted_address);
-            } else {
-              console.error('Geocoder failed due to: ' + status);
-              reject(status);
+            geocoder.geocode({ location: latLng }, (results, status) => {
+              if (status === 'OK') {
+                setOrigin(results[0].formatted_address);
+                resolve(results[0].formatted_address);
+              } else {
+                console.error('Geocoder failed due to: ' + status);
+                reject(status);
+              }
+            });
+          },
+          (error) => {
+            console.error('Error Code = ' + error.code + ' - ' + error.message);
+            if (error.code === error.PERMISSION_DENIED) {
+              alert(t('LocationPermissionRequired'));
             }
-          });
-        }, (error) => {
-          console.error('Error Code = ' + error.code + ' - ' + error.message);
-          reject(error);
-        }, {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0,
-        });
+            reject(error);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0,
+          }
+        );
       } else {
         reject("Geolocation not supported");
       }
@@ -50,8 +78,12 @@ const MapComponent = (props) => {
   };
 
   const onLoadScriptHandler  = async () => {
-    await getCurrentLocation();
-    handleLoad();
+    try {
+      await getCurrentLocation();
+      handleLoad();
+    } catch (error) {
+      console.error("초기 위치를 가져오는데 실패했습니다: ", error);
+    }
   };
 
   const handleLoad = useCallback(() => {
@@ -140,6 +172,17 @@ const MapComponent = (props) => {
     }
   };
 
+  useEffect(()=>{
+   
+    const savedLanguage = Cookies.get('selectedLanguage');
+    if (savedLanguage) {
+        changeLanguage(savedLanguage); // 언어 변경
+    } else {
+        changeLanguage('Korea'); // 기본 언어 설정
+    }
+},[]);
+
+
   return (
     <Container>
       <br/>
@@ -153,7 +196,7 @@ const MapComponent = (props) => {
               <Input
                 id="start"
                 type="text"
-                placeholder="출발지"
+                placeholder={t('Departure')}
                 value={origin || ''}
                 onChange={(e) => setOrigin(e.target.value)}
               />
@@ -167,14 +210,14 @@ const MapComponent = (props) => {
               <Input
                 id="end"
                 type="text"
-                placeholder="도착지"
+                placeholder={t('Destination')}
                 value={destination || ''}
                 onChange={(e) => setDestination(e.target.value)}
               />
             </Autocomplete>
           </InputContainer>
           <StyledButton onClick={handleSubmit}>
-            길찾기
+          {t('FindRoute')}
           </StyledButton>
         </div>
         <div  className="scrollable-content" style={{ maxHeight: '600px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
@@ -191,24 +234,24 @@ const MapComponent = (props) => {
           <div style={{ marginTop: '20px' }}>
             {routes.map((route, index) => (
               <RouteCard key={index}>
-                <h3 style={{ marginBottom: '10px' }}>경로 {index + 1}</h3>
+                <h3 style={{ marginBottom: '10px' }}>{t('Route')} {index + 1}</h3>
                 <Button
                   style={{ marginBottom: "12px" }}
                   onClick={() => setSelectedRoute(route)}
                 >
-                  이 경로 보기
+                  {t('ViewThisRoute')}
                 </Button>
                 {route.legs.map((leg, legIndex) => (
                   <div key={legIndex}>
-                    <p><strong>출발지:</strong> {leg.start_address}</p>
-                    <p><strong>도착지:</strong> {leg.end_address}</p>
-                    <p><strong>거리:</strong> {leg.distance.text}</p>
-                    <p><strong>소요 시간:</strong> {leg.duration.text}</p>
+                    <p><strong>{t('Departure')}:</strong> {leg.start_address}</p>
+                    <p><strong>{t('Destination')}:</strong> {leg.end_address}</p>
+                    <p><strong>{t('Distance')}:</strong> {leg.distance.text}</p>
+                    <p><strong>{t('EstimatedTime')}:</strong> {leg.duration.text}</p>
                     {leg.steps.map((step, stepIndex) => (
                       <div key={stepIndex} style={{ marginBottom: '10px', paddingLeft: '10px', borderLeft: '2px solid #4CAF50' }}>
                         <p dangerouslySetInnerHTML={{ __html: step.instructions }} style={{ margin: '5px 0' }}></p>
-                        <p style={{ margin: '5px 0' }}><strong>거리:</strong> {step.distance.text}</p>
-                        <p style={{ margin: '5px 0' }}><strong>소요 시간:</strong> {step.duration.text}</p>
+                        <p style={{ margin: '5px 0' }}><strong>{t('Distance')}:</strong> {step.distance.text}</p>
+                        <p style={{ margin: '5px 0' }}><strong>{t('EstimatedTime')}:</strong> {step.duration.text}</p>
                       </div>
                     ))}
                   </div>

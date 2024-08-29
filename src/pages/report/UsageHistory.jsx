@@ -3,8 +3,30 @@ import axios from 'axios';
 import Logo from 'assets/urcarcher-logo.png';
 import Axios from 'axios';
 import Preloader from 'bootstrap-template/components/Preloader';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 function UsageHistory(props) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
     const [usage, setUsage] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [groupedUsage, setGroupedUsage] = useState({});
@@ -14,6 +36,15 @@ function UsageHistory(props) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         setLoading(true); // 데이터 로딩 시작 시 로딩 상태 활성화
         axios.get('/api/t/test')
             .then(response => {
@@ -66,7 +97,7 @@ function UsageHistory(props) {
             case 4:
                 return "TourPass";
             case 5:
-                return "트래블러 카드";
+                return "Seoul Plus";
             default:
                 console.log("카드이름가져오는데 오류발생");
                 return "Unknown Card";
@@ -147,9 +178,9 @@ function UsageHistory(props) {
                                     style={{ fontWeight: 'bold', fontSize: '13px', backgroundColor: '#EDF1FF', border: 'none', outline: 'none' }}
                                     onChange={handleCardSelect}
                                 >
-                                    <option value="All">전체 카드</option>
+                                    <option value="All">{t('AllCards')}</option>
                                     {cardInfo.map((card, index) => (
-                                        <option key={index} value={card.cardId}>{cardName(card.cardTypeId)} 카드</option>
+                                        <option key={index} value={card.cardId}>{cardName(card.cardTypeId)} {t('Card')}</option>
                                     ))}
                                 </select>
                             </div>
@@ -163,16 +194,16 @@ function UsageHistory(props) {
                                     : ''}
                             </div>
                         </div>
-
-                        <div style={{ justifyContent: 'flex-start', display: 'flex', color: 'grey' }}>총 지출</div>
-                        <h2 style={{ justifyContent: 'flex-start', display: 'flex', color: '#064AFF' }}>{totalPrice.toLocaleString()}원</h2>
+                        {/* 여기 원 왜들어가나요..??ㅇㅅㅇ */}
+                        <div style={{ justifyContent: 'flex-start', display: 'flex', color: 'grey' }}>{t('Won')}</div>
+                        <h2 style={{ justifyContent: 'flex-start', display: 'flex', color: '#064AFF' }}>{totalPrice.toLocaleString()}{t('Won')}</h2>
                     </div>
 
                     <div style={{ margin: '40px 20px' }}>
                         {paymentHistory && paymentHistory.length > 0 ? (
                             Object.keys(groupedUsage).sort((a, b) => new Date(b) - new Date(a)).map((month, index) => (
                                 <div key={index}>
-                                    <h5 style={{ justifyContent: 'flex-start', display: 'flex' }}>{month.replace('-', '년 ')}월</h5> {/* 월별 헤더 */}
+                                    <h5 style={{ justifyContent: 'flex-start', display: 'flex' }}>{month.replace('-', t('Year'))}{t('Month')}</h5> {/* 월별 헤더 */}
                                     {groupedUsage[month].map((usage, idx) => (
                                         <div style={{ display: 'flex', margin: '25px auto', justifyContent: 'space-between', alignItems: 'center' }} key={idx}>
                                             <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -182,13 +213,13 @@ function UsageHistory(props) {
                                                 <div style={{ fontWeight: 'bold', textAlign: 'start' }}>{usage.storeName}</div>
                                                 <div style={{ textAlign: 'start' }}>{new Date(usage.paymentDate).toLocaleString()}</div>
                                             </div>
-                                            <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice.toLocaleString()}원</div>
+                                            <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice.toLocaleString()}{t('Won')}</div>
                                         </div>
                                     ))}
                                 </div>
                             ))
                         ) : (
-                            <div>결제 내역이 없습니다.</div>
+                            <div>{t('NoPaymentHistory')}</div>
                         )}
                     </div>
                 </div>

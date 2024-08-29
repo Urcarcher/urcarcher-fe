@@ -7,6 +7,10 @@ import { useLocation } from 'react-router-dom';
 import arrow from '../../assets/arrow.png';
 import spot_arrow from '../../assets/spot_arrow.png';
 import { options_POST } from 'services/CommonService';
+import RegionImgUrl from 'assets/icon_cos_schedule.gif';
+import tagImgUrl from 'assets/ico_schedule_tag.png';
+
+
 const CourseDetail = () => {
   const nav = useNavigate();
   const location = useLocation();
@@ -18,22 +22,24 @@ const CourseDetail = () => {
   const [verificationModalOpen, setVerificationModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [courseName, setCourseName] = useState(location.state?.courseName || '');
+  const [region, setRegion] = useState(location.state?.courseRegion || '');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [completedItems, setCompletedItems] = useState(new Set());
   const [verificationImage, setVerificationImage] = useState('');
+  
 
   useEffect(() => {
     if(courseName === '') {
       nav("/CourseList");
       return;
     } 
-
+    
     axios.get(`/api/course/${courseId}`)
       .then((response) => {
 
         const { places, certifications } = response.data;
-
+        const certificationsSafe = certifications || [];
         const courseData = places.map(item => ({
         ...item,
         latitude: parseFloat(item.latitude).toFixed(6),
@@ -42,11 +48,11 @@ const CourseDetail = () => {
         console.log('Course data:', courseData);
         console.log('Certifications:', certifications);
         setCourse(courseData);
-        setCertifications(certifications);
+        setCertifications(certificationsSafe);
         setLoading(false);
-
+        console.log("지역:", region)
         const completedSet = new Set();
-        certifications.forEach(cert => {
+        certificationsSafe.forEach(cert => {
           completedSet.add(cert.placeId);
         });
         setCompletedItems(completedSet);
@@ -277,7 +283,7 @@ const CourseDetail = () => {
             setVerificationImage(require('../../assets/Heart2.png')); // 새로운 이미지로 변경
           } else {
             // 특정 장소 인증만 완료된 경우
-            setModalMessage(`[${placeName}] \n 인증이 완료되었습니다.`);
+            setModalMessage(`<span style="font-size: 10px;">[${placeName}]</span>  \n 인증이 완료되었습니다.`);
             setVerificationImage(require('../../assets/success.png'));
           }
     
@@ -301,27 +307,54 @@ const CourseDetail = () => {
     }, 200);
   };
 
+  // 마지막 아이템의 이미지 URL 가져오기
+  const lastItem = course[course.length - 1];
+  const bgImgUrl = lastItem ? lastItem.placeImg : '';
+
     return (
       <div className="course-detail">
-
-      <div className="detail-course-name">{courseName}</div>
-      <div className="course-items-container">
-      {Array(Math.ceil(course.length / 4)).fill().map((_, rowIndex) => (
-        <div key={rowIndex} className="row-container">
-          {course.slice(rowIndex * 4, (rowIndex + 1) * 4).map((item) => (
-            <div key={item.placeId} className="course-item">
-              <img
-                src={completedItems.has(item.placeId) ? require('../../assets/checked.png') : require('../../assets/default.png')}
-                alt="marker"
-                className="marker-image"
-                onClick={() => handleButtonClick(item)}
-              />
-              <h2>{item.placeName}</h2>
+        <div className='course-background' style={{width:'100%'}}>
+          <div className="detail-course-name" style={{ backgroundImage: `url(${bgImgUrl})`}}>
+            {/* 코스명 표시 */}
+            <p className='course-name-title'>
+              <span className='corse-number'>{course.length}코스</span>
+              <span className='course-title'>{courseName}</span>
+            </p>
+            <div className='course-tag-wrap'>
+                <div>
+                  <img src={RegionImgUrl} alt="태그" style={{width:'30px', height:'30px', borderRadius:'50%'}} />
+                  <div className='course-tag-textwrap'  style={{textAlign:'left'}}>
+                    <p>지역</p>
+                    <p>{region}</p>
+                  </div>
+                </div>
+                <div>
+                  <img src={tagImgUrl} alt="태그" style={{width:'30px', height:'30px', borderRadius:'50%'}} />
+                  <div className='course-tag-textwrap'  style={{textAlign:'left'}}>
+                    <p>태그</p>
+                    <p>#추천코스 #{region}가볼만한곳 #관광지</p>
+                  </div>
+                </div>
             </div>
-          ))}
+          </div>
         </div>
-      ))}
-    </div>
+        <div className="course-items-container">
+        {Array(Math.ceil(course.length / 4)).fill().map((_, rowIndex) => (
+          <div key={rowIndex} className="row-container">
+            {course.slice(rowIndex * 4, (rowIndex + 1) * 4).map((item) => (
+              <div key={item.placeId} className="course-item">
+                <img
+                  src={completedItems.has(item.placeId) ? require('../../assets/checked.png') : require('../../assets/default.png')}
+                  alt="marker"
+                  className="marker-image"
+                  onClick={() => handleButtonClick(item)}
+                />
+                <h2>{item.placeName}</h2>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
 
       <div className="place-containers">
         {course.map((item) => (
@@ -329,7 +362,7 @@ const CourseDetail = () => {
             <div className="place-container">
             <img src={item.placeImg} alt={`${item.placeName} 이미지`} className="place-image" />
             <div className="place-details">
-              <h2 className="place-name">{item.placeName}</h2>
+              <h2 className="place-name">🚩 {item.placeName}</h2>
               <p className="place-address">{item.address}</p>
               <p className="place-content">{item.content}</p>
             </div>

@@ -7,8 +7,30 @@ import { useEffect, useState } from 'react';
 import cookie from 'react-cookies';
 import axios from 'axios';
 import { options_GET } from 'services/CommonService';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
 
 function ExchangeSelect(props) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+    
+
+
     // 로그인 유저 정보
     const [memberId, setMemberId] = useState('');
     const [name, setName] = useState('');
@@ -37,6 +59,15 @@ function ExchangeSelect(props) {
     // isAuthorized();
 
     useEffect(()=>{
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         isAuthorized();
     },[]);
 
@@ -52,7 +83,7 @@ function ExchangeSelect(props) {
         // alert(selectBtn);
 
         if (!memberId && !name) {
-            alert("로그인 후 이용 가능해요");
+            alert(t('LoginRequired'));
             navi("/");
             return;
         }
@@ -62,7 +93,7 @@ function ExchangeSelect(props) {
     // 환전 내역
     const historyHandle = () => {
         if (!memberId && !name) {
-            alert("로그인 후 이용 가능해요");
+            alert(t('LoginRequired'));
             navi("/");
             return;
         }
@@ -73,12 +104,12 @@ function ExchangeSelect(props) {
         <div className="contents">
             <div className="exchange_select_wrapper">
                 <div className="exchange_select_title">
-                    <h5>어카처에서 편하게 환전하고</h5>
-                    <h5>원할 때 바로 사용하세요!</h5>
+                    <h5>어카처{t('ConvenientExchange')}</h5>
+                    <h5>{t('UseImmediately')}</h5>
                 </div>
                 <div className="exchange_select_content">
-                    <p>모바일로 편하게 환전 하고</p>
-                    <p>원하는 날, 원하는 곳에서 바로 사용</p>
+                    <p>{t('MobileExchange')}</p>
+                    <p>{t('UseAnytimeAnywhere')}</p>
                 </div>
                 <div className="exchange_select_card">
                     <img src={exchangeCard} alt="카드 아이콘"/>
@@ -87,17 +118,17 @@ function ExchangeSelect(props) {
                     <img src={exchangeMoney} alt="돈 아이콘"/>
                 </div>
                 <div className="select_btn_wrapper">
-                    <button className="select_info_btn" onClick={historyHandle}>내역보기</button>
-                    <button id="currency" className="select_cur_btn" onClick={exchangeHandle}>충전하기</button>
+                    <button className="select_info_btn" onClick={historyHandle}>{t('ViewHistory')}</button>
+                    <button id="currency" className="select_cur_btn" onClick={exchangeHandle}>{t('Charge')}</button>
                 </div>
                 <div className="exchange_select_title2">
-                    <h5>이런 환전 방법은 어떠세요?</h5>
+                    <h5>{t('HowAboutThisMethod')}</h5>
                 </div>
                 <div className="select_btn_wrapper2">
                     <button id="set" className="select_set_btn" onClick={exchangeHandle}>
-                        <p className="select_set_p">목표환율 자동충전</p>
+                        <p className="select_set_p">{t('AutoRechargeAtReservedRate')}</p>
                         <img src={exchangeArrow} alt="화살표 아이콘"/>
-                        <p>목표 환율 도달 시 자동 환전해줘요</p>
+                        <p>{t('AutoExchangeOnReservedDate')}</p>
                     </button>
                 </div>
             </div>

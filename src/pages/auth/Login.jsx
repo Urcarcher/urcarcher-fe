@@ -8,12 +8,38 @@ import cookie from 'react-cookies';
 import axios from 'axios';
 import { options_GET } from "services/CommonService";
 import LoadingSpinner from "components/LoadingSpinner";
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
+
 
 function Login() {
+
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+  };
+    
+
+
   const nav = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(()=>{
+
+    
     if(cookie.load("URCARCHER_ACCESS_TOKEN") != null) {
       axios(options_GET("/api/auth/authorizing", null))
       .then((resp)=>{
@@ -30,6 +56,15 @@ function Login() {
     } else {
       setLoading(false);
     }
+
+    const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+        
   }, [])
   
   if (loading) {
@@ -49,6 +84,10 @@ function Login() {
     signin({ memberId: username, password: password, agree: on});
   };
 
+  const goSignupPage = () => {
+    nav("/signup");
+  }
+
   return (
     <div className="align-items-center row contents">
       <div className="px-lg-4 col-lg-6">
@@ -56,44 +95,45 @@ function Login() {
           <div className="p-lg-5 card-body">
             <form noValidate onSubmit={handleSubmit}>
               <div className="form-floating mb-3">
-                <input placeholder="아이디" id="username" name="username" className="form-control" />
-                <label className="form-label" for="email">아이디</label>
+                <input placeholder={t('Id')} id="username" name="username" className="form-control" />
+                <label className="form-label" for="email">{t('Id')}</label>
               </div>
 
               <div className="form-floating mb-3">
-                <input placeholder="비밀번호" type="password" id="password" name="password" className="form-control" />
-                <label className="form-label" for="password">비밀번호</label>
+                <input placeholder={t('Pw')} type="password" id="password" name="password" className="form-control" />
+                <label className="form-label" for="password">{t('Pw')}</label>
               </div>
 
-              <button type="submit" className="btn btn-primary btn-lg">로그인</button>
+              <button type="submit" className="btn btn-primary btn-lg">{t('Login2')}</button>
 
               <div className="mb-3 form-check">
                 <div className="fc-1">
                   <input type="checkbox" id="agree" name="agree" className="form-check-input" />
-                  <label title="" for="agree" className="form-check-label">자동 로그인</label>
+                  <label title="" for="agree" className="form-check-label">{t('AutoLogIn')}</label>
                 </div>
 
                 <div className="fc-2">
-                  <Link to="/find/id" className="findid">아이디 찾기</Link>
+                  <Link to="/find/id" className="findid">{t('FindId')}</Link>
                   <label>|</label>
-                  <Link to="/find/pw">비밀번호 찾기</Link>
+                  <Link to="/find/pw">{t('FindPw')}</Link>
                 </div>
               </div>
 
             </form>
             <button className="btn btn-primary btn-lg oauth" onClick={googleOauth2Handler}>
               <img className="logo" src={googleLogo}/>
-              Google 로그인
+              Google {t('Login2')}
             </button>
             
             <button className="btn btn-primary btn-lg oauth">
               <img className="logo" src={appleLogo}/>
-              Apple 로그인
+              Apple {t('Login2')}
             </button>
 
             <div className="wantsign">
-              <span>아직 회원이 아니신가요?</span>
-              <button>회원가입</button>
+         
+              <span>{t('YetMember')}</span>
+              <button onClick={goSignupPage}>{t('SignUp')}</button>
             </div>
           </div>
 

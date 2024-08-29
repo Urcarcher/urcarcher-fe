@@ -15,14 +15,26 @@
     font-family: 'NanumSquareNeoBold';
     width: 100%;
     height: auto;
-    margin-top: 20px;
+    margin-top: 15px;
     /* border: 1px solid red; */
+}
+
+.exCard_user_box {
+    width: 60%;
+    height: 80%;
+    margin-left: 20px;
+    padding-top: 2px;
+    color: white;
+    text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    /* background-color: white; */
+    /* opacity: 0.3; */
+    /* border-radius: 7px; */
 }
 
 .exCard_wrapper p {
     margin-top: 25px;
     margin-left: 25px;
-    line-height: 16px
+    line-height: 16px;
 }
 
 .exCard_balance {
@@ -32,7 +44,7 @@
 
 .exCard_text {
     font-size: 13px;
-    color: #CCCCCC;
+    /* color: #CCCCCC; */
 }
 
 .unChoice {
@@ -42,8 +54,13 @@
     margin-bottom: 30px;
     border-radius: 7px;
     text-align: left;
-    border: 1px solid #CCCCCC;
+    /* border: 1px solid #CCCCCC; */
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* opacity: 0.5; */
 }
 
 .unChoice:hover {
@@ -51,14 +68,37 @@
 }
 
 .choice {
-    width: 85%;
-    height: 150px;
+    width: 90%;
+    height: 180px;
     margin: 0 auto;
     margin-bottom: 30px;
+    padding-top: 17px;
     border-radius: 7px;
     text-align: left;
-    border: 1px solid #476EFF;
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
+    /* border: 1px solid #476EFF; */
+
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.test::after {
+    content: ""; /* 가상의 콘텐츠 */
+    position: absolute; /* 절대 위치 */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: inherit;  /* 배경 이미지 상속 */
+    filter: blur(1px); /* 블러 효과 */
+    z-index: -1;
+    pointer-events: none; /* 가상 요소가 클릭 이벤트를 차단하지 않도록 설정 */
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .choice button {
@@ -98,7 +138,7 @@
     width: 85%;
     height: 60px;
     margin: 0 auto;
-    margin-top: 45px;
+    /* margin-top: 45px; */
     /* border: 1px solid red; */
 }
 

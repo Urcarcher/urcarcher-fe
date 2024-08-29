@@ -5,6 +5,9 @@
     text-decoration: none;
     color: #333;
 }
+.card-signup a:hover{
+    text-decoration: none;
+}
 .home-logo{
     margin: 0 auto;
 }
@@ -17,6 +20,7 @@
     overflow-y: scroll;
     padding-left: 3px;
     padding-right: 3px;
+    position: relative;
 }
 .home-container > h5{
     text-align: left;
@@ -57,7 +61,7 @@ span.type{
 .amount-used, .card-signup{
     display: flex;
     justify-content: space-between;
-    padding: 0 10px;
+    padding: 0 15px;
 }
 .amount-used{
     height: 70px;
@@ -96,19 +100,25 @@ span.type{
     color: #333;
     font-weight: bold;
 }
+.service-list > li >a > img:hover{
+    transform: scale3d(0.9, 0.9, 1.2);
+}
 .home-title-wrap{
     position: relative;
 }
 .home-title{
     text-align: left;
     color: #414042;
+    margin: 0;
 }
 .rate-date{
-    position: absolute;
-    top: 5px;
-    left: 90px;
+    position: relative;
+    padding: 0;
+    margin: 0;
+   
 }
 p.card_balance{
+    width: max-content;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -127,6 +137,7 @@ p.card-charge{
     border-radius: 15px;
     height: 20px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 .home-rate-list{
     margin: 0;
@@ -168,7 +179,7 @@ p.card-charge{
 }
 .member-sigup{
     position: absolute;
-    bottom: 35px;
+    bottom: 45px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #F4F7FC;
@@ -177,10 +188,22 @@ p.card-charge{
     height: 27px;
     line-height: 27px;
     box-sizing: border-box;
+    transition: all 0.3s;
+    cursor: pointer;
 }
 .member-sigup > a {
     color: #333;
     font-weight: bold;
+    font-size: 14px;
+}
+.member-sigup > a:hover {
+    text-decoration: none;
+}
+.member-sigup:hover{
+    background-color: #002e7c;
+}
+.member-sigup:hover a{
+    color: #fff;
 }
 .card_balance-no{
     white-space: nowrap;
@@ -189,6 +212,14 @@ p.card-charge{
     left: 50%;
     transform: translate(-50%,-50%);
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
+    width: 80%;
+    white-space: normal;
 }
 
+.currentExchange{
+    display: flex;
+    flex-direction: row;
+    height: 25px;
+    line-height: 25px;
+}
