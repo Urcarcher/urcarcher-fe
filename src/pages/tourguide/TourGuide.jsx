@@ -3,6 +3,10 @@ import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import CardOverlay from '../../bootstrap-template/components/cards/CardOverlay';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+
 
 function TourGuide({
   numOfRows = '10',
@@ -16,6 +20,24 @@ function TourGuide({
   cat3,
   modifiedtime
 }) {
+
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+    
+
+
   const { areaCode, contentTypeId } = useParams();
 
   const [tourData, setTourData] = useState([]);
@@ -27,6 +49,15 @@ function TourGuide({
   const loaderRef = useRef(null);
 
   useEffect(() => {
+
+    const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -120,7 +151,7 @@ function TourGuide({
             setArrange('R');
         }}
     >
-        생성일순
+        {t('SortByCreationDate')}
     </button>
     <button
         style={buttonStyle(arrange === 'Q')}
@@ -130,7 +161,7 @@ function TourGuide({
             setArrange('Q');
         }}
     >
-        수정일순
+        {t('SortByModifiedDate')}
     </button>
     <button
         style={buttonStyle(arrange === 'O')}
@@ -140,7 +171,7 @@ function TourGuide({
             setArrange('O');
         }}
     >
-        제목순
+        {t('SortByTitle')}
     </button>
 </ButtonGroup>
       <div  className="scrollable-content" style={{ maxHeight: '600px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>

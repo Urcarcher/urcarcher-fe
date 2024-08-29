@@ -6,15 +6,23 @@ import { Button, Container, Form } from 'react-bootstrap';
 import Flickity from 'react-flickity-component';
 import Axios from 'axios';
 import CardOverlay from 'bootstrap-template/components/cards/CardOverlay';
-import { useTranslation } from 'react-i18next';
-import Cookies from 'js-cookie';
-import 'assets/Language.css';
-import SelectLanguage from 'components/language/SelectLanguage';
 
-
-function Payment() {
+function ReservePayment() {
     const location = useLocation();
-    const state = location.state;
+    // const state = location.state;
+    // const { peopleNum } = state || {};
+    // const resDate = state?.resDate || new Date();
+    // const price = state?.price;
+    const { state } = location;
+
+    // state 객체에서 값 추출 및 기본값 설정
+    const { title, price, peopleNum, resDate, selectedSeats, locations } = state || {};
+
+    console.log('State:', state);
+console.log('Price:', price);
+console.log('Name:', title);
+console.log('selectedSeats:', selectedSeats);
+const seatString = selectedSeats.join(', ');
 
     const [paymentMethod, setPaymentMethod] = useState('credit-card-simple');
     const handlePaymentMethodChange = (e) => setPaymentMethod(e.currentTarget.value);
@@ -26,24 +34,6 @@ function Payment() {
     const [currentDate, setCurrentDate] = useState(new Date().toISOString());
     const [cardTypeId, setCardTypeId] = useState(0);
     const [loading, setLoading] = useState(false);
-    
-    const { t, i18n } = useTranslation();
-    const changeLanguage = (selectedLanguage) => {
-        
-        const languageMap = {
-            Korea: 'ko',
-            English: 'en',
-            Japan: 'jp',
-            China: 'cn'
-        };
-
-        const languageCode = languageMap[selectedLanguage] 
-        i18n.changeLanguage(languageCode);
-       
-    };
-    
-
-
     let navigate = useNavigate();
     const flickityOptions = {
         cellAlign: 'center',
@@ -56,15 +46,6 @@ function Payment() {
     };
 
     useEffect(() => {
-
-        const savedLanguage = Cookies.get('selectedLanguage');
-        if (savedLanguage) {
-            changeLanguage(savedLanguage); // 언어 변경
-        } else {
-            changeLanguage('Korea'); // 기본 언어 설정
-        }
-
-
         Axios.get("/api/t/test")
             .then((response) => {
                 setUserId(response.data.memberId);
@@ -113,11 +94,7 @@ function Payment() {
 
     return (
         <ScrollableContainer>
-          {loading && 
-            <PreloaderWrapper>
-              <Preloader type={'pulse'} variant={'primary'} center={true} />
-            </PreloaderWrapper>
-          }
+          {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />}
             <div>
                 <br/>
                 <br/>
@@ -125,7 +102,7 @@ function Payment() {
                 <br/>
                 <br/>
                 <Container>
-                    <h2 className=''>{t('ProductPayment')}</h2>
+                    <h1 className=''>상품 결제</h1>
                     <hr/>
                     <br/>
                     {state ? (
@@ -137,32 +114,32 @@ function Payment() {
                                 </ProductInfo>
 
                                 <PriceInfo>
-                                    <DiscountTag>{t('CardBenefits')}</DiscountTag>
-                                    <OriginalPrice>{(state.price).toLocaleString()}{t('Won')}</OriginalPrice>
-                                    <DiscountedPrice>10% {t('Discount')}</DiscountedPrice>
+                                    <DiscountTag>카드 혜택</DiscountTag>
+                                    <OriginalPrice>{(state.price).toLocaleString()}원</OriginalPrice>
+                                    <DiscountedPrice>10% 할인</DiscountedPrice>
                                 </PriceInfo>
                             </ProductCard>
                             <br/>
                             <TotalAmount>
-                                <span>{t('TotalPaymentAmount')}</span>
-                                <span>{(state.price - (state.price * 0.1)).toLocaleString()}{t('Won')}</span>
+                                <span>총 결제금액</span>
+                                <span>{(state.price - (state.price * 0.1)).toLocaleString()}원</span>
                             </TotalAmount>
                         </>
                     ) : (
-                        <p>{t('NoProductInfo')}</p>
+                        <p>상품 정보가 없습니다.</p>
                     )}
                     <hr/>
                     <br/>
                     <br/>
 
                     <div>
-                        <h4>{t('PaymentMethod')}</h4>
+                        <h4>결제 수단</h4>
                         <PaymentOptionsContainer>
                             <PaymentOptionCard>
                                 <PaymentOption 
                                     type="radio" 
                                     id="credit-card-simple" 
-                                    label={t('CardSimplePayment')}
+                                    label="카드 간편결제" 
                                     value="credit-card-simple" 
                                     checked={paymentMethod === 'credit-card-simple'} 
                                     onChange={handlePaymentMethodChange} 
@@ -186,11 +163,11 @@ function Payment() {
                                             img={require(`../../assets/Card${card.cardTypeId}_.png`)}
                                             imgStyle={{width: '335px', height: '200px'}}
                                         />
-                                        <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left',fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
-                                          {(card.cardTypeId === 1 || card.cardTypeId === 2) ? t('CreditCard'):t('PrepaidCard')}
+                                        <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', marginLeft:'17px', fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
+                                          MyCard : {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "신용카드":"선불카드"}
                                         </p>
-                                        <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', fontSize:'15px'}}>
-                                          {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "" : t('Balance') + " | " + parseFloat(card.cardBalance).toLocaleString()+t('Won')}
+                                        <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', marginLeft:'17px', fontSize:'15px'}}>
+                                          {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "" : "MyMoney : " + parseFloat(card.cardBalance).toLocaleString()+"원"}
                                         </p>
                                         <br/>
                                     </CarouselCell>
@@ -218,6 +195,7 @@ function Payment() {
                             cardBalance: String(payAmount)
                           }).then((response) => {
                             console.log("잔액차감 정상적으로 작동");
+                            reserve();
                           }).catch((error) => {
                             console.log("잔액차감 비정상적으로 작동");
                           })
@@ -225,7 +203,7 @@ function Payment() {
                         setTimeout(() => {
                           setLoading(false);
                           console.log('Payment inserted successfully:', response.data);
-                          alert(t('DepositPaymentSuccess'));
+                          alert("예약금 결제 성공");
                           navigate('/');
                         }, 3000);
                       })
@@ -233,11 +211,38 @@ function Payment() {
                           setTimeout(() => {
                           setLoading(false);
                           console.error('Error inserting payment:', error);
-                          alert(t('DepositPaymentFailure'));
+                          alert("예약금 결제 실패");
                         }, 3000);
                       });
+
+                      const reserve = () => {
+                        Axios.post('/api/reserve/insert', {
+                            peopleNum: peopleNum, // 인원 수
+                            reservationDate: resDate, // 예약일
+                            state: 1, // 1: 예약완료
+                            location: locations , // 예시 데이터: 장소
+                            name: title,//공연명
+                            classification: 1, // 1:축제, 2:맛집
+                            memberId: userId, // 회원 ID
+                            price: price, //가격
+                            seat: seatString //좌석
+                        }).then((response) => {
+                            console.log('Reservation inserted successfully:', response.data);
+                            setTimeout(() => {
+                                setLoading(false);
+                                alert("예약금 결제 및 예약 성공");
+                                navigate('/');
+                            }, 3000);
+                        }).catch((error) => {
+                            console.error('Error inserting reservation:', error);
+                            setTimeout(() => {
+                                setLoading(false);
+                                alert("예약금 결제는 성공했지만 예약에 실패했습니다.");
+                            }, 3000);
+                        });
+                    };
                       
-                }} style={{width: '80%'}}>{t('MakePayment')}</Button>
+                }} style={{width: '80%'}}>결제하기</Button>
             </div>
         </ScrollableContainer>
     );
@@ -248,7 +253,6 @@ const ScrollableContainer = styled.div`
     overflow-y: auto;
     padding: 10px;
     box-sizing: border-box;
-    position: relative; /* 추가: 자식 요소들이 이 컨테이너를 기준으로 위치 */
 `;
 
 const CarouselCell = styled.div`
@@ -368,17 +372,4 @@ const TotalAmount = styled.div`
     border-radius: 10px;
 `;
 
-const PreloaderWrapper = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.75); /* 반투명 배경 */
-    z-index: 1000;
-`;
-
-export default Payment;
+export default ReservePayment;

@@ -125,8 +125,8 @@ function ExchangeHistoryCard(props) {
                         onClick={() => cardSelectHandle(card)}
                     >
                         <div className="exCard_user_box">
-                            <p>{card.cardUsage}</p>
-                            <p className="exCard_balance"> {t('Balance')} {card.cardBalance.toLocaleString()}+" " +{t('Won')}</p>
+                            <p>{card.cardUsage === "선불카드" ? t('PrepaidCard') : ""}</p>
+                            <p className="exCard_balance"> {t('Balance')} {card.cardBalance.toLocaleString()}{t('Won')}</p>
                             <p className="exCard_text">{card.cardNumber}</p>
                             {/* <button className="exCard_btn" onClick={() => cardSelectHandle(card)}>선택</button> */}
                         </div>

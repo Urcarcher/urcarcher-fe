@@ -33,6 +33,7 @@ function UsageHistory(props) {
     const [cardInfo, setCardInfo] = useState([]);
     const [selectedCard, setSelectedCard] = useState(null);
     const [paymentHistory, setPaymentHistory] = useState([]);
+    const [cardTypes, setCardTypes] = useState([]); // 카드 타입 정보 저장
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -68,6 +69,7 @@ function UsageHistory(props) {
                     });
 
                 getMemberId(memberData.memberId);
+                loadCardTypes(); // 카드 타입 정보 로드
             })
             .catch(error => {
                 console.error('Error fetching member data:', error);
@@ -80,29 +82,29 @@ function UsageHistory(props) {
             .then((response) => {
                 const cards = response.data;
                 setCardInfo(cards);
+                console.log(cards);
             })
             .catch((error) => {
                 alert('카드 정보 불러오는데 오류발생');
             });
     };
 
-    const cardName = (cardTypeId) => {
-        switch (cardTypeId) {
-            case 1:
-                return "TravelMate";
-            case 2:
-                return "Nomad Benefits";
-            case 3:
-                return "Tourist Explorer";
-            case 4:
-                return "TourPass";
-            case 5:
-                return "Seoul Plus";
-            default:
-                console.log("카드이름가져오는데 오류발생");
-                return "Unknown Card";
-        }
+    // 카드 종류 정보들
+    const loadCardTypes = () => {
+        axios.get('/api/cards')
+            .then((response) => {
+                setCardTypes(response.data);
+            })
+            .catch((error) => {
+                console.error('Error loading card types:', error);
+            });
     };
+
+    const cardName = (cardTypeId) => {
+        const cardType = cardTypes.find(card => card.cardTypeId === cardTypeId);
+        return cardType ? cardType.cardName : 'Unknown Card';
+    };
+
 
     const updateGroupedUsage = (payments) => {
         const groupedData = payments.reduce((acc, curr) => {
@@ -162,6 +164,11 @@ function UsageHistory(props) {
             });
     };
 
+    const translatedCardName = (cardTypeId) => {
+        const name = cardName(cardTypeId);
+        return name.replace('카드', t('Card'));
+    };
+
     return (
         <div>
             {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />}
@@ -180,12 +187,12 @@ function UsageHistory(props) {
                                 >
                                     <option value="All">{t('AllCards')}</option>
                                     {cardInfo.map((card, index) => (
-                                        <option key={index} value={card.cardId}>{cardName(card.cardTypeId)} {t('Card')}</option>
+                                        <option key={index} value={card.cardId}>{translatedCardName(card.cardTypeId)}</option>
                                     ))}
                                 </select>
                             </div>
                         </div>
-                        <div style={{ display: 'flex', marginBottom: '10px', fontSize: '13px', marginTop: '10px' }}>
+                        <div style={{ display: 'flex', marginBottom: '10px', fontSize: '13px', marginTop: '24px' }}>
                             <div>{selectedCard && selectedCard.paymentBank}</div>
                             <div>
                                 &nbsp;
@@ -194,8 +201,7 @@ function UsageHistory(props) {
                                     : ''}
                             </div>
                         </div>
-                        {/* 여기 원 왜들어가나요..??ㅇㅅㅇ */}
-                        <div style={{ justifyContent: 'flex-start', display: 'flex', color: 'grey' }}>{t('Won')}</div>
+
                         <h2 style={{ justifyContent: 'flex-start', display: 'flex', color: '#064AFF' }}>{totalPrice.toLocaleString()}{t('Won')}</h2>
                     </div>
 

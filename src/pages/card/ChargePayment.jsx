@@ -220,7 +220,7 @@ function ChargePayment(props) {
             active={(amount === value).toString()}  // boolean 값을 string으로 변환하여 전달
             onClick={() => handleAmountChange(value)}
           >
-            {parseInt(value, 10).toLocaleString()}+ " " + {t('Won')}
+            {parseInt(value, 10).toLocaleString()}{t('Won')}
           </CustomToggleButton>
         ))}
         <CustomToggleButton
@@ -292,8 +292,7 @@ function ChargePayment(props) {
       <h5>{t('AfterRecharge')}</h5>
       <div className="my-3">
         <h2 style={{fontWeight:'bold'}}>
-          {(Number(nowRemainPay) + Number(amount === 'custom' ? customAmount : amount)).toLocaleString()}
-          +" " +{t('Won')}
+          {(Number(nowRemainPay) + Number(amount === 'custom' ? customAmount : amount)).toLocaleString()}{t('Won')}
         </h2>
       </div>
 

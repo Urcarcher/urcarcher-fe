@@ -181,7 +181,7 @@ function Card2() {
                         color="primary"
                         onClick={handleVerificationRequest}
                     >
-                        {t('Verify')}
+                        {t('Confrim')}
                     </Button>
                     <br />
                 </div>
@@ -189,10 +189,10 @@ function Card2() {
             {/* 인증번호 입력 필드 및 확인 버튼, 인증번호 발송 후에만 표시 */}
                 {isVerificationSent && (
                     <div style={{ marginBottom: '30px' }}>
-                        <div style={{ justifyContent: 'flex-start', display: 'flex' }}>{t('EnterPhoneNumber')}</div>
+                        <div style={{ justifyContent: 'flex-start', display: 'flex' }}>{t('EnterVerify')}</div>
                         <Input
                             id="verification-code"
-                            placeholder={t('EnterPhoneNumber')}
+                            placeholder={t('EnterVerify2')}
                             value={verificationCode}
                             onChange={handleVerificationCodeChange}
                             style={{ width: '80%' }}
