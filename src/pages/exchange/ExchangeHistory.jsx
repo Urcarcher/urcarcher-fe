@@ -69,7 +69,7 @@ function ExchangeHistory(props) {
     // 환전 내역 없으면 뒤로가기
     useEffect(() => {
         if(!loading && cardHistory.length === 0) {
-            alert("환전 내역이 없어요! 충전 후 확인해 주세요");
+            alert(t('NoExchangeHistory'));
             navi(-1);
             return;
         }

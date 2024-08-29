@@ -6,8 +6,29 @@ import 'react-calendar/dist/Calendar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+
+
 
 function Reservation() {
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+    
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedPeople, setSelectedPeople] = useState('');
@@ -39,6 +60,14 @@ function Reservation() {
 
   useEffect(()=>{
 
+    const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
     Axios.get("/api/t/test").then((response)=>{
       setReservePerson(response.data);
       console.log(reservePerson)
@@ -56,9 +85,9 @@ function Reservation() {
         <h3 style={{marginBottom: '30px'}}> {recv.title}</h3>
         <StyledRow>
           <StyledCol>
-            <Header style={{textAlign: 'left'}}>인원을 선택해 주세요</Header>
+            <Header style={{textAlign: 'left'}}>{t('SelectNumberOfPeople')}</Header>
             <PeopleSelect>
-              {['1명', '2명', '3명', '4명', '5명이상'].map((people, index) => (
+              {['1'+t('Person'), '2'+t('Person'), '3'+t('Person'), '4'+t('Person'), '5'+t('MoreThan')].map((people, index) => (
                 <CustomButton
                   key={index}
                   active={selectedPeople === people}
@@ -73,7 +102,7 @@ function Reservation() {
         <Divider />
         <StyledRow>
           <StyledCol>
-            <Header style={{textAlign: 'left'}}>날짜를 선택해 주세요</Header>
+            <Header style={{textAlign: 'left'}}>{t('SelectDate2')}</Header>
             <Calendar
               onChange={handleDateChange}
               value={selectedDate}
@@ -83,7 +112,7 @@ function Reservation() {
         </StyledRow>
         <StyledRow>
           <StyledCol>
-            <Header style={{textAlign: 'left'}}>시간을 선택해 주세요</Header>
+            <Header style={{textAlign: 'left'}}>{t('SelectTime')}</Header>
             <TimeSelect>
               {['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'].map((time, index) => (
                 <CustomButton
@@ -100,49 +129,49 @@ function Reservation() {
         <StyledRow>
           <StyledCol>
             <Divider />
-            <Header>※ 예약 시 확인해 주세요</Header>
-            <Notice>당일 취소 불가합니다. 하루전 전화 취소 부탁드립니다.</Notice>
+            <Header>※ {t('PleaseConfirmWhenBooking')}</Header>
+            <Notice>{t('SameDayCancellationNotAllowed')}</Notice>
             <Notice>
-              해당 가맹점 Urcarchar 카드 결제시 <Discount>10%할인</Discount>
+            {t('Merchant')} Urcarchar {t('CardPayment')} <Discount>10%{t('Discount')}</Discount>
             </Notice>
           </StyledCol>
         </StyledRow>
         <StyledRow>
           <CenteredCol>
             <StyledNextButton variant="primary" onClick={handleNextClick}>
-              다음
+            {t('Next')}
             </StyledNextButton>
           </CenteredCol>
         </StyledRow>
 
         <Modal show={showModal} onHide={handleClose} centered>
           <Modal.Header closeButton>
-            <Modal.Title>예약 확인</Modal.Title>
+            <Modal.Title>{t('BookingConfirmation')}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <ModalContent>
               <ReservationBox>
-                <ReservationTitle>{recv.title} 예약</ReservationTitle>
+                <ReservationTitle>{recv.title} {t('Booking')}</ReservationTitle>
                 <hr/>
-                <p style={{textAlign: 'left'}}>일정: {selectedDate.toLocaleDateString()} - {selectedTime}</p>
-                <p style={{textAlign: 'left'}}>인원: {selectedPeople}</p>
+                <p style={{textAlign: 'left'}}>{t('Schedule')}: {selectedDate.toLocaleDateString()} - {selectedTime}</p>
+                <p style={{textAlign: 'left'}}>{t('NumberOfPeople')}: {selectedPeople}</p>
                 <p style={{textAlign: 'left', color:'red'}}>
-                  예약금: {(parseInt(selectedPeople, 10) * 10000).toLocaleString()}원
+                {t('Deposit')}: {(parseInt(selectedPeople, 10) * 10000).toLocaleString()}{t('Won')}
                 </p>
-                <p style={{textAlign: 'left'}}>위치 : {recv.location}</p>
+                <p style={{textAlign: 'left'}}>{t('Location')} : {recv.location}</p>
               </ReservationBox>
               <InfoSection>
-                <InfoTitle>예약자 정보</InfoTitle>
+                <InfoTitle>{t('BookerInformation')}</InfoTitle>
                 <hr />
                 {reservePerson ? (
                   <>
-                    <p style={{textAlign: 'left'}}>예약자: {reservePerson.name}</p>
-                    <p style={{textAlign: 'left'}}>연락처: {reservePerson.phoneNumber}</p>
-                    <p style={{textAlign: 'left'}}>이메일: {reservePerson.email}</p>
-                    <Input placeholder="요청사항: 업체에 요청하실 내용을 적어주세요." />
+                    <p style={{textAlign: 'left'}}>{t('Booker')}: {reservePerson.name}</p>
+                    <p style={{textAlign: 'left'}}>{t('PhoneNumber')}: {reservePerson.phoneNumber}</p>
+                    <p style={{textAlign: 'left'}}>{t('Email')}: {reservePerson.email}</p>
+                    <Input placeholder={t('Requests')} />
                   </>
                 ) : (
-                  <p style={{textAlign: 'left', color: 'red'}}>예약자 정보를 불러오는 중입니다...</p>
+                  <p style={{textAlign: 'left', color: 'red'}}>{t('LoadingBookerInformation')}...</p>
                 )}
                 
               </InfoSection>
@@ -158,11 +187,11 @@ function Reservation() {
                   price: parseInt(selectedPeople, 10) * 10000
               }
           });
-          }}>예약금 결제</Button>
+          }}>{t('DepositPayment')}</Button>
             
             
             <CancelButton onClick={handleClose}>
-              취소
+            {t('Cancel')}
             </CancelButton>
           </Modal.Footer>
         </Modal>

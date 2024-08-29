@@ -175,7 +175,7 @@ const MonthlyChart = () => {
         const options = [];
         for (let month = 1; month <= 12; month++) {
             const value = month.toString().padStart(2, '0');
-            options.push(<option key={value} value={value}>{month}월</option>);
+            options.push(<option key={value} value={value}>{month}{t('Month')}</option>);
         }
         return options;
     };
@@ -242,7 +242,7 @@ const MonthlyChart = () => {
                         >
                             <img src={categoryImages[stat.category]} alt={stat.category} style={{ width: '40px', height: '40px', marginRight: '10px' }} />
                             <div style={{ flex: 1, textAlign: 'left', fontWeight: 'bold' }}><strong>{stat.category}</strong></div>
-                            <div style={{ fontWeight: 'bold', textAlign: 'right', marginLeft: 'auto' }}>{stat.amount.toLocaleString()}원&nbsp; | &nbsp; {stat.percentage}%</div>
+                            <div style={{ fontWeight: 'bold', textAlign: 'right', marginLeft: 'auto' }}>{stat.amount.toLocaleString()}{t('Won')}&nbsp; | &nbsp; {stat.percentage}%</div>
                         </div>
                     ))
                 ) : (

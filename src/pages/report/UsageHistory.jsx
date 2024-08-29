@@ -194,8 +194,7 @@ function UsageHistory(props) {
                                     : ''}
                             </div>
                         </div>
-                        {/* 여기 원 왜들어가나요..??ㅇㅅㅇ */}
-                        <div style={{ justifyContent: 'flex-start', display: 'flex', color: 'grey' }}>{t('Won')}</div>
+                       
                         <h2 style={{ justifyContent: 'flex-start', display: 'flex', color: '#064AFF' }}>{totalPrice.toLocaleString()}{t('Won')}</h2>
                     </div>
 
