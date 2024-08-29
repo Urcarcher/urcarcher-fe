@@ -108,6 +108,7 @@
     font-family: 'NanumSquareNeoBold';
     text-align: left;
     padding-left: 35px;
+    line-height: 15px;
 }
 
 .set_rate_right {
@@ -173,7 +174,7 @@
     width: 85%;
     height: 120px;
     margin: 0 auto;
-    margin-top: 30px;
+    margin-top: 50px;
     /* border: 1px solid red; */
     
 }

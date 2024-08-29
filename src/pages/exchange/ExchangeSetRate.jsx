@@ -18,8 +18,8 @@ import SelectLanguage from 'components/language/SelectLanguage';
 
 function ExchangeSetRate(props) {
     const { t, i18n } = useTranslation();
+    
     const changeLanguage = (selectedLanguage) => {
-        
         const languageMap = {
             Korea: 'ko',
             English: 'en',
@@ -29,9 +29,7 @@ function ExchangeSetRate(props) {
 
         const languageCode = languageMap[selectedLanguage] 
         i18n.changeLanguage(languageCode);
-       
     };
-
     
     // 이전 페이지에서 보낸 선택한 카드 정보
     const location = useLocation();
@@ -240,6 +238,7 @@ function ExchangeSetRate(props) {
             setCur: parseFloat(selectCur.replace(/,/g, "")), // 예약금액
             // setPay: parseFloat(selectAmount), // 결제금액
             setDate: reserveDate, // 예약일
+            nationality: nation, // 로그인 유저 국적
             setStatus: "N"
         };
 
@@ -333,8 +332,11 @@ function ExchangeSetRate(props) {
                             </LocalizationProvider>
                         </div> */}
                         <p className="set_rate_left_text">{reserveDate !== "" ? reserveDate : t('SelectReservationDate')}</p>
-                        <p className="set_rate_box_left">*  {t('SelectedReservationRate')}</p>
-                        <p className="set_rate_left_text">{nation} 1 = {selectRate !== null ? selectRate + " ￦" : t('SelectReservationRate')}</p>
+                        <p className="set_rate_box_left">* 예측 환율 정보 주의사항</p>
+                        <p className="set_rate_left_text">당일 환율과 예측한 환율이 다를 수 있어요</p>
+                        <p className="set_rate_left_text">예약일이 되면 당일 환율로 환전해 드려요</p>
+                        {/* <p className="set_rate_box_left">*  {t('SelectedReservationRate')}</p> */}
+                        {/* <p className="set_rate_left_text">{nation} 1 = {selectRate !== null ? selectRate + " ￦" : t('SelectReservationRate')}</p> */}
                     </div>
                     <div className="set_rate_cur">
                         <p className="set_rate_box_left">
