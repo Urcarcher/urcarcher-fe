@@ -26,7 +26,7 @@ const CourseList = () => {
             if (sortOption === '최신순') {
                 return b.courseId.localeCompare(a.courseId); 
             } else if (sortOption === '조회순') {
-                return b.views - a.views;  
+                return b.viewCount - a.viewCount;  
             } else if (sortOption === '인증순') {
                 return b.certifications - a.certifications;  
             }

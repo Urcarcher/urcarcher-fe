@@ -283,7 +283,8 @@ const CourseDetail = () => {
             setVerificationImage(require('../../assets/Heart2.png')); // 새로운 이미지로 변경
           } else {
             // 특정 장소 인증만 완료된 경우
-            setModalMessage(`<span style="font-size: 10px;">[${placeName}]</span>  \n 인증이 완료되었습니다.`);
+            setModalMessage(`[${placeName}] \n 인증이 완료되었습니다.`);
+        
             setVerificationImage(require('../../assets/success.png'));
           }
     
