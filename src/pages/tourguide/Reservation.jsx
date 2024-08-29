@@ -156,7 +156,7 @@ function Reservation() {
                 <p style={{textAlign: 'left'}}>{t('Schedule')}: {selectedDate.toLocaleDateString()} - {selectedTime}</p>
                 <p style={{textAlign: 'left'}}>{t('NumberOfPeople')}: {selectedPeople}</p>
                 <p style={{textAlign: 'left', color:'red'}}>
-                {t('Deposit')}: {(parseInt(selectedPeople, 10) * 10000).toLocaleString()}{t('Won')}
+                {t('Deposit')}: {(parseInt(selectedPeople, 10) * 10000).toLocaleString()}{" "+t('Won')}
                 </p>
                 <p style={{textAlign: 'left'}}>{t('Location')} : {recv.location}</p>
               </ReservationBox>

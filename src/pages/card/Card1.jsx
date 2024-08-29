@@ -245,7 +245,7 @@ function Card1() {
                             fontWeight: 'bold',
                             marginTop: '5px',
                         }}>
-                            {selectedCard.annualFee} {t('Won')}&nbsp;
+                            {selectedCard.annualFee} {" "+t('Won')}&nbsp;
                             <span style={{ fontSize: '11px', color: '#999' }}>{t('AnnualFee')}</span>
                         </div>
 

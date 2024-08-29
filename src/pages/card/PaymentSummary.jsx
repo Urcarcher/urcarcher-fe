@@ -119,7 +119,7 @@ function PaymentSummary(props) {
       {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />}
       <Card>
         <Title>{formatDate(expectedPayDate)}  {t('EstimatedPaymentAmount')}</Title>
-        <Amount>{Number(expectedAmount).toLocaleString()}{t('Won')}</Amount>
+        <Amount>{Number(expectedAmount).toLocaleString()}{" "+t('Won')}</Amount>
         <br/>
         <PaymentButton onClick={()=>{
           paymentHandler();
@@ -131,7 +131,7 @@ function PaymentSummary(props) {
         {recentPayLocation ? (
           <>
             {t('Recent')} <span style={{ fontWeight: 'bold' }}>{recentPayLocation}</span>{t('From')}
-            <span style={{ fontWeight: 'bold' }}> {Number(recentPay).toLocaleString()} </span>{t('Won')}{t('PaymentCompleted')}
+            <span style={{ fontWeight: 'bold' }}> {Number(recentPay).toLocaleString()} </span>{" "+t('Won')}{t('PaymentCompleted')}
           </>
         ) : (
           ''

@@ -4,6 +4,10 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { Link, useLocation } from 'react-router-dom';
 import 'assets/Map.css';
 import Modal from 'components/mymap/Modal';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+
 
 const { kakao } = window;
 
@@ -12,6 +16,23 @@ const myMapIcon = "/icon/markericon.png";
 const locationIcon = "/icon/icon-location.png";
  
 const MyMapApp = () => {  
+
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+    
+
 
   const location = useLocation();
   const { memberId } = location.state || ''; 
@@ -39,6 +60,15 @@ const MyMapApp = () => {
 
   //카테고리 데이터 호출
   useEffect(() => {
+
+    const savedLanguage = Cookies.get('selectedLanguage');
+    if (savedLanguage) {
+        changeLanguage(savedLanguage); // 언어 변경
+    } else {
+        changeLanguage('Korea'); // 기본 언어 설정
+    }
+
+
     axios.get(`/api/paymentPlace/top-categories`, {
         params: {
             memberId: memberId
@@ -246,7 +276,7 @@ const MyMapApp = () => {
               className={index === activeButtonId ? 'active' : ''}
               onClick={() => handleButtonClick(index, item.categoryName)}
               >
-              {item.categoryName}
+              {t(item.categoryName)}
             </button>
           ))}
         </div>

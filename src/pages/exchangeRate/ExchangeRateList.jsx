@@ -2,8 +2,30 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import 'pages/exchangeRate/ExchangeRateList.css';
 import LoadingSpinner from "components/LoadingSpinner";
 import reading from "assets/reading.png";
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+
+
 
 function ExchangeRateList(props) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
     const [exchangeRateInfos, setExchangeRateInfos] = useState({});
     const [socketData, setSocketData] = useState();
     const [loading, setLoading] = useState(true);
@@ -12,6 +34,14 @@ function ExchangeRateList(props) {
     const mainlist = ['USD', 'EUR', 'JPY', 'CNY']
 
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
         wsLogin();
     }, []);
 
@@ -36,7 +66,7 @@ function ExchangeRateList(props) {
             setSocketData(dataSet);
         };
     });
-
+   
     if(loading) return <LoadingSpinner />;
 
     return (
@@ -46,7 +76,10 @@ function ExchangeRateList(props) {
                     <ul className='mainlist-list'>
                         {mainlist.map((item, index)=>(
                         <li key={index}>
-                            <span className='mainlist-itemname'>{exchangeRateInfos[item] ? exchangeRateInfos[item].exchangeName : ''}</span>
+                            <span className='mainlist-itemname'>{exchangeRateInfos[item] ? 
+                `${t(exchangeRateInfos[item].country)} ${exchangeRateInfos[item].exchangeType}` : 
+                ''
+            }</span>
                             <span className='mainlist-itemprice'>{exchangeRateInfos[item] ? exchangeRateInfos[item].rate : ''}</span>
                             <span className='mainlist-itemtime'>{exchangeRateInfos[item] ? exchangeRateInfos[item].date : ''}</span>
                         </li>
@@ -67,7 +100,10 @@ function ExchangeRateList(props) {
                             <tr key={item}>
                                 <td>
                                     <span className='tableName'>
-                                        {exchangeRateInfos[item] ? exchangeRateInfos[item].exchangeName : ''}
+                                    {exchangeRateInfos[item] ? 
+                `${t(exchangeRateInfos[item].country)} ${exchangeRateInfos[item].exchangeType}` : 
+                ''
+            }
                                     </span>
     
                                     <span className='tableTime'>

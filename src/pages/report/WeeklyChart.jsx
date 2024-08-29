@@ -242,7 +242,7 @@ const WeeklyChart = () => {
           {t('UsageAmountForWeek')}
         </div>
         <div style={{ justifyContent: 'flex-start', display: 'flex', margin: '8px 20px', color: '#064AFF', fontWeight: 'bolder', fontSize: '25px' }}>
-          {totalPrice.toLocaleString()}{t('Won')}
+          {totalPrice.toLocaleString()}{" "+t('Won')}
         </div>
         <Chart
           chartType="ColumnChart"
@@ -303,7 +303,7 @@ const WeeklyChart = () => {
                   <div style={{ fontWeight: 'bold', textAlign: 'start' }}>{usage.storeName}</div>
                   <div style={{ textAlign: 'start' }}>{new Date(usage.paymentDate).toLocaleString()}</div>
                 </div>
-                <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice}{t('Won')}</div>
+                <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice}{" "+t('Won')}</div>
               </div>
             );
           })

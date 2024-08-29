@@ -242,7 +242,7 @@ const MonthlyChart = () => {
                         >
                             <img src={categoryImages[stat.category]} alt={stat.category} style={{ width: '40px', height: '40px', marginRight: '10px' }} />
                             <div style={{ flex: 1, textAlign: 'left', fontWeight: 'bold' }}><strong>{stat.category}</strong></div>
-                            <div style={{ fontWeight: 'bold', textAlign: 'right', marginLeft: 'auto' }}>{stat.amount.toLocaleString()}{t('Won')}&nbsp; | &nbsp; {stat.percentage}%</div>
+                            <div style={{ fontWeight: 'bold', textAlign: 'right', marginLeft: 'auto' }}>{stat.amount.toLocaleString()}{" "+t('Won')}&nbsp; | &nbsp; {stat.percentage}%</div>
                         </div>
                     ))
                 ) : (
