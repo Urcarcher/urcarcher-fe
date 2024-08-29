@@ -7,26 +7,22 @@ import LocationIcon from '../../assets/nowlocation.png'; // 이미지 경로 가
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
+import LoadingSpinner from 'components/LoadingSpinner'; // 스피너가 있는지 확인하세요.
 import SelectLanguage from 'components/language/SelectLanguage';
-
 
 const MapComponent = (props) => {
 
   const { t, i18n } = useTranslation();
-    const changeLanguage = (selectedLanguage) => {
-        
-        const languageMap = {
-            Korea: 'ko',
-            English: 'en',
-            Japan: 'jp',
-            China: 'cn'
-        };
-
-        const languageCode = languageMap[selectedLanguage] 
-        i18n.changeLanguage(languageCode);
-       
+  const changeLanguage = (selectedLanguage) => {
+    const languageMap = {
+        Korea: 'ko',
+        English: 'en',
+        Japan: 'jp',
+        China: 'cn'
     };
-
+    const languageCode = languageMap[selectedLanguage] 
+    i18n.changeLanguage(languageCode);
+  };
 
   const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY_1;
   const { detailDestination } = useParams();
@@ -36,12 +32,15 @@ const MapComponent = (props) => {
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState(detailDestination || '');
   const [selectedRoute, setSelectedRoute] = useState(null);
+  const [loading, setLoading] = useState(false);  // 로딩 상태를 추가합니다.
 
   const travelMode = 'TRANSIT';
 
+  // 위치 정보를 가져오는 함수
   const getCurrentLocation = async () => {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
+        setLoading(true);  // 위치 정보를 가져오는 동안 로딩을 표시합니다.
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const { latitude, longitude } = position.coords;
@@ -49,6 +48,7 @@ const MapComponent = (props) => {
             const latLng = new window.google.maps.LatLng(latitude, longitude);
 
             geocoder.geocode({ location: latLng }, (results, status) => {
+              setLoading(false);  // 위치 정보를 가져온 후 로딩을 종료합니다.
               if (status === 'OK') {
                 setOrigin(results[0].formatted_address);
                 resolve(results[0].formatted_address);
@@ -59,6 +59,7 @@ const MapComponent = (props) => {
             });
           },
           (error) => {
+            setLoading(false);  // 오류 발생 시 로딩을 종료합니다.
             console.error('Error Code = ' + error.code + ' - ' + error.message);
             if (error.code === error.PERMISSION_DENIED) {
               alert(t('LocationPermissionRequired'));
@@ -77,10 +78,24 @@ const MapComponent = (props) => {
     });
   };
 
+  // 위치 정보를 가져오는 것을 지연시키고 실패 시 재시도하는 함수
+  const retryGetLocation = async (attempts = 3, delay = 1000) => {
+    for (let i = 0; i < attempts; i++) {
+      try {
+        await new Promise(res => setTimeout(res, delay));  // 지연시킴
+        await getCurrentLocation();
+        handleLoad();
+        return; // 성공하면 종료
+      } catch (error) {
+        console.warn(`위치 가져오기 시도 실패: ${i + 1} / ${attempts}`);
+      }
+    }
+    console.error("모든 위치 가져오기 시도가 실패했습니다.");
+  };
+
   const onLoadScriptHandler  = async () => {
     try {
-      await getCurrentLocation();
-      handleLoad();
+      await retryGetLocation();  // 위치 요청을 지연시키고 재시도
     } catch (error) {
       console.error("초기 위치를 가져오는데 실패했습니다: ", error);
     }
@@ -173,15 +188,13 @@ const MapComponent = (props) => {
   };
 
   useEffect(()=>{
-   
     const savedLanguage = Cookies.get('selectedLanguage');
     if (savedLanguage) {
         changeLanguage(savedLanguage); // 언어 변경
     } else {
         changeLanguage('Korea'); // 기본 언어 설정
     }
-},[]);
-
+  },[]);
 
   return (
     <Container>
@@ -217,10 +230,17 @@ const MapComponent = (props) => {
             </Autocomplete>
           </InputContainer>
           <StyledButton onClick={handleSubmit}>
-          {t('FindRoute')}
+            {t('FindRoute')}
           </StyledButton>
         </div>
-        <div  className="scrollable-content" style={{ maxHeight: '600px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
+
+        {loading && (
+          <LoadingOverlay>
+            <LoadingSpinner />
+          </LoadingOverlay>
+        )}
+
+        <div className="scrollable-content" style={{ maxHeight: '600px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
           <MapContainer>
             <GoogleMap
               mapContainerStyle={containerStyle}
@@ -264,12 +284,14 @@ const MapComponent = (props) => {
     </Container>
   );
 };
+
 const Container = styled.div`
   max-height: 800px;
   overflow-y: auto;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  position: relative;
 `;
 
 const MapContainer = styled.div`
@@ -331,6 +353,20 @@ const LocationImage = styled.img`
   height: 24px;
 `;
 
+const LoadingOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 1000;
+`;
+
 const containerStyle = {
   width: '100%',
   height: '500px'
@@ -340,4 +376,5 @@ const center = {
   lat: 37.5665,
   lng: 126.9780
 };
+
 export default MapComponent;

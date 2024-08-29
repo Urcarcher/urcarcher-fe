@@ -8,8 +8,6 @@ import Cookies from 'js-cookie';
 import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
 
-
-
 function Card6(props) {
     const { produceCardOffer, setProduceCardOffer } = useCardContext();
     const navigate = useNavigate(); 
@@ -24,7 +22,7 @@ function Card6(props) {
             China: 'cn'
         };
 
-        const languageCode = languageMap[selectedLanguage] 
+        const languageCode = languageMap[selectedLanguage];
         i18n.changeLanguage(languageCode);
        
     };
@@ -37,7 +35,6 @@ function Card6(props) {
             changeLanguage('Korea'); // 기본 언어 설정
         }
 
-
         if (!produceCardOffer || !produceCardOffer.card_type_id) {
             console.error("Card type ID is missing or null");
             return;
@@ -45,6 +42,14 @@ function Card6(props) {
 
         const sendCardData = async () => {
             try {
+                const today = new Date(); // 오늘 날짜 가져오기
+                const selectedDate = new Date(today.getFullYear(), today.getMonth(), produceCardOffer.payment_date);
+
+                // 선택된 일자가 오늘 일자보다 작은 경우 다음 달로 설정
+                if (selectedDate < today) {
+                    selectedDate.setMonth(today.getMonth() + 1);
+                }
+
                 const modifiedCardOffer = {
                     cardId: produceCardOffer.card_id,
                     cardNumber: produceCardOffer.card_number,
@@ -53,13 +58,14 @@ function Card6(props) {
                     cardStatus: produceCardOffer.card_status,
                     issueDate: produceCardOffer.issue_date,
                     expirationDate: produceCardOffer.expiration_date,
-                    // cardPassword: '11',
                     cardPassword: produceCardOffer.card_password,
                     cardPickup: produceCardOffer.card_pickup,
                     pickupDate: produceCardOffer.pickup_date,
                     cardAccount: produceCardOffer.card_account,
                     paymentBank: produceCardOffer.payment_bank,
-                    paymentDate: produceCardOffer.payment_date ? `2024-08-${produceCardOffer.payment_date}` : null, // 날짜 형식 변환 또는 null 처리
+                    paymentDate: produceCardOffer.payment_date 
+                        ? `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(produceCardOffer.payment_date).padStart(2, '0')}` 
+                        : null, // 날짜 형식 변환 또는 null 처리
                     transportation: produceCardOffer.transportation,
                     cardTypeId: produceCardOffer.card_type_id,
                     memberId: produceCardOffer.member_id,
@@ -76,8 +82,8 @@ function Card6(props) {
                 // 초기화 전에 현재 상태를 displayCardOffer에 저장
                 setDisplayCardOffer(produceCardOffer);
 
-                 // 상태 초기화
-                 setProduceCardOffer({
+                // 상태 초기화
+                setProduceCardOffer({
                     "card_id": null,
                     "card_account": null,
                     "card_balance": 0, 

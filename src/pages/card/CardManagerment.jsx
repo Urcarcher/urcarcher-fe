@@ -107,42 +107,43 @@ function CardManagerment(props) {
       });
       setMyCard(updatedCards); // 상태 업데이트
   };
+
   
 
-    useEffect(() => {
+  useEffect(() => {
 
-      const savedLanguage = Cookies.get('selectedLanguage');
-      if (savedLanguage) {
-          changeLanguage(savedLanguage); // 언어 변경
-      } else {
-          changeLanguage('Korea'); // 기본 언어 설정
+    const savedLanguage = Cookies.get('selectedLanguage');
+    if (savedLanguage) {
+        changeLanguage(savedLanguage); // 언어 변경
+    } else {
+        changeLanguage('Korea'); // 기본 언어 설정
+    }
+
+      Axios.get("/api/t/test")
+          .then((response) => {
+              setUserId(response.data.memberId);
+          })
+          .catch((error) => {
+              alert("회원정보를 가져오는데 오류 발생");
+          });
+
+      if (userId) {
+          Axios.get(`/api/card/mycard/${userId}`)
+              .then((response) => {
+                  setMyCard(response.data);
+                  const cards = response.data.map(card => ({
+                    ...card,
+                    cardStatus: card.cardStatus
+                }));
+                setMyCard(cards);
+                console.log(cards)
+              })
+              .catch((error) => {
+                  console.log("card정보 가져오는데 오류 발생");
+                  console.log(error);
+              });
       }
-
-        Axios.get("/api/t/test")
-            .then((response) => {
-                setUserId(response.data.memberId);
-            })
-            .catch((error) => {
-                alert("회원정보를 가져오는데 오류 발생");
-            });
-
-        if (userId) {
-            Axios.get(`/api/card/mycard/${userId}`)
-                .then((response) => {
-                    setMyCard(response.data);
-                    const cards = response.data.map(card => ({
-                      ...card,
-                      cardStatus: card.cardStatus
-                  }));
-                  setMyCard(cards);
-                  console.log(cards)
-                })
-                .catch((error) => {
-                    console.log("card정보 가져오는데 오류 발생");
-                    console.log(error);
-                });
-        }
-    }, [userId]);
+  }, [userId]);
 
     return (
         <>
