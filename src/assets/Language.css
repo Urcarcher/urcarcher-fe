@@ -85,6 +85,12 @@
     z-index: 80;
     position: relative;
 }
+@media screen and (max-Width: 375px) { /* iPhone SE */
+    .lang-modal-contents {
+        padding: 25px 30px 20px;
+    }
+}
+  
 .lang-modal-contents > h5 {
     margin: 30px 0 0;
     text-align: left;

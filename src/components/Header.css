@@ -5,7 +5,8 @@ header {
 
 .header-wrap {
     width: 100%;
-    padding-left: 2%;
+    /* 가운데 정렬 안돼서 주석처리 - 사용자 확인 필요! */
+    /* padding-left: 2%; */
 }
 
 .header-wrap > h3 {

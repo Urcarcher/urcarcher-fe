@@ -366,7 +366,7 @@ p.phone{
 }
 
 
-@media (max-width: 413px) { /* iPhone XR */
+@media (max-width: 414px) { /* iPhone XR */
   .mymaphome-wrap{
     height: 130vh;
   }
@@ -381,7 +381,7 @@ p.phone{
     height: 200px;
   }
   .mymaphome-wrap > div {
-    top: 40%;
+    top: 35%;
   }
 }
 @media screen and (max-Width: 375px) { /* iPhone SE */
