@@ -82,14 +82,14 @@ function Reserve() {
       <br />
       <br />
       <br />
-      <h3>좌석 정보</h3>
+      {/* <h3>좌석 정보</h3>
       <ul>
         {recv.seatingData.map((seat, index) => (
           <li key={index}>
             {seat.type}: {seat.price.toLocaleString()}원
           </li>
         ))}
-      </ul>
+      </ul> */}
       <br />
       <StyledContainer>
         <h2>공연명 : {recv.title}</h2>
