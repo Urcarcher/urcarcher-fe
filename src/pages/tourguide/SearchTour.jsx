@@ -86,7 +86,8 @@ function SearchTour(props) {
         <br/>
         <br/>
         <br/>
-        <p style={{textAlign:'left', padding:'10px'}}>{t('SelectCategoryAndRegion')}</p>
+        {/* p태그 center로 수정(08.29) */}
+        <p style={{textAlign:'center', padding:'10px'}}>{t('SelectCategoryAndRegion')}</p>
         <ButtonGroup className="mb-3 d-flex justify-content-center">
             {radios.map((radio, idx) => (
                 <button

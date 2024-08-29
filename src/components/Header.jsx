@@ -19,8 +19,8 @@ function Header() {
             </p>
             ) : (
             <>
-                <button onClick={() => navigate(-1)}>
-                <img src="/icon/left-arrow.png" alt="화살표" />
+                <button onClick={() => navigate(-1)} style={{marginLeft:'15px'}}>
+                    <img src="/icon/left-arrow.png" alt="화살표" />
                 </button>
                 <h5>{t(getTitle(location.pathname))}</h5> {/* t() 함수로 제목 번역 */}
             </>

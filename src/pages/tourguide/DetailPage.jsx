@@ -8,11 +8,12 @@ import Reservation from './Reservation';
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
+import LoadingSpinner from 'components/LoadingSpinner';
 
 
 
 function DetailPage() {
-
+  const [loading, setLoading] = useState(true);
   const { t, i18n } = useTranslation();
     const changeLanguage = (selectedLanguage) => {
         
@@ -34,7 +35,7 @@ function DetailPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-
+   
     const savedLanguage = Cookies.get('selectedLanguage');
         if (savedLanguage) {
             changeLanguage(savedLanguage); // 언어 변경
@@ -44,6 +45,7 @@ function DetailPage() {
 
 
     const fetchDetailData = async () => {
+      setLoading(true); // 로딩 시작
       try {
         const response = await axios.get('/api/tour/tour-detail', {
           params: {
@@ -57,9 +59,11 @@ function DetailPage() {
         setDetailData(response.data);
       } catch (err) {
         setError(err.message);
+      } finally {
+        setLoading(false); // 로딩 종료
       }
     };
-
+    
     fetchDetailData();
   }, [id]);
 
@@ -79,6 +83,9 @@ function DetailPage() {
     return <div>No detail available</div>;
   }
 
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div>

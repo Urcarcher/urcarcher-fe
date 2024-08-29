@@ -6,6 +6,7 @@ import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
+import LoadingSpinner from 'components/LoadingSpinner';
 
 
 function TourGuide({
@@ -117,7 +118,10 @@ function TourGuide({
   if (error) {
     return <div>Error: {error}</div>;
   }
-
+  
+  if (loading) {
+    return <LoadingSpinner />;
+  }
   const buttonStyle = (isActive) => ({
     width: '100px',
     textAlign: 'center',

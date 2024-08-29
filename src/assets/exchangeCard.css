@@ -173,3 +173,10 @@
 .exCard_next_btn:hover {
     transform: translateY(-2px);
 }
+
+
+@media screen and (max-Width: 390px) { /* iPhone 12Pro */
+    .exCard_back_btn{
+        width: 150px;
+    }
+}
