@@ -1,13 +1,13 @@
 @media (min-width: 992px) {
     .col-lg-3 {
         flex: 0 0 auto;
-        width: 100% !important;
+        width: 40% !important;
     }
 }
 @media (min-width: 768px) {
     .col-md-6 {
         flex: 0 0 auto;
-        width: 100% !important;
+        width: 40% !important;
     }
 }
 /* 공통 스타일 */
@@ -109,4 +109,63 @@
     padding-left: 15px;
     padding-right: 15px;
   }
+  
+  .region-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px; /* 버튼 사이의 간격 */
+  }
+  
+  .region-button {
+    background-color: #f0f0f0; /* 기본 버튼 배경색 */
+    border: 2px solid #dcdcdc; /* 버튼 테두리 */
+    border-radius: 5px; /* 둥근 모서리 */
+    color: #333; /* 텍스트 색상 */
+    padding: 10px 15px; /* 패딩 조정 */
+    cursor: pointer; /* 마우스 커서 변경 */
+    font-size: 16px; /* 텍스트 크기 */
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  
+  .region-button:hover {
+    background-color: #e0e0e0; /* 호버 시 버튼 배경색 */
+    border-color: #bbb; /* 호버 시 버튼 테두리 색상 */
+  }
+  
+  .region-button.active {
+    background-color: #007bff; /* 클릭된 버튼 배경색 */
+    border-color: #0056b3; /* 클릭된 버튼 테두리 색상 */
+    color: white; /* 클릭된 버튼 텍스트 색상 */
+  }
+  
+  .region-button:focus {
+    outline: none; /* 포커스 시 아웃라인 제거 */
+  }
+
+/* toggle-button 스타일 */
+.toggle-button {
+  width: 90%;
+  background-color: #007bff; /* 버튼의 배경색 */
+  color: white; /* 버튼 텍스트 색상 */
+  padding: 10px 20px; /* 버튼의 패딩 (내부 여백) */
+  font-size: 16px; /* 버튼의 글꼴 크기 */
+  border: none; /* 버튼의 테두리 제거 */
+  border-radius: 5px; /* 버튼 모서리를 둥글게 */
+  cursor: pointer; /* 커서를 포인터로 변경 */
+  transition: background-color 0.3s ease; /* 배경색 전환 애니메이션 */
+}
+
+.toggle-button:hover {
+  background-color: #0056b3; /* 호버 시 배경색을 어둡게 */
+}
+
+.toggle-button:focus {
+  outline: none; /* 버튼이 포커스 되었을 때 외곽선 제거 */
+}
+
+.toggle-button:active {
+  background-color: #003f7f; /* 버튼이 활성화되었을 때 (클릭 시) 더 어둡게 */
+}
   
