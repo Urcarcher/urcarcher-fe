@@ -46,7 +46,7 @@ function ExchangeRateList(props) {
                     <ul className='mainlist-list'>
                         {mainlist.map((item, index)=>(
                         <li key={index}>
-                            <span className='mainlist-itemname'>{exchangeRateInfos[item] ? exchangeRateInfos[item].exchangeName : ''}</span>
+                            <span className='mainlist-itemname'>{exchangeRateInfos[item] ? exchangeRateInfos[item].country+' '+exchangeRateInfos[item].exchangeType : ''}</span>
                             <span className='mainlist-itemprice'>{exchangeRateInfos[item] ? exchangeRateInfos[item].rate : ''}</span>
                             <span className='mainlist-itemtime'>{exchangeRateInfos[item] ? exchangeRateInfos[item].date : ''}</span>
                         </li>

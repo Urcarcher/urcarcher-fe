@@ -138,14 +138,14 @@ function Payment() {
 
                                 <PriceInfo>
                                     <DiscountTag>{t('CardBenefits')}</DiscountTag>
-                                    <OriginalPrice>{(state.price).toLocaleString()}{t('Won')}</OriginalPrice>
+                                    <OriginalPrice>{(state.price).toLocaleString()}{" "+t('Won')}</OriginalPrice>
                                     <DiscountedPrice>10% {t('Discount')}</DiscountedPrice>
                                 </PriceInfo>
                             </ProductCard>
                             <br/>
                             <TotalAmount>
                                 <span>{t('TotalPaymentAmount')}</span>
-                                <span>{(state.price - (state.price * 0.1)).toLocaleString()}{t('Won')}</span>
+                                <span>{(state.price - (state.price * 0.1)).toLocaleString()}{" "+t('Won')}</span>
                             </TotalAmount>
                         </>
                     ) : (

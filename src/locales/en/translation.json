@@ -412,6 +412,30 @@
     "RealtimeExchangeRate": "Realtime Exchange Rate",
     "Reservation": "Reservation",
     "TouristAttractionsAndRestaurants": "Tourist Attractions & Restaurants",
-    "MyCard" : "My Card"
+    "MyCard" : "My Card",
+    "culturalActivityReservation": "Cultural Activity Reservation",
+    "travelCourseDetail": "Travel Course Detail",
+    "detailPage": "Detail Page",
+    "other": "Other",
+
+    "학원": "Academy",
+    "숙박": "Accommodation",
+    "중개업소": "Brokerage Office",
+    "관광명소": "Tourist Attraction",
+    "은행": "Bank",
+    "카페": "Cafe",
+    "편의점": "Convenience Store",
+    "문화시설": "Cultural Site",
+    "음식점": "Restaurant",
+    "병원": "Hospital",
+    "대형마트": "Large Mart",
+    "주유소": "Gas Station",
+    "주차장": "Parking Lot",
+    "약국": "Pharmacy",
+    "공공기관": "Public Institution",
+    "유치원": "Kindergarten",
+    "학교": "School",
+    "지하철역": "Subway Station",
+    "Count": "count"
 
 }
