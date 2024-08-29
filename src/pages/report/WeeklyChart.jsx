@@ -3,6 +3,10 @@ import { Chart } from "react-google-charts";
 import '../../assets/WeeklyChart.css';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
 
 const initialData = [
   ["요일", "소비 금액", { role: "style" }, { role: "annotation" }],
@@ -53,11 +57,33 @@ const options = {
 };
 
 const getWeekOfMonth = (date) => {
+
+  
+
+  
+
   const firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
   return Math.ceil((date.getDate() + firstDay) / 7);
 };
 
 const WeeklyChart = () => {
+
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
   const [usage, setUsage] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [data, setData] = useState(initialData);
@@ -100,6 +126,15 @@ const WeeklyChart = () => {
   }, []);
 
   useEffect(() => {
+
+    const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
     if (usage.length > 0) {
       filterDataByMonthWeek(selectedMonthWeek, usage); // 선택된 주에 따라 데이터 필터링
     }
@@ -127,7 +162,7 @@ const WeeklyChart = () => {
       if (index === 0) return item;
       const dayIndex = index - 1;
       const dayTotal = dayTotals[dayIndex] || 0;
-      return [item[0], dayTotal, item[2], `${dayTotal}원`];
+      return [item[0], dayTotal, item[2], `${dayTotal}`];
     });
 
     // 가장 높은 값을 찾아 색상 변경
@@ -153,7 +188,7 @@ const WeeklyChart = () => {
       for (let week = 1; week <= 5; week++) { // 최대 5주까지 가능
         options.push(
           <option key={`${monthValue}-W${week}`} value={`${monthValue}-W${week}`}>
-            2024년 {month}월 {week}주
+            2024{t('Year')} {month}{t('Month')} {week}{t('Week')}
           </option>
         );
       }
@@ -178,13 +213,13 @@ const WeeklyChart = () => {
           className={`menu-item ${location.pathname === '/chart2' ? 'active' : ''}`}
           onClick={() => navigate('/chart2')}
         >
-          소비 리포트
+          {t('ConsumptionReport')}
         </div>
         <div
            className={`menu-item ${location.pathname === '/chart1' ? 'active' : ''}`}
           onClick={() => navigate('/chart1')}
         >
-          소비 패턴 분석
+          {t('ConsumptionPatternAnalysis')}
         </div>
       </div>
 
@@ -201,10 +236,10 @@ const WeeklyChart = () => {
             }}>
             {generateMonthWeekOptions()}
           </select>
-          차 사용 금액
+          {t('UsageAmountForWeek')}
         </div>
         <div style={{ justifyContent: 'flex-start', display: 'flex', margin: '8px 20px', color: '#064AFF', fontWeight: 'bolder', fontSize: '25px' }}>
-          {totalPrice.toLocaleString()}원
+          {totalPrice.toLocaleString()}{t('Won')}
         </div>
         <Chart
           chartType="ColumnChart"
@@ -226,10 +261,10 @@ const WeeklyChart = () => {
               justifyContent: 'space-between'  // 자식 요소들을 공간 양 끝에 배치
             }}
           >
-            <div>총 소비 내역</div>
+            <div>{t('TotalSpendingDetails')}</div>
             <div style={{ color: 'gray' }}
               onClick={() => navigate('/usage')}>
-              카드 사용 내역 {'>'} </div>
+              {t('CardUsageDetails')}{'>'} </div>
           </div>
 
           {/* <span 
@@ -265,7 +300,7 @@ const WeeklyChart = () => {
                   <div style={{ fontWeight: 'bold', textAlign: 'start' }}>{usage.storeName}</div>
                   <div style={{ textAlign: 'start' }}>{new Date(usage.paymentDate).toLocaleString()}</div>
                 </div>
-                <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice}원</div>
+                <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice}{t('Won')}</div>
               </div>
             );
           })

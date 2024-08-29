@@ -254,6 +254,7 @@
     "EstimatedAmountInKRW": "원화 예상 금액",
     "EnterAmountAboveZero": "0원 이상의 충전하실 금액을 입력해 주세요",
     "FindingExchangeRateInfo": "환율 정보를 찾고 있어요. 다시 시도해 주세요",
+    "FindingExchangeRateInfo2": "환율 정보를 찾고 있어요",
     "CannotCalculateEstimatedKRW": "예상 원화 금액을 계산할 수 없어요. 다시 시도해 주세요",
     
     "NoExchangeHistory": "환전 내역이 없어요! 충전 후 확인해 주세요",
@@ -322,7 +323,51 @@
     "ParticleEul": "을",
     "Filled": "채웠어요",
 
+    "LocationPermissionRequired": "위치 권한이 필요합니다. 권한을 허용해 주세요",
+    "Departure": "출발지",
+    "Destination": "도착지",
+    "Route": "경로",
+    "ViewThisRoute": "이 경로 보기",
+    "Distance": "거리",
+    "EstimatedTime": "소요 시간",
 
+    "NoVisitHistory": "모든 방문 내역이 없습니다",
+    "GoBackHome": "홈으로 돌아가기",
+    "PopularPlaces": "다른 사람이 많이 방문한 곳은 \n 어디일까요?",
+
+    "DiscoverNewPlaces": "당신의 일상에 꼭 맞는 새로운 장소를 만나보세요",
+    "MostVisitedThisMonth": "이번 달 내가 가장 자주 가는 곳은?",
+    "ExploreAroundMe": "내 주변 탐색",
+    "NoPaymentHistory": "결제 내역이 없습니다",
+    "ExplorePopularPlaces": "인기 장소 둘러보기",
+
+    "DrawnWithPaymentHistory": "결제 내역으로 그린",
+    "MyOwnMap": "나만의 지도",
+    "RecommendPlacesBasedOnPaymentHistory": "님, 결제 내역으로 장소를 추천합니다",
+    "GetStarted": "시작하기",
+
+    "Convenience": "생활편의",
+    "Education/Culture": "교육/문화",
+    "Transportation": "교통",
+    "Finance/Public Services": "금융/공공서비스",
+    "Food/Health": "식비/건강",
+    "Tourism/Leisure": "관광/여가",
+
+    "ConsumptionReport": "소비 리포트",
+    "ConsumptionPatternAnalysis": "소비 패턴 분석",
+    "NoCategoryInformation": "카테고리 정보가 없습니다",
+
+
+    "TotalSpending": "총 지출",
+    "ErrorFetchingCardInfo": "카드 정보 불러오는데 오류 발생",
+    "AllCards": "전체 카드",
+    "Month": "월",
+    "Year": "년",
+    "Week": "주",
+
+    "UsageAmountForWeek": "차 사용 금액",
+    "TotalSpendingDetails": "총 소비 내역",
+    "CardUsageDetails": "카드 사용 내역",
     "Sort Latest" : "최신순",
     "Sort Most Viewed" : "조회순",
     "Sort Verified" : "인증순"

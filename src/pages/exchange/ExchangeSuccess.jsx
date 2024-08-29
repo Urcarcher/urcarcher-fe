@@ -119,7 +119,7 @@ function ExchangeSuccess(props) {
             </div>
             <div className="ex_success_btn_wrapper">
                 <button className="success_info_btn" onClick={historyHandle}>{t('ViewHistory')}</button>
-                <button className="success_check_btn" onClick={homeHandle}>{t('Confirm')}</button>
+                <button className="success_check_btn" onClick={homeHandle}>{t('Confrim')}</button>
             </div>
         </div>
     );

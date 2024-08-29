@@ -249,6 +249,7 @@
     "EstimatedAmountInKRW": "ウォンの予想金額",
     "EnterAmountAboveZero": "0ウォン以上のチャージ金額を入力してください",
     "FindingExchangeRateInfo": "為替レート情報を探しています。もう一度お試しください。",
+    "FindingExchangeRateInfo2": "為替レート情報を探しています",
     "CannotCalculateEstimatedKRW": "予想ウォン金額を計算できません。もう一度お試しください。",
 
     "NoExchangeHistory": "両替履歴がありません！チャージ後にご確認ください。",
@@ -316,6 +317,52 @@
     "HasBeenSet": "設定されました",
     "ParticleEul": "を",
     "Filled": "埋めました",
+
+    "LocationPermissionRequired": "位置情報の許可が必要です。許可してください。",
+    "Departure": "出発地",
+    "Destination": "目的地",
+    "Route": "ルート",
+    "ViewThisRoute": "このルートを見る",
+    "Distance": "距離",
+    "EstimatedTime": "所要時間",
+
+    "NoVisitHistory": "すべての訪問履歴がありません",
+    "GoBackHome": "ホームに戻る",
+    "PopularPlaces": "他の人がよく訪れる場所は \n どこでしょう？",
+
+    "DiscoverNewPlaces": "あなたの日常にぴったりの新しい場所を見つけましょう",
+    "MostVisitedThisMonth": "今月、私が最も頻繁に訪れる場所は？",
+    "ExploreAroundMe": "周辺を探す",
+    "NoPaymentHistory": "決済履歴がありません",
+    "ExplorePopularPlaces": "人気の場所を見てみよう",
+
+    "DrawnWithPaymentHistory": "決済履歴で描いた",
+    "MyOwnMap": "私だけの地図",
+    "RecommendPlacesBasedOnPaymentHistory": "さん、決済履歴に基づいて場所をお勧めします",
+    "GetStarted": "始める",
+
+    "Convenience": "生活便利",
+    "Education/Culture": "教育/文化",
+    "Transportation": "交通",
+    "Finance/Public Services": "金融/公共サービス",
+    "Food/Health": "食費/健康",
+    "Tourism/Leisure": "観光/レジャー",
+
+    "ConsumptionReport": "消費レポート",
+    "ConsumptionPatternAnalysis": "消費パターン分析",
+    "NoCategoryInformation": "カテゴリー情報がありません",
+
+    "TotalSpending": "総支出",
+    "ErrorFetchingCardInfo": "カード情報の取得中にエラーが発生しました",
+    "AllCards": "すべてのカード",
+    "Month": "月",
+    "Year": "年",
+    "Week": "週",
+
+    "UsageAmountForWeek": "週の使用金額",
+    "TotalSpendingDetails": "総消費内訳",
+    "CardUsageDetails": "カード使用内訳",
+
     "Sort Latest" : "最新順",
     "Sort Most Viewed" : "閲覧数順",
     "Sort Verified" : "認証順"
