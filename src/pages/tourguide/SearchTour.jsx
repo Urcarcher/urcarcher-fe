@@ -1,15 +1,36 @@
-import React, { useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import CardOverlay from '../../bootstrap-template/components/cards/CardOverlay';
 import { Link } from 'react-router-dom';
 import { ButtonGroup } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+
+
 
 function SearchTour(props) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
 
     let [contentTypeId, setContentTypeId] = useState('12');
 
     const radios = [
-        { name: '관광지', value: '12' },
-        { name: '맛집', value: '39' }
+        { name: t('TouristAttractions'), value: '12' },
+        { name: t('Restaurants'), value: '39' }
     ];
     // 버튼 클릭 헨들러 함수가 리렌더링될때마다 새로생성되지 않게 useCallback함수 사용
     const handleRadioChange = useCallback((value) => {
@@ -46,6 +67,18 @@ function SearchTour(props) {
         border: 'none',  // 테두리 제거
     });
 
+        
+    useEffect(()=>{
+    
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+    },[]);
+
+
     return (
         <>
         <br/>
@@ -53,7 +86,8 @@ function SearchTour(props) {
         <br/>
         <br/>
         <br/>
-        <p style={{textAlign:'left', padding:'10px'}}>원하시는 카테고리를 선택하신 뒤 지역을 선택해주세요</p>
+        {/* p태그 center로 수정(08.29) */}
+        <p style={{textAlign:'center', padding:'10px'}}>{t('SelectCategoryAndRegion')}</p>
         <ButtonGroup className="mb-3 d-flex justify-content-center">
             {radios.map((radio, idx) => (
                 <button

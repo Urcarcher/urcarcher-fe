@@ -138,14 +138,14 @@ function Payment() {
 
                                 <PriceInfo>
                                     <DiscountTag>{t('CardBenefits')}</DiscountTag>
-                                    <OriginalPrice>{(state.price).toLocaleString()}+ " " +{t('Won')}</OriginalPrice>
+                                    <OriginalPrice>{(state.price).toLocaleString()}{" "+t('Won')}</OriginalPrice>
                                     <DiscountedPrice>10% {t('Discount')}</DiscountedPrice>
                                 </PriceInfo>
                             </ProductCard>
                             <br/>
                             <TotalAmount>
-                                <span>{t('DiscoTotalPaymentAmountunt')}</span>
-                                <span>{(state.price - (state.price * 0.1)).toLocaleString()}+" " +{t('Won')}</span>
+                                <span>{t('TotalPaymentAmount')}</span>
+                                <span>{(state.price - (state.price * 0.1)).toLocaleString()}{" "+t('Won')}</span>
                             </TotalAmount>
                         </>
                     ) : (
@@ -162,7 +162,7 @@ function Payment() {
                                 <PaymentOption 
                                     type="radio" 
                                     id="credit-card-simple" 
-                                    label="카드 간편결제" 
+                                    label={t('CardSimplePayment')}
                                     value="credit-card-simple" 
                                     checked={paymentMethod === 'credit-card-simple'} 
                                     onChange={handlePaymentMethodChange} 
@@ -187,10 +187,10 @@ function Payment() {
                                             imgStyle={{width: '335px', height: '200px'}}
                                         />
                                         <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left',fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
-                                          {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "신용카드":"선불카드"}
+                                          {(card.cardTypeId === 1 || card.cardTypeId === 2) ? t('CreditCard'):t('PrepaidCard')}
                                         </p>
                                         <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', fontSize:'15px'}}>
-                                          {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "" : "잔액 | " + parseFloat(card.cardBalance).toLocaleString()+" " +t('Won')}
+                                          {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "" : t('Balance') + " | " + parseFloat(card.cardBalance).toLocaleString()+t('Won')}
                                         </p>
                                         <br/>
                                     </CarouselCell>

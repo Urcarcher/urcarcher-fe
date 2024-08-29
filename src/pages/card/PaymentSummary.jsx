@@ -13,6 +13,18 @@ import SelectLanguage from 'components/language/SelectLanguage';
 
 function PaymentSummary(props) {
 
+  function formatDate(dateString) {
+
+    const date = new Date(dateString);
+  
+    // 개별적으로 월과 일을 추출
+    const month = date.getMonth() + 1; // 월은 0부터 시작하므로 +1 필요
+    const day = date.getDate();
+  
+    // 번역된 텍스트로 조합
+    return `${month}${t('Month')} ${day}${t('Day')}`;
+  }
+
   const { t, i18n } = useTranslation();
     const changeLanguage = (selectedLanguage) => {
         
@@ -107,7 +119,7 @@ function PaymentSummary(props) {
       {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />}
       <Card>
         <Title>{formatDate(expectedPayDate)}  {t('EstimatedPaymentAmount')}</Title>
-        <Amount>{Number(expectedAmount).toLocaleString()}+" "+{t('Won')}</Amount>
+        <Amount>{Number(expectedAmount).toLocaleString()}{" "+t('Won')}</Amount>
         <br/>
         <PaymentButton onClick={()=>{
           paymentHandler();
@@ -119,7 +131,7 @@ function PaymentSummary(props) {
         {recentPayLocation ? (
           <>
             {t('Recent')} <span style={{ fontWeight: 'bold' }}>{recentPayLocation}</span>{t('From')}
-            <span style={{ fontWeight: 'bold' }}> {Number(recentPay).toLocaleString()} </span>{t('Won')}+" "+{t('PaymentCompleted')}
+            <span style={{ fontWeight: 'bold' }}> {Number(recentPay).toLocaleString()} </span>{" "+t('Won')}{t('PaymentCompleted')}
           </>
         ) : (
           ''
@@ -134,11 +146,6 @@ function PaymentSummary(props) {
   );
 }
 
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  const options = { month: 'long', day: 'numeric' };
-  return date.toLocaleDateString('ko-KR', options);
-}
 
 const Card = styled.div`
   background-color: #f0f4f7;

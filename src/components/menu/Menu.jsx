@@ -125,7 +125,7 @@ function Menu({onClose, isLoggedIn, userName}) {
                 items={[
                   { id:12, text: t('RecommendSpot'), link: "/searchtour" },
                   { id:13,text: t('PaymentBased'), link: "/maphome" },
-                  { id:14,text: t('BookActivities'), link: "/" },
+                  { id:14,text: t('BookActivities'), link: "/reservation" },
                   { id:15,text: t('RecommendCourse'), link: "/courseList" },
                   { id:16,text:  t('Reward'), link: "/courseList" },
                   { id:17,text: t('FindRoute'), link: "/MapComponent" },

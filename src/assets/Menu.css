@@ -105,3 +105,9 @@
     border-top: none;
     padding: 10px 0 0;
 }
+
+@media screen and (max-Width: 414px) {
+    .menu-wrap {
+     padding: 0 20px;
+    }
+  }

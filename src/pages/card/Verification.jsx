@@ -218,9 +218,9 @@ function Verification() {
     );
 }
 const Container = styled.div`
-  width: 400px;
+  width: 100%;
+  padding: 0 20px;
   margin: 50px auto;
-  font-family: Arial, sans-serif;
 `;
 const Row = styled.div`
   display: flex;

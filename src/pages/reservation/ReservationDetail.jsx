@@ -114,14 +114,14 @@ const secureImages = images.map((url) => {
       <br />
       <br />
       <br />
-      <h2>Seating Prices</h2>
+      {/* <h2>Seating Prices</h2>
       <ul>
         {seatingData.map((seat, index) => (
           <li key={index}>
             {seat.type}: {seat.price.toLocaleString()}원
           </li>
         ))}
-      </ul>
+      </ul> */}
       <br />
       <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
         <div style={{ position: 'relative' }}>

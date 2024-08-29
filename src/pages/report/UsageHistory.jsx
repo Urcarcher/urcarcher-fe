@@ -201,7 +201,8 @@ function UsageHistory(props) {
                                     : ''}
                             </div>
                         </div>
-                        <h2 style={{ justifyContent: 'flex-start', display: 'flex', color: '#064AFF' }}>{totalPrice.toLocaleString()}{t('Won')}</h2>
+
+                        <h2 style={{ justifyContent: 'flex-start', display: 'flex', color: '#064AFF' }}>{totalPrice.toLocaleString()}{" "+t('Won')}</h2>
                     </div>
 
                     <div style={{ margin: '40px 20px' }}>
@@ -218,7 +219,7 @@ function UsageHistory(props) {
                                                 <div style={{ fontWeight: 'bold', textAlign: 'start' }}>{usage.storeName}</div>
                                                 <div style={{ textAlign: 'start' }}>{new Date(usage.paymentDate).toLocaleString()}</div>
                                             </div>
-                                            <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice.toLocaleString()}{t('Won')}</div>
+                                            <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice.toLocaleString()}{" "+t('Won')}</div>
                                         </div>
                                     ))}
                                 </div>

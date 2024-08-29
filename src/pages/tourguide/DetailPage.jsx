@@ -5,15 +5,47 @@ import CardOverlay from '../../bootstrap-template/components/cards/CardOverlay';
 import { Margin } from '@mui/icons-material';
 import { Button } from 'react-bootstrap';
 import Reservation from './Reservation';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import LoadingSpinner from 'components/LoadingSpinner';
+
+
 
 function DetailPage() {
+  const [loading, setLoading] = useState(true);
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
   const { type, id } = useParams(); // id와 type을 URL 파라미터로 받음
   const [detailData, setDetailData] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
+   
+    const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
     const fetchDetailData = async () => {
+      setLoading(true); // 로딩 시작
       try {
         const response = await axios.get('/api/tour/tour-detail', {
           params: {
@@ -27,9 +59,11 @@ function DetailPage() {
         setDetailData(response.data);
       } catch (err) {
         setError(err.message);
+      } finally {
+        setLoading(false); // 로딩 종료
       }
     };
-
+    
     fetchDetailData();
   }, [id]);
 
@@ -49,6 +83,9 @@ function DetailPage() {
     return <div>No detail available</div>;
   }
 
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div>
@@ -71,7 +108,7 @@ function DetailPage() {
       <br/>
       <br/>
       <h1 className="display-6">{item.title}</h1> {/* 제목 */}
-      <p style={{textAlign:'left', margin:'10px'}}># 안내</p>
+      <p style={{textAlign:'left', margin:'10px'}}># {t('Information')}</p>
       <p style={{textAlign:'left', margin:'10px'}}>{item.overview}</p> {/* 개요 */}
       <hr/>
       <br/>
@@ -86,7 +123,7 @@ function DetailPage() {
             navigate(`/MapComponent/${item.addr1}`);
           }}
         >
-          길찾기
+          {t('FindRoute')}
         </Button>
 
         {
@@ -95,7 +132,7 @@ function DetailPage() {
           <Button style={{width:'110px'}} onClick={()=>{
             navigate(`/reservation1`, { state: { title : item.title, location : item.addr1, img:item.firstimage } });
           }}>
-            예약 및 결제
+            {t('BookingAndPayment')}
           </Button>
         }
         

@@ -260,7 +260,7 @@ function ExchangeCurrency(props) {
                 <div className="ex_cur_nation">
                     <p className="exAmt_text">{calculateAmount}</p>
                     {exchangeCurInfo[nation] ? 
-                    (<p style={{ color: "#BFBFBF" }}>1 { curSymbol(nation) } = {exchangeCurInfo[nation].rate}+ " " +{t('Won')}</p>) : (<p style={{ color: "#BFBFBF" }}>{t('FindingExchangeRateInfo2')}</p>)}
+                    (<p style={{ color: "#BFBFBF" }}>1 { curSymbol(nation) } = {exchangeCurInfo[nation].rate}{" "+t('Won')}</p>) : (<p style={{ color: "#BFBFBF" }}>{t('FindingExchangeRateInfo2')}</p>)}
                 </div>
             </div>
             <div className="exRate_wrapper">

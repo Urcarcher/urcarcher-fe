@@ -1,4 +1,3 @@
-// 경로에 따라 제목을 설정하는 함수 
 export  const getTitle = (pathname) => {
 
     const cleanedPathname = pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
@@ -8,9 +7,9 @@ export  const getTitle = (pathname) => {
         case '/maphome/map':
         case '/maphome/categoryRank':
         case '/maphome/beststorelist':
-            return '나만의 지도';
+            return 'MyOwnMap';
         case '/courseList': 
-            return '여행 코스';
+            return 'TourCourse';
         case '/card1':
         case '/card2':
         case '/card3':
@@ -18,42 +17,42 @@ export  const getTitle = (pathname) => {
         case '/card5':
         case '/card6':
         case '/cardverification':
-            return '카드 신청';
+            return 'ApplyCard2';
         case '/usage':
-            return '카드 사용 내역';
+            return 'CardUsageDetails';
         case '/chart1':
         case '/chart2':
-            return '소비 리포트'; 
+            return 'ReportMenu'; 
         case '/cardmanagement': 
-            return 'My 카드'; 
+            return 'MyCard'; 
         case '/exchange':  
         case '/exchange/currency':
         case '/exchange/success':
-            return '환전';
+            return 'CurrencyExchange';
         case '/exchange/card':
-            return '카드 선택';
+            return 'SelectCard';
         case '/exchange/set':
         case '/exchange/set/rate':
         case '/exchange/set/success':
-            return '자동 환전';
+            return 'AutoExchange';
         case '/exchange/history/card':
         case '/exchange/history':
         case '/exchange/history/detail':
-            return '환전 내역';
+            return 'ExchangeHistory';
         case '/exchange/realtime/rate':
-            return '실시간 환율 조회';
+            return 'RealtimeExchangeRate';
         case '/reservation':
-            return '문화 활동 예매';
+            return 'culturalActivityReservation';
         case '/searchtour': 
-            return '관광지 및 맛집 추천';
+            return 'TouristAttractionsAndRestaurants';
         case '/MapComponent':  
-            return '길 찾기';
+            return 'FindRoute';
         case '/signup':
         case '/signup/success':
         case '/signup/userinfo':
-            return '회원가입';
+            return 'SignUp';
         case '/login':
-            return '로그인';
+            return 'Login2';
         default:
             return handleDynamicPaths(cleanedPathname); // 가변 경로 처리
     }
@@ -67,21 +66,21 @@ export  const handleDynamicPaths = (pathname) => {
     }
     // /detail/:type/:id 패턴
     if (/^\/detail\/[^\/]+\/[^\/]+$/.test(pathname)) {
-        return '상세 페이지';
+        return 'detailPage';
     }
     // /course/:courseId 패턴
     if (/^\/course\/[^\/]+$/.test(pathname)) {
-        return '여행 코스 상세';
+        return 'travelCourseDetail';
     }
     // /MapComponent/:detailDestination 패턴
     if (/^\/MapComponent\/[^\/]+$/.test(pathname)) {
-        return '길 찾기';
+        return 'FindRoute';
     }
 
     if (/^\/reservation\/detail/.test(pathname)) {
-        return '문화 활동 예매';
+        return 'culturalActivityReservation';
       }
-    return '기타';
+    return 'other';
 }
 
 // :contentTypeId에 따라 제목을 반환하는 함수

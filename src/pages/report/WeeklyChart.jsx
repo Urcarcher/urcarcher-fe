@@ -8,16 +8,8 @@ import Cookies from 'js-cookie';
 import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
 
-const initialData = [
-  ["요일", "소비 금액", { role: "style" }, { role: "annotation" }],
-  ["Sat", 0, "#EDF0F7", "0원"],
-  ["Sun", 0, "#EDF0F7", "0원"],
-  ["Mon", 0, "#EDF0F7", "0원"],
-  ["Tue", 0, "#EDF0F7", "0원"],
-  ["Wed", 0, "#EDF0F7", "0원"],
-  ["Thu", 0, "#EDF0F7", "0원"],
-  ["Fri", 0, "#EDF0F7", "0원"]
-];
+
+
 
 const options = {
   title: "",
@@ -83,6 +75,17 @@ const WeeklyChart = () => {
        
     };
 
+  const initialData = [
+    ["요일", t('SpendingAmount'), { role: "style" }, { role: "annotation" }],
+    ["Sat", 0, "#EDF0F7", "0"+t('Won')],
+    ["Sun", 0, "#EDF0F7", "0"+t('Won')],
+    ["Mon", 0, "#EDF0F7", "0"+t('Won')],
+    ["Tue", 0, "#EDF0F7", "0"+t('Won')],
+    ["Wed", 0, "#EDF0F7", "0"+t('Won')],
+    ["Thu", 0, "#EDF0F7", "0"+t('Won')],
+    ["Fri", 0, "#EDF0F7", "0"+t('Won')]
+  ];
+  
 
   const [usage, setUsage] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -239,7 +242,7 @@ const WeeklyChart = () => {
           {t('UsageAmountForWeek')}
         </div>
         <div style={{ justifyContent: 'flex-start', display: 'flex', margin: '8px 20px', color: '#064AFF', fontWeight: 'bolder', fontSize: '25px' }}>
-          {totalPrice.toLocaleString()}{t('Won')}
+          {totalPrice.toLocaleString()}{" "+t('Won')}
         </div>
         <Chart
           chartType="ColumnChart"
@@ -300,7 +303,7 @@ const WeeklyChart = () => {
                   <div style={{ fontWeight: 'bold', textAlign: 'start' }}>{usage.storeName}</div>
                   <div style={{ textAlign: 'start' }}>{new Date(usage.paymentDate).toLocaleString()}</div>
                 </div>
-                <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice}{t('Won')}</div>
+                <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice}{" "+t('Won')}</div>
               </div>
             );
           })
