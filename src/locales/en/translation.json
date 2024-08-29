@@ -250,6 +250,7 @@
     "EstimatedAmountInKRW": "Estimated Amount in KRW",
     "EnterAmountAboveZero": "Please enter an amount greater than 0 KRW to recharge",
     "FindingExchangeRateInfo": "Finding exchange rate information. Please try again.",
+    "FindingExchangeRateInfo2": "Finding exchange rate information",
     "CannotCalculateEstimatedKRW": "Unable to calculate the estimated amount in KRW. Please try again.",
     "Service" : "Service",
 
@@ -318,6 +319,52 @@
     "HasBeenSet": "has been set",
     "ParticleEul": "",
     "Filled": "filled",
+
+    "LocationPermissionRequired": "Location permission is required. Please allow permission.",
+    "Departure": "Departure",
+    "Destination": "Destination",
+    "Route": "Route",
+    "ViewThisRoute": "View this route",
+    "Distance": "Distance",
+    "EstimatedTime": "Estimated time",
+
+    "NoVisitHistory": "No visit history available",
+    "GoBackHome": "Go back to home",
+    "PopularPlaces": "Where are the places \n most visited by others?",
+
+    "DiscoverNewPlaces": "Discover new places that fit perfectly into your daily life",
+    "MostVisitedThisMonth": "Where do I visit most often this month?",
+    "ExploreAroundMe": "Explore around me",
+    "NoPaymentHistory": "No payment history available",
+    "ExplorePopularPlaces": "Explore popular places",
+
+    "DrawnWithPaymentHistory": "Drawn with Payment History",
+    "MyOwnMap": "My Own Map",
+    "RecommendPlacesBasedOnPaymentHistory": ", we recommend places based on your payment history",
+    "GetStarted": "Get Started",
+
+    "Convenience": "Convenience",
+    "Education/Culture": "Education/Culture",
+    "Transportation": "Transportation",
+    "Finance/Public Services": "Finance/Public Services",
+    "Food/Health": "Food/Health",
+    "Tourism/Leisure": "Tourism/Leisure",
+
+    "ConsumptionReport": "Consumption Report",
+    "ConsumptionPatternAnalysis": "Consumption Pattern Analysis",
+    "NoCategoryInformation": "No category information available",
+
+    "TotalSpending": "Total Spending",
+    "ErrorFetchingCardInfo": "Error fetching card information",
+    "AllCards": "All Cards",
+    "Month": "Month",
+    "Year": "Year",
+    "Week": "Week",
+
+    "UsageAmountForWeek": "Week Usage Amount",
+    "TotalSpendingDetails": "Total Spending Details",
+    "CardUsageDetails": "Card Usage Details",
+
     "Sort Latest" : "Latest",
     "Sort Most Viewed" : "Most Viewed",
     "Sort Verified" : "Verified"

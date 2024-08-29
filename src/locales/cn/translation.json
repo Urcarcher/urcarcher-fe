@@ -248,6 +248,7 @@
     "EstimatedAmountInKRW": "韩元预计金额",
     "EnterAmountAboveZero": "请输入0韩元以上的充值金额",
     "FindingExchangeRateInfo": "正在查找汇率信息。请重试。",
+    "FindingExchangeRateInfo2": "正在查找汇率信息",
     "CannotCalculateEstimatedKRW": "无法计算预估韩元金额。请重试。",
 
     "NoExchangeHistory": "没有兑换记录！请在充值后查看。",
@@ -317,6 +318,52 @@
     "HasBeenSet": "已设置",
     "ParticleEul": "",
     "Filled": "填满了",
+
+    "LocationPermissionRequired": "需要位置权限。请允许权限。",
+    "Departure": "出发地",
+    "Destination": "目的地",
+    "Route": "路线",
+    "ViewThisRoute": "查看此路线",
+    "Distance": "距离",
+    "EstimatedTime": "预计时间",
+
+    "NoVisitHistory": "没有任何访问记录",
+    "GoBackHome": "返回主页",
+    "PopularPlaces": "其他人常去的地方是 \n 哪里？",
+
+    "DiscoverNewPlaces": "发现与您的日常生活完美契合的新地点",
+    "MostVisitedThisMonth": "这个月我最常去的地方是哪里？",
+    "ExploreAroundMe": "探索我周围的地方",
+    "NoPaymentHistory": "没有支付记录",
+    "ExplorePopularPlaces": "浏览热门地点",
+
+    "DrawnWithPaymentHistory": "根据支付记录绘制的",
+    "MyOwnMap": "我的专属地图",
+    "RecommendPlacesBasedOnPaymentHistory": ", 我们根据您的支付记录推荐地点",
+    "GetStarted": "开始",
+
+    "Convenience": "生活便利",
+    "Education/Culture": "教育/文化",
+    "Transportation": "交通",
+    "Finance/Public Services": "金融/公共服务",
+    "Food/Health": "餐饮/健康",
+    "Tourism/Leisure": "旅游/休闲",
+
+    "ConsumptionReport": "消费报告",
+    "ConsumptionPatternAnalysis": "消费模式分析",
+    "NoCategoryInformation": "没有类别信息",
+
+    "TotalSpending": "总支出",
+    "ErrorFetchingCardInfo": "获取卡信息时出错",
+    "AllCards": "所有卡片",
+    "Month": "月",
+    "Year": "年",
+    "Week": "周",
+
+    "UsageAmountForWeek": "周次使用金额",
+    "TotalSpendingDetails": "总消费明细",
+    "CardUsageDetails": "卡片使用明细",
+
     "Sort Latest" : "最新",
     "Sort Most Viewed" : "按浏览量排序",
     "Sort Verified" : "按认证排序"

@@ -4,8 +4,29 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import StoreInfoList from 'components/mymap/StoreInfoList';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 function BestStoreList(props) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
 
     const location = useLocation();
     const { memberId } = location.state || ''; 
@@ -16,6 +37,15 @@ function BestStoreList(props) {
    
 
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         axios.get(`/api/paymentPlace/best-store`, {
             params: {
                 memberId: memberId
@@ -49,11 +79,11 @@ function BestStoreList(props) {
                 <img src="/icon/white-exclamation-mark.png" alt="느낌표" 
                     style={{width:'30px', height:'150px'}}
                 />
-                <h2 style={{margin:'20px 0'}}>모든 방문 내역이 없습니다.</h2> 
+                <h2 style={{margin:'20px 0'}}>{t('NoVisitHistory')}</h2> 
                 <button 
                     className='mymap-btn'
                     onClick={goHome}>
-                   홈으로 돌아가기
+                   {t('GoBackHome')}
                 </button>
             </div>
         );
@@ -63,7 +93,7 @@ function BestStoreList(props) {
         <div>
             <div className='contents'>
                 <div className='categoryRank-title inner'>
-                    <h3>다른 사람이 많이 방문한 곳은 <br /> 어디일까요?</h3>
+                    <h3> {t('PopularPlaces')}</h3>
                 </div>
                 <StoreInfoList storeList={storeList} />
             </div>

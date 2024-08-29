@@ -260,7 +260,7 @@ function ExchangeCurrency(props) {
                 <div className="ex_cur_nation">
                     <p className="exAmt_text">{calculateAmount}</p>
                     {exchangeCurInfo[nation] ? 
-                    (<p style={{ color: "#BFBFBF" }}>1 { curSymbol(nation) } = {exchangeCurInfo[nation].rate}+ " " +{t('Won')}</p>) : (<p style={{ color: "#BFBFBF" }}>환율 정보를 찾고 있어요</p>)}
+                    (<p style={{ color: "#BFBFBF" }}>1 { curSymbol(nation) } = {exchangeCurInfo[nation].rate}+ " " +{t('Won')}</p>) : (<p style={{ color: "#BFBFBF" }}>{t('FindingExchangeRateInfo2')}</p>)}
                 </div>
             </div>
             <div className="exRate_wrapper">
@@ -269,7 +269,7 @@ function ExchangeCurrency(props) {
                     <div className="exRate_col">
                         <p className="exRate_left_text">{t('AppliedExchangeRate')}</p>
                         {exchangeCurInfo[nation] ? 
-                        (<p className="exRate_right_text">KRW {exchangeCurInfo[nation].rate} = 1 { curSymbol(nation) }</p>) : (<p className="exRate_right_text">환율 정보를 찾고 있어요</p>)}
+                        (<p className="exRate_right_text">KRW {exchangeCurInfo[nation].rate} = 1 { curSymbol(nation) }</p>) : (<p className="exRate_right_text">{t('FindingExchangeRateInfo2')}</p>)}
                     </div>
                     <div className="exRate_col">
                         <p className="exRate_left_text">{t('PreferentialTerms')}</p>

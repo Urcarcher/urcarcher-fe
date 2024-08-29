@@ -3,8 +3,30 @@ import axios from 'axios';
 import { Chart } from 'react-google-charts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../assets/WeeklyChart.css';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+import SelectLanguage from 'components/language/SelectLanguage';
+
 
 const MonthlyChart = () => {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
     const [selectedMonth, setSelectedMonth] = useState(() => {
         const today = new Date();
         return `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}`;
@@ -18,45 +40,54 @@ const MonthlyChart = () => {
     const location = useLocation();
 
     const categoryMapping = {
-        "MT1": "생활편의",
-        "CS2": "생활편의",
-        "PK6": "생활편의",
-        "OL7": "생활편의",
-        "AD5": "생활편의",
-        "PS3": "교육/문화",
-        "SC4": "교육/문화",
-        "AC5": "교육/문화",
-        "CT1": "교육/문화",
-        "SW8": "교통",
-        "BK9": "금융/공공서비스",
-        "AG2": "금융/공공서비스",
-        "PO3": "금융/공공서비스",
-        "FD6": "식비/건강",
-        "CE7": "식비/건강",
-        "HP8": "식비/건강",
-        "PM9": "식비/건강",
-        "AT4": "관광/여가"
+        "MT1": t('Convenience'),
+        "CS2": t('Convenience'),
+        "PK6": t('Convenience'),
+        "OL7": t('Convenience'),
+        "AD5": t('Convenience'),
+        "PS3": t('Education/Culture'),
+        "SC4": t('Education/Culture'),
+        "AC5": t('Education/Culture'),
+        "CT1": t('Education/Culture'),
+        "SW8": t('Transportation'),
+        "BK9": t('Finance/Public Services'),
+        "AG2": t('Finance/Public Services'),
+        "PO3": t('Finance/Public Services'),
+        "FD6": t('Food/Health'),
+        "CE7": t('Food/Health'),
+        "HP8": t('Food/Health'),
+        "PM9": t('Food/Health'),
+        "AT4": t('Tourism/Leisure')
     };
 
     const categoryColors = {
-        "생활편의": "#80B2FF",
-        "교육/문화": "#FF80EB",
-        "교통": "#FFCC80",
-        "금융/공공서비스": "#FF808F",
-        "식비/건강": "#80FF94",
-        "관광/여가": "#FF99CC",
+        [t('Convenience')] : "#80B2FF",
+        [t('Education/Culture')]: "#FF80EB",
+        [t('Transportation')]: "#FFCC80",
+        [t('Finance/Public Services')]: "#FF808F",
+        [t('Food/Health')]: "#80FF94",
+        [t('Tourism/Leisure')]: "#FF99CC",
     };
 
     const categoryImages = {
-        "생활편의": require('../../assets/conv.png'),
-        "교육/문화": require('../../assets/education.png'),
-        "교통": require('../../assets/bus.png'),
-        "금융/공공서비스": require('../../assets/etc.png'),
-        "식비/건강": require('../../assets/food.png'),
-        "관광/여가": require('../../assets/travel.png'),
+        [t('Convenience')]: require('../../assets/conv.png'),
+        [t('Education/Culture')]: require('../../assets/education.png'),
+        [t('Transportation')]: require('../../assets/bus.png'),
+        [t('Finance/Public Services')]: require('../../assets/etc.png'),
+        [t('Food/Health')]: require('../../assets/food.png'),
+        [t('Tourism/Leisure')]: require('../../assets/travel.png'),
     };
 
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         axios.get('/api/t/test')
             .then(response => {
                 const memberData = response.data;
@@ -160,13 +191,13 @@ const MonthlyChart = () => {
                     className={`menu-item ${location.pathname === '/chart2' ? 'active' : ''}`}
                     onClick={() => navigate('/chart2')}
                 >
-                    소비 리포트
+                    {t('ConsumptionReport')}
                 </div>
                 <div
                     className={`menu-item ${location.pathname === '/chart1' ? 'active' : ''}`}
                     onClick={() => navigate('/chart1')}
                 >
-                    소비 패턴 분석
+                    {t('ConsumptionPatternAnalysis')}
                 </div>
             </div>
 
@@ -179,7 +210,7 @@ const MonthlyChart = () => {
                     >
                         {generateMonthOptions()}
                     </select>
-                    &nbsp;소비 패턴 분석
+                    &nbsp;{t('ConsumptionPatternAnalysis')}
                 </div>
 
                 <div className="chart-container">
@@ -215,7 +246,7 @@ const MonthlyChart = () => {
                         </div>
                     ))
                 ) : (
-                    <div>카테고리 정보가 없습니다.</div>
+                    <div>{t('NoCategoryInformation')}</div>
                 )}
             </div>
         </div>
