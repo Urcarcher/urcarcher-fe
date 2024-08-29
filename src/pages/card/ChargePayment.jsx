@@ -49,6 +49,7 @@ const PaymentOptionInput = styled(Form.Check.Input)`
 
 const CustomToggleButtonGroup = styled.div`
   display: flex;
+  font-size:small;
   justify-content: space-between;
   margin-bottom: 20px;
 `;

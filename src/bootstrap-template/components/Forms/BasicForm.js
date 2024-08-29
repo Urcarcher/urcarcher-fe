@@ -17,28 +17,22 @@ export default function BasicForm(props) {
         //alert(JSON.stringify(values, null, 2))
 
         console.log(values.password);
-
-        // 카드삭제 및 비활성화
-        if(props.cardId[0] === 'deleteCard'){
-          Axios.post(`api/card/deletecard`,{
-              cardId : String(props.cardId[1]),
-              password : String(values.password)
+        if(values.password){
+          // 카드삭제 및 비활성화
+          if(props.cardId[0] === 'deleteCard'){
+            Axios.post(`api/card/deletecard`,{
+                cardId : String(props.cardId[1]),
+                password : String(values.password)
+              })
+            .then((response)=>{
+              alert('카드가 삭제되었습니다.');
             })
-          .then((response)=>{
-            alert('카드가 삭제되었습니다.');
-          })
-          .catch((error)=>{
-            alert('카드 삭제가 실패하였습니다.');
-          })
-        }else if(props.cardId[0] === 'deactivate'){
-          Axios.delete(`api/card/delete/${props.cardId[0]}`)
-          .then((response)=>{
-            alert('요청이 완료되었습니다.');
-            props.setShowModal(false)
-          })
-          .catch((error)=>{
-            alert('요청에 실패하였습니다.');
-          })
+            .catch((error)=>{
+              alert('카드 삭제가 실패하였습니다.');
+            })
+          }
+        }else{
+          alert('PIN번호를 입력해주세요.');
         }
 
         props.setShowModal(false);
@@ -67,6 +61,7 @@ export default function BasicForm(props) {
             type="password"
             placeholder="Password"
             className="form-control"
+            maxLength="4"
           />
         </div>
         <div className="mb-3">

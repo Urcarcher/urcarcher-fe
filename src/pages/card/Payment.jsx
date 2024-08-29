@@ -20,11 +20,12 @@ function Payment() {
     const handlePaymentMethodChange = (e) => setPaymentMethod(e.currentTarget.value);
     const [userId, setUserId] = useState(null);
     const [myCard, setMyCard] = useState([]);
-    const [selectedCardIndex, setSelectedCardIndex] = useState(0); // 추가: 선택된 카드의 인덱스 관리
+    const [selectedCardIndex, setSelectedCardIndex] = useState(0); //선택된 카드의 인덱스 관리
     const [cardId, setCardId] = useState('');
     const [payAmount, setPayAmount] = useState(0);
     const [currentDate, setCurrentDate] = useState(new Date().toISOString());
     const [cardTypeId, setCardTypeId] = useState(0);
+    const [cardBalance, setCardBalance] = useState(0);
     const [loading, setLoading] = useState(false);
     
     const { t, i18n } = useTranslation();
@@ -42,8 +43,6 @@ function Payment() {
        
     };
     
-
-
     let navigate = useNavigate();
     const flickityOptions = {
         cellAlign: 'center',
@@ -107,6 +106,7 @@ function Payment() {
 
         setCardId(card.cardId);
         setCardTypeId(card.cardTypeId);
+        setCardBalance(card.cardBalance);
         setPayAmount(state.price - (state.price * 0.1));
         setCurrentDate(new Date().toISOString());
     }
@@ -202,41 +202,47 @@ function Payment() {
                 <br/>
                 <Button onClick={() => {
                   setLoading(true);
-                    Axios.post('/api/payment/insert',
-                      {
-                        paymentPrice: payAmount,
-                        paymentDate: currentDate,
-                        cardId: cardId,
-                        storeId: '11111111'
-                      })
-                      .then((response) => {
-                        if (cardTypeId !== 1 && cardTypeId !== 2) {
-                          // 선불카드라면
-                          Axios.post('/api/card/usepayment', 
-                          {
-                            cardId: String(cardId),
-                            cardBalance: String(payAmount)
-                          }).then((response) => {
-                            console.log("잔액차감 정상적으로 작동");
-                          }).catch((error) => {
-                            console.log("잔액차감 비정상적으로 작동");
-                          })
-                        }
-                        setTimeout(() => {
-                          setLoading(false);
-                          console.log('Payment inserted successfully:', response.data);
-                          alert(t('DepositPaymentSuccess'));
-                          navigate('/');
-                        }, 3000);
-                      })
-                      .catch((error) => {
-                          setTimeout(() => {
-                          setLoading(false);
-                          console.error('Error inserting payment:', error);
-                          alert(t('DepositPaymentFailure'));
-                        }, 3000);
-                      });
-                      
+
+                    if ((cardTypeId !== 1 && cardTypeId !== 2) && (Number(cardBalance)<Number(payAmount)) ){
+                        alert("선불카드의 잔액이 부족합니다.");
+                        setLoading(false);
+                    }else{
+                        // 결제테이블의 결제 데이터 저장
+                        Axios.post('/api/payment/insert',
+                            {
+                              paymentPrice: payAmount,
+                              paymentDate: currentDate,
+                              cardId: cardId,
+                              storeId: '11111111'
+                            })
+                            .then((response) => {
+                              if (cardTypeId !== 1 && cardTypeId !== 2) {
+                                // 선불카드일 경우 잔액 차감
+                                Axios.post('/api/card/usepayment', 
+                                {
+                                  cardId: String(cardId),
+                                  cardBalance: String(payAmount)
+                                }).then((response) => {
+                                  console.log("잔액차감 정상적으로 작동");
+                                }).catch((error) => {
+                                  console.log("잔액차감 비정상적으로 작동");
+                                })
+                              }
+                              setTimeout(() => {
+                                setLoading(false);
+                                console.log('Payment inserted successfully:', response.data);
+                                alert(t('DepositPaymentSuccess'));
+                                navigate('/');
+                              }, 3000);
+                            })
+                            .catch((error) => {
+                                setTimeout(() => {
+                                setLoading(false);
+                                console.error('Error inserting payment:', error);
+                                alert(t('DepositPaymentFailure'));
+                              }, 3000);
+                            });
+                    }
                 }} style={{width: '80%'}}>{t('MakePayment')}</Button>
             </div>
         </ScrollableContainer>

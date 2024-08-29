@@ -72,7 +72,7 @@ function Reservation() {
       setReservePerson(response.data);
       console.log(reservePerson)
     })
-  },[reservePerson])
+  },[])
 
 
   return (
