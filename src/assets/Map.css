@@ -387,5 +387,5 @@ p.phone{
 @media screen and (max-Width: 375px) { /* iPhone SE */
   .maphome_textwrap > p:last-child {
     font-size: 38px;
-}
+  }
 }

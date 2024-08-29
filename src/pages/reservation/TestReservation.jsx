@@ -90,12 +90,11 @@ function ReservationInfo() {
             ))}
           </div>
         )}
-        <div className="dropdown-controls">
+        {/* <div className="dropdown-controls">
           <button onClick={toggleDropdown} className="toggle-button">
             {dropdownOpen ? "닫기" : "지역: "+ regionNames[region]}
           </button>
-          
-        </div>
+        </div> */}
       </div>
       <div className='reserve-list-wrap'>
         <div className="row">
@@ -104,6 +103,7 @@ function ReservationInfo() {
               <Link to={`./detail/${item.mt20id}`}>
                 <div className="reserve-card">
                   <img className="reserve-card-img-top rounded-0" src={item.poster} alt={`${item.prfnm} 포스터`} />
+                  {/* <p>{item.prfstate}</p> */}
                   <div className="reserve-card-body-box">
                     <h5 className="reserve-card-title">{item.prfnm}</h5>
                     <h6 className="reserve-card-subtitle mb-2 text-muted">{item.genrenm}</h6>
