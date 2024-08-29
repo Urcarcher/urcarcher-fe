@@ -87,10 +87,10 @@ const changeLanguage = (selectedLanguage) => {
             <div className="ex_setting_table_box">
                 <div className="ex_setting_table">
                     <h5>대한민국 KRW</h5>
-                    <div className="ex_setting_col">
+                    {/* <div className="ex_setting_col">
                         <p className="ex_setting_p">{t('ReservedExchangeRate')}</p>
                         <h5>1 { curSymbol(nation) } = {settingData.setRate}</h5>
-                    </div>
+                    </div> */}
                     <div className="ex_setting_col">
                         <p className="ex_setting_p">{t('ReservationDate')}</p>
                         <h5>{settingData.setDate}</h5>
