@@ -53,6 +53,8 @@ export  const getTitle = (pathname) => {
             return 'SignUp';
         case '/login':
             return 'Login2';
+        case '/reward':
+            return 'Reward';
         default:
             return handleDynamicPaths(cleanedPathname); // 가변 경로 처리
     }

@@ -127,7 +127,7 @@ function Menu({onClose, isLoggedIn, userName}) {
                   { id:13,text: t('PaymentBased'), link: "/maphome" },
                   { id:14,text: t('BookActivities'), link: "/reservation" },
                   { id:15,text: t('RecommendCourse'), link: "/courseList" },
-                  { id:16,text:  t('Reward'), link: "/courseList" },
+                  { id:16,text:  t('Reward'), link: "/reward" },
                   { id:17,text: t('FindRoute'), link: "/MapComponent" },
                 ]}
               />

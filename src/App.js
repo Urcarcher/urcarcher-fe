@@ -31,8 +31,7 @@ import OAuthNew from './pages/auth/OAuthNew';
 import OAuthLoading from './pages/auth/OAuthLoading';
 import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
 
-import CourseDetail from './pages/tourcourse/CourseDetail2';
-//import CourseDetail from './pages/tourcourse/CourseDetail';
+import CourseDetail from './pages/tourcourse/CourseDetail';
 import ExchangeSuccess from './pages/exchange/ExchangeSuccess';
 import TestReservation from './pages/reservation/TestReservation';
 import MapComponent from './pages/location/MapComponent';
@@ -55,6 +54,7 @@ import Reserve from 'pages/reservation/Reserve';
 import ReservePayment from 'pages/reservation/ReservePayment';
 import SettingPassword from 'pages/card/SettingPassword';
 import CardPassword from 'pages/card/CardPassword';
+import Reward from 'pages/tourcourse/Reward';
 
 function App() {
   return (
@@ -81,6 +81,7 @@ function App() {
           <Route path='/courseList' element={<CourseList/>}/>
           <Route path="/course/:courseId" element={<CourseDetail />} />
           <Route path='/signup/*' element={<Signup/>}/>
+          <Route path='/reward' element={<Reward/>}/>
           <Route  path='/maphome' element={<MyMapHome />}></Route>
           <Route  path='/maphome/map' element={<MyMapApp />}></Route>
           <Route  path='/maphome/categoryRank' element={<MyCategoryRank />}></Route>
