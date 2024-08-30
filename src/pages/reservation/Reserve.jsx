@@ -44,14 +44,6 @@ function Reserve() {
     setTotalPrice(newTotalPrice);
   }, [selectedSeats, seatPrices]);
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-
-  const handleTimeChange = (time) => {
-    setSelectedTime(time);
-  };
-
   const handlePeopleChange = (people) => {
     setSelectedPeople(people);
   };
@@ -75,6 +67,81 @@ function Reserve() {
 
   const handleClose = () => {
     setShowModal(false);
+  };
+
+  const [availableDates, setAvailableDates] = useState([]);
+  const [availableTimes, setAvailableTimes] = useState({});
+
+  useEffect(() => {
+    // 날짜 범위 생성
+    const startDate = new Date(recv.resStart.replaceAll('.', '-'));
+    const endDate = new Date(recv.resEnd.replaceAll('.', '-'));
+
+    const dates = [];
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+      dates.push(new Date(d));
+    }
+    setAvailableDates(dates);
+
+    // dtguidance에서 요일별 시간을 파싱하여 사용 가능한 시간 설정
+    const times = {};
+    const dayMap = {
+      '일요일': 0,
+      '월요일': 1,
+      '화요일': 2,
+      '수요일': 3,
+      '목요일': 4,
+      '금요일': 5,
+      '토요일': 6,
+    };
+
+    // dtguidance를 ')으로 나누고 각 부분을 처리
+    recv.resTime.split('),').forEach((entry, idx) => {
+      // '), '로 분리된 각 부분에서 ')'을 제거
+      const cleanedEntry = idx === recv.resTime.split('),').length - 1 ? entry : entry + ')';
+      
+      // 괄호와 요일 부분을 분리
+      const [daysPart, timesPart] = cleanedEntry.split('(');
+      const dayRange = daysPart.trim();
+      const timeValues = timesPart ? timesPart.replace(')', '').split(',').map(time => time.trim()) : [];
+
+      console.log(`Parsing entry: ${cleanedEntry.trim()}`);
+      console.log(`Days: ${dayRange}`);
+      console.log(`Times: ${timeValues.join(', ')}`);
+
+      const [startDay, endDay] = dayRange.split('~').map(day => day.trim());
+      const startIdx = dayMap[startDay];
+      const endIdx = endDay ? dayMap[endDay] : startIdx;
+
+      for (let i = startIdx; i <= endIdx; i++) {
+        const dayKey = Object.keys(dayMap).find(key => dayMap[key] === i);
+        if (dayKey) {
+          times[dayKey] = times[dayKey] ? [...new Set([...times[dayKey], ...timeValues])] : [...timeValues];
+        }
+      }
+    });
+
+    console.log('Available Times:', times);
+    setAvailableTimes(times);
+
+  }, [recv.resStart, recv.resEnd, recv.resTime]);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setSelectedTime(null);  // 날짜 변경 시 시간 초기화
+  };
+
+  const handleTimeChange = (time) => {
+    setSelectedTime(time);
+  };
+
+  const isDateSelectable = (date) => {
+    return availableDates.some(d => d.toDateString() === date.toDateString());
+  };
+
+  const getAvailableTimesForSelectedDate = () => {
+    const dayOfWeek = selectedDate.toLocaleString('ko-KR', { weekday: 'long' });
+    return availableTimes[dayOfWeek] || [];
   };
 
   return (
@@ -111,31 +178,32 @@ function Reserve() {
         </StyledRow>
         <Divider />
         <StyledRow>
-          <StyledCol>
-            <Header>날짜를 선택해 주세요</Header>
-            <Calendar
-              onChange={handleDateChange}
-              value={selectedDate}
-              className="react-calendar modern-calendar"
-            />
-          </StyledCol>
-        </StyledRow>
-        <StyledRow>
-          <StyledCol>
-            <Header>시간을 선택해 주세요</Header>
-            <TimeSelect>
-              {['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'].map((time, index) => (
-                <CustomButton
-                  key={index}
-                  active={selectedTime === time}
-                  onClick={() => handleTimeChange(time)}
-                >
-                  {time}
-                </CustomButton>
-              ))}
-            </TimeSelect>
-          </StyledCol>
-        </StyledRow>
+        <StyledCol>
+          <Header>날짜를 선택해 주세요</Header>
+          <Calendar
+            onChange={handleDateChange}
+            value={selectedDate}
+            className="react-calendar modern-calendar"
+            tileDisabled={({ date }) => !isDateSelectable(date)}
+          />
+        </StyledCol>
+      </StyledRow>
+      <StyledRow>
+        <StyledCol>
+          <Header>시간을 선택해 주세요</Header>
+          <TimeSelect>
+            {getAvailableTimesForSelectedDate().map((time, index) => (
+              <CustomButton
+                key={index}
+                active={selectedTime === time}
+                onClick={() => handleTimeChange(time)}
+              >
+                {time}
+              </CustomButton>
+            ))}
+          </TimeSelect>
+        </StyledCol>
+      </StyledRow>
         <StyledRow>
           <StyledCol>
             <Divider />
@@ -183,6 +251,7 @@ function Reserve() {
                   예약금: {totalPrice*parseInt(selectedPeople, 10).toLocaleString()}원
                 </p>
                 <p style={{ textAlign: 'left' }}>위치 : {recv.location}</p>
+                <p style={{ textAlign: 'left' }}>시간 : {selectedTime}</p>
               </ReservationBox>
               <InfoSection>
                 <InfoTitle>예약자 정보</InfoTitle>
@@ -211,6 +280,7 @@ function Reserve() {
                     price: totalPrice * parseInt(selectedPeople, 10), // 선택한 좌석 가격 합계
                     peopleNum: parseInt(selectedPeople, 10),
                     resDate: selectedDate,
+                    resTime: selectedTime, //시간 추가
                     selectedSeats, // 좌석 정보 추가
                     locations: recv.location
                   }

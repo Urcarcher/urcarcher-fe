@@ -80,6 +80,7 @@ function MyReservations1() {
                 <hr></hr>
                 <h3>{reservation.title}</h3>
                 <p>일자: {reservation.reservationDate}</p>
+                <p>시간: {reservation.reservationTime}</p>
                 <p>상태: {reservation.state === 1 ? '예약완료' : reservation.state === 0 ? '예약취소' : '알 수 없음'}</p>
                 <p>공연명: {reservation.name}</p>
                 <p>위치: {reservation.location}</p>
