@@ -319,14 +319,16 @@ function ExchangeSetRate(props) {
                             </LocalizationProvider>
                         </div>
                     </div>
+
                     <div className="set_rate_notice">
-                        {/* <p className="set_rate_left_text">{reserveDate !== "" ? reserveDate : t('SelectReservationDate')}</p> */}
-                        <p className="set_rate_box_left">* 예측 환율 정보 주의사항</p>
-                        <p className="set_rate_left_text">당일 환율과 예측한 환율이 다를 수 있어요</p>
-                        <p className="set_rate_left_text">예약일이 되면 당일 환율로 환전해 드려요</p>
+                        <p className="set_rate_left_text">{reserveDate !== "" ? reserveDate : t('SelectReservationDate')}</p>
+                        <p className="set_rate_box_left">* {t('exchangeRateForecastNotice')}</p>
+                        <p className="set_rate_left_text">{t('actualRateMayDiffer')}</p>
+                        <p className="set_rate_left_text">{t('exchangeAtActualRate')}</p>
                         {/* <p className="set_rate_box_left">*  {t('SelectedReservationRate')}</p> */}
                         {/* <p className="set_rate_left_text">{nation} 1 = {selectRate !== null ? selectRate + " ￦" : t('SelectReservationRate')}</p> */}
                     </div>
+
                     <div className="set_rate_cur">
                         <p className="set_rate_box_left">
                             * {t('ExchangeAmount')}

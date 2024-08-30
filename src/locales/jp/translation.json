@@ -493,5 +493,15 @@
     "파키스탄": "パキスタン",
     "방글라데시": "バングラデシュ",
     "필리핀": "フィリピン",
-    "멕시코": "メキシコ"
+    "멕시코": "メキシコ",
+
+    "exchangeRateForecastNotice": "為替予測注意",
+    "actualRateMayDiffer": "実際のレートが異なる場合あり",
+    "exchangeAtActualRate": "当日のレートで両替",
+    "date": "日付",
+    "openingPrice": "始値",
+    "closingPrice": "終値",
+    "highPrice": "高値",
+    "lowPrice": "安値",
+    "fluctuationRate": "変動"
 }

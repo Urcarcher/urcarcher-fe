@@ -492,5 +492,15 @@
     "파키스탄": "巴基斯坦",
     "방글라데시": "孟加拉国",
     "필리핀": "菲律宾",
-    "멕시코": "墨西哥"
+    "멕시코": "墨西哥",
+
+    "exchangeRateForecastNotice": "汇率预测注意事项",
+    "actualRateMayDiffer": "当天汇率可能与预测汇率不同",
+    "exchangeAtActualRate": "在预定日期按当天汇率兑换",
+    "date": "日期",
+    "openingPrice": "开盘价",
+    "closingPrice": "收盘价",
+    "highPrice": "最高价",
+    "lowPrice": "最低价",
+    "fluctuationRate": "波动率"
 }

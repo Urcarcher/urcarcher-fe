@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import 'assets/rateGraph.css';
 import 'components/exchange/ForecastedGraph.css';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+
 
 import {
     LineChart,
@@ -40,6 +44,22 @@ const CustomXAxisTick = ({ x, y, payload, onClick, data }) => {
 };
 
 function RateGraph( { getDate } ) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
     const [data, setData] = useState([]);
     const [currentPrice, setCurrentPrice] = useState('시가');
     const [exchangeType, setExchangeType] = useState('');
@@ -57,6 +77,15 @@ function RateGraph( { getDate } ) {
     }
 
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         axios.get("/api/fore/list", null)
             .then((resp) => {
                 setExchangeType(resp.data[0].exchangeType);
@@ -117,7 +146,7 @@ function RateGraph( { getDate } ) {
                             checked={currentPrice === '시가'}
                             onChange={priceHandling}
                         />
-                        <label>시가</label>
+                        <label>{t('openingPrice')}</label>
                         <input
                             type="radio"
                             className="form-check-input"
@@ -125,7 +154,7 @@ function RateGraph( { getDate } ) {
                             checked={currentPrice === '종가'}
                             onChange={priceHandling}
                         />
-                        <label>종가</label>
+                        <label>{t('closingPrice')}</label>
                         <input
                             type="radio"
                             className="form-check-input"
@@ -133,7 +162,7 @@ function RateGraph( { getDate } ) {
                             checked={currentPrice === '고가'}
                             onChange={priceHandling}
                         />
-                        <label>고가</label>
+                        <label>{t('highPrice')}</label>
                         <input
                             type="radio"
                             className="form-check-input"
@@ -141,7 +170,7 @@ function RateGraph( { getDate } ) {
                             checked={currentPrice === '저가'}
                             onChange={priceHandling}
                         />
-                        <label>저가</label>
+                        <label>{t('lowPrice')}</label>
                         <input
                             type="radio"
                             className="form-check-input"
@@ -149,7 +178,7 @@ function RateGraph( { getDate } ) {
                             checked={currentPrice === '변동률'}
                             onChange={priceHandling}
                         />
-                        <label>변동률 {"(%)"}</label>
+                        <label>{t('fluctuationRate')}{"(%)"}</label>
                     </div>
                 </div>
             </div>
@@ -168,12 +197,12 @@ function RateGraph( { getDate } ) {
                     <table>
                         <thead>
                             <tr>
-                                <th>날짜</th>
-                                <th>시가</th>
-                                <th>종가</th>
-                                <th>고가</th>
-                                <th>저가</th>
-                                <th>변동률</th>
+                                <th>{t('date')}</th>
+                                <th>{t('openingPrice')}</th>
+                                <th>{t('closingPrice')}</th>
+                                <th>{t('highPrice')}</th>
+                                <th>{t('lowPrice')}</th>
+                                <th>{t('fluctuationRate')}</th>
                             </tr>
                         </thead>
                         <tbody>
