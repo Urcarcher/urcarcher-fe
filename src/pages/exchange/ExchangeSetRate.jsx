@@ -47,14 +47,13 @@ function ExchangeSetRate(props) {
     
     // 로그인 유저 국적 조회
     useEffect(() => {
-
         const savedLanguage = Cookies.get('selectedLanguage');
+
         if (savedLanguage) {
             changeLanguage(savedLanguage); // 언어 변경
         } else {
             changeLanguage('Korea'); // 기본 언어 설정
         }
-
 
         axios.get("/api/exchange/find")
         .then((response) => {
@@ -69,16 +68,9 @@ function ExchangeSetRate(props) {
     // 국적 별 통화 기호
     const curSymbol = (nation) => {
         const foundCur = exchangeType.find(cur => cur.nt === nation);
-        // 배열에 유저의 국적과 일치하는 국적이 없으면 $ 보이도록
+        // 배열에 유저의 국적과 일치하는 국적이 기본값 $
         return foundCur ? foundCur.cr : "$";
     };
-    
-    // 예측 환율 임시 data
-    // const rate = [
-    //     // 예측 날짜, 시가, 여행 추천 시작일, 여행 추천 종료일 (국가 별 예측 정보가 있다고 가정)
-    //     { rDate: "2024-08-24", rOpen: "1336.40", rStart: "2024-08-21", rEnd: "2024-08-27", rNation: "USD" },
-    //     { rDate: "2024-08-26", rOpen: "1330.30", rStart: "2024-08-22", rEnd: "2024-08-27", rNation: "USD" }
-    // ];
 
     const [isView, setIsView] = useState(false); // toggle 효과
     // const [rateList, setRateList] = useState(rate);
@@ -95,13 +87,11 @@ function ExchangeSetRate(props) {
     // const [inputWidth, setInputWidth] = useState(295); // 글자 너비 기본값 (15px)
     const [selectCur, setSelectCur] = useState(0); // 사용자가 입력한 KRW
     const [selectAmount, setSelectAmount] = useState(0); // 예상 원화
-    
 
     // 환율 예측 그래프 날짜(월) 선택
     const showRateHandle = (event) => {
         const showDate = event.currentTarget.value;
         console.log("그래프 날짜(월)", showDate);
-        // alert(event);
 
         // 월 선택이므로 잘라서 비교
         setSelectDate(showDate.slice(0, 7));
@@ -129,54 +119,53 @@ function ExchangeSetRate(props) {
 
     // DatePicker 선택한 날짜 포맷 변경 후 범위 확인
     const dateChangeHandle = (date) => {
-        setSelectReserve(date);
-
         if (date) {
-            // setReserveDate(dayjs(date).format("YYYY-MM-DD"));
+            setReserveDate(dayjs(date).format("YYYY-MM-DD"));
             const formatDate = dayjs(date).format("YYYY-MM-DD");
+
             setReserveDate(formatDate);
             
-            const reserveDateObj = dayjs(formatDate); // 날짜 객체로 변환
-            const today = dayjs().startOf("day"); // 오늘 날짜 00:00:00
+            // const reserveDateObj = dayjs(formatDate); // 날짜 객체로 변환
+            // const today = dayjs().startOf("day"); // 오늘 날짜 00:00:00
 
-            if (reserveDateObj.isSame(today, "day")) {
-                setCleared(true);
-                setReserveDate(null); // 선택 날짜 초기화
+            // if (reserveDateObj.isSame(today, "day")) {
+            //     setCleared(true);
+            //     setReserveDate(null); // 선택 날짜 초기화
 
-                alert(t('SameDayReservationNotAllowed'));
-                return;
-            }
+            //     alert(t('SameDayReservationNotAllowed'));
+            //     return;
+            // }
 
-            if (selectRate) {
-                const startDateObj = dayjs(selectRate.rStart); // 추천 시작일
-                const endDateObj = dayjs(selectRate.rEnd); // 추천 종료일
+            // if (selectRate) {
+            //     const startDateObj = dayjs(selectRate.rStart); // 추천 시작일
+            //     const endDateObj = dayjs(selectRate.rEnd); // 추천 종료일
 
-                if (reserveDateObj.isBetween(startDateObj, endDateObj, null, "[]")) {
-                    console.log("범위 내에 있는 날짜");
-                } else {
-                    console.log("범위 밖에 있는 날짜");
+            //     if (reserveDateObj.isBetween(startDateObj, endDateObj, null, "[]")) {
+            //         console.log("범위 내에 있는 날짜");
+            //     } else {
+            //         console.log("범위 밖에 있는 날짜");
 
-                    setCleared(true);
-                    setReserveDate(null); // 선택 날짜 초기화
+            //         setCleared(true);
+            //         setReserveDate(null); // 선택 날짜 초기화
 
-                    alert(t('OnlyDatesBetweenStartAndEnd'));
-                    return;
-                }
-            } else {
-                setCleared(true);
-                setReserveDate(null); // 선택 날짜 초기화
+            //         alert(t('OnlyDatesBetweenStartAndEnd'));
+            //         return;
+            //     }
+            // } else {
+            //     setCleared(true);
+            //     setReserveDate(null); // 선택 날짜 초기화
                 
-                alert(t('SelectPredictionInfoFirst'));
-                return;
-            }
+            //     alert(t('SelectPredictionInfoFirst'));
+            //     return;
+            // }
         }
     };
 
-    // console.log("예약일 선택", reserveDate);
+    console.log("예약일 선택", reserveDate);
 
     // input 클릭 시 초기화
     const focusHandle = () => {
-        if (!focused && selectRate) {
+        if (!focused) {
             setSelectCur("");
             setFocused(true);
         } 
@@ -214,22 +203,20 @@ function ExchangeSetRate(props) {
 
     // 환전 예약 isnert
     const insertHandle = () => {
-        /*
-        if (!selectRate) {
-            alert(t('SetReservationAfterSelectingPrediction'));
-            return;
-        }
+        // if (!selectRate) {
+        //     alert(t('SetReservationAfterSelectingPrediction'));
+        //     return;
+        // }
         
         if (!reserveDate) {
             alert("환전 예약일을 선택해 주세요");
             return;
         }
         
-        if (!selectAmount) {
+        if (!selectCur) {
             alert(t('EnterAmountAboveZero'));
             return;
         }
-        */
 
         const data = {
             cardId: exCard.cardId,
@@ -269,8 +256,8 @@ function ExchangeSetRate(props) {
         // console.log("data 타입 확인", typeof data);
         console.log("선택한 data 정보", data);
 
-        setReserveDate(data.date); // 날짜
-        setSelectRate(data.open); // 시가
+        // setReserveDate(data.date); // 날짜
+        // setSelectRate(data.open); // 시가
     };
 
     return (
@@ -312,10 +299,10 @@ function ExchangeSetRate(props) {
                 <div className="set_rate_value">
                     <div className="set_rate_date_box">
                         <p className="set_rate_box_left">* {t('SelectedExchangeReservationDate')}</p>
-                        {/* <div className="set_rate_option">
+                        <div className="set_rate_option">
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
-                                    label="예측 날짜 선택"
+                                    label="예약 날짜 선택"
                                     showDaysOutsideCurrentMonth
                                     slotProps={{
                                         textField: {
@@ -330,8 +317,10 @@ function ExchangeSetRate(props) {
                                     dateFormat="YYYY-MM-DD"
                                 />
                             </LocalizationProvider>
-                        </div> */}
-                        <p className="set_rate_left_text">{reserveDate !== "" ? reserveDate : t('SelectReservationDate')}</p>
+                        </div>
+                    </div>
+                    <div className="set_rate_notice">
+                        {/* <p className="set_rate_left_text">{reserveDate !== "" ? reserveDate : t('SelectReservationDate')}</p> */}
                         <p className="set_rate_box_left">* 예측 환율 정보 주의사항</p>
                         <p className="set_rate_left_text">당일 환율과 예측한 환율이 다를 수 있어요</p>
                         <p className="set_rate_left_text">예약일이 되면 당일 환율로 환전해 드려요</p>
@@ -357,11 +346,11 @@ function ExchangeSetRate(props) {
                                 />
                         </div>
                     </div>
-                    <div className="set_rate_pay">
+                    {/* <div className="set_rate_pay">
                         <p className="set_rate_box_left">* {t('EstimatedKRW')}
                             <span className="set_rate_pay_text">KRW 1 = {selectAmount} { curSymbol(nation) }</span>
                         </p>
-                    </div>
+                    </div> */}
                     <div className="set_rate_fix_box">
                         <button className="set_rate_fix_btn" onClick={insertHandle}> {t('Set')}</button>
                     </div>
