@@ -154,7 +154,7 @@
 
 .MuiPaper-root {
     width: 350px !important;
-    max-height: 310px !important;
+    max-height: 550px !important;
     border-radius: 10px !important;
 }
 
@@ -163,7 +163,7 @@
 }
 
 .css-19qh8xo-MuiInputBase-input-MuiOutlinedInput-input {
-    width: 100% !important;
+    width: 240px !important;
 }
 
 .css-1pysi21-MuiFormLabel-root-MuiInputLabel-root {
@@ -237,7 +237,7 @@
     width: 85%;
     height: 50px;
     margin: 0 auto;
-    margin-top: 50px;
+    /* margin-top: 50px; */
 }
 
 .set_rate_fix_btn {

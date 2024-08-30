@@ -81,10 +81,10 @@ function ExchangeSetList({ reserveInfo }) {
         <div className="ex_set_list_wrapper">
             <div className="ex_set_list_table">
                 <h5>대한민국 KRW</h5>
-                <div className="ex_set_list_col">
+                {/* <div className="ex_set_list_col">
                     <p className="ex_set_list_p">{t('ReservedExchangeRate')}</p>
                     <h5>1 { curSymbol(nation) } = {reserveInfo.setRate}</h5>
-                </div>
+                </div> */}
                 <div className="ex_set_list_col">
                     <p className="ex_set_list_p">{t('ReservationDate')}</p>
                     <h5>{reserveInfo.setDate}</h5>
