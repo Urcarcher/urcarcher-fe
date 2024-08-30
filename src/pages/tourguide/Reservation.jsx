@@ -183,7 +183,12 @@ function Reservation() {
             navigate('/paymentpage', {
               state: {
                   img: recv.img,
-                  title: recv.title,
+                  title: recv.title,  // 상호명
+                  reservePersonNum: selectedPeople, // 예약인원수
+                  reservePerson: reservePerson, // 예약자명 -- 일단 사용x
+                  reserveDate: selectedDate,    // 예약날짜
+                  reserveTime: selectedTime,  // 예약시간
+                  reserveLocation: recv.location, // 예약 위치
                   price: parseInt(selectedPeople, 10) * 10000
               }
           });

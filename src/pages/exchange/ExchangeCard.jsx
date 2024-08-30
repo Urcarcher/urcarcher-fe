@@ -145,7 +145,7 @@ function ExchangeCard(props) {
                     >
                         <div className="exCard_user_box">
                             <p>{card.cardUsage === "선불카드" ? t('PrepaidCard') : ""}</p>
-                            <p className="exCard_balance">{t('Balance')}{card.cardBalance.toLocaleString()}{" "+t('Won')}</p>
+                            <p className="exCard_balance">{t('Balance')} {card.cardBalance.toLocaleString()}{" "+t('Won')}</p>
                             {/* <p className="exCard_text">연결 계좌에서 바로 충전 가능!</p> */}
                             <p className="exCard_text">{card.cardNumber}</p>
                             {/* <button className="exCard_btn" onClick={() => cardSelectHandle(card)}>선택</button> */}

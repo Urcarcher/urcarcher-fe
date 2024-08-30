@@ -16,7 +16,7 @@ function ReservePayment() {
     const { state } = location;
 
     // state 객체에서 값 추출 및 기본값 설정
-    const { title, price, peopleNum, resDate, selectedSeats, locations } = state || {};
+    const { title, price, peopleNum, resDate, resTime, selectedSeats, locations } = state || {};
 
     console.log('State:', state);
 console.log('Price:', price);
@@ -219,6 +219,7 @@ const seatString = selectedSeats.join(', ');
                         Axios.post('/api/reserve/insert', {
                             peopleNum: peopleNum, // 인원 수
                             reservationDate: resDate, // 예약일
+                            reservationTime: resTime, //예약시간
                             state: 1, // 1: 예약완료
                             location: locations , // 예시 데이터: 장소
                             name: title,//공연명
