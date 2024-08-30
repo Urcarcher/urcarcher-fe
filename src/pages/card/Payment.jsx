@@ -54,6 +54,32 @@ function Payment() {
         initialIndex: 0 // 첫 번째 카드가 중앙에 오도록 설정
     };
 
+    // 날짜 형식으로 변환
+    const formattedDate = state.reserveDate.toLocaleDateString('ko-KR', {
+        year: '2-digit',
+        month: '2-digit',
+        day: '2-digit'
+      }).replace(/\. /g, '-').replace('.', '');
+    //   console.log(formattedDate);
+
+    // 시간 형식 변환
+    function convertTo24Hour(time) {
+        const [timePart, modifier] = time.split(' '); // "7:00"과 "PM"으로 분리
+        let [hours, minutes] = timePart.split(':'); // "7"과 "00"으로 분리
+    
+        if (modifier === 'PM' && hours !== '12') {
+            hours = parseInt(hours, 10) + 12; // PM일 경우 12를 더해줌
+        }
+        
+        if (modifier === 'AM' && hours === '12') {
+            hours = '00'; // AM 12시는 00시로 변환
+        }
+    
+        return `${hours}:${minutes}:00`; // HH:MM:SS 형식으로 반환
+    }
+
+
+
     useEffect(() => {
 
         const savedLanguage = Cookies.get('selectedLanguage');
@@ -110,6 +136,8 @@ function Payment() {
         setPayAmount(state.price - (state.price * 0.1));
         setCurrentDate(new Date().toISOString());
     }
+
+    
 
     return (
         <ScrollableContainer>
@@ -234,6 +262,36 @@ function Payment() {
                                 alert(t('DepositPaymentSuccess'));
                                 navigate('/');
                               }, 3000);
+
+                            //   console.log(state.reservePersonNum);
+                            //   console.log(formattedDate);
+                            //   console.log(state.reservePersonNum);
+                            //   console.log("-");
+                            //   console.log(convertTo24Hour(state.reserveTime));
+                            //   console.log(state.reserveLocation);
+                            //   console.log("-");
+                            //   console.log(state.title);
+                            //   console.log(userId);
+
+                              // 예약 테이블 데이터 저장
+                            //   Axios.post("", {
+                            //     peopleNum: state.reservePersonNum,  // 예약 인원 수
+                            //     reservationDate:state.reserveDate,                 // 예약 날짜
+                            //     state:"",
+                            //     reservationTime:state.reserveTime,
+                            //     location: state.reserveLocation,    // 예약위치
+                            //     classification:"",
+                            //     name: state.title,      // 상호명
+                            //     price:payAmount,        // 예약금
+                            //     memberId:userId         // 예약자명
+                            //   })
+                            //   .then((response)=>{
+
+                            //     console.log(response);
+                            //   })
+                            //   .catch((error)=>{
+                            //     console.log(error);
+                            //   })
                             })
                             .catch((error) => {
                                 setTimeout(() => {
