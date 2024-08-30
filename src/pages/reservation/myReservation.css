@@ -1,0 +1,36 @@
+.reservation-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .reservation-modal-content {
+    width: 400px;
+    max-width: 400px;
+    min-width: 400px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .reservation-modal-content button {
+    margin: 10px;
+  }
+  
+  /* li 스타일 */
+.reservation-item {
+    text-align: left;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc; /* 테두리 추가 (선택 사항) */
+    border-radius: 5px;
+    background-color: #f9f9f9; /* 배경색 추가 (선택 사항) */
+  }
