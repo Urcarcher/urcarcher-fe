@@ -289,7 +289,7 @@ const CourseDetail = () => {
           }
     
           return updatedSet;
-        });
+        }); 
 
         // setModalMessage(`[${placeName}] \n 인증이 완료되었습니다.`);
         // setVerificationImage(require('../../assets/success.png'));

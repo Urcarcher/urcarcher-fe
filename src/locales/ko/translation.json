@@ -500,7 +500,17 @@
     "파키스탄": "파키스탄",
     "방글라데시": "방글라데시",
     "필리핀": "필리핀",
-    "멕시코": "멕시코"
+    "멕시코": "멕시코",
+
+    "exchangeRateForecastNotice": "예측 환율 정보 주의사항",
+    "actualRateMayDiffer": "당일 환율과 예측한 환율이 다를 수 있어요",
+    "exchangeAtActualRate": "예약일이 되면 당일 환율로 환전해 드려요",
+    "date": "날짜",
+    "openingPrice": "시가",
+    "closingPrice": "종가",
+    "highPrice": "고가",
+    "lowPrice": "저가",
+    "fluctuationRate": "변동률"
 
     
 }
