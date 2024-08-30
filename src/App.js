@@ -52,16 +52,13 @@ import ExchangeHistoryDetail from 'pages/exchange/ExchangeHistoryDetail';
 import ReservationDetail from 'pages/reservation/ReservationDetail';
 import Reserve from 'pages/reservation/Reserve';
 import ReservePayment from 'pages/reservation/ReservePayment';
-<<<<<<< HEAD
 import SettingPassword from 'pages/card/SettingPassword';
 import CardPassword from 'pages/card/CardPassword';
 import Reward from 'pages/tourcourse/Reward';
-=======
 //import MyReservations1 from 'pages/reservation/MyReservations1';
 import MyReservations1 from './pages/reservation/MyReservations1'; // 경로 확인
 import MyComponent from 'pages/reservation/parsingTest';
 
->>>>>>> cac3b131f31f264cd42a19a39e371211e2f9254d
 
 function App() {
   return (
