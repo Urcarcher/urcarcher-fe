@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
 
-
 const { kakao } = window;
 
 //마커 커스텀 이미지
@@ -32,8 +31,6 @@ const MyMapApp = () => {
        
     };
     
-
-
   const location = useLocation();
   const { memberId } = location.state || ''; 
   //console.log(memberId)
