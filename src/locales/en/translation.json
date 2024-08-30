@@ -163,7 +163,7 @@
     "NotExist" : "Card Type ID Does Not Exist",
     "Home" : "Home",
 
-    "EstimatedAmount" : "Estimated Payment Amount (Credit Card Only)",
+    "EstimatedAmount" : "Expected Payment (Credit Card Only)",
     "LoadAmount" : "Load Amount (Prepaid Card Only)",
     "SetPINNumber" : "Set PIN Number",
     "CancelCard" : "Cancel Card",
