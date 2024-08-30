@@ -56,6 +56,7 @@ import ReservePayment from 'pages/reservation/ReservePayment';
 //import MyReservations1 from 'pages/reservation/MyReservations1';
 import MyReservations1 from './pages/reservation/MyReservations1'; // 경로 확인
 import MyComponent from 'pages/reservation/parsingTest';
+import CardPassword from 'pages/card/CardPassword';
 
 
 function App() {
@@ -113,7 +114,7 @@ function App() {
           <Route path='/paymentpage' element={<Payment/>}></Route>
           <Route path='/verification' element={<Verification/>}></Route>
           <Route path='/parsingTest' element={<MyComponent/>}></Route>
-          
+          <Route path='/cardPass' element={<CardPassword/>}></Route>
         </Routes>
       <Footer />
     </BrowserRouter>
