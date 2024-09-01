@@ -207,10 +207,10 @@ const secureImages = images.map((url) => {
               //navigate(`/reserve`, { state: { title: item.prfnm, location: item.fcltynm, img: item.poster || logo } });
               navigate(`/reserve`, { state: { title: item.prfnm, location: item.fcltynm, img: item.poster || logo, seatingData: seatingData, resTime:item.dtguidance, resStart:item.prfpdfrom, resEnd:item.prfpdto  } });
             }}
+            disabled={item.prfstate === "공연완료"}
           >
             예약 및 결제
           </Button>
-
           <br />
           <br />
           <br />

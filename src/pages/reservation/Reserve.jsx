@@ -15,6 +15,7 @@ function Reserve() {
   const [seatPrices, setSeatPrices] = useState({}); // 좌석 가격 상태 추가
   const [totalPrice, setTotalPrice] = useState(0); // 총 예약금 상태 추가
   const [showModal, setShowModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [reservePerson, setReservePerson] = useState(null);
   const location = useLocation();
   const recv = location.state;
@@ -62,7 +63,12 @@ function Reserve() {
   };
 
   const handleNextClick = () => {
+    if (!selectedDate || !selectedTime || !selectedPeople || selectedSeats.length === 0) {
+      setErrorMessage('모든 항목을 선택해 주세요.');
+      return;
+    }
     setShowModal(true);
+    setErrorMessage('');
   };
 
   const handleClose = () => {
@@ -82,6 +88,11 @@ function Reserve() {
       dates.push(new Date(d));
     }
     setAvailableDates(dates);
+
+    // 첫 공연일을 기본 선택 날짜로 설정
+    if (dates.length > 0) {
+      setSelectedDate(dates[0]);
+    }
 
     // dtguidance에서 요일별 시간을 파싱하여 사용 가능한 시간 설정
     const times = {};
@@ -227,6 +238,8 @@ function Reserve() {
             </Notice>
           </StyledCol>
         </StyledRow>
+        
+        {errorMessage}
         <StyledRow>
           <CenteredCol>
             <StyledNextButton variant="primary" onClick={handleNextClick}>
@@ -444,5 +457,6 @@ const Input = styled.input`
   border-radius: 5px;
   font-size: 0.9em;
 `;
+
 
 export default Reserve;
