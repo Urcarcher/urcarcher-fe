@@ -31,17 +31,35 @@ function ReservationInfo() {
     '50': '제주',
   };
 
+  function getFirstDayOfCurrentMonth() {
+    const date = new Date();
+    return new Date(date.getFullYear(), date.getMonth(), 1);
+  }
+  
+  function getLastDayOfNextMonth() {
+    const date = new Date();
+    const nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+    return new Date(nextMonth.getFullYear(), nextMonth.getMonth() + 1, 0);
+  }
+  
+  function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}${month}${day}`;
+  }
+  
+  const firstDayOfCurrentMonth = formatDate(getFirstDayOfCurrentMonth());
+  const lastDayOfNextMonth = formatDate(getLastDayOfNextMonth());
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true); // 로딩 상태를 true로 설정
       try {
-        const response = await fetch(`/api/reservation/reservation-info?signgucode=${region}`, {
+        const response = await fetch(`/api/reservation/reservation-info?signgucode=${region}&stdate=${firstDayOfCurrentMonth}&eddate=${lastDayOfNextMonth}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-          },
-          params:{
-            signgucode:region
           }
         });
 
