@@ -548,6 +548,12 @@
       "completed": "Completed"
     },
 
-    "select_seat": "Please select a seat"
+    "select_seat": "Please select a seat",
+    "reservationDetails": "Reservation Details",
+    "fullList": "Full List",
+    "performanceList": "Performance List",
+    "restaurantList": "Restaurant List",
+    "reservationClickDetails": "Click on the reservation to view details",
+    "myPoints": "My Points"
 
 }

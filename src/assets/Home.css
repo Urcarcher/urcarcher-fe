@@ -1,11 +1,11 @@
 .hidden{
     display: none;
 }
-.card-signup a{
+.card-signup a, .my-point a{
     text-decoration: none;
     color: #333;
 }
-.card-signup a:hover{
+.card-signup a:hover, .my-point a:hover{
     text-decoration: none;
 }
 .home-logo{
@@ -58,7 +58,7 @@ span.type{
     box-sizing: border-box;
     margin-left: 10px;
 }
-.amount-used, .card-signup{
+.amount-used, .card-signup, .my-point{
     display: flex;
     justify-content: space-between;
     padding: 0 15px;
@@ -68,13 +68,19 @@ span.type{
     line-height: 70px;
     background-color: #F4F7FC;
 }
-.amount-used > p, .card-signup > p {
+.amount-used > p, .card-signup > p, .home-rate-list > p, .my-point > p {
     font-weight: bold;
 }
 .card-signup{
     height: 50px;
     line-height: 50px;
     background-color: #DCE2FF;
+}
+
+.my-point{
+    height: 50px;
+    line-height: 50px;
+    background-color: #FFFFD2;
 }
 .amount-used-no{
     padding: 0 10px;

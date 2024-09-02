@@ -545,5 +545,11 @@
         "completed": "演出已完成"
     },
 
-    "select_seat": "请选择座位"
+    "select_seat": "请选择座位",
+    "reservationDetails": "预订详情",
+    "fullList": "全部列表",
+    "performanceList": "演出列表",
+    "restaurantList": "美食列表",
+    "reservationClickDetails": "点击预订可查看详细信息",
+    "myPoints": "我的积分"
 }

@@ -134,7 +134,7 @@ function Menu({onClose, isLoggedIn, userName}) {
                   { id:17,text: t('RecommendCourse'), link: "/courseList" },
                   { id:18,text:  t('Reward'), link: "/reward" },
                   { id:19,text: t('FindRoute'), link: "/MapComponent" },
-                  { id:20,text: "공연/맛집 예약 확인", link: "/myReservationList1" },
+                  { id:20,text: t('Reservation_confirmation'), link: "/myReservationList1" },
                 ]}
               />
               <MenuCategory 
