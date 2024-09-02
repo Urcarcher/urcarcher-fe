@@ -321,7 +321,7 @@ function ExchangeSetRate(props) {
                     </div>
 
                     <div className="set_rate_notice">
-                        <p className="set_rate_left_text">{reserveDate !== "" ? reserveDate : t('SelectReservationDate')}</p>
+                        {/* <p className="set_rate_left_text">{reserveDate !== "" ? reserveDate : t('SelectReservationDate')}</p> */}
                         <p className="set_rate_box_left">* {t('exchangeRateForecastNotice')}</p>
                         <p className="set_rate_left_text">{t('actualRateMayDiffer')}</p>
                         <p className="set_rate_left_text">{t('exchangeAtActualRate')}</p>
