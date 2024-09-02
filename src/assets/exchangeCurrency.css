@@ -5,10 +5,11 @@
     /* border: 1px solid red; */
 }
 
-.exCur_title h3 {
+.exCur_title h4 {
     margin: 0;
     padding: 0;
     line-height: 80px;
+    font-size: 20px;
 }
 
 .exCur_wrapper {
@@ -129,6 +130,7 @@ input:focus {
     float: left;
     text-align: left;
     line-height: 25px;
+    white-space: nowrap;
     /* border: 1px solid red; */
 }
 
@@ -138,6 +140,7 @@ input:focus {
     color: #476EFF;
     text-align: right;
     line-height: 25px;
+    white-space: nowrap;
     /* border: 1px solid red; */
 }
 
@@ -175,8 +178,34 @@ input:focus {
 
 /* 반응형 css */
 @media screen and (max-Width: 414px) { /* iPhone 12Pro */
+    .exCur_wrapper {
+        margin-top: 0;
+    }
+
+    .exAmt_wrapper {
+        margin-top: 20px;
+    }
+
+    .exCur_title {
+        margin-top: 5px;
+    }
+
+    .exCur_title h4 {
+        font-size: 18px;
+    }
+
+    .exRate_wrapper {
+        margin-top: 45px;
+    }
+
+    .exRate_left_text {
+        width: 75px;
+    }
+
     .exRate_left_text,
     .exRate_right_text{
         margin: 0;
+        font-size: 13px;
+        white-space: nowrap;
     }
 }

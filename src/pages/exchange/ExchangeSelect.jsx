@@ -13,8 +13,8 @@ import { options_GET } from 'services/CommonService';
 
 function ExchangeSelect(props) {
     const { t, i18n } = useTranslation();
+
     const changeLanguage = (selectedLanguage) => {
-        
         const languageMap = {
             Korea: 'ko',
             English: 'en',
@@ -61,6 +61,7 @@ function ExchangeSelect(props) {
         } else {
             changeLanguage('Korea'); // 기본 언어 설정
         }
+        
         isAuthorized();
     },[]);
 

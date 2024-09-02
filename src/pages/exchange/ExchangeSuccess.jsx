@@ -10,10 +10,9 @@ import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
 
 function ExchangeSuccess(props) {
-
     const { t, i18n } = useTranslation();
+
     const changeLanguage = (selectedLanguage) => {
-        
         const languageMap = {
             Korea: 'ko',
             English: 'en',
@@ -23,7 +22,6 @@ function ExchangeSuccess(props) {
 
         const languageCode = languageMap[selectedLanguage] 
         i18n.changeLanguage(languageCode);
-       
     };
 
     const location = useLocation();
@@ -43,14 +41,13 @@ function ExchangeSuccess(props) {
 
     // 로그인 유저 국적 조회
     useEffect(() => {
-
         const savedLanguage = Cookies.get('selectedLanguage');
+
         if (savedLanguage) {
             changeLanguage(savedLanguage); // 언어 변경
         } else {
             changeLanguage('Korea'); // 기본 언어 설정
         }
-
 
         axios.get("/api/exchange/find")
         .then((response) => {

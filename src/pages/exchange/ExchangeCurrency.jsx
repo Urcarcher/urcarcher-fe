@@ -15,10 +15,9 @@ import SelectLanguage from 'components/language/SelectLanguage';
 
 
 function ExchangeCurrency(props) {
-
     const { t, i18n } = useTranslation();
+
     const changeLanguage = (selectedLanguage) => {
-        
         const languageMap = {
             Korea: 'ko',
             English: 'en',
@@ -28,9 +27,7 @@ function ExchangeCurrency(props) {
 
         const languageCode = languageMap[selectedLanguage] 
         i18n.changeLanguage(languageCode);
-       
     };
-
 
     const [exchangeCurInfo, setExchangeCurInfo] = useState({});
     const [wscData, setWscData] = useState();
@@ -50,7 +47,7 @@ function ExchangeCurrency(props) {
     const curImg = {USD : USD, JPY : JPY, CNY : CNY};
 
     const [focused, setFocused] = useState(false);
-    const [inputWidth, setInputWidth] = useState(200); // 글자 너비 기본값 (15px)
+    const [inputWidth, setInputWidth] = useState(300); // 글자 너비 기본값 (15px)
     const [currency, setCurrency] = useState(0); // 사용자가 입력한 KRW
     const [calculateAmount, setCalculateAmount] = useState(0); // 예상 원화
     
@@ -58,15 +55,14 @@ function ExchangeCurrency(props) {
 
     // 처음 렌더링 될 때만 웹소켓 연결
     useEffect(()=>{
-
         const savedLanguage = Cookies.get('selectedLanguage');
+
         if (savedLanguage) {
             changeLanguage(savedLanguage); // 언어 변경
         } else {
             changeLanguage('Korea'); // 기본 언어 설정
         }
-
-
+        
         wsConnect();
     }, []);
 
@@ -228,7 +224,7 @@ function ExchangeCurrency(props) {
     return (
         <div className="contents">
             <div className="exCur_title">
-                <h3>{t('HowMuch')} <span style={{ color: "#476EFF" }}>{t('Charge')}</span>{t('DoYouWantToRecharge')}</h3>
+                <h4>{t('HowMuch')} <span style={{ color: "#476EFF" }}>{t('Charge')}</span>{t('DoYouWantToRecharge')}</h4>
             </div>
             <div className="exCur_wrapper">
                 <div className="ex_cur_img">

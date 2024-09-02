@@ -47,6 +47,7 @@
     height: 200px;
     margin: 0 auto;
     margin-top: 40px;
+    white-space: nowrap;
     /* border: 1px solid red; */
 }
 
@@ -71,7 +72,7 @@
     width: 85%;
     height: 60px;
     margin: 0 auto;
-    margin-top: 30px;
+    margin-top: 25px;
     /* border: 1px solid red; */
 }
 
@@ -103,4 +104,35 @@
 
 .success_check_btn:hover {
     transform: translateY(-2px);
+}
+
+/* 반응형 css */
+@media screen and (max-Width: 414px) { /* iPhone 12Pro */
+    .ex_success_wrapper {
+        height: 335px;
+    }
+
+    .ex_success_wrapper  {
+        padding-top: 50px;
+    }
+
+    .ex_success_title {
+        margin-top: -45px;
+    }
+
+    .ex_success_money {
+        left: 246px;
+    }
+
+    .success_info_btn, .success_check_btn {
+        width: 155px;
+    }
+
+    .ex_success_btn_wrapper {
+        margin-top: 35px;
+    }
+
+    .ex_success_btn_wrapper {
+        margin-top: 20px;
+    }
 }

@@ -14,10 +14,9 @@ import SelectLanguage from 'components/language/SelectLanguage';
 
 
 function ExchangeHistoryCard(props) {
-
     const { t, i18n } = useTranslation();
+
     const changeLanguage = (selectedLanguage) => {
-        
         const languageMap = {
             Korea: 'ko',
             English: 'en',
@@ -27,7 +26,6 @@ function ExchangeHistoryCard(props) {
 
         const languageCode = languageMap[selectedLanguage] 
         i18n.changeLanguage(languageCode);
-       
     };
 
     const navi = useNavigate();
@@ -57,8 +55,8 @@ function ExchangeHistoryCard(props) {
 
     // 선불 카드 여부 체크
     useEffect(() => {
-
         const savedLanguage = Cookies.get('selectedLanguage');
+        
         if (savedLanguage) {
             changeLanguage(savedLanguage); // 언어 변경
         } else {

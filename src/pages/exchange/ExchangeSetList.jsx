@@ -9,10 +9,9 @@ import SelectLanguage from 'components/language/SelectLanguage';
 
 
 function ExchangeSetList({ reserveInfo }) {
-
     const { t, i18n } = useTranslation();
+
     const changeLanguage = (selectedLanguage) => {
-        
         const languageMap = {
             Korea: 'ko',
             English: 'en',
@@ -22,9 +21,7 @@ function ExchangeSetList({ reserveInfo }) {
 
         const languageCode = languageMap[selectedLanguage] 
         i18n.changeLanguage(languageCode);
-       
     };
-
 
     const navi = useNavigate();
     
@@ -35,8 +32,8 @@ function ExchangeSetList({ reserveInfo }) {
 
     // 로그인 유저 국적 조회
     useEffect(() => {
-
         const savedLanguage = Cookies.get('selectedLanguage');
+        
         if (savedLanguage) {
             changeLanguage(savedLanguage); // 언어 변경
         } else {
