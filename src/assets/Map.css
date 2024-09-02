@@ -223,6 +223,7 @@
   letter-spacing: -1px;
   animation: slideUp 1s ease-out; /* 1초 동안 애니메이션 적용 */
   opacity: 1; /* 초기 상태를 설정 */
+  word-break: keep-all;
 }
 .rank-list-wrap{
   height: 400px;
@@ -309,8 +310,8 @@
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease;
   margin: 10px 0;
-  background-color: #fff;
-  margin-bottom: 50px;
+  margin-bottom: 80px;
+  box-sizing: border-box;
 }
 .top-store-list li.show {
   opacity: 1;
@@ -333,6 +334,7 @@ p.rank{
 }
 .store-info-text{
   text-align: left;
+  margin: 10px 0 20px;
 }
 .store-info-text > div{
   display: flex;
@@ -343,13 +345,24 @@ p.rank{
 .store-info-text > p{
   margin: 0;
 }
+.store-info-text  p{
+  /* padding: 0 10px; */
+}
 p.name{
   font-weight: bold;
   font-size: 20px;
+  color: #476eff;
 }
 p.phone{
   color: seagreen;
   font-size: 12px;
+}
+.storedetail-btn>a{
+  font-size: 8px;
+}
+.rankTitle{
+  display: flex;
+  justify-content: space-between;
 }
 /* NoResult.jsx */
 .noReslut-wrap{

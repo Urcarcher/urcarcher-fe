@@ -29,8 +29,6 @@ function BestStoreList(props) {
 
 
     const location = useLocation();
-    const { memberId } = location.state || ''; 
-    //console.log(memberId)
     const [storeList, setStoreList] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -47,9 +45,9 @@ function BestStoreList(props) {
 
 
         axios.get(`/api/paymentPlace/best-store`, {
-            params: {
-                memberId: memberId
-            }
+            // params: {
+            //     memberId: memberId
+            // }
         })
         .then(response => {
             setStoreList(response.data);
@@ -59,7 +57,7 @@ function BestStoreList(props) {
             setLoading(false);
             console.error('There was an error!', error);
         });
-    }, [memberId]);
+    }, []);
     
     const navigator = new useNavigate();
     

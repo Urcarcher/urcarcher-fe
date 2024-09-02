@@ -29,8 +29,10 @@ function MyCategoryRank(props) {
 
 
     const location = useLocation();
-    const { memberId } = location.state || ''; 
-    console.log(memberId)
+    //const { memberId } = location.state || ''; 
+    //console.log(memberId)
+    const mid = location.state.memberId;
+    console.log("state로 받은 아이디1", mid);
 
     const navigator = new useNavigate();    
     const [categoryList, setCategoryList] = useState([]);
@@ -48,7 +50,7 @@ function MyCategoryRank(props) {
 
         axios.get(`/api/paymentPlace/categories`, {
             params: {
-                memberId: memberId
+                memberId: mid
             }
         })
         .then(response => {
@@ -59,13 +61,13 @@ function MyCategoryRank(props) {
             console.error('There was an error!', error);
             setLoading(false);
         });
-    }, [memberId]);
+    }, [mid]);
 
 
 
     //버튼 클릭이벤트 - 페이지 이동
     const goMapAppPage = () => {
-        navigator("/maphome/map" , { state: { categoryList, memberId }});
+        navigator("/maphome/map" , { state: { categoryList, mid }});
     }
 
     //나의 결제 내역이 없을 경우

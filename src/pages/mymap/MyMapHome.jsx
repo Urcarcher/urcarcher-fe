@@ -32,8 +32,7 @@ function MyMapHome(props) { //시작 페이지
     const navigator = new useNavigate();
 
     //로그인한 회원 이름 저장
-    // 테스트할 회원 ID : bleakwinter, 9911dbfl
-    const [memberId, setMemberId] = useState('9911dbfl'); 
+    const [memberId, setMemberId] = useState(''); 
     const [name, setName] = useState('');
 
     const isAuthorized = () => {
