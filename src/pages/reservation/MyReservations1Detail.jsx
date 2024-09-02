@@ -103,7 +103,7 @@ function MyReservations1Detail() {
                      '명칭 없음'}
                   </p>
             <p>위치: {reservation.location}</p>
-            <p>인원: {reservation.peopleNum}</p>
+            <p>인원: {reservation.peopleNum}명</p>
             <p>좌석: {reservation.seat}</p>
             <button
               className="btn btn-primary"
@@ -115,7 +115,7 @@ function MyReservations1Detail() {
             <hr />
           </div>
         ) : (
-          <p>No reservation details found.</p>
+          <p>예약 내역이 없습니다.</p>
         )}
       </div>
 
