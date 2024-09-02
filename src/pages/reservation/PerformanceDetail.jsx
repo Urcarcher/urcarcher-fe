@@ -7,7 +7,7 @@ import leftArrow from "assets/left-arrow.png";
 import rightArrow from "assets/right-arrow.png";
 import logo from "assets/logo.png";
 
-function ReservationDetail() {
+function PerformanceDetail() {
   const { id } = useParams(); // mt20id를 URL 파라미터로 받음
   const [detailData, setDetailData] = useState(null);
   const [error, setError] = useState(null);
@@ -223,4 +223,4 @@ const secureImages = images.map((url) => {
   );
 }
 
-export default ReservationDetail;
+export default PerformanceDetail;
