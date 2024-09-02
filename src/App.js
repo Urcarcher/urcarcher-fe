@@ -59,7 +59,6 @@ import Reward from 'pages/tourcourse/Reward';
 import MyReservations1 from './pages/reservation/MyReservations1'; // 경로 확인
 import MyComponent from 'pages/reservation/parsingTest';
 
-
 function App() {
   return (
     <CardProvider>
@@ -71,7 +70,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/login/loading' element={<OAuthLoading/>}/>
           <Route path='/login/new' element={<OAuthNew/>}/>
-          <Route path='/exchangeRate' element={<ExchangeRateList/>}/>
+          <Route path='/exchange/realtime/rate' element={<ExchangeRateList/>}/>
           <Route path='/test' element={<Test/>}/>
           <Route path='/card1' element={<Card1/>}/>
           <Route path='/card2' element={<Card2/>}/>
