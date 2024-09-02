@@ -101,7 +101,7 @@
     "Tourism" : "観光",
     "PaymentBased" : "決済ベースの場所のおすすめ",
     "BookActivities" : "文化活動の予約",
-    "Reward" : "旅行コースのおすすめ",
+    "Reward" : "リワード支給",
     "FindRoute" : "道順を探す",
     "CustomerCenter" : "カスタマーセンター",
     "FAQ" : "よくある質問",
@@ -402,6 +402,7 @@
     "Booking": "予約",
     "Booker": "予約者",
     "CardSimplePayment": "カード簡単決済",
+    "PleaseCheckReservation":"予約情報をすべて入力してください",
 
     "CurrencyExchange": "両替",
     "SelectCard": "カード選択",
@@ -503,5 +504,47 @@
     "closingPrice": "終値",
     "highPrice": "高値",
     "lowPrice": "安値",
-    "fluctuationRate": "変動"
+    "fluctuationRate": "変動",
+    "Reservation_confirmation": "公演/レストラン予約確認",
+    "card_management": "カード管理",
+    "welcome": "ようこそ！",
+    "membership_confirmed": "'어카처' の会員になりました。",
+    "time": "時間",
+    "status": "状態",
+    "seat": "座席",
+    "cancel_reservation": "予約をキャンセルしますか？",
+    "yes": "はい",
+    "no": "いいえ",
+    "reservation_cancelled": "予約がキャンセルされました。",
+    "page_redirecting": "ページが自動的に移動します。",
+    "no_reservations": "予約履歴がありません。",
+    "ticket_unit": "枚",
+
+    "reservation_confirmation": "予約完了",
+    "reservation_cancellation": "予約取消",
+    "unknown": "不明",
+    "performance_name": "公演名",
+    "restaurant_name": "レストラン名",
+    "no_name": "名称なし",
+    "expired": "期限切れ",
+
+    "location": "場所",
+    "duration": "期間",
+    "runtime": "ランタイム",
+    "age": "年齢",
+    "cast": "出演者",
+    "staff": "スタッフ",
+    "producer": "プロデューサー",
+    "production_company": "制作会社",
+    "planning_company": "企画会社",
+    "ticket_price": "チケット価格",
+    "synopsis": "あらすじ",
+    "performance": {
+        "inProgress": "公演中",
+        "upcoming": "公演予定",
+        "completed": "公演完了"
+    },
+
+     "select_seat": "座席を選択してください"
+
 }

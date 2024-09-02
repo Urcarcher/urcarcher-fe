@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import "./myReservation.css"; // 스타일링을 위한 CSS 파일
+import { Link } from 'react-router-dom';
 
 function MyReservations1() {
   const [userId, setUserId] = useState(null);
   const [reservations, setReservations] = useState([]);
+  const [currentReservations, setCurrentReservations] = useState([]); // 현재 표시되는 예약 목록
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showModal, setShowModal] = useState(false);
   const [selectedReservation, setSelectedReservation] = useState(null);
+  const [view, setView] = useState('all'); // 현재 보이는 목록을 구분
 
   useEffect(() => {
     // 회원 정보 가져오기
@@ -32,6 +34,7 @@ function MyReservations1() {
       try {
         const response = await Axios.get(`/api/reserve/myReservation1/${userId}`);
         setReservations(response.data);
+        setCurrentReservations(response.data); // 기본 예약 목록으로 설정
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -42,76 +45,69 @@ function MyReservations1() {
     fetchReservations();
   }, [userId]); // userId가 변경될 때 호출
 
-  // 예약 삭제 핸들러
-  const handleDelete = async () => {
-    try {
-      await Axios.put('/api/reserve/delete', { reservationId: selectedReservation.reservationId });
-      // 삭제 후 예약 목록 갱신
-      setReservations(reservations.filter(reservation => reservation.reservationId !== selectedReservation.reservationId));
-      setShowModal(false); // 모달 닫기
-    } catch (error) {
-      alert("예약 삭제에 오류가 발생했습니다.");
-    }
+  // 보기 전환 핸들러
+  const showAllReservations = () => {
+    setCurrentReservations(reservations); // 모든 예약 목록으로 설정
+    setView('all');
   };
 
-  // 모달 열기
-  const openModal = (reservation) => {
-    setSelectedReservation(reservation);
-    setShowModal(true);
+  const showPerformanceReservations = () => {
+    setCurrentReservations(reservations.filter(reservation => reservation.classification === 1));
+    setView('performance');
   };
 
-  // 모달 닫기
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedReservation(null);
+  const showRestaurantReservations = () => {
+    setCurrentReservations(reservations.filter(reservation => reservation.classification === 2));
+    setView('restaurant');
   };
 
-  if (loading) return <p>Loading...</p>;
+  // 컴포넌트가 렌더링될 때 currentReservations를 콘솔에 출력하여 문제를 확인합니다.
+  useEffect(() => {
+    console.log("Current reservations:", currentReservations);
+  }, [currentReservations]);
+
+  if (loading) return <p>Loagding...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
       <div style={{ position: 'relative' }}>
-        <h2>My Reservations</h2>
-        {reservations.length > 0 ? (
+        <br /><br /><br />
+        <div className='region-buttons'>
+          <button className="reservationList-button" onClick={showAllReservations}>전체 목록</button>
+          <button className="reservationList-button" onClick={showPerformanceReservations}>공연 목록</button>
+          <button className="reservationList-button" onClick={showRestaurantReservations}>맛집 목록</button>
+        </div>
+        <p>해당 예약 건 클릭 시 상세 보기 가능</p>
+        {currentReservations.length > 0 ? (
           <ul>
-            {reservations.map((reservation) => (
-              <li className="reservation-item" key={reservation.reservationId}>
-                <hr></hr>
-                <h3>{reservation.title}</h3>
-                <p>일자: {reservation.reservationDate}</p>
-                <p>시간: {reservation.reservationTime}</p>
-                <p>상태: {reservation.state === 1 ? '예약완료' : reservation.state === 0 ? '예약취소' : '알 수 없음'}</p>
-                <p>공연명: {reservation.name}</p>
-                <p>위치: {reservation.location}</p>
-                <p>인원: {reservation.peopleNum}</p>
-                <p>좌석: {reservation.seat}</p>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => openModal(reservation)}
-                  disabled={reservation.state === 0} // 예약 상태가 0이면 비활성화
-                >
-                  {reservation.state === 0 ? '취소 완료' : '예약 취소'}
-                </button>
-                <hr></hr>
-              </li>
-            ))}
+            {currentReservations.map((reservation) => {
+
+              return (
+                <li className='list-item' key={reservation.reservationId}>
+                  <hr />
+                  <Link to={`/myReservationList1Detail/${reservation.reservationId}`}>
+                    <div className='list-up'>
+                        <div className='up'>
+                          <h6>{reservation.reservationDate}</h6>
+                          <h3 className='right-text'>{reservation.peopleNum} 매</h3>
+                        </div>
+                      <div className='list-down'>
+                        <div className='down'>
+                          <h5>{reservation.name}</h5>
+                        <h6 className='right-text'>[{reservation.state === 0 ? '예약취소' : '예약완료'}]</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         ) : (
-          <p>No reservations found.</p>
+          <p>예약 내역이 존재하지 않습니다.</p>
         )}
       </div>
-
-      {/* 모달 */}
-      {showModal && (
-        <div className="reservation-modal-overlay">
-          <div className="reservation-modal-content">
-            <h3> {selectedReservation.name}<br></br> [{selectedReservation.reservationDate}]<hr/> 예약을 취소하겠습니까?</h3>
-            <button className="btn btn-primary" onClick={handleDelete}>네</button>
-            <button className="btn btn-primary" onClick={closeModal}>아니오</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

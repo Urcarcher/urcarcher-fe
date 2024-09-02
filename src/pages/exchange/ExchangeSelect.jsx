@@ -1,19 +1,17 @@
-import { useNavigate } from 'react-router-dom';
+import exchangeArrow from 'assets/arrow.png';
+import exchangeCard from 'assets/card.png';
 import 'assets/exchangeSelect.css';
-import exchangeCard from 'assets/card.png'
-import exchangeMoney from 'assets/money.png'
-import exchangeArrow from 'assets/arrow.png'
+import 'assets/Language.css';
+import exchangeMoney from 'assets/money.png';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import cookie from 'react-cookies';
-import axios from 'axios';
-import { options_GET } from 'services/CommonService';
 import { useTranslation } from 'react-i18next';
-import Cookies from 'js-cookie';
-import 'assets/Language.css';
-import SelectLanguage from 'components/language/SelectLanguage';
+import { useNavigate } from 'react-router-dom';
+import { options_GET } from 'services/CommonService';
 
 function ExchangeSelect(props) {
-
     const { t, i18n } = useTranslation();
     const changeLanguage = (selectedLanguage) => {
         
@@ -26,10 +24,7 @@ function ExchangeSelect(props) {
 
         const languageCode = languageMap[selectedLanguage] 
         i18n.changeLanguage(languageCode);
-       
     };
-    
-
 
     // 로그인 유저 정보
     const [memberId, setMemberId] = useState('');
@@ -59,15 +54,13 @@ function ExchangeSelect(props) {
     // isAuthorized();
 
     useEffect(()=>{
-
         const savedLanguage = Cookies.get('selectedLanguage');
+
         if (savedLanguage) {
             changeLanguage(savedLanguage); // 언어 변경
         } else {
             changeLanguage('Korea'); // 기본 언어 설정
         }
-
-
         isAuthorized();
     },[]);
 
@@ -80,7 +73,6 @@ function ExchangeSelect(props) {
     const exchangeHandle = (event) => {
         // 카드 선택 후 버튼 종류에 따라 다른 페이지 보여주기 위해
         const selectBtn = event.currentTarget.id;
-        // alert(selectBtn);
 
         if (!memberId && !name) {
             alert(t('LoginRequired'));

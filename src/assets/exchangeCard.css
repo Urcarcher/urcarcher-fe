@@ -176,6 +176,10 @@
 
 
 @media screen and (max-Width: 390px) { /* iPhone 12Pro */
+    .exCard_title {
+        min-width: 60%;
+    }
+
     .exCard_back_btn{
         width: 150px;
     }

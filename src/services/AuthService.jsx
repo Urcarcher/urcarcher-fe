@@ -4,18 +4,19 @@ import { options, options_GET, options_POST } from 'services/CommonService'
 
 const ACCESS_TOKEN = "URCARCHER_ACCESS_TOKEN";
 
-export function signin(userDTO) {
-  axios(options("/api/auth/login", "POST", userDTO))
-    .then(resp=>{
-      if(resp.data.accessToken) {
-        cookie.save(ACCESS_TOKEN, resp.data.accessToken, {path:"/"});
-        window.location.href = "/";
-      }
-    })
-    .catch(err=>{
-      // console.log(err);
-      window.location.href = "/login";
-    });
+export async function signin(userDTO) {
+  try {
+    const resp = await axios(options("/api/auth/login", "POST", userDTO));
+    if(resp.data.accessToken) {
+      cookie.save(ACCESS_TOKEN, resp.data.accessToken, { path:"/" });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
 }
 
 export function oauthNew(userDTO) {
