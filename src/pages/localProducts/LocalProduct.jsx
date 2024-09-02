@@ -9,7 +9,8 @@ import img5 from 'assets/localProduct/lp-img5.png';
 import img6 from 'assets/localProduct/lp-img6.png';
 import img7 from 'assets/localProduct/lp-img7.png';
 
-function LocalProduct(props) {
+function LocalProduct(props) { 
+    //0902
     return (
         <div className='contents'>
             <div className='prod-container'>
