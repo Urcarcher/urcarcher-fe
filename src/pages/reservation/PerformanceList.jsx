@@ -35,6 +35,11 @@ function PerformanceList() {
     const date = new Date();
     return new Date(date.getFullYear(), date.getMonth(), 1);
   }
+
+  function getFirstDayOfNextMonth() {
+    const date = new Date();
+    return new Date(date.getFullYear(), date.getMonth()+1, 1);
+  }
   
   function getLastDayOfNextMonth() {
     const date = new Date();
@@ -51,6 +56,7 @@ function PerformanceList() {
   
   const firstDayOfCurrentMonth = formatDate(getFirstDayOfCurrentMonth());
   const lastDayOfNextMonth = formatDate(getLastDayOfNextMonth());
+  const firstDayOfNextMonth = formatDate(getFirstDayOfNextMonth());
 
   useEffect(() => {
     const fetchData = async () => {

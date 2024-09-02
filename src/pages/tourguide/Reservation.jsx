@@ -29,9 +29,6 @@ function Reservation() {
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedPeople, setSelectedPeople] = useState('');
   const [showModal, setShowModal] = useState(false);
-  //윤철 = 에러메시지 추가 
-  //다음버튼 이전에 이거 추가해야하는데 번역위치 어디갔지? <p style={{color: 'red'}}>{errorMessage}</p>
-  const [errorMessage, setErrorMessage] = useState('');
   const [reservePerson, setReservePerson] = useState(null);
 
 
@@ -60,11 +57,9 @@ function Reservation() {
   const handleNextClick = () => {
     if (!selectedPeople || !selectedDate || !selectedTime) {
       alert(t('PleaseCheckReservation'));
-    //윤철: 모든 항목 선택해야 넘어가게 처리
       return;
     }
     setShowModal(true);
-    setErrorMessage('');
   };
 
   const handleClose = () => {
@@ -72,11 +67,9 @@ function Reservation() {
   };
 
   
-  const today = new Date(); //윤철: 지난 날짜 설정 못하게 추가
+  const today = new Date(); // 지난 날짜 설정 못하게 추가
 
   useEffect(() => {
-
-    //const today = new Date(); //윤철: 지난 날짜 설정 못하게 추가
 
     const savedLanguage = Cookies.get('selectedLanguage');
     if (savedLanguage) {
@@ -132,7 +125,7 @@ function Reservation() {
               onChange={handleDateChange}
               value={selectedDate}
               className="react-calendar modern-calendar"
-              minDate={today} // 윤철: 현재 날짜를 최소 선택 날짜로 설정
+              minDate={today} // 현재 날짜를 최소 선택 날짜로 설정
             />
           </StyledCol>
         </StyledRow>
@@ -140,7 +133,6 @@ function Reservation() {
           <StyledCol>
             <Header style={{ textAlign: 'left' }}>{t('SelectTime')}</Header>
             <TimeSelect>
-              {/*윤철: 시간형식변경 {['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'].map((time, index) => ( */}
               {['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'].map((time, index) => (
                 <CustomButton
                   key={index}
@@ -204,36 +196,12 @@ function Reservation() {
             </ModalContent>
           </Modal.Body>
           <Modal.Footer>
-          {/*윤철: state변경하려고 삭제 - 밑에 버튼이 맞음 <Button variant="primary"
-          onClick={()=>{
-            navigate('/paymentpage', {
-              state: {
-======= main
-                  img: recv.img,
-                  title: recv.title,  // 상호명
-                  reservePersonNum: selectedPeople, // 예약인원수
-                  reservePerson: reservePerson, // 예약자명 -- 일단 사용x
-                  reserveDate: selectedDate,    // 예약날짜
-                  reserveTime: selectedTime,  // 예약시간
-                  reserveLocation: recv.location, // 예약 위치
-                  price: parseInt(selectedPeople, 10) * 10000
-======= find-direction
-                }
-              });
-              sessionStorage.removeItem('reservationData');
-            }}>{t('DepositPayment')}</Button>
-=======
-              }
-          });
-          }}>{t('DepositPayment')}</Button> */}
           <Button variant="primary"
           onClick={()=>{
             navigate('/reservePayment', {
               state: {
                   img: recv.img,
                   title: recv.title,  // 상호명
-                  //reservePersonNum: selectedPeople, // 예약인원수
-                  //reservePerson: reservePerson, // 예약자명 -- 일단 사용x
                   reserveDate: selectedDate,    // 예약날짜
                   reserveTime: selectedTime,  // 예약시간
                   reserveLocation: recv.location, // 예약 위치

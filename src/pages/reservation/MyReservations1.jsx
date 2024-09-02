@@ -85,21 +85,20 @@ function MyReservations1() {
 
               return (
                 <li className='list-item' key={reservation.reservationId}>
+                  <hr />
                   <Link to={`/myReservationList1Detail/${reservation.reservationId}`}>
-                    <hr />
                     <div className='list-up'>
                         <div className='up'>
-                          <p>{reservation.reservationDate}</p>
-                          <h3>{reservation.peopleNum} 매</h3>
+                          <h6>{reservation.reservationDate}</h6>
+                          <h3 className='right-text'>{reservation.peopleNum} 매</h3>
                         </div>
                       <div className='list-down'>
                         <div className='down'>
-                          {reservation.name}
+                          <h5>{reservation.name}</h5>
+                        <h6 className='right-text'>[{reservation.state === 0 ? '예약취소' : '예약완료'}]</h6>
                         </div>
-                        <h6>[{reservation.state === 0 ? '예약취소' : '예약완료'}]</h6>
                       </div>
                     </div>
-                    <hr />
                   </Link>
                 </li>
               );
