@@ -32,8 +32,10 @@ const MyMapApp = () => {
     };
     
   const location = useLocation();
-  const { memberId } = location.state || ''; 
+  // const { memberId } = location.state || ''; 
   //console.log(memberId)
+  const mid2 = location.state.mid;
+  console.log("state로 받은 아이디2", mid2);
   
   const [topCategoryList, setTopCategoryList] = useState([]);
   const [map, setMap] = useState(null); // 카카오 맵에 접근해 지도 상태 조작하는 상태 변수
@@ -68,7 +70,7 @@ const MyMapApp = () => {
 
     axios.get(`/api/paymentPlace/top-categories`, {
         params: {
-            memberId: memberId
+            memberId: mid2
         }
     })
     .then(response => {
@@ -77,7 +79,7 @@ const MyMapApp = () => {
     .catch(error => {
         console.error('There was an error!', error);
     });
-  }, [memberId]);
+  }, [mid2]);
 
   //기본 위치 상태 - 학원원 위치
   const [state, setState] = useState({
@@ -347,7 +349,7 @@ const MyMapApp = () => {
               </button>
             </div>
             <div className='storeRank-link'>
-                <Link to="/maphome/beststorelist" state={{ memberId: memberId }} >
+                <Link to="/maphome/beststorelist" state={{ memberId: mid2 }} >
                   <img src="/icon/icon-list.png" alt="아이콘" />
                 </Link>
             </div>

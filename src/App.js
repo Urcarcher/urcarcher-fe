@@ -58,7 +58,6 @@ import Reward from 'pages/tourcourse/Reward';
 //import MyReservations1 from 'pages/reservation/MyReservations1';
 import MyReservations1 from './pages/reservation/MyReservations1'; // 경로 확인
 import MyComponent from 'pages/reservation/parsingTest';
-import CardPassword from 'pages/card/CardPassword';
 
 
 function App() {
