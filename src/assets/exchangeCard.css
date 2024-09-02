@@ -1,29 +1,31 @@
 .exCard_title {
     width: 100%;
     height: 80px;
-    margin-top: 20px;
+    margin-top: 40px;
+    margin-bottom: -10px;
     /* border: 1px solid red; */
 }
 
-.exCard_title h3 {
+.exCard_title h4 {
     margin: 0;
     padding: 0;
-    line-height: 80px;
+    line-height: 30px;
+    font-size: 20px;
 }
 
 .exCard_wrapper {
     font-family: 'NanumSquareNeoBold';
     width: 100%;
     height: auto;
-    margin-top: 15px;
+    /* margin-top: 15px; */
     /* border: 1px solid red; */
 }
 
 .exCard_user_box {
-    width: 60%;
+    width: 65%;
     height: 80%;
     margin-left: 20px;
-    padding-top: 2px;
+    padding-top: 1px;
     color: white;
     text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
     /* background-color: white; */
@@ -32,9 +34,9 @@
 }
 
 .exCard_wrapper p {
-    margin-top: 25px;
-    margin-left: 25px;
-    line-height: 16px;
+    margin-top: 22px;
+    margin-left: 10px;
+    line-height: 20px;
 }
 
 .exCard_balance {
@@ -178,9 +180,40 @@
 @media screen and (max-Width: 390px) { /* iPhone 12Pro */
     .exCard_title {
         min-width: 60%;
+        margin-top: 30px;
+        margin-bottom: -20px;
+    }
+
+    .exCard_title h4 {
+        font-size: 18px;
     }
 
     .exCard_back_btn{
         width: 150px;
+    }
+
+    .exCard_user_box {
+        font-size: 12px;
+    }
+
+    .exCard_wrapper p {
+        margin-top: 20px;
+        line-height: 15px;
+    }
+
+    .exCard_balance {
+        font-size: 16px;
+    }
+
+    .exCard_text {
+        font-size: 12px;
+    }
+
+    .unChoice {
+        height: 130px;
+    }
+
+    .choice {
+        height: 155px;
     }
 }

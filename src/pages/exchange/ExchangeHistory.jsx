@@ -10,10 +10,9 @@ import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
 
 function ExchangeHistory(props) {
-
     const { t, i18n } = useTranslation();
+
     const changeLanguage = (selectedLanguage) => {
-        
         const languageMap = {
             Korea: 'ko',
             English: 'en',
@@ -23,10 +22,7 @@ function ExchangeHistory(props) {
 
         const languageCode = languageMap[selectedLanguage] 
         i18n.changeLanguage(languageCode);
-       
     };
-    
-
 
     const navi = useNavigate();
     const location = useLocation();
@@ -43,14 +39,13 @@ function ExchangeHistory(props) {
 
     // 환전 내역 전체 조회
     useEffect(() => {
-
         const savedLanguage = Cookies.get('selectedLanguage');
+
         if (savedLanguage) {
             changeLanguage(savedLanguage); // 언어 변경
         } else {
             changeLanguage('Korea'); // 기본 언어 설정
         }
-
 
         axios.get(`/api/exchange/list/${exCard.cardId}`)
         .then((response) => {

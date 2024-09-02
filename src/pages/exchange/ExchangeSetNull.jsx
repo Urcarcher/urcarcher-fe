@@ -9,10 +9,9 @@ import SelectLanguage from 'components/language/SelectLanguage';
 import { useEffect, useState } from 'react';
 
 function ExchangeSetNull({ exchangeSetHandle }) {
-
     const { t, i18n } = useTranslation();
+
     const changeLanguage = (selectedLanguage) => {
-        
         const languageMap = {
             Korea: 'ko',
             English: 'en',
@@ -22,21 +21,17 @@ function ExchangeSetNull({ exchangeSetHandle }) {
 
         const languageCode = languageMap[selectedLanguage] 
         i18n.changeLanguage(languageCode);
-       
     };
-    
-
 
     useEffect(()=>{
-   
         const savedLanguage = Cookies.get('selectedLanguage');
+
         if (savedLanguage) {
             changeLanguage(savedLanguage); // 언어 변경
         } else {
             changeLanguage('Korea'); // 기본 언어 설정
         }
     },[]);
-
 
     return (
         <div className="ex_set_null_wrapper">

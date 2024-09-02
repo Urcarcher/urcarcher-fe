@@ -11,10 +11,9 @@ import SelectLanguage from 'components/language/SelectLanguage';
 
 
 function ExchangeSet(props) {
-
     const { t, i18n } = useTranslation();
+
     const changeLanguage = (selectedLanguage) => {
-        
         const languageMap = {
             Korea: 'ko',
             English: 'en',
@@ -24,7 +23,6 @@ function ExchangeSet(props) {
 
         const languageCode = languageMap[selectedLanguage] 
         i18n.changeLanguage(languageCode);
-       
     };
 
     // 이전 페이지에서 보낸 선택한 카드 정보
@@ -41,14 +39,13 @@ function ExchangeSet(props) {
 
     // 카드에 예약 내역이 있는지 조회
     useEffect(() => {
-
         const savedLanguage = Cookies.get('selectedLanguage');
+
         if (savedLanguage) {
             changeLanguage(savedLanguage); // 언어 변경
         } else {
             changeLanguage('Korea'); // 기본 언어 설정
         }
-
 
         axios.get(`/api/exchange/rate/detail/${reserveCard.cardId}`)
             .then((response) => {

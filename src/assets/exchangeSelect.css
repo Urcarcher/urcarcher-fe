@@ -159,7 +159,27 @@
 
 /* 반응형 css */
 @media screen and (max-Width: 414px) { /* iPhone 12Pro */
+    .exchange_select_wrapper {
+        height: 470px;
+    }
+
     .exchange_select_money {
         left: 246px;
+    }
+
+    .select_btn_wrapper {
+        margin-top: -45px;
+    }
+
+    .exchange_select_title2 {
+        margin-top: 35px;
+    }
+
+    .select_btn_wrapper2 {
+        margin-top:8px;
+    }
+    
+    .select_set_btn p {
+        font-size: 12.5px;
     }
 }

@@ -14,10 +14,9 @@ import SelectLanguage from 'components/language/SelectLanguage';
 
 
 function ExchangeCard(props) {
-
     const { t, i18n } = useTranslation();
+
     const changeLanguage = (selectedLanguage) => {
-        
         const languageMap = {
             Korea: 'ko',
             English: 'en',
@@ -27,10 +26,7 @@ function ExchangeCard(props) {
 
         const languageCode = languageMap[selectedLanguage] 
         i18n.changeLanguage(languageCode);
-       
     };
-    
-
 
     // 이전 페이지에서 보낸 버튼 정보
     const location = useLocation();
@@ -49,14 +45,13 @@ function ExchangeCard(props) {
     
     // 카드 리스트 조회
     useEffect(() => {
-
         const savedLanguage = Cookies.get('selectedLanguage');
+
         if (savedLanguage) {
             changeLanguage(savedLanguage); // 언어 변경
         } else {
             changeLanguage('Korea'); // 기본 언어 설정
         }
-
         
         // axios.get("https://urcarcher-local.kro.kr:8443/api/exchange/list")
         axios.get("/api/exchange/list")
@@ -128,9 +123,9 @@ function ExchangeCard(props) {
     return (
         <div className="contents">
             <div className="exCard_title">
-                <h3>
+                <h4>
                 {t('WhichCard')} <span style={{ color: "#476EFF" }}>{t('Charge')}</span>{t('DoYouWantToRecharge')}
-                </h3>
+                </h4>
             </div>
             <div className="exCard_wrapper">
                 {/* null, undefined 아닌지 확인 후 id 비교 */}
