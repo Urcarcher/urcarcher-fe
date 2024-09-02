@@ -33,7 +33,7 @@ import ExchangeRateList from './pages/exchangeRate/ExchangeRateList';
 
 import CourseDetail from './pages/tourcourse/CourseDetail';
 import ExchangeSuccess from './pages/exchange/ExchangeSuccess';
-import TestReservation from './pages/reservation/TestReservation';
+import PerformanceList from './pages/reservation/PerformanceList';
 import MapComponent from './pages/location/MapComponent';
 import TestCard from './pages/tourguide/TestCard';
 import SearchTour from './pages/tourguide/SearchTour';
@@ -49,7 +49,7 @@ import ExchangeSetSuccess from 'pages/exchange/ExchangeSetSuccess';
 import ExchangeHistory from 'pages/exchange/ExchangeHistory';
 import ExchangeHistoryCard from 'pages/exchange/ExchangeHistoryCard';
 import ExchangeHistoryDetail from 'pages/exchange/ExchangeHistoryDetail';
-import ReservationDetail from 'pages/reservation/ReservationDetail';
+import PerformanceDetail from 'pages/reservation/PerformanceDetail';
 import Reserve from 'pages/reservation/Reserve';
 import ReservePayment from 'pages/reservation/ReservePayment';
 import SettingPassword from 'pages/card/SettingPassword';
@@ -58,6 +58,9 @@ import Reward from 'pages/tourcourse/Reward';
 //import MyReservations1 from 'pages/reservation/MyReservations1';
 import MyReservations1 from './pages/reservation/MyReservations1'; // 경로 확인
 import MyComponent from 'pages/reservation/parsingTest';
+import PrivateRoute from 'pages/auth/PrivateRoute';
+import MyReservations1Detail from './pages/reservation/MyReservations1Detail'; // 경로 확인
+
 
 
 function App() {
@@ -71,17 +74,9 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/login/loading' element={<OAuthLoading/>}/>
           <Route path='/login/new' element={<OAuthNew/>}/>
-          <Route path='/exchangeRate' element={<ExchangeRateList/>}/>
+          <Route path='/exchange/realtime/rate' element={<ExchangeRateList/>}/>
           <Route path='/test' element={<Test/>}/>
           <Route path='/card1' element={<Card1/>}/>
-          <Route path='/card2' element={<Card2/>}/>
-          <Route path='/card3' element={<Card3 />}/>
-          <Route path='/card4' element={<Card4 />}/>
-          <Route path='/card5' element={<Card5 />}/>
-          <Route path='/card6' element={<Card6 />}/>
-          <Route path='/usage' element={<UsageHistory/>}/>
-          <Route path='/chart1' element={<MonthlyChart/>}/>
-          <Route path='/chart2' element={<WeeklyChart/>}/>
           <Route path='/courseList' element={<CourseList/>}/>
           <Route path="/course/:courseId" element={<CourseDetail />} />
           <Route path='/signup/*' element={<Signup/>}/>
@@ -104,19 +99,30 @@ function App() {
           <Route path='/MapComponent/:detailDestination' element={<MapComponent/>}/>
           <Route path='/TourGuide/:areaCode/:contentTypeId' element={<TourGuide/>}/>
           <Route path='/detail/:type/:id' element={<DetailPage/>}/>
-          <Route path='/reservation' element={<TestReservation/>}/>
-          <Route path='/reservation/detail/:id' element={<ReservationDetail/>}/>
+          <Route path='/performanceList' element={<PerformanceList/>}/>
+          <Route path='/performanceList/detail/:id' element={<PerformanceDetail/>}/>
           <Route path='/reserve' element={<Reserve/>}/>
           <Route path='/reservePayment' element={<ReservePayment/>}></Route>
           <Route path='/myReservationList1' element={<MyReservations1/>}></Route>
+          <Route path='/myReservationList1Detail/:reservationId' element={<MyReservations1Detail/>}></Route>
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
-          <Route path='/reservation1' element={<Reservation/>}/>
-          <Route path='/cardmanagement' element={<CardManagerment/>}></Route>
-          <Route path='/paymentpage' element={<Payment/>}></Route>
-          <Route path='/verification' element={<Verification/>}></Route>
-          <Route path='/parsingTest' element={<MyComponent/>}></Route>
-          <Route path='/cardPass' element={<CardPassword/>}></Route>
+
+          <Route element={<PrivateRoute />}>
+            <Route path='/reservation1' element={<Reservation />} />
+            <Route path='/cardmanagement' element={<CardManagerment/>}></Route>
+            <Route path='/verification' element={<Verification/>}></Route>
+            <Route path='/card2' element={<Card2/>}/>
+            <Route path='/card3' element={<Card3 />}/>
+            <Route path='/card4' element={<Card4 />}/>
+            <Route path='/card5' element={<Card5 />}/>
+            <Route path='/card6' element={<Card6 />}/>
+            <Route path='/cardPass' element={<CardPassword/>}></Route>
+            <Route path='/usage' element={<UsageHistory/>}/>
+            <Route path='/chart1' element={<MonthlyChart/>}/>
+            <Route path='/chart2' element={<WeeklyChart/>}/>
+            <Route path='/paymentpage' element={<Payment/>}></Route>
+          </Route>
         </Routes>
       <Footer />
     </BrowserRouter>

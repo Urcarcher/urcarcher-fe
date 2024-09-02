@@ -124,7 +124,8 @@ function CardManagerment(props) {
                 setUserId(response.data.memberId);
             })
             .catch((error) => {
-                alert(t('ErrorRetrieving'));
+                //alert("회원정보를 가져오는데 오류 발생");
+                console.log(error);
             });
 
       if (userId) {

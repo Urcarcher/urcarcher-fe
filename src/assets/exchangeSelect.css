@@ -156,3 +156,10 @@
 .select_set_btn:hover {
     transform: translateY(-2px);
 }
+
+/* 반응형 css */
+@media screen and (max-Width: 414px) { /* iPhone 12Pro */
+    .exchange_select_money {
+        left: 246px;
+    }
+}

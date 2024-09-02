@@ -173,8 +173,8 @@ input:focus {
     transform: translateY(-2px);
 }
 
+/* 반응형 css */
 @media screen and (max-Width: 414px) { /* iPhone 12Pro */
- 
     .exRate_left_text,
     .exRate_right_text{
         margin: 0;
