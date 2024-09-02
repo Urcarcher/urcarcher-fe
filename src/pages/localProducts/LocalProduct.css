@@ -1,0 +1,26 @@
+.prod-container{
+
+}
+.prod-map {
+    width: 100%;
+    margin-top: 40px;
+    position: relative;
+}
+.prod-map > img{
+    width: 350px;
+}
+.imgbox {
+    position: absolute;
+}
+.imgbox1{ /*망개떡*/
+    bottom: 350px;
+    left: 180px;
+}
+.imgbox4{  /*사과빵*/
+    right: 50px;
+    bottom: 490px;
+}
+.imgbox3{  /*잣한과*/
+    top: 200px;
+    left: 160px;
+}

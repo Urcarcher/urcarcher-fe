@@ -58,6 +58,7 @@ import Reward from 'pages/tourcourse/Reward';
 //import MyReservations1 from 'pages/reservation/MyReservations1';
 import MyReservations1 from './pages/reservation/MyReservations1'; // 경로 확인
 import MyComponent from 'pages/reservation/parsingTest';
+import LocalProduct from 'pages/localProducts/LocalProduct';
 
 
 function App() {
@@ -117,6 +118,7 @@ function App() {
           <Route path='/verification' element={<Verification/>}></Route>
           <Route path='/parsingTest' element={<MyComponent/>}></Route>
           <Route path='/cardPass' element={<CardPassword/>}></Route>
+          <Route path='/localProducts' element={<LocalProduct/>}></Route>
         </Routes>
       <Footer />
     </BrowserRouter>
