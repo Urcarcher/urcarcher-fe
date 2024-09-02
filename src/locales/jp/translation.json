@@ -402,6 +402,7 @@
     "Booking": "予約",
     "Booker": "予約者",
     "CardSimplePayment": "カード簡単決済",
+    "PleaseCheckReservation":"予約情報をすべて入力してください",
 
     "CurrencyExchange": "両替",
     "SelectCard": "カード選択",

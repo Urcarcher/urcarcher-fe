@@ -409,6 +409,7 @@
     "Booking": "예약",
     "Booker": "예약자",
     "CardSimplePayment": "카드 간편결제",
+    "PleaseCheckReservation" : "예약 정보를 모두 입력해주세요.",
 
     "CurrencyExchange": "환전",
     "SelectCard": "카드 선택",
