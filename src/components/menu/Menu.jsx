@@ -112,7 +112,7 @@ function Menu({onClose, isLoggedIn, userName}) {
                 title={[{id:12, tit:t('Finance')}]} 
                 items={[
                   { id: 6, text: t('ApplyCard2'), link: "/card1" },
-                  { id: 7, text: t('LostCardMenu'), link: "/cardmanagement" },
+                  { id: 7, text: t('card_management'), link: "/cardmanagement" },
                   { id: 8, text: t('SpendingMenu'), link: "/usage" },
                   { id: 9, text: t('PatternMenu'), link: "/chart1" },
                   { id: 10, text: t('ExchangeMenu'), link: "/exchange/realtime/rate" },
@@ -129,7 +129,7 @@ function Menu({onClose, isLoggedIn, userName}) {
                   { id:15,text: t('RecommendCourse'), link: "/courseList" },
                   { id:16,text:  t('Reward'), link: "/reward" },
                   { id:17,text: t('FindRoute'), link: "/MapComponent" },
-                  { id:18,text: "공연/맛집 예약 확인", link: "/myReservationList1" },
+                  { id:18,text: t('Reservation_confirmation'), link: "/myReservationList1" },
                 ]}
               />
               <MenuCategory 

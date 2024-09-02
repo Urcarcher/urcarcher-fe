@@ -504,5 +504,46 @@
     "closingPrice": "收盘价",
     "highPrice": "最高价",
     "lowPrice": "最低价",
-    "fluctuationRate": "波动率"
+    "fluctuationRate": "波动率",
+    "Reservation_confirmation": "演出/餐厅预订确认",
+    "card_management": "卡片管理",
+    "welcome": "欢迎！",
+    "membership_confirmed": "您已成为 '어카처' 会员。",
+    "time": "时间",
+    "status": "状态",
+    "seat": "座位",
+    "cancel_reservation": "您要取消预订吗?",
+    "yes": "是",
+    "no": "否",
+    "reservation_cancelled": "预订已取消。",
+    "page_redirecting": "页面将自动跳转。",
+    "no_reservations": "没有预订记录。",
+    "ticket_unit": "张",
+
+    "reservation_confirmation": "预订已确认",
+    "reservation_cancellation": "预订已取消",
+    "unknown": "未知",
+    "performance_name": "演出名称",
+    "restaurant_name": "餐厅名称",
+    "no_name": "无名称",
+    "expired": "已过期",
+
+    "location": "地点",
+    "duration": "期间",
+    "runtime": "运行时间",
+    "age": "年龄",
+    "cast": "演员阵容",
+    "staff": "制作人员",
+    "producer": "制片人",
+    "production_company": "制作公司",
+    "planning_company": "策划公司",
+    "ticket_price": "票价",
+    "synopsis": "剧情简介",
+    "performance": {
+        "inProgress": "演出中",
+        "upcoming": "即将上演",
+        "completed": "演出已完成"
+    },
+
+    "select_seat": "请选择座位"
 }
