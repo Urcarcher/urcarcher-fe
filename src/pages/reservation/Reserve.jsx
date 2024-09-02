@@ -11,7 +11,7 @@ function Reserve() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedPeople, setSelectedPeople] = useState('');
-  const [selectedSeats, setSelectedSeats] = useState([]); // 좌석 선택 상태 추가
+  const [selectedSeat, setSelectedSeat] = useState(''); // 단일 좌석 선택 상태로 변경
   const [seatPrices, setSeatPrices] = useState({}); // 좌석 가격 상태 추가
   const [totalPrice, setTotalPrice] = useState(0); // 총 예약금 상태 추가
   const [showModal, setShowModal] = useState(false);
@@ -38,32 +38,21 @@ function Reserve() {
   }, [recv]);
 
   useEffect(() => {
-    // 총 예약금 계산
-    const newTotalPrice = selectedSeats.reduce((total, seat) => {
-      return total + (seatPrices[seat] || 0);
-    }, 0);
+    // 선택된 좌석에 따른 총 예약금 계산
+    const newTotalPrice = seatPrices[selectedSeat] || 0;
     setTotalPrice(newTotalPrice);
-  }, [selectedSeats, seatPrices]);
+  }, [selectedSeat, seatPrices]);
 
   const handlePeopleChange = (people) => {
     setSelectedPeople(people);
   };
 
   const handleSeatChange = (seat) => {
-    setSelectedSeats((prevSeats) => {
-      const newSeats = [...prevSeats];
-      const index = newSeats.indexOf(seat);
-      if (index === -1) {
-        newSeats.push(seat);
-      } else {
-        newSeats.splice(index, 1);
-      }
-      return newSeats;
-    });
+    setSelectedSeat(seat); // 선택한 좌석으로 상태 변경
   };
 
   const handleNextClick = () => {
-    if (!selectedDate || !selectedTime || !selectedPeople || selectedSeats.length === 0) {
+    if (!selectedDate || !selectedTime || !selectedPeople || !selectedSeat) {
       setErrorMessage('모든 항목을 선택해 주세요.');
       return;
     }
@@ -106,12 +95,8 @@ function Reserve() {
       '토요일': 6,
     };
 
-    // dtguidance를 ')으로 나누고 각 부분을 처리
     recv.resTime.split('),').forEach((entry, idx) => {
-      // '), '로 분리된 각 부분에서 ')'을 제거
       const cleanedEntry = idx === recv.resTime.split('),').length - 1 ? entry : entry + ')';
-      
-      // 괄호와 요일 부분을 분리
       const [daysPart, timesPart] = cleanedEntry.split('(');
       const dayRange = daysPart.trim();
       const timeValues = timesPart ? timesPart.replace(')', '').split(',').map(time => time.trim()) : [];
@@ -160,14 +145,6 @@ function Reserve() {
       <br />
       <br />
       <br />
-      {/* <h3>좌석 정보</h3>
-      <ul>
-        {recv.seatingData.map((seat, index) => (
-          <li key={index}>
-            {seat.type}: {seat.price.toLocaleString()}원
-          </li>
-        ))}
-      </ul> */}
       <br />
       <StyledContainer>
         <h2>공연명 : {recv.title}</h2>
@@ -223,7 +200,7 @@ function Reserve() {
               {recv.seatingData.map((seat, index) => (
                 <CustomButton
                   key={index}
-                  active={selectedSeats.includes(seat.type)}
+                  active={selectedSeat === seat.type}
                   onClick={() => handleSeatChange(seat.type)}
                 >
                   {seat.type} - {seat.price.toLocaleString()}원
@@ -239,7 +216,7 @@ function Reserve() {
           </StyledCol>
         </StyledRow>
         
-        {errorMessage}
+        <p style={{color: 'red'}}>{errorMessage}</p>
         <StyledRow>
           <CenteredCol>
             <StyledNextButton variant="primary" onClick={handleNextClick}>
@@ -259,9 +236,9 @@ function Reserve() {
                 <hr />
                 <p style={{ textAlign: 'left' }}>일정: {selectedDate.toLocaleDateString()} - {selectedTime}</p>
                 <p style={{ textAlign: 'left' }}>인원: {selectedPeople}</p>
-                <p style={{ textAlign: 'left' }}>좌석: {selectedSeats.join(', ')}</p>
+                <p style={{ textAlign: 'left' }}>좌석: {selectedSeat}</p> {/* 단일 좌석 표시 */}
                 <p style={{ textAlign: 'left', color: 'red' }}>
-                  예약금: {totalPrice*parseInt(selectedPeople, 10).toLocaleString()}원
+                  예약금: {(totalPrice * parseInt(selectedPeople, 10)).toLocaleString()}원
                 </p>
                 <p style={{ textAlign: 'left' }}>위치 : {recv.location}</p>
                 <p style={{ textAlign: 'left' }}>시간 : {selectedTime}</p>
@@ -294,8 +271,9 @@ function Reserve() {
                     peopleNum: parseInt(selectedPeople, 10),
                     resDate: selectedDate,
                     resTime: selectedTime, //시간 추가
-                    selectedSeats, // 좌석 정보 추가
-                    locations: recv.location
+                    selectedSeat, // 단일 좌석 정보 추가
+                    locations: recv.location,
+                    classification: 1 //1: 공연 2:맛집
                   }
                 });
               }}
@@ -309,6 +287,7 @@ function Reserve() {
     </ScrollableContainer>
   );
 }
+
 
 const ScrollableContainer = styled.div`
   max-height: 800px;
