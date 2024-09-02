@@ -2,8 +2,29 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import "./myReservation.css"; // 스타일링을 위한 CSS 파일
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+
 
 function MyReservations1Detail() {
+
+  const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
   const { reservationId } = useParams(); // URL 파라미터에서 reservationId를 가져옵니다.
   const navigate = useNavigate();
 
@@ -18,6 +39,15 @@ function MyReservations1Detail() {
   const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD 포맷
 
   useEffect(() => {
+
+    const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
     // 회원 정보 가져오기
     const fetchUserId = async () => {
       try {
@@ -94,28 +124,28 @@ function MyReservations1Detail() {
         {reservation ? (
           <div className="reservation-item" key={reservation.reservationId}>
             <hr />
-            <p>일자: {reservation.reservationDate}</p>
-            <p>시간: {formattedTime}</p>
-            <p>상태: {reservation.state === 1 ? '예약완료' : reservation.state === 0 ? '예약취소' : '알 수 없음'}</p>
+            <p>{t('date')}: {reservation.reservationDate}</p>
+            <p>{t('time')}: {formattedTime}</p>
+            <p>{t('status')}: {reservation.state === 1 ? t('reservation_confirmation') : reservation.state === 0 ? t('reservation_cancellation')  : t('unknown')}</p>
             <p>
-                    {reservation.classification === 1 ? '공연명: ' + reservation.name : 
-                     reservation.classification === 2 ? '식당명: ' + reservation.name : 
-                     '명칭 없음'}
+                    {reservation.classification === 1 ?  t('performance_name')+":" + reservation.name : 
+                     reservation.classification === 2 ? t('restaurant_name')+":" + reservation.name : 
+                     t('no_name')}
                   </p>
-            <p>위치: {reservation.location}</p>
-            <p>인원: {reservation.peopleNum}</p>
-            <p>좌석: {reservation.seat}</p>
+            <p>{t('Location')}: {reservation.location}</p>
+            <p>{t('NumberOfPeople')}: {reservation.peopleNum}</p>
+            <p>{t('seat')}: {reservation.seat}</p>
             <button
               className="btn btn-primary"
               onClick={openModal}
               disabled={reservation.state === 0 || (reservation.state === 1 && reservation.reservationDate <= today)}
             >
-              {reservation.state === 1 && reservation.reservationDate <= today ? '기간 만료' : '예약 취소'}
+              {reservation.state === 1 && reservation.reservationDate <= today ? t('expired') : t('reservation_cancellation')}
             </button>
             <hr />
           </div>
         ) : (
-          <p>No reservation details found.</p>
+          <p>{t('no_reservations')}</p>
         )}
       </div>
 
@@ -123,9 +153,9 @@ function MyReservations1Detail() {
       {showModal && (
         <div className="reservation-modal-overlay">
           <div className="reservation-modal-content">
-            <h3>{reservation.name}<br />[{reservation.reservationDate}]<hr /> 예약을 취소하겠습니까?</h3>
-            <button className="btn btn-primary" onClick={handleDelete}>네</button>
-            <button className="btn btn-primary" onClick={closeModal}>아니오</button>
+            <h3>{reservation.name}<br />[{reservation.reservationDate}]<hr /> {t('cancel_reservation')}</h3>
+            <button className="btn btn-primary" onClick={handleDelete}>{t('yes')}</button>
+            <button className="btn btn-primary" onClick={closeModal}>{t('no')}</button>
           </div>
         </div>
       )}
@@ -134,8 +164,8 @@ function MyReservations1Detail() {
       {showSuccessModal && (
         <div className="reservation-modal-overlay">
           <div className="reservation-modal-content">
-            <h3>예약 취소가 완료되었습니다.<br />페이지가 자동으로 이동합니다.</h3>
-            <button className="btn btn-primary" onClick={closeModal}>확인</button>
+            <h3>{t('reservation_cancelled')}<br />{t('page_redirecting')}</h3>
+            <button className="btn btn-primary" onClick={closeModal}>{t('Confrim')}</button>
           </div>
         </div>
       )}
