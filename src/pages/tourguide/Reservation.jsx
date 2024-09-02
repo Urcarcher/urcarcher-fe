@@ -71,9 +71,12 @@ function Reservation() {
     setShowModal(false);
   };
 
+  
+  const today = new Date(); //윤철: 지난 날짜 설정 못하게 추가
+
   useEffect(() => {
 
-    const today = new Date(); //윤철: 지난 날짜 설정 못하게 추가
+    //const today = new Date(); //윤철: 지난 날짜 설정 못하게 추가
 
     const savedLanguage = Cookies.get('selectedLanguage');
     if (savedLanguage) {
