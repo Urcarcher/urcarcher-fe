@@ -402,6 +402,8 @@
     "Booking": "预订",
     "Booker": "预订者",
     "CardSimplePayment": "卡片快捷支付",
+    "PleaseCheckReservation": "请输入所有预订信息",
+    
     "CurrencyExchange": "外汇兑换",
     "SelectCard": "选择卡",
     "AutoExchange": "自动兑换",

@@ -10,32 +10,36 @@ import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
 
-
-
 function Reservation() {
   const { t, i18n } = useTranslation();
-    const changeLanguage = (selectedLanguage) => {
-        
-        const languageMap = {
-            Korea: 'ko',
-            English: 'en',
-            Japan: 'jp',
-            China: 'cn'
-        };
-
-        const languageCode = languageMap[selectedLanguage] 
-        i18n.changeLanguage(languageCode);
-       
+  
+  const changeLanguage = (selectedLanguage) => {
+    const languageMap = {
+      Korea: 'ko',
+      English: 'en',
+      Japan: 'jp',
+      China: 'cn'
     };
-    
+
+    const languageCode = languageMap[selectedLanguage];
+    i18n.changeLanguage(languageCode);
+  };
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedPeople, setSelectedPeople] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [reservePerson, setReservePerson] = useState(null);
-  const location = useLocation();
-  const recv = location.state;
+
+
+  // 이거 잠깐 보류
+  // const location = useLocation();
+  // const recv = location.state;
+
+  // 세션 가져와
+  const [recv, setRecv] = useState(null);
+
+
   let navigate = useNavigate();
 
   const handleDateChange = (date) => {
@@ -51,6 +55,10 @@ function Reservation() {
   };
 
   const handleNextClick = () => {
+    if (!selectedPeople || !selectedDate || !selectedTime) {
+      alert(t('PleaseCheckReservation'));
+      return;
+    }
     setShowModal(true);
   };
 
@@ -58,36 +66,42 @@ function Reservation() {
     setShowModal(false);
   };
 
-  useEffect(()=>{
-
+  useEffect(() => {
     const savedLanguage = Cookies.get('selectedLanguage');
-        if (savedLanguage) {
-            changeLanguage(savedLanguage); // 언어 변경
-        } else {
-            changeLanguage('Korea'); // 기본 언어 설정
-        }
+    if (savedLanguage) {
+      changeLanguage(savedLanguage); // 언어 변경
+    } else {
+      changeLanguage('Korea'); // 기본 언어 설정
+    }
+
+    const storedData = sessionStorage.getItem('reservationData');
+    if (storedData) {
+      setRecv(JSON.parse(storedData));
+    }
 
 
-    Axios.get("/api/t/test").then((response)=>{
+    Axios.get("/api/t/test").then((response) => {
       setReservePerson(response.data);
-      console.log(reservePerson)
-    })
-  },[])
-
+      console.log(reservePerson);
+    });
+  }, []);
 
   return (
+    
     <ScrollableContainer>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <StyledContainer style={{fontFamily: 'NanumSquareNeo'}}>
-        <h3 style={{marginBottom: '30px'}}> {recv.title}</h3>
+      {recv ? (
+        <>
+      <br />
+      <br />
+      <br />
+      <br />
+      <StyledContainer style={{ fontFamily: 'NanumSquareNeo' }}>
+        <h3 style={{ marginBottom: '30px' }}> {recv.title}</h3>
         <StyledRow>
           <StyledCol>
-            <Header style={{textAlign: 'left'}}>{t('SelectNumberOfPeople')}</Header>
+            <Header style={{ textAlign: 'left' }}>{t('SelectNumberOfPeople')}</Header>
             <PeopleSelect>
-              {['1'+t('Person'), '2'+t('Person'), '3'+t('Person'), '4'+t('Person'), '5'+t('MoreThan')].map((people, index) => (
+              {['1' + t('Person'), '2' + t('Person'), '3' + t('Person'), '4' + t('Person'), '5' + t('MoreThan')].map((people, index) => (
                 <CustomButton
                   key={index}
                   active={selectedPeople === people}
@@ -102,7 +116,7 @@ function Reservation() {
         <Divider />
         <StyledRow>
           <StyledCol>
-            <Header style={{textAlign: 'left'}}>{t('SelectDate2')}</Header>
+            <Header style={{ textAlign: 'left' }}>{t('SelectDate2')}</Header>
             <Calendar
               onChange={handleDateChange}
               value={selectedDate}
@@ -112,7 +126,7 @@ function Reservation() {
         </StyledRow>
         <StyledRow>
           <StyledCol>
-            <Header style={{textAlign: 'left'}}>{t('SelectTime')}</Header>
+            <Header style={{ textAlign: 'left' }}>{t('SelectTime')}</Header>
             <TimeSelect>
               {['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'].map((time, index) => (
                 <CustomButton
@@ -132,14 +146,14 @@ function Reservation() {
             <Header>※ {t('PleaseConfirmWhenBooking')}</Header>
             <Notice>{t('SameDayCancellationNotAllowed')}</Notice>
             <Notice>
-            {t('Merchant')} Urcarchar {t('CardPayment')} <Discount>10%{t('Discount')}</Discount>
+              {t('Merchant')} Urcarchar {t('CardPayment')} <Discount>10%{t('Discount')}</Discount>
             </Notice>
           </StyledCol>
         </StyledRow>
         <StyledRow>
           <CenteredCol>
             <StyledNextButton variant="primary" onClick={handleNextClick}>
-            {t('Next')}
+              {t('Next')}
             </StyledNextButton>
           </CenteredCol>
         </StyledRow>
@@ -152,36 +166,34 @@ function Reservation() {
             <ModalContent>
               <ReservationBox>
                 <ReservationTitle>{recv.title} {t('Booking')}</ReservationTitle>
-                <hr/>
-                <p style={{textAlign: 'left'}}>{t('Schedule')}: {selectedDate.toLocaleDateString()} - {selectedTime}</p>
-                <p style={{textAlign: 'left'}}>{t('NumberOfPeople')}: {selectedPeople}</p>
-                <p style={{textAlign: 'left', color:'red'}}>
-                {t('Deposit')}: {(parseInt(selectedPeople, 10) * 10000).toLocaleString()}{" "+t('Won')}
+                <hr />
+                <p style={{ textAlign: 'left' }}>{t('Schedule')}: {selectedDate.toLocaleDateString()} - {selectedTime}</p>
+                <p style={{ textAlign: 'left' }}>{t('NumberOfPeople')}: {selectedPeople}</p>
+                <p style={{ textAlign: 'left', color: 'red' }}>
+                  {t('Deposit')}: {(parseInt(selectedPeople, 10) * 10000).toLocaleString()}{" " + t('Won')}
                 </p>
-                <p style={{textAlign: 'left'}}>{t('Location')} : {recv.location}</p>
+                <p style={{ textAlign: 'left' }}>{t('Location')} : {recv.location}</p>
               </ReservationBox>
               <InfoSection>
                 <InfoTitle>{t('BookerInformation')}</InfoTitle>
                 <hr />
                 {reservePerson ? (
                   <>
-                    <p style={{textAlign: 'left'}}>{t('Booker')}: {reservePerson.name}</p>
-                    <p style={{textAlign: 'left'}}>{t('PhoneNumber')}: {reservePerson.phoneNumber}</p>
-                    <p style={{textAlign: 'left'}}>{t('Email')}: {reservePerson.email}</p>
+                    <p style={{ textAlign: 'left' }}>{t('Booker')}: {reservePerson.name}</p>
+                    <p style={{ textAlign: 'left' }}>{t('PhoneNumber')}: {reservePerson.phoneNumber}</p>
+                    <p style={{ textAlign: 'left' }}>{t('Email')}: {reservePerson.email}</p>
                     <Input placeholder={t('Requests')} />
                   </>
                 ) : (
-                  <p style={{textAlign: 'left', color: 'red'}}>{t('LoadingBookerInformation')}...</p>
+                  <p style={{ textAlign: 'left', color: 'red' }}>{t('LoadingBookerInformation')}...</p>
                 )}
-                
               </InfoSection>
             </ModalContent>
           </Modal.Body>
           <Modal.Footer>
-          <Button variant="primary"
-          onClick={()=>{
-            navigate('/paymentpage', {
-              state: {
+            <Button variant="primary" onClick={() => {
+              navigate('/paymentpage', {
+                state: {
                   img: recv.img,
                   title: recv.title,  // 상호명
                   reservePersonNum: selectedPeople, // 예약인원수
@@ -190,17 +202,20 @@ function Reservation() {
                   reserveTime: selectedTime,  // 예약시간
                   reserveLocation: recv.location, // 예약 위치
                   price: parseInt(selectedPeople, 10) * 10000
-              }
-          });
-          }}>{t('DepositPayment')}</Button>
-            
-            
+                }
+              });
+              sessionStorage.removeItem('reservationData');
+            }}>{t('DepositPayment')}</Button>
             <CancelButton onClick={handleClose}>
-            {t('Cancel')}
+              {t('Cancel')}
             </CancelButton>
           </Modal.Footer>
         </Modal>
       </StyledContainer>
+      </>
+      ):(
+        <p>Loading data...</p> // recv가 null일 때 표시할 내용을 추가
+      )}
     </ScrollableContainer>
   );
 }

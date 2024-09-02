@@ -130,7 +130,16 @@ function DetailPage() {
           type === 'tour' ? ''
           :
           <Button style={{width:'110px'}} onClick={()=>{
-            navigate(`/reservation1`, { state: { title : item.title, location : item.addr1, img:item.firstimage } });
+            //navigate(`/reservation1`, { state: { title : item.title, location : item.addr1, img:item.firstimage } });
+
+            const reservationData = {
+              title: item.title,
+              location: item.addr1,
+              img: item.firstimage
+            };
+
+            sessionStorage.setItem('reservationData', JSON.stringify(reservationData));
+            navigate(`/reservation1`);
           }}>
             {t('BookingAndPayment')}
           </Button>

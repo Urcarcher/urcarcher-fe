@@ -404,6 +404,7 @@
     "Booking": "Booking",
     "Booker": "Booker",
     "CardSimplePayment": "Card Simple Payment",
+    "PleaseCheckReservation":"Please enter all reservation information",
 
     "CurrencyExchange": "Currency Exchange",
     "SelectCard": "Select Card",
