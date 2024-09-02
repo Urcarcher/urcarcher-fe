@@ -545,6 +545,12 @@
         "completed": "公演完了"
     },
 
-     "select_seat": "座席を選択してください"
+     "select_seat": "座席を選択してください",
+     "reservationDetails": "予約詳細",
+    "fullList": "全体リスト",
+    "performanceList": "公演一覧",
+    "restaurantList": "レストラン一覧",
+    "reservationClickDetails": "予約をクリックすると詳細を表示できます",
+    "myPoints": "マイポイント"
 
 }

@@ -553,7 +553,14 @@
       "inProgress": "공연중",
       "upcoming": "공연예정",
       "completed": "공연완료"
-    }
+    },
+
+    "reservationDetails": "예약 상세",
+    "fullList": "전체 목록",
+    "performanceList": "공연 목록",
+    "restaurantList": "맛집 목록",
+    "reservationClickDetails": "해당 예약 건 클릭 시 상세 보기 가능",
+    "myPoints": "나의 포인트"
 
 
     

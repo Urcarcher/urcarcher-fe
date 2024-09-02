@@ -81,6 +81,7 @@ function Home(props) {
         if (memberId) {
                 axios.get(`/api/home/my-main-card/${memberId}`)
                 .then(response => {
+                    console.log(response);
                     setMainCardInfo(response.data);
                     setLoading(false); // 데이터 로드 후 로딩 종료
                 })
@@ -204,6 +205,11 @@ function Home(props) {
                     <div className='card-signup'>
                         <p><Link to="/card1">{t('ApplyCard2')}</Link></p>
                         <p><img src="icon/icon-credit-card.png" alt="카드신청" style={{width:"40px"}}/></p>
+                    </div>
+                 
+                    <div className='my-point'>
+                        <p><Link to="/card1">{t('myPoints')}</Link></p>
+                        
                     </div>
                 </div>
                 <div className='home-content-box'> 
