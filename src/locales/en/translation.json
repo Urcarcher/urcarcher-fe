@@ -506,6 +506,48 @@
     "closingPrice": "Close",
     "highPrice": "High",
     "lowPrice": "Low",
-    "fluctuationRate": "Change"
+    "fluctuationRate": "Change",
+    "Reservation_confirmation":  "Reservation Confirmed",
+    "card_management": "Card Management",
+    "welcome": "Welcome!",
+    "membership_confirmed": "You are now an '어카처' member.",
+
+    "time": "Time",
+    "status": "Status",
+    "seat": "Seat",
+    "cancel_reservation": "Do you want to cancel the reservation?",
+    "yes": "Yes",
+    "no": "No",
+    "reservation_cancelled": "Reservation has been cancelled.",
+    "page_redirecting": "The page will redirect automatically.",
+    "no_reservations": "No reservations found.",
+    "ticket_unit": "tickets",
+
+    "reservation_confirmation": "Reservation Confirmed",
+    "reservation_cancellation": "Reservation Cancelled",
+    "unknown": "Unknown",
+    "performance_name": "Performance Name",
+    "restaurant_name": "Restaurant Name",
+    "no_name": "No Name",
+    "expired": "Expired",
+
+    "location": "Location",
+    "duration": "Duration",
+    "runtime": "Runtime",
+    "age": "Age",
+    "cast": "Cast",
+    "staff": "Staff",
+    "producer": "Producer",
+    "production_company": "Production Company",
+    "planning_company": "Planning Company",
+    "ticket_price": "Ticket Price",
+    "synopsis": "Synopsis",
+    "performance": {
+      "inProgress": "In Progress",
+      "upcoming": "Upcoming",
+      "completed": "Completed"
+    },
+
+    "select_seat": "Please select a seat"
 
 }

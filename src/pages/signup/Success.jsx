@@ -1,12 +1,42 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./signup.css"
 import welcome from 'assets/welcome.gif'
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
+import 'assets/Language.css';
+
 
 function Success() {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (selectedLanguage) => {
+        
+        const languageMap = {
+            Korea: 'ko',
+            English: 'en',
+            Japan: 'jp',
+            China: 'cn'
+        };
+
+        const languageCode = languageMap[selectedLanguage] 
+        i18n.changeLanguage(languageCode);
+       
+    };
+
+
     const navigate = useNavigate();
 
     useEffect(() => {
+
+        const savedLanguage = Cookies.get('selectedLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage); // 언어 변경
+        } else {
+            changeLanguage('Korea'); // 기본 언어 설정
+        }
+
+
         const timer = setTimeout(() => {
             navigate('/login');
         }, 3000); // 3초 후에 자동으로 로그인 페이지로 이동
@@ -20,8 +50,8 @@ function Success() {
             <div className="mb-4 card">
                 <img className="card-img-top" src={welcome} alt="welcome image" />
             <div className="card-body">
-            <h1 className="card-text">환영합니다!</h1>
-            <h3 className="card-text">어카처 회원이 되었어요</h3>
+            <h1 className="card-text">{t('welcome')}</h1>
+            <h3 className="card-text">{t('membership_confirmed')}</h3>
             {/* Illustration by <a href="https://icons8.com/illustrations/author/WsYoyZ6jp8sg">Victoria Chepkasova</a> from <a href="https://icons8.com/illustrations">Ouch!</a> */}
             </div>
             </div>
