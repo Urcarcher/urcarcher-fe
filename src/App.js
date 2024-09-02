@@ -57,7 +57,6 @@ import CardPassword from 'pages/card/CardPassword';
 import Reward from 'pages/tourcourse/Reward';
 //import MyReservations1 from 'pages/reservation/MyReservations1';
 import MyReservations1 from './pages/reservation/MyReservations1'; // 경로 확인
-import MyComponent from 'pages/reservation/parsingTest';
 import PrivateRoute from 'pages/auth/PrivateRoute';
 import MyReservations1Detail from './pages/reservation/MyReservations1Detail'; // 경로 확인
 
@@ -106,7 +105,6 @@ function App() {
           <Route path='/myReservationList1Detail/:reservationId' element={<MyReservations1Detail/>}></Route>
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
-          <Route path='/parsingTest' element={<MyComponent/>}></Route>
 
           <Route element={<PrivateRoute />}>
             <Route path='/reservation1' element={<Reservation />} />
