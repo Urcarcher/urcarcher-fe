@@ -111,32 +111,37 @@ function Menu({onClose, isLoggedIn, userName}) {
                 onClose={onClose}
                 title={[{id:12, tit:t('Finance')}]} 
                 items={[
-                  { id: 6, text: t('ApplyCard2'), link: "/card1" },
-                  { id: 7, text: t('LostCardMenu'), link: "/cardmanagement" },
-                  { id: 8, text: t('SpendingMenu'), link: "/usage" },
-                  { id: 9, text: t('PatternMenu'), link: "/chart1" },
-                  { id: 10, text: t('ExchangeMenu'), link: "/exchange/realtime/rate" },
-                  { id: 11, text: t('Exchange'), link: "/exchange" },
+                  { id: 5, text: t('ApplyCard2'), link: "/card1" },
+
+                  { id: 6, text: t('MyCard'), link: "/cardmanagement" },
+                  { id: 7, text: t('EstimatedAmount'), link: "/cardmanagement" },
+                  { id: 8, text: t('LoadAmount'), link: "/cardmanagement" },
+                  { id: 9, text: t('CancelCard'), link: "/cardmanagement" },
+
+                  { id: 10, text: t('SpendingMenu'), link: "/usage" },
+                  { id: 11, text: t('PatternMenu'), link: "/chart1" },
+                  { id: 12, text: t('ExchangeMenu'), link: "/exchange/realtime/rate" },
+                  { id: 13, text: t('Exchange'), link: "/exchange" },
                 ]}
               />
               <MenuCategory 
                 onClose={onClose}
                 title={[{id:13, tit:t('Tourism')}]} 
                 items={[
-                  { id:12, text: t('RecommendSpot'), link: "/searchtour" },
-                  { id:13,text: t('PaymentBased'), link: "/maphome" },
-                  { id:14,text: t('BookActivities'), link: "/performanceList" },
-                  { id:15,text: t('RecommendCourse'), link: "/courseList" },
-                  { id:16,text:  t('Reward'), link: "/reward" },
-                  { id:17,text: t('FindRoute'), link: "/MapComponent" },
-                  { id:18,text: "공연/맛집 예약 확인", link: "/myReservationList1" },
+                  { id:14, text: t('RecommendSpot'), link: "/searchtour" },
+                  { id:15,text: t('PaymentBased'), link: "/maphome" },
+                  { id:16,text: t('BookActivities'), link: "/performanceList" },
+                  { id:17,text: t('RecommendCourse'), link: "/courseList" },
+                  { id:18,text:  t('Reward'), link: "/reward" },
+                  { id:19,text: t('FindRoute'), link: "/MapComponent" },
+                  { id:20,text: "공연/맛집 예약 확인", link: "/myReservationList1" },
                 ]}
               />
               <MenuCategory 
                 onClose={onClose}
                 title={[{id:14, tit:t('CustomerCenter')}]} 
                 items={[
-                  { id:19, text: t('FAQ'), link: "/" },
+                  { id:21, text: t('FAQ'), link: "/" },
                 ]}
               />
             </div>
