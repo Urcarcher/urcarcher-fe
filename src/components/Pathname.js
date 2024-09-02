@@ -41,7 +41,9 @@ export  const getTitle = (pathname) => {
             return 'ExchangeHistory';
         case '/exchange/realtime/rate':
             return 'RealtimeExchangeRate';
-        case '/reservation':
+        // case '/reservation':
+        //     return 'culturalActivityReservation';
+        case '/performanceList':
             return 'culturalActivityReservation';
         case '/searchtour': 
             return 'TouristAttractionsAndRestaurants';
@@ -55,6 +57,8 @@ export  const getTitle = (pathname) => {
             return 'Login2';
         case '/reward':
             return 'Reward';
+        case '/myReservationList1':
+            return '예약 확인';
         default:
             return handleDynamicPaths(cleanedPathname); // 가변 경로 처리
     }
@@ -79,8 +83,16 @@ export  const handleDynamicPaths = (pathname) => {
         return 'FindRoute';
     }
 
-    if (/^\/reservation\/detail/.test(pathname)) {
+    // if (/^\/reservation\/detail/.test(pathname)) {
+    //     return 'culturalActivityReservation';
+    //   }
+
+      if (/^\/performanceList\/detail/.test(pathname)) {
         return 'culturalActivityReservation';
+      }
+
+      if (/^\/myReservationList1Detail/.test(pathname)) {
+        return '예약 상세';
       }
     return 'other';
 }

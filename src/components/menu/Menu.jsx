@@ -125,17 +125,18 @@ function Menu({onClose, isLoggedIn, userName}) {
                 items={[
                   { id:12, text: t('RecommendSpot'), link: "/searchtour" },
                   { id:13,text: t('PaymentBased'), link: "/maphome" },
-                  { id:14,text: t('BookActivities'), link: "/reservation" },
+                  { id:14,text: t('BookActivities'), link: "/performanceList" },
                   { id:15,text: t('RecommendCourse'), link: "/courseList" },
                   { id:16,text:  t('Reward'), link: "/reward" },
                   { id:17,text: t('FindRoute'), link: "/MapComponent" },
+                  { id:18,text: "공연/맛집 예약 확인", link: "/myReservationList1" },
                 ]}
               />
               <MenuCategory 
                 onClose={onClose}
                 title={[{id:14, tit:t('CustomerCenter')}]} 
                 items={[
-                  { id:18, text: t('FAQ'), link: "/" },
+                  { id:19, text: t('FAQ'), link: "/" },
                 ]}
               />
             </div>

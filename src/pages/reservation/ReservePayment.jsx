@@ -9,32 +9,22 @@ import CardOverlay from 'bootstrap-template/components/cards/CardOverlay';
 
 function ReservePayment() {
     const location = useLocation();
-    // const state = location.state;
-    // const { peopleNum } = state || {};
-    // const resDate = state?.resDate || new Date();
-    // const price = state?.price;
     const { state } = location;
-
-    // state 객체에서 값 추출 및 기본값 설정
-    const { title, price, peopleNum, resDate, resTime, selectedSeats, locations } = state || {};
-
-    console.log('State:', state);
-console.log('Price:', price);
-console.log('Name:', title);
-console.log('selectedSeats:', selectedSeats);
-const seatString = selectedSeats.join(', ');
+    const { title, price, peopleNum, resDate, resTime, selectedSeat, locations, classification } = state || {}; //공연
+    const { reservePersonNum, reserveDate, reserveTime, reserveLocation } = state || {}; //맛집
 
     const [paymentMethod, setPaymentMethod] = useState('credit-card-simple');
     const handlePaymentMethodChange = (e) => setPaymentMethod(e.currentTarget.value);
     const [userId, setUserId] = useState(null);
     const [myCard, setMyCard] = useState([]);
-    const [selectedCardIndex, setSelectedCardIndex] = useState(0); // 추가: 선택된 카드의 인덱스 관리
+    const [selectedCardIndex, setSelectedCardIndex] = useState(0);
     const [cardId, setCardId] = useState('');
-    const [payAmount, setPayAmount] = useState(0);
+    const [payAmount, setPayAmount] = useState(price - (price * 0.1)); // 할인 적용된 결제 금액
     const [currentDate, setCurrentDate] = useState(new Date().toISOString());
     const [cardTypeId, setCardTypeId] = useState(0);
     const [loading, setLoading] = useState(false);
-    let navigate = useNavigate();
+    const navigate = useNavigate();
+    
     const flickityOptions = {
         cellAlign: 'center',
         pageDots: false,
@@ -42,7 +32,7 @@ const seatString = selectedSeats.join(', ');
         selectedAttraction: 0.03,
         friction: 0.15,
         contain: false,
-        initialIndex: 0 // 첫 번째 카드가 중앙에 오도록 설정
+        initialIndex: 0
     };
 
     useEffect(() => {
@@ -50,26 +40,27 @@ const seatString = selectedSeats.join(', ');
             .then((response) => {
                 setUserId(response.data.memberId);
             })
-            .catch((error) => {
+            .catch(() => {
                 alert("회원정보를 가져오는데 오류 발생");
             });
+    }, []);
 
+    useEffect(() => {
         if (userId) {
             Axios.get(`/api/card/mycard/${userId}`)
                 .then((response) => {
-                    setMyCard(response.data);
                     const cards = response.data.map(card => ({
                         ...card,
                         cardStatus: card.cardStatus
                     }));
                     setMyCard(cards);
                     if (cards.length > 0) {
-                        setCardId(cards[0].cardId); // 첫 번째 카드의 ID를 기본 설정
+                        setCardId(cards[0].cardId);
+                        setCardTypeId(cards[0].cardTypeId);
                     }
                 })
-                .catch((error) => {
-                    console.log("card정보 가져오는데 오류 발생");
-                    console.log(error);
+                .catch(() => {
+                    console.log("카드 정보를 가져오는데 오류 발생");
                 });
         }
     }, [userId]);
@@ -77,61 +68,117 @@ const seatString = selectedSeats.join(', ');
     useEffect(() => {
         if (myCard.length > 0) {
             const selectedCard = myCard[selectedCardIndex];
-            updatePayData(selectedCard);
+            setCardId(selectedCard.cardId);
+            setCardTypeId(selectedCard.cardTypeId);
+            setPayAmount(price - (price * 0.1));
+            setCurrentDate(new Date().toISOString());
         }
-    }, [selectedCardIndex, myCard]);
+    }, [selectedCardIndex, myCard, price]);
 
-    function updatePayData(card) {
-        console.log(card.cardId);
-        console.log(state.price - (state.price * 0.1));
-        console.log(new Date().toISOString());
+    const handlePayment = () => {
+        setLoading(true);
+        Axios.post('/api/payment/insert', {
+            paymentPrice: payAmount,
+            paymentDate: currentDate,
+            cardId: cardId,
+            storeId: '11111111'
+        })
+        .then(() => {
+            if (cardTypeId !== 1 && cardTypeId !== 2) {
+                Axios.post('/api/card/usepayment', {
+                    cardId: String(cardId),
+                    cardBalance: String(payAmount)
+                }).then(() => {
+                    processReservation();
+                }).catch(() => {
+                    console.log("잔액 차감 오류");
+                    console.log(price);
+                });
+            } else {
+                processReservation();
+            }
+        })
+        .catch(() => {
+            setLoading(false);
+            alert("예약금 결제 실패");
+        });
+    };
 
-        setCardId(card.cardId);
-        setCardTypeId(card.cardTypeId);
-        setPayAmount(state.price - (state.price * 0.1));
-        setCurrentDate(new Date().toISOString());
-    }
+    const processReservation = () => {
+        // 공연 파라미터로 일단 초기화
+        let peopleNumParam = peopleNum;
+        let resDateParam = resDate;
+        let resTimeParam = resTime;
+        let locationParam = locations;
+        let memberIdParam = userId;
+        let seatParam = selectedSeat; //선택한좌석
+
+        //맛집일때 변경
+        if (classification === 2) {
+            peopleNumParam = reservePersonNum; 
+            resDateParam = reserveDate; 
+            resTimeParam = reserveTime;
+            locationParam = reserveLocation; 
+            seatParam = "예약석";
+        } 
+
+        Axios.post('/api/reserve/insert', {
+            state: 1, //1: 예약완료
+            name: title, //공연or축제명
+            price: price, //가격
+            classification: classification, //분류 1:공연, 2:축제
+            peopleNum: peopleNumParam,
+            reservationDate: resDateParam,
+            reservationTime: resTimeParam,
+            location: locationParam,
+            memberId: memberIdParam,
+            seat: seatParam
+        })
+        .then(() => {
+            setLoading(false);
+            alert("예약금 결제 및 예약 성공");
+            navigate('/');
+        })
+        .catch(() => {
+            setLoading(false);
+            console.log(resTimeParam);
+            alert("예약금 결제는 성공했지만 예약에 실패했습니다.");
+        });
+    };
 
     return (
         <ScrollableContainer>
           {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />}
             <div>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
+                <br/><br/><br/><br/><br/>
                 <Container>
-                    <h1 className=''>상품 결제</h1>
+                    <h1>상품 결제</h1>
                     <hr/>
                     <br/>
                     {state ? (
                         <>
                             <ProductCard>
-                                <ProductImage src={state.img}/>
+                                <ProductImage src={state.img} alt={title}/>
                                 <ProductInfo>
-                                    <ProductTitle>{state.title}</ProductTitle>
+                                    <ProductTitle>{title}</ProductTitle>
                                 </ProductInfo>
-
                                 <PriceInfo>
                                     <DiscountTag>카드 혜택</DiscountTag>
-                                    <OriginalPrice>{(state.price).toLocaleString()}원</OriginalPrice>
+                                    <OriginalPrice>{price.toLocaleString()}원</OriginalPrice>
                                     <DiscountedPrice>10% 할인</DiscountedPrice>
                                 </PriceInfo>
                             </ProductCard>
                             <br/>
                             <TotalAmount>
                                 <span>총 결제금액</span>
-                                <span>{(state.price - (state.price * 0.1)).toLocaleString()}원</span>
+                                <span>{payAmount.toLocaleString()}원</span>
                             </TotalAmount>
                         </>
                     ) : (
                         <p>상품 정보가 없습니다.</p>
                     )}
                     <hr/>
-                    <br/>
-                    <br/>
-
+                    <br/><br/>
                     <div>
                         <h4>결제 수단</h4>
                         <PaymentOptionsContainer>
@@ -156,14 +203,14 @@ const seatString = selectedSeats.join(', ');
                                     }
                                 }}
                             >
-                                {myCard.map((card, index) => (
+                                {myCard.map((card) => (
                                     <CarouselCell key={card.cardId}>
                                         <CardOverlay
                                             className='my-custom-class'
                                             img={require(`../../assets/Card${card.cardTypeId}_.png`)}
                                             imgStyle={{width: '335px', height: '200px'}}
                                         />
-                                        <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', marginLeft:'17px', fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
+                                        <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', marginLeft:'17px', fontSize:'15px', marginTop:'5px' , marginBottom:'5px'}}>
                                           MyCard : {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "신용카드":"선불카드"}
                                         </p>
                                         <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', marginLeft:'17px', fontSize:'15px'}}>
@@ -177,73 +224,7 @@ const seatString = selectedSeats.join(', ');
                     </div>
                 </Container>
                 <br/>
-                <Button onClick={() => {
-                  setLoading(true);
-                    Axios.post('/api/payment/insert',
-                      {
-                        paymentPrice: payAmount,
-                        paymentDate: currentDate,
-                        cardId: cardId,
-                        storeId: '11111111'
-                      })
-                      .then((response) => {
-                        if (cardTypeId !== 1 && cardTypeId !== 2) {
-                          // 선불카드라면
-                          Axios.post('/api/card/usepayment', 
-                          {
-                            cardId: String(cardId),
-                            cardBalance: String(payAmount)
-                          }).then((response) => {
-                            console.log("잔액차감 정상적으로 작동");
-                            reserve();
-                          }).catch((error) => {
-                            console.log("잔액차감 비정상적으로 작동");
-                          })
-                        }
-                        setTimeout(() => {
-                          setLoading(false);
-                          console.log('Payment inserted successfully:', response.data);
-                          alert("예약금 결제 성공");
-                          navigate('/');
-                        }, 3000);
-                      })
-                      .catch((error) => {
-                          setTimeout(() => {
-                          setLoading(false);
-                          console.error('Error inserting payment:', error);
-                          alert("예약금 결제 실패");
-                        }, 3000);
-                      });
-
-                      const reserve = () => {
-                        Axios.post('/api/reserve/insert', {
-                            peopleNum: peopleNum, // 인원 수
-                            reservationDate: resDate, // 예약일
-                            reservationTime: resTime, //예약시간
-                            state: 1, // 1: 예약완료
-                            location: locations , // 예시 데이터: 장소
-                            name: title,//공연명
-                            classification: 1, // 1:축제, 2:맛집
-                            memberId: userId, // 회원 ID
-                            price: price, //가격
-                            seat: seatString //좌석
-                        }).then((response) => {
-                            console.log('Reservation inserted successfully:', response.data);
-                            setTimeout(() => {
-                                setLoading(false);
-                                alert("예약금 결제 및 예약 성공");
-                                navigate('/');
-                            }, 3000);
-                        }).catch((error) => {
-                            console.error('Error inserting reservation:', error);
-                            setTimeout(() => {
-                                setLoading(false);
-                                alert("예약금 결제는 성공했지만 예약에 실패했습니다.");
-                            }, 3000);
-                        });
-                    };
-                      
-                }} style={{width: '80%'}}>결제하기</Button>
+                <Button onClick={handlePayment} style={{width: '80%'}}>결제하기</Button>
             </div>
         </ScrollableContainer>
     );
@@ -269,7 +250,7 @@ const FlickityStyled = styled(Flickity)`
     }
 
     .flickity-button {
-        display: none; /* Flickity 버튼을 완전히 숨김 */
+        display: none;
     }
 `;
 

@@ -3,7 +3,7 @@ import "./reservation.css";
 import LoadingSpinner from 'components/LoadingSpinner';
 import { Link } from 'react-router-dom';
 
-function ReservationInfo() {
+function PerformanceList() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -139,4 +139,4 @@ function ReservationInfo() {
   );
 }
 
-export default ReservationInfo;
+export default PerformanceList;
