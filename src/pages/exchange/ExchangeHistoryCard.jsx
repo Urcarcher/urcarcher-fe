@@ -108,9 +108,9 @@ function ExchangeHistoryCard(props) {
     return (
         <div className="contents">
             <div className="exCard_title">
-                <h3>
+                <h4>
                     {t('WhichCard2')} <span style={{ color: "#476EFF" }}>{t('View')} </span>{t('DoYouWantToRecharge')}
-                </h3>
+                </h4>
             </div>
             <div className="exCard_wrapper">
                 {/* null, undefined 아닌지 확인 후 id 비교 */}

@@ -10,7 +10,7 @@
     width: 80%;
     height: 75px;
     margin: 0 auto;
-    margin-top: 50px;
+    margin-top: 40px;
     /* border: 1px solid red; */
 }
 
@@ -94,4 +94,27 @@
 
 .set_setting_home_btn:hover {
     transform: translateY(-2px);
+}
+
+/* 반응형 css */
+@media screen and (max-Width: 414px) {
+    .ex_setting_wrapper {
+        margin-top: 40px;
+    }
+
+    .ex_setting_table_box {
+        margin-top: 25px;
+    }
+
+    .ex_setting_box_text {
+        margin-top: 40px;
+    }
+
+    .ex_setting_box_text h4 {
+        line-height: 25px;
+    }
+
+    .set_setting_info_btn, .set_setting_home_btn {
+        width: 145px;
+    }
 }

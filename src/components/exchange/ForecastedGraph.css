@@ -47,6 +47,7 @@
 .scroll-container,
 .scroll-area {
   width: 100%;
+  line-height: 25px;
 }
 
 .over-scroll {
@@ -133,4 +134,24 @@
 
 .scroll-area tr {
   cursor: pointer;
+}
+
+/* 반응형 css */
+@media screen and (max-Width: 414px) {
+  .graph_wrapper {
+    margin-top: 15px;
+  }
+
+  .scroll-area {
+    font-size: 11px;
+    line-height: 17px;
+  }
+
+  .scroll-container {
+    line-height: 10px;
+  }
+
+  .forecast-price {
+    font-size: 13px;
+  }
 }

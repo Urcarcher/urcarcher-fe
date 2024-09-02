@@ -309,6 +309,7 @@
     "AutoExchangeOnReservationDate": "在设定的预约日期自动为您兑换",
     "SelectedExchangeReservationDate": "选择的兑换预约日期",
     "SelectReservationDate": "请选择预约日期",
+    "SameDayReservationsNotPossible": "无法当天预订",
     "SelectedReservationRate": "选择的预约汇率",
     "SelectReservationRate": "请选择要预约的汇率",
     "ExchangeAmount": "兑换金额",
