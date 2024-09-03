@@ -5,6 +5,10 @@
 .prod-container > p{
     animation: slideUp 1s ease-in;
     opacity: 1; 
+    word-break: keep-all;
+}
+.prod-container > h2{
+    font-family: 'NanumSquareNeoExtraBold';
 }
 .prod-map {
     width: 100%;
@@ -18,6 +22,9 @@
     position: absolute;
     animation: slideUp 1.5s ease-in-out;
     opacity: 1; 
+}
+.imgbox:hover{
+    transform: translateY(-7px);
 }
 .imgbox img {
     cursor: pointer;
@@ -72,12 +79,15 @@
     bottom: 22%;
     left: 23%;
 }
+.imgbox11{
+    bottom: 33%;
+    left: 10%;
+}
 .prod-text{
     font-size: 18px;
     font-weight: bold;
     color: #a3a3a3;
 }
-
 /* 애니메이션 정의 */
 @keyframes slideUp {
     from {
@@ -88,4 +98,12 @@
         transform: translateY(0); /* 원래 위치로 이동 */
         opacity: 1; /* 투명도 1로 끝 */
     }
+}
+.prod-map-exp{
+    padding: 0 50px;
+    text-align: left;
+    margin: 30px 0;
+}
+.prod-map-exp > p{
+    font-size: 15px;
 }
