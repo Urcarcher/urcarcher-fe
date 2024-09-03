@@ -112,12 +112,7 @@ function Menu({onClose, isLoggedIn, userName}) {
                 title={[{id:12, tit:t('Finance')}]} 
                 items={[
                   { id: 5, text: t('ApplyCard2'), link: "/card1" },
-
                   { id: 6, text: t('MyCard'), link: "/cardmanagement" },
-                  { id: 7, text: t('EstimatedAmount'), link: "/cardmanagement" },
-                  { id: 8, text: t('LoadAmount'), link: "/cardmanagement" },
-                  { id: 9, text: t('CancelCard'), link: "/cardmanagement" },
-
                   { id: 10, text: t('SpendingMenu'), link: "/usage" },
                   { id: 11, text: t('PatternMenu'), link: "/chart1" },
                   { id: 12, text: t('ExchangeMenu'), link: "/exchange/realtime/rate" },

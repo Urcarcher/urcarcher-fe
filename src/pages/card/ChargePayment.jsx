@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
+import { useNavigate } from 'react-router-dom';
 
 
 // Styled components
@@ -90,21 +91,21 @@ function ChargePayment(props) {
             Japan: 'jp',
             China: 'cn'
         };
-
         const languageCode = languageMap[selectedLanguage] 
         i18n.changeLanguage(languageCode);
-       
     };
-
 
   const [nowRemainPay, setNowRemainPay] = useState(); 
   const [amount, setAmount] = useState('10000');
   const [customAmount, setCustomAmount] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('credit-card-simple'); // 선택된 결제 수단 상태
   const [loading, setLoading] = useState(false);
+  
+
 
   // 아임포트 스크립트 로드
   useEffect(() => {
+
     const script = document.createElement('script');
     script.src = 'https://cdn.iamport.kr/js/iamport.payment-1.2.0.js';
     script.async = true;

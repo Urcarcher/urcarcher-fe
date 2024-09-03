@@ -11,28 +11,24 @@ import Cookies from 'js-cookie';
 import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
 
-
 const CardForm = () => {
   const { produceCardOffer, setProduceCardOffer } = useCardContext();
   let navigate = useNavigate();
 
   const [pickupMethod, setPickupMethod] = useState('address'); // 초기값은 'address'
-
   const { t, i18n } = useTranslation();
-    const changeLanguage = (selectedLanguage) => {
-        
-        const languageMap = {
-            Korea: 'ko',
-            English: 'en',
-            Japan: 'jp',
-            China: 'cn'
-        };
 
-        const languageCode = languageMap[selectedLanguage] 
-        i18n.changeLanguage(languageCode);
-       
+  const changeLanguage = (selectedLanguage) => {
+    const languageMap = {
+      Korea: 'ko',
+      English: 'en',
+      Japan: 'jp',
+      China: 'cn'
     };
 
+    const languageCode = languageMap[selectedLanguage];
+    i18n.changeLanguage(languageCode);
+  };
 
   const styles = {
     formGroupWithLabel: {
@@ -59,16 +55,23 @@ const CardForm = () => {
     },
   };
 
-  useEffect(()=>{
-   
+  useEffect(() => {
     const savedLanguage = Cookies.get('selectedLanguage');
     if (savedLanguage) {
-        changeLanguage(savedLanguage); // 언어 변경
+      changeLanguage(savedLanguage); // 언어 변경
     } else {
-        changeLanguage('Korea'); // 기본 언어 설정
+      changeLanguage('Korea'); // 기본 언어 설정
     }
-},[]);
+  }, []);
 
+  // 오늘 날짜를 구함
+  const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
 
   return (
     <div style={{ marginTop: '140px'}}>
@@ -93,9 +96,8 @@ const CardForm = () => {
 
           if (produceCardOffer.card_type_id === 1 || produceCardOffer.card_type_id === 2){
             setTimeout(() => navigate('/card5'), 300);
-          }else{
-              // setTimeout(() => navigate('/card6'), 300);
-              setTimeout(() => navigate('/cardPass'), 300);
+          } else {
+            setTimeout(() => navigate('/cardPass'), 300);
           }
         }}
       >
@@ -153,6 +155,7 @@ const CardForm = () => {
                   color: '#333',
                   borderColor: '#ced4da',
                 }}
+                min={getTodayDate()}  // 오늘 이전 날짜 선택 불가
               />
               <label 
                 className="form-label"

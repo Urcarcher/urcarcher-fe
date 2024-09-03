@@ -37,10 +37,8 @@ function Payment() {
             Japan: 'jp',
             China: 'cn'
         };
-
         const languageCode = languageMap[selectedLanguage] 
         i18n.changeLanguage(languageCode);
-       
     };
     
     let navigate = useNavigate();
@@ -101,6 +99,7 @@ function Payment() {
         if (userId) {
             Axios.get(`/api/card/mycard/${userId}`)
                 .then((response) => {
+                    console.log(response.data);
                     setMyCard(response.data);
                     const cards = response.data.map(card => ({
                         ...card,

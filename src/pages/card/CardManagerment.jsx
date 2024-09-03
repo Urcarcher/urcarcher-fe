@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
@@ -41,6 +41,8 @@ function CardManagerment(props) {
     const [modalContent, setModalContent] = useState("");
     const [modalTitle, setModalTitle] = useState('');
     const [userId, setUserId] = useState(null);
+    const [nationality, setNationality] = useState(null);
+    const navigate = useNavigate();
 
     const flickityOptions = {
         cellAlign: 'center',
@@ -82,8 +84,15 @@ function CardManagerment(props) {
                 setModalTitle(t('EstimatedAmount'));
                 break;
             case "2":
-                setModalContent(<ChargePayment setShowModal={setShowModal} card={card} onPaymentSuccess={handlePaymentSuccess} />);
-                setModalTitle(t('LoadAmount'));
+              Axios.get("api/t/test")
+                .then((response)=>{
+                  if(nationality !== "KR"){
+                    navigate("/exchange");
+                  }else{
+                    setModalContent(<ChargePayment setShowModal={setShowModal} card={card} onPaymentSuccess={handlePaymentSuccess} />);
+                    setModalTitle(t('LoadAmount'));
+                  }
+                })
                 break;
             case "3":
                 setModalContent(<SettingPassword setShowModal={setShowModal} card={card} />);
@@ -96,7 +105,6 @@ function CardManagerment(props) {
             default:
                 console.log("올바른 선택지가 아닙니다");
         }
-
         setShowModal(true);
     };
     const handlePaymentSuccess = (cardId, updatedBalance) => {
@@ -123,6 +131,8 @@ function CardManagerment(props) {
         Axios.get("/api/t/test")
             .then((response) => {
                 setUserId(response.data.memberId);
+                setNationality(response.data.nationality);
+
             })
             .catch((error) => {
                 //alert("회원정보를 가져오는데 오류 발생");
