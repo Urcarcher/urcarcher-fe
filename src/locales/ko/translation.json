@@ -403,7 +403,7 @@
     "Schedule": "일정",
     "NumberOfPeople": "인원",
     "Deposit": "예약금",
-    "Location": "위치",
+    "location": "위치",
     "BookerInformation": "예약자 정보",
     "LoadingBookerInformation": "예약자 정보를 불러오는 중입니다",
     "DepositPayment": "예약금 결제",

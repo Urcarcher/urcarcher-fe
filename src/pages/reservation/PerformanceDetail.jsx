@@ -9,6 +9,7 @@ import logo from "assets/logo.png";
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
+import './performanceDetail.css';
 
 
 
@@ -153,119 +154,102 @@ const secureImages = images.map((url) => {
 
 
   return (
-    <div>
-      <br />
-      <br />
-      <br />
-      <br />
-      {/* <h2>Seating Prices</h2>
-      <ul>
-        {seatingData.map((seat, index) => (
-          <li key={index}>
-            {seat.type}: {seat.price.toLocaleString()}원
-          </li>
-        ))}
-      </ul> */}
-      <br />
-      <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
-        <div style={{ position: 'relative' }}>
-          {secureImages.length > 1 &&  (
-            <img
-              src={leftArrow} // 좌측 화살표
-              alt="Previous"
+    <div className='contents'>
+        <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
+          <div style={{ position: 'relative' }}>
+            {secureImages.length > 1 &&  (
+              <img
+                src={leftArrow} // 좌측 화살표
+                alt="Previous"
+                style={{
+                  position: 'absolute',
+                  left: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  zIndex: 1,
+                  cursor: 'pointer',
+                  width: '30px', height: '30px',
+                  filter: 'invert(100%) sepia(100%) saturate(0%) brightness(200%) contrast(1000%)', // 흰색으로 만듦
+                  opacity: '0.6'
+                }}
+                onClick={handlePreviousImage}
+              />
+            )}
+            <CardOverlay
+              className="my-custom-class"
+              img={secureImages[currentImageIndex]} // 현재 이미지 인덱스에 해당하는 이미지 사용
               style={{
-                position: 'absolute',
-                left: '10px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                zIndex: 1,
-                cursor: 'pointer',
-                width: '30px', height: '30px',
-                filter: 'invert(100%) sepia(100%) saturate(0%) brightness(200%) contrast(1000%)', // 흰색으로 만듦
+                padding: "10px",
+                margin: "0",
+                width: "100%",
+                borderRadius: "0 0 10px 10px",
               }}
-              onClick={handlePreviousImage}
             />
-          )}
-          <CardOverlay
-            className="my-custom-class"
-            img={secureImages[currentImageIndex]} // 현재 이미지 인덱스에 해당하는 이미지 사용
-            style={{
-              padding: "10px",
-              margin: "0",
-              width: "100%",
-              borderRadius: "0 0 10px 10px",
-            }}
-          />
-          {secureImages.length > 1 && (
-            <img
-              src={rightArrow} // 우측 화살표
-              alt="Next"
-              style={{
-                position: 'absolute',
-                right: '10px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                zIndex: 1,
-                cursor: 'pointer',
-                width: '30px', height: '30px',
-                filter: 'invert(100%) sepia(100%) saturate(0%) brightness(200%) contrast(1000%)', // 흰색으로 만듦
-              }}
-              onClick={handleNextImage}
-            />
-          )}
-        </div>
-        <br />
-        <br />
-        <h1 className="display-6">{item.prfnm}</h1> {/* 공연명 */}
-        <p style={{ textAlign: 'left', margin: '10px' }}># {t('Information')}</p>
-         <p style={{ textAlign: 'left', margin: '10px' }}>
-      {getTranslatedState(item.prfstate)}
-    </p>
-        <hr />
-        <br />
-        <br />
-        {item.fcltynm && item.fcltynm.trim() !== "" && ( <p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('location')}: {item.fcltynm}</p> )} {/* 공연 장소 */}
-        {item.prfpdfrom  && item.prfpdfrom.trim() !== ""&& (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('duration')}: {item.prfpdfrom} ~ {item.prfpdto}</p> )} {/* 공연 기간 */}
-        {item.dtguidance  && item.dtguidance.trim() !== ""&& (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('time')}: {item.dtguidance}</p> )}
-        {item.prfruntime && item.prfruntime.trim() !== "" && (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('runtime')}: {item.prfruntime}</p> )}
-        {item.prfage  && item.prfage.trim() !== ""&& (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('age')}: {item.prfage} </p>)}
-        {item.prfcast && item.prfcast.trim() !== "" && (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('cast')}: {item.prfcast}</p> )}
-        {item.prfcrew  && item.prfcrew.trim() !== ""&& (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('staff')}: {item.prfcrew} </p> )}
-        {item.entrpsnm  && item.entrpsnm.trim() !== ""&& (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('producer')}: {item.entrpsnm}</p> )}
-        {item.entrpsnmP && item.entrpsnmP.trim() !== "" && (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('production_company')}: {item.entrpsnmP} </p> )}
-        {item.entrpsnmA && item.entrpsnmA.trim() !== "" && (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('planning_company')}: {item.entrpsnmA}</p> )}
-        {item.pcseguidance && item.pcseguidance.trim() !== "" && (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('ticket_price')}: {item.pcseguidance}</p>)}
-        {item.sty && item.sty.trim() !== "" && (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('synopsis')}: {item.sty}</p> )}
-        <br />
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
-          <Button
-            style={{ width: '110px' }}
-            onClick={() => {
-              navigate(`/MapComponent/${item.fcltynm}`);
-            }}
-          >
-            {t('FindRoute')}
-          </Button>
+            {secureImages.length > 1 && (
+              <img
+                src={rightArrow} // 우측 화살표
+                alt="Next"
+                style={{
+                  position: 'absolute',
+                  right: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  zIndex: 1,
+                  cursor: 'pointer',
+                  width: '30px', height: '30px',
+                  filter: 'invert(100%) sepia(100%) saturate(0%) brightness(200%) contrast(1000%)', // 흰색으로 만듦
+                  opacity: '0.6'
+                }}
+                onClick={handleNextImage}
+              />
+            )}
+          </div>
+          <br />
+          <h1 className="display-6">{item.prfnm}</h1> {/* 공연명 */}
+          <p style={{ textAlign: 'left', margin: '10px' }}># {t('Information')}</p>
+          <p style={{ textAlign: 'left', margin: '10px' }}>
+        {getTranslatedState(item.prfstate)}
+      </p>
+          <hr />
+          <div className='perform_detail_wrapper'>
+              {item.fcltynm && item.fcltynm.trim() !== "" && ( <p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('location')}: {item.fcltynm}</p> )} {/* 공연 장소 */}
+              {item.prfpdfrom  && item.prfpdfrom.trim() !== ""&& (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('duration')}: {item.prfpdfrom} ~ {item.prfpdto}</p> )} {/* 공연 기간 */}
+              {item.dtguidance  && item.dtguidance.trim() !== ""&& (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('time')}: {item.dtguidance}</p> )}
+              {item.prfruntime && item.prfruntime.trim() !== "" && (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('runtime')}: {item.prfruntime}</p> )}
+              {item.prfage  && item.prfage.trim() !== ""&& (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('age')}: {item.prfage} </p>)}
+              {item.prfcast && item.prfcast.trim() !== "" && (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('cast')}: {item.prfcast}</p> )}
+              {item.prfcrew  && item.prfcrew.trim() !== ""&& (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('staff')}: {item.prfcrew} </p> )}
+              {item.entrpsnm  && item.entrpsnm.trim() !== ""&& (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('producer')}: {item.entrpsnm}</p> )}
+              {item.entrpsnmP && item.entrpsnmP.trim() !== "" && (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('production_company')}: {item.entrpsnmP} </p> )}
+              {item.entrpsnmA && item.entrpsnmA.trim() !== "" && (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('planning_company')}: {item.entrpsnmA}</p> )}
+              {item.pcseguidance && item.pcseguidance.trim() !== "" && (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('ticket_price')}: {item.pcseguidance}</p>)}
+              {item.sty && item.sty.trim() !== "" && (<p className="text-muted" style={{ textAlign: 'left', margin: '10px' }}>{t('synopsis')}: {item.sty}</p> )}
+            <div className='perform_detail_btn_box' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+              <div className='perform_detail_btn1'>
+                <button
+                  // style={{ width: '110px' }}
+                  onClick={() => {
+                    navigate(`/MapComponent/${item.fcltynm}`);
+                  }}
+                  >
+                  {t('FindRoute')}
+                </button>
+                <button
+                  // style={{ width: '110px' }}
+                  onClick={() => {
+                    //navigate(`/reserve`, { state: { title: item.prfnm, location: item.fcltynm, img: item.poster || logo } });
+                    navigate(`/reserve`, { state: { title: item.prfnm, location: item.fcltynm, img: item.poster || logo, seatingData: seatingData, resTime:item.dtguidance, resStart:item.prfpdfrom, resEnd:item.prfpdto  } });
+                  }}
+                  disabled={item.prfstate === "공연완료"}
+                  >
+                  {t('BookingAndPayment')}
+                </button>
+              </div>
+            </div>
+          </div>
 
-          <Button
-            style={{ width: '110px' }}
-            onClick={() => {
-              //navigate(`/reserve`, { state: { title: item.prfnm, location: item.fcltynm, img: item.poster || logo } });
-              navigate(`/reserve`, { state: { title: item.prfnm, location: item.fcltynm, img: item.poster || logo, seatingData: seatingData, resTime:item.dtguidance, resStart:item.prfpdfrom, resEnd:item.prfpdto  } });
-            }}
-            disabled={item.prfstate === "공연완료"}
-          >
-            {t('BookingAndPayment')}
-          </Button>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
         </div>
       </div>
-    </div>
   );
 }
 
