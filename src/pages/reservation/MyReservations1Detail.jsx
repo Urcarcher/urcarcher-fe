@@ -123,7 +123,7 @@ function MyReservations1Detail() {
         <br /><br /><br />
         {reservation ? (
           <div className="reservation-item" key={reservation.reservationId}>
-            <hr />
+            
             <p>{t('date')}: {reservation.reservationDate}</p>
             <p>{t('time')}: {formattedTime}</p>
             <p>{t('status')}: {reservation.state === 1 ? t('reservation_confirmation') : reservation.state === 0 ? t('reservation_cancellation')  : t('unknown')}</p>
@@ -133,7 +133,7 @@ function MyReservations1Detail() {
                      t('no_name')}
                   </p>
             <p>{t('Location')}: {reservation.location}</p>
-            <p>{t('NumberOfPeople')}: {reservation.peopleNum}</p>
+            <p>{t('NumberOfPeople')}: {reservation.peopleNum} {t('Person')}</p>
             <p>{t('seat')}: {reservation.seat}</p>
             <button
               className="btn btn-primary"
@@ -142,7 +142,7 @@ function MyReservations1Detail() {
             >
               {reservation.state === 1 && reservation.reservationDate <= today ? t('expired') : t('reservation_cancellation')}
             </button>
-            <hr />
+           
           </div>
         ) : (
           <p>{t('no_reservations')}</p>
