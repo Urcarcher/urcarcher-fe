@@ -108,6 +108,7 @@
     "FindRoute" : "길찾기",
     "CustomerCenter" : "고객 센터",
     "FAQ" : "자주 묻는 질문",
+    "Regional Delicacy": "지역 특산품 추천",
 
     "Card" : "카드",
     "AnnualFee" : "(연회비)",
@@ -312,6 +313,7 @@
     "AutoExchangeOnReservationDate": "설정한 예약일에 자동으로 환전해 드려요",
     "SelectedExchangeReservationDate": "선택한 환전 예약일",
     "SelectReservationDate": "예약 날짜를 선택해 주세요",
+    "SameDayReservationsNotPossible": "당일 예약 불가",
     "SelectedReservationRate": "선택한 예약 환율",
     "SelectReservationRate": "예약할 환율을 선택해 주세요",
     "ExchangeAmount": "환전 금액",

@@ -55,12 +55,11 @@ import ReservePayment from 'pages/reservation/ReservePayment';
 import SettingPassword from 'pages/card/SettingPassword';
 import CardPassword from 'pages/card/CardPassword';
 import Reward from 'pages/tourcourse/Reward';
-//import MyReservations1 from 'pages/reservation/MyReservations1';
-import MyReservations1 from './pages/reservation/MyReservations1'; // 경로 확인
+import MyReservations1 from './pages/reservation/MyReservations1';
 import LocalProduct from 'pages/localProducts/LocalProduct';
 import PrivateRoute from 'pages/auth/PrivateRoute';
-import MyReservations1Detail from './pages/reservation/MyReservations1Detail'; // 경로 확인
-
+import MyReservations1Detail from './pages/reservation/MyReservations1Detail';
+import FAQ from 'pages/faq/FAQ';
 
 function App() {
   return (
@@ -106,6 +105,14 @@ function App() {
           <Route path='/myReservationList1Detail/:reservationId' element={<MyReservations1Detail/>}></Route>
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
+          <Route path='/reservation1' element={<Reservation/>}/>
+          <Route path='/cardmanagement' element={<CardManagerment/>}></Route>
+          <Route path='/paymentpage' element={<Payment/>}></Route>
+          <Route path='/verification' element={<Verification/>}></Route>
+          <Route path='/cardPass' element={<CardPassword/>}></Route>
+          <Route path='/localProducts' element={<LocalProduct/>}></Route>
+          <Route path='/faq' element={<FAQ/>}></Route>
+
           <Route element={<PrivateRoute />}>
             <Route path='/reservation1' element={<Reservation />} />
             <Route path='/cardmanagement' element={<CardManagerment/>}></Route>
@@ -120,6 +127,10 @@ function App() {
             <Route path='/chart1' element={<MonthlyChart/>}/>
             <Route path='/chart2' element={<WeeklyChart/>}/>
             <Route path='/paymentpage' element={<Payment/>}></Route>
+            {/* <Route path='/myReservationList1' element={<MyReservations1/>}></Route>
+            <Route path='/myReservationList1Detail/:reservationId' element={<MyReservations1Detail/>}></Route>
+            <Route path='/reserve' element={<Reserve/>}/>
+            <Route path='/reservePayment' element={<ReservePayment/>}></Route> */}
           </Route>
         </Routes>
       <Footer />

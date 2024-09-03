@@ -38,7 +38,7 @@
 .ex_set_null {
     width: 100%;
     height: 50px;
-    margin-top: -110px;
+    margin-top: -145px;
     /* border: 1px solid green; */
 }
 
@@ -53,7 +53,7 @@
     width: 80%;
     height: 50px;
     margin: 0 auto;
-    margin-top: 30px;
+    margin-top: 35px;
 }
 
 .exchange_set_btn {
@@ -70,4 +70,29 @@
 
 .exchange_set_btn:hover {
     transform: translateY(-2px);
+}
+
+/* 반응형 css */
+@media screen and (max-Width: 414px) { /* iPhone 12Pro */
+    .ex_set_chart {
+        width: 55%;
+        height: 230px;
+    }
+
+    .ex_set_money {
+        left: 55px;
+        bottom: 140px;
+    }
+
+    .ex_set_money img {
+        height: 85%;
+    }
+
+    .ex_set_null {
+        margin-top: -170px;
+    }
+
+    .exchange_set_btn_wrapper {
+        margin-top: 20px;
+    }
 }
