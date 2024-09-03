@@ -209,6 +209,7 @@ function Home(props) {
                  
                     <div className='my-point'>
                         <p><Link to="/card1">{t('myPoints')}</Link></p>
+                        <p> {mainCardInfo.point} p</p>
                         
                     </div>
                 </div>

@@ -55,6 +55,7 @@ const CustomToggleButtonGroup = styled.div`
 `;
 
 const CustomToggleButton = styled.button`
+  font-size:11px;
   border-radius: 10px;
   border: 2px solid ${({ active }) => (active === 'true' ? '#476EFF' : '#cccccc')};
   background-color: ${({ active }) => (active === 'true' ? '#476EFF' : '#ffffff')};
