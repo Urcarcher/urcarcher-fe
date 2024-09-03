@@ -141,7 +141,7 @@ function Menu({onClose, isLoggedIn, userName}) {
                 onClose={onClose}
                 title={[{id:14, tit:t('CustomerCenter')}]} 
                 items={[
-                  { id:21, text: t('FAQ'), link: "/" },
+                  { id:21, text: t('FAQ'), link: "/faq" },
                 ]}
               />
             </div>

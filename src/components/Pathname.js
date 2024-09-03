@@ -59,6 +59,8 @@ export  const getTitle = (pathname) => {
             return 'Reward';
         case '/myReservationList1':
             return 'BookingConfirmation';
+        case '/faq':
+            return '자주 묻는 질문';
         default:
             return handleDynamicPaths(cleanedPathname); // 가변 경로 처리
     }

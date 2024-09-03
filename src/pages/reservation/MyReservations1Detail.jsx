@@ -126,10 +126,16 @@ function MyReservations1Detail() {
             <hr />
             <p>{t('date')}: {reservation.reservationDate}</p>
             <p>{t('time')}: {formattedTime}</p>
-            <p>{t('status')}: {reservation.state === 1 ? t('reservation_confirmation') : reservation.state === 0 ? t('reservation_cancellation')  : t('unknown')}</p>
             <p>
-                    {reservation.classification === 1 ?  t('performance_name')+":" + reservation.name : 
-                     reservation.classification === 2 ? t('restaurant_name')+":" + reservation.name : 
+              {t('status')}:
+              {reservation.state === 1 ? " " + t('reservation_confirmation') : 
+              reservation.state === 0 ? " "+ t('reservation_cancellation') : 
+              reservation.state === 2 ? " " + "사용 완료" :
+              t('unknown')}
+            </p>
+            <p>
+                    {reservation.classification === 1 ?  t('performance_name')+": " + reservation.name : 
+                     reservation.classification === 2 ? t('restaurant_name')+": " + reservation.name : 
                      t('no_name')}
                   </p>
             <p>{t('Location')}: {reservation.location}</p>
@@ -138,9 +144,9 @@ function MyReservations1Detail() {
             <button
               className="btn btn-primary"
               onClick={openModal}
-              disabled={reservation.state === 0 || (reservation.state === 1 && reservation.reservationDate <= today)}
+              disabled={reservation.state === 0 || ((reservation.state === 1 || reservation.state === 2) && reservation.reservationDate <= today)}
             >
-              {reservation.state === 1 && reservation.reservationDate <= today ? t('expired') : t('reservation_cancellation')}
+              {(reservation.state === 1 || reservation.state === 2)  && reservation.reservationDate <= today ? t('expired') : t('reservation_cancellation')}
             </button>
             <hr />
           </div>
@@ -153,9 +159,15 @@ function MyReservations1Detail() {
       {showModal && (
         <div className="reservation-modal-overlay">
           <div className="reservation-modal-content">
-            <h3>{reservation.name}<br />[{reservation.reservationDate}]<hr /> {t('cancel_reservation')}</h3>
-            <button className="btn btn-primary" onClick={handleDelete}>{t('yes')}</button>
-            <button className="btn btn-primary" onClick={closeModal}>{t('no')}</button>
+          <h5>[{reservation.reservationDate}]</h5>
+            <br/>
+            <h3>{reservation.name}</h3>
+            <hr /> 
+            <h3>{t('cancel_reservation')}</h3>
+            <div className="res-modal-buttons">
+            <button className="res-can-button" onClick={handleDelete}>{t('yes')}</button>
+            <button className="res-can-button" onClick={closeModal}>{t('no')}</button>
+            </div>
           </div>
         </div>
       )}
