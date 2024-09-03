@@ -11,7 +11,7 @@ const { kakao } = window;
 const myMapIcon = "/icon/markericon.png";
 const locationIcon = "/icon/icon-location.png";
  
-const MyMapApp = () => {    //index.html에 스크립트 넣어두면 잘 뜸 (원본)
+const MyMapApp = () => { 
   
   const [memberId, setMemberId] = useState('bleakwinter');  // 테스트할 회원 ID
   const [topCategoryList, setTopCategoryList] = useState([]);

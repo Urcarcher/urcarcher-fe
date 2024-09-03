@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
+import { Link } from 'react-router-dom';
 
 
 
@@ -173,7 +174,7 @@ function CardManagerment(props) {
                                   <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
                                     {(card.cardTypeId === 1 || card.cardTypeId === 2) ? t('CreditCard'):t('PrepaidCard')}
                                   </p>
-                                  <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
+                                  <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', fontSize:'10px',marginTop:'5px' , marginBottom:'5px'}}>
                                     {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "" : t('Balance') +" | " + parseFloat(card.cardBalance).toLocaleString()+t('Won')}
                                   </p>
                                 </div>
@@ -227,12 +228,14 @@ function CardManagerment(props) {
                     </button>
                 </CardSection>
                 <hr/>
+                <Link to="/faq" style={{ textDecoration: 'none' }}>
                   <CardOverlay
                     className="my-custom-class" 
                     img={myImage}
                     // imgStyle={{ height: '110px', width: '390px', objectFit: 'cover', backgroundColor:'#f3f6fb', margin:'-10px -15px' }} //기존
                     imgStyle={{ height: '110px', width: '100%', objectFit: 'cover', backgroundColor:'#f3f6fb', margin:'0 auto' }}
                   />
+                  </Link>
                 <br /><br /><br /><br /><br /><br />
             </CardDetailsContainer>
 
