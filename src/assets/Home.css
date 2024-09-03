@@ -125,6 +125,7 @@ span.type{
     text-align: left;
     color: #414042;
     margin: 0;
+    margin-bottom: 10px;
 }
 .rate-date{
     position: relative;

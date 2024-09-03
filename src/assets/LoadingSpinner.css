@@ -6,8 +6,10 @@
 }
 
 .loading-spinner {
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid #3498db; 
+    /* border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;  */
+    border: 16px solid #eff2ff;
+    border-top: 16px solid #476eff;
     border-radius: 50%;
     width: 120px;
     height: 120px;
@@ -18,3 +20,12 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+@media screen and (max-Width: 390px) { /* iPhone 12Pro */
+    .prod-container > h2 {
+        font-size: 18px;
+    }
+    .prod-container > p {
+        font-size: 13px;
+    }
+  }

@@ -332,6 +332,9 @@
 p.rank{
   font-size: 20px;
 }
+.rankTitle>h5{
+  color: #476eff;
+}
 .store-info-text{
   text-align: left;
   margin: 10px 0 20px;
@@ -351,7 +354,7 @@ p.rank{
 p.name{
   font-weight: bold;
   font-size: 20px;
-  color: #476eff;
+  color: #333;
 }
 p.phone{
   color: seagreen;
@@ -359,6 +362,7 @@ p.phone{
 }
 .storedetail-btn>a{
   font-size: 8px;
+  color: #333;
 }
 .rankTitle{
   display: flex;
