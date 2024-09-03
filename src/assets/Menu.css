@@ -87,7 +87,9 @@
 .menu-banner p {
     color: #333;
     font-weight: bold;
+    word-break: keep-all;
     margin: 15px 0 0;
+    font-size: 16px;
 }
 .menu-section{
     overflow-y: scroll;

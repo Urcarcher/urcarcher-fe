@@ -59,6 +59,8 @@ export  const getTitle = (pathname) => {
             return 'Reward';
         case '/myReservationList1':
             return 'BookingConfirmation';
+        case '/localProducts':
+            return '지역 특산품 추천'
         default:
             return handleDynamicPaths(cleanedPathname); // 가변 경로 처리
     }
