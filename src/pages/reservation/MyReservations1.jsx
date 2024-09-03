@@ -103,49 +103,50 @@ function MyReservations1() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
-      <div style={{ position: 'relative' }}>
-        <br /><br /><br />
-        <div className='region-buttons2'>
-          <button className={`reservationList-button2 ${selectedButton === 'all' ? 'active' : ''}`} 
-          onClick={showAllReservations}>{t('fullList')}</button>
-          <button className={`reservationList-button2 ${selectedButton === 'performance' ? 'active' : ''}`} 
-          onClick={showPerformanceReservations}>{t('performanceList')}</button>
-          <button className={`reservationList-button2 ${selectedButton === 'restaurant' ? 'active' : ''}`} 
-          onClick={showRestaurantReservations}>{t('restaurantList')}</button>
-        </div>
-        <p>{t('reservationClickDetails')}</p>
-        {currentReservations.length > 0 ? (
-          <ul className='res-ul'>
-            {currentReservations.map((reservation) => {
+    <div className='contents'>
+      <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
+        <div style={{ position: 'relative' }}>
+          <div className='region-buttons2'>
+            <button className={`reservationList-button2 ${selectedButton === 'all' ? 'active' : ''}`} 
+            onClick={showAllReservations}>{t('fullList')}</button>
+            <button className={`reservationList-button2 ${selectedButton === 'performance' ? 'active' : ''}`} 
+            onClick={showPerformanceReservations}>{t('performanceList')}</button>
+            <button className={`reservationList-button2 ${selectedButton === 'restaurant' ? 'active' : ''}`} 
+            onClick={showRestaurantReservations}>{t('restaurantList')}</button>
+          </div>
+          <p>{t('reservationClickDetails')}</p>
+          {currentReservations.length > 0 ? (
+            <ul className='res-ul'>
+              {currentReservations.map((reservation) => {
 
-              return (
-                <li className='list-item res-li' key={reservation.reservationId}>
-                  <hr />
-                  <Link to={`/myReservationList1Detail/${reservation.reservationId}`}>
-                    <div className='list-up'>
-                        <div className='up'>
-                          <h6>{reservation.reservationDate}</h6>
-                          <h5 className='right-text'>{reservation.peopleNum} {t('ticket_unit')}</h5>
-                        </div>
-                      <div className='list-down'>
-                        <div className='down'>
-                          <h5>{reservation.name}</h5>
-                        {/* <h6 className='right-text'>[{reservation.state === 0 ? t('reservation_cancellation') : t('reservation_confirmation')}]</h6> */}
-                        <h6 className='right-text'>
-  [{reservation.state === 0 ? "예약취소" : reservation.state === 1 ? "예약완료" : reservation.state === 2 ? "사용완료" : ""}]
-</h6>
+                return (
+                  <li className='list-item res-li' key={reservation.reservationId}>
+                    <hr />
+                    <Link to={`/myReservationList1Detail/${reservation.reservationId}`}>
+                      <div className='list-up'>
+                          <div className='up'>
+                            <h6>{reservation.reservationDate}</h6>
+                            <h5 className='right-text'>{reservation.peopleNum} {t('ticket_unit')}</h5>
+                          </div>
+                        <div className='list-down'>
+                          <div className='down'>
+                            <h5>{reservation.name}</h5>
+                          {/* <h6 className='right-text'>[{reservation.state === 0 ? t('reservation_cancellation') : t('reservation_confirmation')}]</h6> */}
+                          <h6 className='right-text'>
+    [{reservation.state === 0 ? "예약취소" : reservation.state === 1 ? "예약완료" : reservation.state === 2 ? "사용완료" : ""}]
+  </h6>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p>예약 내역이 존재하지 않습니다.</p>
-        )}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p>예약 내역이 존재하지 않습니다.</p>
+          )}
+        </div>
       </div>
     </div>
   );

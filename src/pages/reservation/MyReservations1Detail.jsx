@@ -118,69 +118,70 @@ function MyReservations1Detail() {
    const formattedTime = time.replace(':00', '');
 
   return (
-    <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
-      <div style={{ position: 'relative' }}>
-        <br /><br /><br />
-        {reservation ? (
-          <div className="reservation-item" key={reservation.reservationId}>
-            <hr />
-            <p>{t('date')}: {reservation.reservationDate}</p>
-            <p>{t('time')}: {formattedTime}</p>
-            <p>
-              {t('status')}:
-              {reservation.state === 1 ? " " + t('reservation_confirmation') : 
-              reservation.state === 0 ? " "+ t('reservation_cancellation') : 
-              reservation.state === 2 ? " " + "사용 완료" :
-              t('unknown')}
-            </p>
-            <p>
-                    {reservation.classification === 1 ?  t('performance_name')+": " + reservation.name : 
-                     reservation.classification === 2 ? t('restaurant_name')+": " + reservation.name : 
-                     t('no_name')}
-                  </p>
-            <p>{t('Location')}: {reservation.location}</p>
-            <p>{t('NumberOfPeople')}: {reservation.peopleNum}</p>
-            <p>{t('seat')}: {reservation.seat}</p>
-            <button
-              className="btn btn-primary"
-              onClick={openModal}
-              disabled={reservation.state === 0 || ((reservation.state === 1 || reservation.state === 2) && reservation.reservationDate <= today)}
-            >
-              {(reservation.state === 1 || reservation.state === 2)  && reservation.reservationDate <= today ? t('expired') : t('reservation_cancellation')}
-            </button>
-            <hr />
-          </div>
-        ) : (
-          <p>{t('no_reservations')}</p>
-        )}
-      </div>
+    <div className='contents'>
+      <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
+        <div style={{ position: 'relative' }}>
+          {reservation ? (
+            <div className="reservation-item" key={reservation.reservationId}>
+              <hr />
+              <p>{t('date')}: {reservation.reservationDate}</p>
+              <p>{t('time')}: {formattedTime}</p>
+              <p>
+                {t('status')}:
+                {reservation.state === 1 ? " " + t('reservation_confirmation') : 
+                reservation.state === 0 ? " "+ t('reservation_cancellation') : 
+                reservation.state === 2 ? " " + "사용 완료" :
+                t('unknown')}
+              </p>
+              <p>
+                      {reservation.classification === 1 ?  t('performance_name')+": " + reservation.name : 
+                      reservation.classification === 2 ? t('restaurant_name')+": " + reservation.name : 
+                      t('no_name')}
+                    </p>
+              <p>{t('Location')}: {reservation.location}</p>
+              <p>{t('NumberOfPeople')}: {reservation.peopleNum}</p>
+              <p>{t('seat')}: {reservation.seat}</p>
+              <button
+                className="btn btn-primary"
+                onClick={openModal}
+                disabled={reservation.state === 0 || ((reservation.state === 1 || reservation.state === 2) && reservation.reservationDate <= today)}
+              >
+                {(reservation.state === 1 || reservation.state === 2)  && reservation.reservationDate <= today ? t('expired') : t('reservation_cancellation')}
+              </button>
+              <hr />
+            </div>
+          ) : (
+            <p>{t('no_reservations')}</p>
+          )}
+        </div>
 
-      {/* 예약 취소 확인 모달 */}
-      {showModal && (
-        <div className="reservation-modal-overlay">
-          <div className="reservation-modal-content">
-          <h5>[{reservation.reservationDate}]</h5>
-            <br/>
-            <h3>{reservation.name}</h3>
-            <hr /> 
-            <h3>{t('cancel_reservation')}</h3>
-            <div className="res-modal-buttons">
-            <button className="res-can-button" onClick={handleDelete}>{t('yes')}</button>
-            <button className="res-can-button" onClick={closeModal}>{t('no')}</button>
+        {/* 예약 취소 확인 모달 */}
+        {showModal && (
+          <div className="reservation-modal-overlay">
+            <div className="reservation-modal-content">
+            <h5>[{reservation.reservationDate}]</h5>
+              <br/>
+              <h3>{reservation.name}</h3>
+              <hr /> 
+              <h3>{t('cancel_reservation')}</h3>
+              <div className="res-modal-buttons">
+              <button className="res-can-button" onClick={handleDelete}>{t('yes')}</button>
+              <button className="res-can-button" onClick={closeModal}>{t('no')}</button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* 예약 취소 완료 모달 */}
-      {showSuccessModal && (
-        <div className="reservation-modal-overlay">
-          <div className="reservation-modal-content">
-            <h3>{t('reservation_cancelled')}<br />{t('page_redirecting')}</h3>
-            <button className="btn btn-primary" onClick={closeModal}>{t('Confrim')}</button>
+        {/* 예약 취소 완료 모달 */}
+        {showSuccessModal && (
+          <div className="reservation-modal-overlay">
+            <div className="reservation-modal-content">
+              <h3>{t('reservation_cancelled')}<br />{t('page_redirecting')}</h3>
+              <button className="btn btn-primary" onClick={closeModal}>{t('Confrim')}</button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
