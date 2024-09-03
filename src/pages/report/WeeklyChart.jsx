@@ -303,7 +303,7 @@ const WeeklyChart = () => {
                   <div style={{ fontWeight: 'bold', textAlign: 'start' }}>{usage.storeName}</div>
                   <div style={{ textAlign: 'start' }}>{new Date(usage.paymentDate).toLocaleString()}</div>
                 </div>
-                <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice}{" "+t('Won')}</div>
+                <div style={{ fontWeight: 'bold', color: '#064AFF' }}>{usage.paymentPrice.toLocaleString()}{" "+t('Won')}</div>
               </div>
             );
           })
