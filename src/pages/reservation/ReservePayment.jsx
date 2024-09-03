@@ -49,6 +49,7 @@ function ReservePayment() {
         if (userId) {
             Axios.get(`/api/card/mycard/${userId}`)
                 .then((response) => {
+                    console.log(response.data);
                     const cards = response.data.map(card => ({
                         ...card,
                         cardStatus: card.cardStatus
