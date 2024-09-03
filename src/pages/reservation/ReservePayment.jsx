@@ -23,6 +23,7 @@ function ReservePayment() {
     const [currentDate, setCurrentDate] = useState(new Date().toISOString());
     const [cardTypeId, setCardTypeId] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [cardBalance, setCardBalance] = useState(0);
     const navigate = useNavigate();
     
     const flickityOptions = {
@@ -35,7 +36,18 @@ function ReservePayment() {
         initialIndex: 0
     };
 
+    // useEffect(() => {
+    //     Axios.get("/api/t/test")
+    //         .then((response) => {
+    //             setUserId(response.data.memberId);
+    //         })
+    //         .catch(() => {
+    //             alert("회원정보를 가져오는데 오류 발생");
+    //         });
+    // }, []);
+
     useEffect(() => {
+
         Axios.get("/api/t/test")
             .then((response) => {
                 setUserId(response.data.memberId);
@@ -43,9 +55,7 @@ function ReservePayment() {
             .catch(() => {
                 alert("회원정보를 가져오는데 오류 발생");
             });
-    }, []);
-
-    useEffect(() => {
+            
         if (userId) {
             Axios.get(`/api/card/mycard/${userId}`)
                 .then((response) => {
@@ -55,12 +65,13 @@ function ReservePayment() {
                     }));
                     setMyCard(cards);
                     if (cards.length > 0) {
-                        setCardId(cards[0].cardId);
-                        setCardTypeId(cards[0].cardTypeId);
+                        setCardId(cards[0].cardId);// 첫 번째 카드의 ID를 기본 설정
+                        //setCardTypeId(cards[0].cardTypeId);
                     }
                 })
-                .catch(() => {
+                .catch((error) => {
                     console.log("카드 정보를 가져오는데 오류 발생");
+                    console.log(error);
                 });
         }
     }, [userId]);
@@ -68,41 +79,54 @@ function ReservePayment() {
     useEffect(() => {
         if (myCard.length > 0) {
             const selectedCard = myCard[selectedCardIndex];
-            setCardId(selectedCard.cardId);
-            setCardTypeId(selectedCard.cardTypeId);
-            setPayAmount(price - (price * 0.1));
-            setCurrentDate(new Date().toISOString());
+            // setCardId(selectedCard.cardId);
+            // setCardTypeId(selectedCard.cardTypeId);
+            // setPayAmount(price - (price * 0.1));
+            // setCurrentDate(new Date().toISOString());
+            updatePayData(selectedCard);
         }
-    }, [selectedCardIndex, myCard, price]);
+    }, [selectedCardIndex, myCard]);
 
-    const handlePayment = () => {
-        setLoading(true);
-        Axios.post('/api/payment/insert', {
-            paymentPrice: payAmount,
-            paymentDate: currentDate,
-            cardId: cardId,
-            storeId: '11111111'
-        })
-        .then(() => {
-            if (cardTypeId !== 1 && cardTypeId !== 2) {
-                Axios.post('/api/card/usepayment', {
-                    cardId: String(cardId),
-                    cardBalance: String(payAmount)
-                }).then(() => {
-                    processReservation();
-                }).catch(() => {
-                    console.log("잔액 차감 오류");
-                    console.log(price);
-                });
-            } else {
-                processReservation();
-            }
-        })
-        .catch(() => {
-            setLoading(false);
-            alert("예약금 결제 실패");
-        });
-    };
+    function updatePayData(card) {
+        console.log(card.cardId);
+        console.log(state.price - (state.price * 0.1));
+        console.log(new Date().toISOString());
+
+        setCardId(card.cardId);
+        setCardTypeId(card.cardTypeId);
+        setCardBalance(card.cardBalance);
+        setPayAmount(state.price - (state.price * 0.1));
+        setCurrentDate(new Date().toISOString());
+    }
+
+    // const handlePayment = () => {
+    //     setLoading(true);
+    //     Axios.post('/api/payment/insert', {
+    //         paymentPrice: payAmount,
+    //         paymentDate: currentDate,
+    //         cardId: cardId,
+    //         storeId: '11111111'
+    //     })
+    //     .then(() => {
+    //         if (cardTypeId !== 1 && cardTypeId !== 2) {
+    //             Axios.post('/api/card/usepayment', {
+    //                 cardId: String(cardId),
+    //                 cardBalance: String(payAmount)
+    //             }).then(() => {
+    //                 processReservation();
+    //             }).catch(() => {
+    //                 console.log("잔액 차감 오류");
+    //                 console.log(price);
+    //             });
+    //         } else {
+    //             processReservation();
+    //         }
+    //     })
+    //     .catch(() => {
+    //         setLoading(false);
+    //         alert("예약금 결제 실패");
+    //     });
+    // };
 
     const processReservation = () => {
         // 공연 파라미터로 일단 초기화
@@ -148,7 +172,12 @@ function ReservePayment() {
 
     return (
         <ScrollableContainer>
-          {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />}
+          {/* {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />} */}
+          {loading && 
+            <PreloaderWrapper>
+              <Preloader type={'pulse'} variant={'primary'} center={true} />
+            </PreloaderWrapper>
+          }
             <div>
                 <br/><br/><br/><br/><br/>
                 <Container>
@@ -171,7 +200,8 @@ function ReservePayment() {
                             <br/>
                             <TotalAmount>
                                 <span>총 결제금액</span>
-                                <span>{payAmount.toLocaleString()}원</span>
+                                {/* <span>{payAmount.toLocaleString()}원</span> */}
+                                <span>{(state.price - (state.price * 0.1)).toLocaleString()}원</span>
                             </TotalAmount>
                         </>
                     ) : (
@@ -224,7 +254,84 @@ function ReservePayment() {
                     </div>
                 </Container>
                 <br/>
-                <Button onClick={handlePayment} style={{width: '80%'}}>결제하기</Button>
+                {/* <Button onClick={handlePayment} style={{width: '80%'}}>결제하기</Button> */}
+                <Button onClick={() => {
+                  setLoading(true);
+
+                    if ((cardTypeId !== 1 && cardTypeId !== 2) && (Number(cardBalance)<Number(payAmount)) ){
+                        alert("선불카드의 잔액이 부족합니다.");
+                        setLoading(false);
+                    }else{
+                        // 결제테이블의 결제 데이터 저장
+                        Axios.post('/api/payment/insert',
+                            {
+                              paymentPrice: payAmount,
+                              paymentDate: currentDate,
+                              cardId: cardId,
+                              storeId: '11111111'
+                            })
+                            .then((response) => {
+                              if (cardTypeId !== 1 && cardTypeId !== 2) {
+                                // 선불카드일 경우 잔액 차감
+                                Axios.post('/api/card/usepayment', 
+                                {
+                                  cardId: String(cardId),
+                                  cardBalance: String(payAmount)
+                                }).then((response) => {
+                                  console.log("잔액차감 정상적으로 작동");
+                                  processReservation();
+                                }).catch((error) => {
+                                  console.log("잔액차감 비정상적으로 작동");
+                                })
+                              }else {
+                                processReservation();
+                            }
+                              setTimeout(() => {
+                                setLoading(false);
+                                console.log('Payment inserted successfully:', response.data);
+                                alert("예약금 결제 성공");
+                                navigate('/');
+                              }, 3000);
+
+                            //   console.log(state.reservePersonNum);
+                            //   console.log(formattedDate);
+                            //   console.log(state.reservePersonNum);
+                            //   console.log("-");
+                            //   console.log(convertTo24Hour(state.reserveTime));
+                            //   console.log(state.reserveLocation);
+                            //   console.log("-");
+                            //   console.log(state.title);
+                            //   console.log(userId);
+
+                              // 예약 테이블 데이터 저장
+                            //   Axios.post("", {
+                            //     peopleNum: state.reservePersonNum,  // 예약 인원 수
+                            //     reservationDate:state.reserveDate,                 // 예약 날짜
+                            //     state:"",
+                            //     reservationTime:state.reserveTime,
+                            //     location: state.reserveLocation,    // 예약위치
+                            //     classification:"",
+                            //     name: state.title,      // 상호명
+                            //     price:payAmount,        // 예약금
+                            //     memberId:userId         // 예약자명
+                            //   })
+                            //   .then((response)=>{
+
+                            //     console.log(response);
+                            //   })
+                            //   .catch((error)=>{
+                            //     console.log(error);
+                            //   })
+                            })
+                            .catch((error) => {
+                                setTimeout(() => {
+                                setLoading(false);
+                                console.error('Error inserting payment:', error);
+                                alert("예약금 결제 실패");
+                              }, 3000);
+                            });
+                    }
+                }} style={{width: '80%'}}>결제하기</Button>
             </div>
         </ScrollableContainer>
     );
@@ -352,6 +459,19 @@ const TotalAmount = styled.div`
     padding: 15px;
     background-color: #EDF0F7;
     border-radius: 10px;
+`;
+
+const PreloaderWrapper = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.75); /* 반투명 배경 */
+    z-index: 1000;
 `;
 
 export default ReservePayment;

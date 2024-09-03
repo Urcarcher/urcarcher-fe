@@ -180,7 +180,7 @@ function Reserve() {
           <StyledCol>
             <Header>{t('SelectNumberOfPeople')}</Header>
             <PeopleSelect>
-              {['1' + t('Person'), '2' + t('Person'), '3' + t('Person'), '4' + t('Person'), '5' + t('MoreThan')].map((people, index) => (
+              {['1' + t('Person'), '2' + t('Person'), '3' + t('Person'), '4' + t('Person')].map((people, index) => (
                 <CustomButton
                   key={index}
                   active={selectedPeople === people}
