@@ -263,9 +263,9 @@ function ExchangeSetRate(props) {
     return (
         <div className="contents">
             <div className="set_rate_wrapper">
-                <h3>
+                <h4>
                     <span style={{ color: "#476EFF" }}>{t('ReservedExchangeRate2')}</span> {t('Designated')}
-                </h3>
+                </h4>
                 <div>
                     <ForecastedGraph getDate={handleClick}/>
                     {/* <div className="set_rate_graph_box">
@@ -302,11 +302,11 @@ function ExchangeSetRate(props) {
                         <div className="set_rate_option">
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
-                                    label="예약 날짜 선택"
+                                    label={t('SelectReservationDate')}
                                     showDaysOutsideCurrentMonth
                                     slotProps={{
                                         textField: {
-                                            helperText: "당일 예약 불가",
+                                            helperText: t('SameDayReservationsNotPossible'),
                                             clearable: true, onClear: () => setCleared(true),
                                             size: "small"
                                         },

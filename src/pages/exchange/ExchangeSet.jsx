@@ -65,10 +65,10 @@ function ExchangeSet(props) {
     return (
         <div className="contents">
             <div className="exchange_set_wrapper">
-                <h3>
-                    어카처{t('From')} <span style={{ color: "#476EFF" }}>{t('PredictedExchangeRate')}</span>{t('With')}
-                </h3>
-                <h3>{t('AutoRecharge2')}</h3>
+                <h4>
+                    어카처 {t('From')} <span style={{ color: "#476EFF" }}>{t('PredictedExchangeRate')}</span>{t('With')}
+                </h4>
+                <h4>{t('AutoRecharge2')}</h4>
             </div>
             <>
                 {Object.keys(reserveInfo).length === 0 ? (

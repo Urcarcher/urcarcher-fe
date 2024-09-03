@@ -105,7 +105,8 @@
     "FindRoute" : "道順を探す",
     "CustomerCenter" : "カスタマーセンター",
     "FAQ" : "よくある質問",
-  
+    "Regional Delicacy": "特産品として有名なもの",
+
     "Card" : "カード",
     "AnnualFee" : "(年会費)",
     "20%Discount" : "主要観光地の入場料が最大20%割引",
@@ -307,6 +308,7 @@
     "Designated": "指定",
     "AutoExchangeOnReservationDate": "設定した予約日に自動で両替します",
     "SelectedExchangeReservationDate": "選択した両替予約日",
+    "SameDayReservationsNotPossible": "当日予約不可",
     "SelectReservationDate": "予約日を選択してください",
     "SelectedReservationRate": "選択した予約為替レート",
     "SelectReservationRate": "予約する為替レートを選択してください",

@@ -174,7 +174,7 @@ function CardManagerment(props) {
                                   <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
                                     {(card.cardTypeId === 1 || card.cardTypeId === 2) ? t('CreditCard'):t('PrepaidCard')}
                                   </p>
-                                  <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', fontSize:'15px',marginTop:'5px' , marginBottom:'5px'}}>
+                                  <p style={{fontWeight:'bold', color:'darkgrey', textAlign:'left', fontSize:'10px',marginTop:'5px' , marginBottom:'5px'}}>
                                     {(card.cardTypeId === 1 || card.cardTypeId === 2) ? "" : t('Balance') +" | " + parseFloat(card.cardBalance).toLocaleString()+t('Won')}
                                   </p>
                                 </div>
