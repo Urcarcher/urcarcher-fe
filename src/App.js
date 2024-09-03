@@ -62,6 +62,7 @@ import MyReservations1Detail from './pages/reservation/MyReservations1Detail';
 import FAQ from 'pages/faq/FAQ';
 
 
+
 function App() {
   return (
     <CardProvider>
