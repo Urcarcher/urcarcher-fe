@@ -30,8 +30,9 @@ function MyReservations1() {
   const [currentReservations, setCurrentReservations] = useState([]); // 현재 표시되는 예약 목록
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedReservation, setSelectedReservation] = useState(null);
+  // const [selectedReservation, setSelectedReservation] = useState(null);
   const [view, setView] = useState('all'); // 현재 보이는 목록을 구분
+  const [selectedButton, setSelectedButton] = useState('all'); // 선택된 버튼 상태 관리
 
   useEffect(() => {
 
@@ -78,16 +79,19 @@ function MyReservations1() {
   const showAllReservations = () => {
     setCurrentReservations(reservations); // 모든 예약 목록으로 설정
     setView('all');
+    setSelectedButton('all');
   };
 
   const showPerformanceReservations = () => {
     setCurrentReservations(reservations.filter(reservation => reservation.classification === 1));
     setView('performance');
+    setSelectedButton('performance');
   };
 
   const showRestaurantReservations = () => {
     setCurrentReservations(reservations.filter(reservation => reservation.classification === 2));
     setView('restaurant');
+    setSelectedButton('restaurant');
   };
 
   // 컴포넌트가 렌더링될 때 currentReservations를 콘솔에 출력하여 문제를 확인합니다.
@@ -102,29 +106,35 @@ function MyReservations1() {
     <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
       <div style={{ position: 'relative' }}>
         <br /><br /><br />
-        <div className='region-buttons'>
-          <button className="reservationList-button" onClick={showAllReservations}>{t('fullList')}</button>
-          <button className="reservationList-button" onClick={showPerformanceReservations}>{t('performanceList')}</button>
-          <button className="reservationList-button" onClick={showRestaurantReservations}>{t('restaurantList')}</button>
+        <div className='region-buttons2'>
+          <button className={`reservationList-button2 ${selectedButton === 'all' ? 'active' : ''}`} 
+          onClick={showAllReservations}>{t('fullList')}</button>
+          <button className={`reservationList-button2 ${selectedButton === 'performance' ? 'active' : ''}`} 
+          onClick={showPerformanceReservations}>{t('performanceList')}</button>
+          <button className={`reservationList-button2 ${selectedButton === 'restaurant' ? 'active' : ''}`} 
+          onClick={showRestaurantReservations}>{t('restaurantList')}</button>
         </div>
         <p>{t('reservationClickDetails')}</p>
         {currentReservations.length > 0 ? (
-          <ul>
+          <ul className='res-ul'>
             {currentReservations.map((reservation) => {
 
               return (
-                <li className='list-item' key={reservation.reservationId}>
+                <li className='list-item res-li' key={reservation.reservationId}>
                   <hr />
                   <Link to={`/myReservationList1Detail/${reservation.reservationId}`}>
                     <div className='list-up'>
                         <div className='up'>
                           <h6>{reservation.reservationDate}</h6>
-                          <h3 className='right-text'>{reservation.peopleNum} {t('ticket_unit')}</h3>
+                          <h5 className='right-text'>{reservation.peopleNum} {t('ticket_unit')}</h5>
                         </div>
                       <div className='list-down'>
                         <div className='down'>
                           <h5>{reservation.name}</h5>
-                        <h6 className='right-text'>[{reservation.state === 0 ? t('reservation_cancellation') : t('reservation_confirmation')}]</h6>
+                        {/* <h6 className='right-text'>[{reservation.state === 0 ? t('reservation_cancellation') : t('reservation_confirmation')}]</h6> */}
+                        <h6 className='right-text'>
+  [{reservation.state === 0 ? "예약취소" : reservation.state === 1 ? "예약완료" : reservation.state === 2 ? "사용완료" : ""}]
+</h6>
                         </div>
                       </div>
                     </div>
