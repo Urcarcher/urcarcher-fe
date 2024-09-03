@@ -89,7 +89,7 @@ function ExchangeHistoryDetail(props) {
                 <span>대한민국 KRW</span>
                 <h3>￦ {Number(detailHistory.cardBalance).toLocaleString()}</h3>
                 <div className="ex_history_btn_wrpper">
-                    <button className="ex_go_change_btn" onClick={exchangeHandle}>충전</button>
+                    <button className="ex_go_change_btn" onClick={exchangeHandle}>{t('Charge')}</button>
                 </div>
             </div>
             <div className="ex_history_detail_container">

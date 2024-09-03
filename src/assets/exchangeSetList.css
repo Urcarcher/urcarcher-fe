@@ -92,5 +92,23 @@
 
 /* 반응형 css */
 @media screen and (max-Width: 414px) { /* iPhone 12Pro */
+    .ex_set_list_wrapper {
+        margin-top: 70px;
+    }
 
+    .ex_set_list_text {
+        margin-top: 40px;
+    }
+
+    .ex_set_list_btn {
+        margin-top: 35px;
+    }
+
+    .ex_set_list_text h4 {
+        font-size: 20px;
+    }
+
+    .set_delete_btn, .set_home_btn {
+        width: 145px;
+    }
 }

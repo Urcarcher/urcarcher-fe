@@ -308,6 +308,7 @@
     "Designated": "指定",
     "AutoExchangeOnReservationDate": "設定した予約日に自動で両替します",
     "SelectedExchangeReservationDate": "選択した両替予約日",
+    "SameDayReservationsNotPossible": "当日予約不可",
     "SelectReservationDate": "予約日を選択してください",
     "SelectedReservationRate": "選択した予約為替レート",
     "SelectReservationRate": "予約する為替レートを選択してください",
