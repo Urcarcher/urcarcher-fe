@@ -117,6 +117,7 @@ function Home(props) {
         navigator("/cardmanagement");
     }
     console.log(mainCardInfo);
+    // console.log(mainCardInfo.point);
     return (
         <div className="contents">
             <div className='home-container'>
@@ -152,7 +153,7 @@ function Home(props) {
                                     </p>
                                     <p className='card_balance'>
                                         { mainCardInfo.cardUsage === "신용카드" ? '' : (  //신용카드이면 잔액 출력, 선불카드일 때 카드 충전 
-                                            mainCardInfo.cardBalance ? mainCardInfo.cardBalance.toLocaleString() + " " + t('Won') :  <Link to='/'>{t('CardRecharge')}</Link>
+                                            mainCardInfo.cardBalance ? mainCardInfo.cardBalance.toLocaleString() + " " + t('Won') :  <Link to='/cardmanagement'>{t('CardRecharge')}</Link>
                                         )}
                                     </p>
                                     <p 
@@ -209,7 +210,7 @@ function Home(props) {
                  
                     <div className='my-point'>
                         <p><Link to="/card1">{t('myPoints')}</Link></p>
-                        <p> {mainCardInfo.point} p</p>
+                        <p> {mainCardInfo.point === undefined ? '-' :  mainCardInfo.point + ' p'}</p>
                         
                     </div>
                 </div>

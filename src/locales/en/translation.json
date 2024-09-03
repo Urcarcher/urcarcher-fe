@@ -556,6 +556,38 @@
     "performanceList": "Performance List",
     "restaurantList": "Restaurant List",
     "reservationClickDetails": "Click on the reservation to view details",
-    "myPoints": "My Points"
+    "myPoints": "My Points",
 
-}
+    "Recommended_Local_Specialties":"Recommended Local Specialties",
+
+    "National" : "National",
+    "SpecialtyFood" : "SpecialtyFood",
+    "Journey" : "Journey",
+
+    "click": "Experience taste and style with just one click.",
+
+    "BuyNow":"Buy Now",
+
+    "MunggaeTteok": "Uiryeong County is famous for Munggae Tteok, a traditional snack made with soft rice cake filled with sweet red bean paste. Uiryeong has a long tradition of making Munggae Tteok using munggae tree leaves.",
+
+    "GongjuFood": "Gongju City is famous for its chestnuts, and the chestnut bread made from these chestnuts is a beloved local specialty. Gongju's chestnuts are known for their sweetness and high quality, making them popular in various breads and snacks.",
+
+    "Hangwa": "Gapyeong County is known for its pine nuts, which are used to make traditional Hangwa, a representative local specialty. Gapyeong's pine nuts are rich in flavor and nutrition, used in a variety of traditional foods and sweets.",
+
+    "AppleDesert": "Yeongju City is famous for its apples, and apple bread has become a local specialty. Yeongju's apples are known for their sweetness and crisp texture, making them popular in various desserts.",
+
+    "JeonjuFood": "Jeonju City is the center of Korea's traditional food culture, and Bibimbap Bread is gaining attention as a local specialty alongside Bibimbap. Bibimbap Bread combines various ingredients from Jeonju to create a unique flavor.",
+
+    "IksanFood": "Iksan City is known for its rice and rice cakes, and the cream-filled rice cake is a representative local specialty. The soft cream and chewy rice cake harmonize to create a melting taste in your mouth.",
+
+    "YangyangFood": "Yangyang County is famous for its clean natural environment, and Yangyang Sand is a snack made using the local specialty, pine mushrooms. Known for its nutty flavor and crispy texture, Yangyang Sand is popular among visitors to Yangyang.",
+
+    "GyeongjuFood": "Gyeongju City, the ancient capital of the Silla Kingdom, is known for its Hwangnam Bread, a representative local specialty. Hwangnam Bread is filled with sweet red bean paste and is popular among visitors to Gyeongju.",
+
+    "DaejeonFood": "Daejeon is the transportation hub of Korea, and the Seongsimdang Fig Cake is a representative dessert of the city. It is a seasonal fruit cake with various flavors and designs that can only be enjoyed in Daejeon.",
+
+    "JejuFood": "Jeju Maeum Sand, filled with the deep flavor of Jeju peanuts, is a special snack that reminds you of Jeju.",
+
+    "GwangjuFood": "Made with Gwangju's premium specialty, Mudeungsan Watermelon, this coffee enhances the taste and aroma of watermelon for a unique experience."
+
+  }

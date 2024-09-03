@@ -59,15 +59,12 @@
 }
 
 .imgbox7{  /*양양샌드*/
-    /* top: 240px; */
-    /* top: 29%;
-    right: 80px; */
     top: 28%;
     right: 20%;
 }
 .imgbox8{  /*황남빵*/
     bottom: 410px;
-    right: 80px;
+    right: 12%;
 }
 .imgbox9{  /*시루*/
     /* bottom: 500px;
@@ -75,11 +72,11 @@
     bottom: 53%;
     right: 20%;
 }
-.imgbox10{  
+.imgbox10{  /*마음샌드*/ 
     bottom: 22%;
     left: 23%;
 }
-.imgbox11{
+.imgbox11{ /*무등산수박커피*/ 
     bottom: 33%;
     left: 10%;
 }

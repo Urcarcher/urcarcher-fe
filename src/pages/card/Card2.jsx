@@ -174,12 +174,13 @@ function Card2() {
                         placeholder={t('EnterPhoneNumber')}
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
-                        style={{ width: '80%' }}
+                        style={{ width: '100%' }}
                     />
                     <Button
                         variant="contained"
                         color="primary"
                         onClick={handleVerificationRequest}
+                        style={{position:'relative', left:'134px',bottom:'35px'}}
                     >
                         {t('Confrim')}
                     </Button>

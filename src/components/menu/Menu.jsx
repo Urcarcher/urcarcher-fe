@@ -99,7 +99,9 @@ function Menu({onClose, isLoggedIn, userName}) {
               <div className="menu-section">
               <MenuCategory 
                 onClose={onClose}
-                title={[{id:11, tit:t('Recommend')}]} 
+                title={
+                  {id:111, tit:t('Recommend')}
+                } 
                 items={[
                   { id: 1, text: t('ApplyCard2'), link: "/card1" },
                   { id: 2, text: t('Exchange'), link: "/exchange" },
@@ -109,7 +111,9 @@ function Menu({onClose, isLoggedIn, userName}) {
               />
               <MenuCategory 
                 onClose={onClose}
-                title={[{id:12, tit:t('Finance')}]} 
+                title={
+                  {id:121, tit:t('Finance')}
+                } 
                 items={[
                   { id: 5, text: t('ApplyCard2'), link: "/card1" },
                   { id: 6, text: t('MyCard'), link: "/cardmanagement" },
@@ -121,7 +125,9 @@ function Menu({onClose, isLoggedIn, userName}) {
               />
               <MenuCategory 
                 onClose={onClose}
-                title={[{id:13, tit:t('Tourism')}]} 
+                title={
+                  {id:131, tit:t('Tourism')}
+                } 
                 items={[
                   { id:14, text: t('RecommendSpot'), link: "/searchtour" },
                   { id:15,text: t('PaymentBased'), link: "/maphome" },
@@ -135,9 +141,11 @@ function Menu({onClose, isLoggedIn, userName}) {
               />
               <MenuCategory 
                 onClose={onClose}
-                title={[{id:14, tit:t('CustomerCenter')}]} 
+                title={
+                  {id:141, tit:t('CustomerCenter')}
+                } 
                 items={[
-                  { id:21, text: t('FAQ'), link: "/faq" },
+                  { id:22, text: t('FAQ'), link: "/faq" },
                 ]}
               />
             </div>
