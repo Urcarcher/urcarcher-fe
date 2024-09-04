@@ -556,11 +556,13 @@
     "reservationClickDetails": "点击预订可查看详细信息",
     "myPoints": "我的积分",
     
-    "Recommended Local Specialties":"地方特产推荐",
+    "RecommendedLocal":"地方特产推荐",
 
-    "National" : "全国",
-    "SpecialtyFood" : "特产",
-    "Journey" : "之 旅",
+    "We" : "我们",
+    "Specialty1" : "农产品,",
+    "Desert" : "甜点",
+    "Specialty2" : "特别",
+    "Plus" : "增添",
 
     "click": "只需点击一次，尽享美味与风采",
 

@@ -136,7 +136,7 @@ function Menu({onClose, isLoggedIn, userName}) {
                   { id:18,text:  t('Reward'), link: "/reward" },
                   { id:19,text: t('FindRoute'), link: "/MapComponent" },
                   { id:20,text: t('Reservation_confirmation'), link: "/myReservationList1" },
-                  { id:21,text: t('Regional Delicacy'), link: "/localProducts" }  //지역 특산품 추천
+                  { id:21,text: t('RecommendedLocal'), link: "/localProducts" }  //지역 특색 식품 추천
                 ]}
               />
               <MenuCategory 

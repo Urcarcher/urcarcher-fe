@@ -557,12 +557,14 @@
     "reservationClickDetails": "予約をクリックすると詳細を表示できます",
     "myPoints": "マイポイント",
 
-    "Recommended Local Specialties":"地域特産品のおすすめ",
-    "localProd":{
-        "National" : "全国",
-        "Specialty Food" : "特産品",
-        "Journey" : "旅行"
-    },
+    "RecommendedLocal":"地域特産品のおすすめ",
+    
+    "We" : "私たち",
+    "Specialty1" : "農産物,",
+    "Desert" : "デザート",
+    "Specialty2" : "特別",
+    "Plus" : "を加える",
+
     "click": "クリック一つで味と美しさを楽しもう",
     
     "BuyNow": "購入する",

@@ -560,11 +560,13 @@
     "reservationClickDetails": "Click on the reservation to view details",
     "myPoints": "My Points",
 
-    "Recommended_Local_Specialties":"Recommended Local Specialties",
+    "RecommendedLocal":"Recommended Local Specialties",
 
-    "National" : "National",
-    "SpecialtyFood" : "SpecialtyFood",
-    "Journey" : "Journey",
+    "We" : "Our",
+    "Specialty1" : "agricultural products,",
+    "Desert" : "special",
+    "Specialty2" : "desserts",
+    "Plus" : "",
 
     "click": "Experience taste and style with just one click.",
 

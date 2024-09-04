@@ -567,11 +567,13 @@
     "reservationClickDetails": "해당 예약 건 클릭 시 상세 보기 가능",
     "myPoints": "나의 포인트",
 
-    "RecommendedLocal":"지역 특산품 추천",
-
-    "National" : "전국",
-    "SpecialtyFood" : "특산품",
-    "Journey" : "여행",    
+    "RecommendedLocal":"지역 특색 식품 추천",
+   
+    "We" : "우리",
+    "Specialty1" : "농산물,",
+    "Desert" : "디저트에",
+    "Specialty2" : "특별함",
+    "Plus" : "을 더하다",    
       
     "click": "클릭 한 번으로 맛과 멋을 즐겨보세요",
 

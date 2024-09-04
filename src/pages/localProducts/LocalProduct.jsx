@@ -134,13 +134,17 @@ function LocalProduct(props) { //특산품 추천
     return (
         <div className='prod-container'> 
             <h2 style={{marginTop:'40px'}}> 
-                {t('National')} 
-                <span style={{color:'#476eff'}}> {t('SpecialtyFood')} </span> 
-                {t('Journey')}
+                {t('We')} 
+                <span style={{color:'#476eff'}}> {t('Specialty1')}</span> 
+                {t('Desert')} 
+                <span style={{color:'#476eff'}}> {t('Specialty2')} </span> 
+                {t('Plus')}
             </h2>
-            <p className='prod-text'>
-                {t('click')}!
-            </p>
+            {i18n.language !== 'en' && ( //언어가 영어일 때 텍스트 숨김
+                <p className='prod-text'>
+                    {t('click')}!
+                </p>
+            )}
             <div className='prod-map-wrap'>
                 {/* 지도 이미지 */}
                 <div className='prod-map'>

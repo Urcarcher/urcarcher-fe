@@ -9,6 +9,7 @@
 }
 .prod-container > h2{
     font-family: 'NanumSquareNeoExtraBold';
+    padding: 0 30px;
 }
 .prod-map {
     width: 100%;
