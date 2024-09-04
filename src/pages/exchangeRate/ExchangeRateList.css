@@ -230,14 +230,14 @@
 
 /* 추가 */
 .flag_img_wrapper {
-    width: 130px;
+    width: 135px;
     height: 40px;
     display: flex;
 }
 
 .flag_img {
     width: 20%;
-    height: 65%;
+    height: 68%;
     object-fit: cover;
     margin-right: 5px;
 }
