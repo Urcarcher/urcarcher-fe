@@ -108,7 +108,8 @@ function ConsentForm() {
                     </p>
                     <hr></hr>
 
-                    <div className="mb-3 form-check">
+                    <div className="mb-3 form-check form-box">
+                      
                       <input
                         type="checkbox"
                         name="informationConsent"
@@ -116,16 +117,22 @@ function ConsentForm() {
                         checked={consentData.informationConsent}
                         onChange={handleChange}
                       />
-                      <label htmlFor="agree" className="form-check-label"></label>
+
+                      <div className="form-first">
+                      <p className="form-check-label">
+                      
                       &nbsp;{t('Collection')}&nbsp;
+                      </p>   
                       <button
                         class="custom-link-button"
                         onClick={() => handleShowModal("information")}
                       >
                         {t('Look')}
                       </button>
+
+                      </div>
                     </div>
-                    <div className="mb-3 form-check">
+                    <div className="mb-3 form-check form-box">
                       <input
                         type="checkbox"
                         name="locationConsent"
@@ -133,15 +140,22 @@ function ConsentForm() {
                         checked={consentData.locationConsent}
                         onChange={handleChange}
                       />
+                      <div className="form-first">
+                      <p className="form-check-label">
+                      
                       &nbsp; {t('ConsentLocation')}&nbsp;
+                      </p>
+                      
+                    
                       <button
                         class="custom-link-button"
                         onClick={() => handleShowModal("location")}
                       >
                         {t('Look')}
                       </button>
+                      </div>
                     </div>
-                    <div className="mb-3 form-check">
+                    <div className="mb-3 form-check form-box">
                       <input
                         type="checkbox"
                         name="matchingConsent"
@@ -149,13 +163,19 @@ function ConsentForm() {
                         checked={consentData.matchingConsent}
                         onChange={handleChange}
                       />
+                      <div className="form-first">
+                      <p className="form-check-label">
+                      
                       &nbsp;{t('ConsentMatching')}&nbsp;
+                      </p>
+                     
                       <button
                         class="custom-link-button"
                         onClick={() => handleShowModal("matching")}
                       >
                         {t('Look')}
                       </button>
+                      </div>
                     </div>
 
                     {errorMessage && (
@@ -169,7 +189,7 @@ function ConsentForm() {
                   <div className="px-lg-5 py-lg-4 card-footer">
                     <div className="text-sm text-muted">
                     {t('AreadyAccount')}
-                      <a href="/login">{t('Login2')}</a>
+                      <a href="/login"> {" " + t('Login2')}</a>
                     </div>
                   </div>
                 </div>

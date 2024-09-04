@@ -193,11 +193,11 @@ function UserInfoForm() {
                     <label className="form-label" htmlFor="memberId">
                     {t('Id')}
                         </label>
-                    <Button type="button" onClick={checkIdAvailability}>{t('DuplicationCheck')}</Button>
-                    {idCheckResult && <div>{idCheckResult}</div>}
+                    <Button type="button" onClick={checkIdAvailability} style={{ marginTop: '10px' }}>{t('DuplicationCheck')}</Button>
+                    {idCheckResult && <div style={{marginTop:'5px', textAlign:'right', marginRight:'5px', color:'#4650dd', fontSize:'12px'}}>*{idCheckResult}</div>}
                 </div>
                 <div className="form-floating mb-3">
-                    <input 
+                    <input style={{marginBottom:'5px'}}
                     placeholder="password"
                         type="password" 
                         name="password" 
@@ -208,7 +208,7 @@ function UserInfoForm() {
                     <label className="form-label" htmlFor="memberId">
                     {t('Pw')}
                         </label>
-                    <small> *{t('PwCheck2')}</small>
+                    <small style={{fontSize:'10px'}}> *{t('PwCheck2')}</small>
                 </div>
                 <div className="form-floating mb-3">
                     <input 
