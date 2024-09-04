@@ -29,6 +29,7 @@ function ExchangeSelect(props) {
     // 로그인 유저 정보
     const [memberId, setMemberId] = useState('');
     const [name, setName] = useState('');
+    const [nation, setNation] = useState(""); // 사용자 국적
 
     const [loading, setLoading] = useState(true);
 
@@ -52,6 +53,18 @@ function ExchangeSelect(props) {
         }
     };
     // isAuthorized();
+
+    // 로그인 유저 국적 조회
+    useEffect(() => {
+        axios.get("/api/exchange/find")
+        .then((response) => {
+            console.log(response.data);
+            setNation(response.data);
+        })
+        .catch((error) => {
+            console.log("국적 조회 실패", error);
+        });
+    }, []);
 
     useEffect(()=>{
         const savedLanguage = Cookies.get('selectedLanguage');
@@ -80,6 +93,13 @@ function ExchangeSelect(props) {
             navi("/");
             return;
         }
+
+        if (nation === "") {
+            alert(t('NationCheck'));
+            navi("/cardmanagement");
+            return;
+        }
+
         navi("/exchange/card", { state: { selectBtn } });
     };
 
@@ -90,6 +110,13 @@ function ExchangeSelect(props) {
             navi("/");
             return;
         }
+
+        if (nation === "") {
+            alert(t('NationPayCheck'));
+            navi("/usage");
+            return;
+        }
+
         navi("/exchange/history/card");
     }
 
