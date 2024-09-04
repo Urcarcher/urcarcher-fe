@@ -23,6 +23,7 @@
 }
 
 .form-check {
+    width: 100%;
     text-align: left;
     align-self: center;
 
@@ -64,9 +65,6 @@
     margin-right: 3%;
 }
 
-.form-check {
-  width: 100%;
-}
 
 .fc-1 {
     float: left;
