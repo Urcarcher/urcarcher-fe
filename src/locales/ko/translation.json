@@ -404,6 +404,7 @@
     "NumberOfPeople": "인원",
     "Deposit": "예약금",
     "location": "위치",
+    "Location": "위치",
     "BookerInformation": "예약자 정보",
     "LoadingBookerInformation": "예약자 정보를 불러오는 중입니다",
     "DepositPayment": "예약금 결제",
@@ -531,6 +532,8 @@
     "no_reservations": "예약 내역이 없습니다.",
     "ticket_unit": "매",
 
+    "reservation_successful": "예약 성공",
+    "reservation_failed": "예약 실패",
     "reservation_confirmation": "예약 완료",
     "reservation_cancellation": "예약 취소",
     "unknown": "알 수 없음",

@@ -525,6 +525,8 @@
     "no_reservations": "No reservations found.",
     "ticket_unit": "tickets",
 
+    "reservation_successful": "Reservation Successful",
+    "reservation_failed": "Reservation Failed",
     "reservation_confirmation": "Reservation Confirmed",
     "reservation_cancellation": "Reservation Cancelled",
     "unknown": "Unknown",
