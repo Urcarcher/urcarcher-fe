@@ -272,6 +272,8 @@
     "ViewList": "查看列表",
 
     "LoginRequired": "登录后才可使用",
+    "NationCheck": "国内公民只能充值",
+    "NationPayCheck": "国内居民只能查看使用记录",
     "ConvenientExchange": "在这里轻松兑换",
     "UseImmediately": "想用的时候立刻使用！",
     "MobileExchange": "通过手机轻松兑换",

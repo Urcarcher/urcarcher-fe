@@ -276,6 +276,8 @@
     "ViewList": "View List",
 
     "LoginRequired": "Available after logging in",
+    "NationCheck": "Domestic citizens can only top up the amount",
+    "NationPayCheck": "Domestic residents can only check usage history",
     "ConvenientExchange": "Exchange conveniently at",
     "UseImmediately": "Use immediately when you want!",
     "MobileExchange": "Exchange conveniently via mobile",

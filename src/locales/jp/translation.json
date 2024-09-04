@@ -274,6 +274,8 @@
     "ViewList": "リストを見る",
 
     "LoginRequired": "ログイン後に利用可能です",
+    "NationCheck": "内国人は金額の充電のみ可能です",
+    "NationPayCheck": "内国人は使用履歴照会のみ可能です",
     "ConvenientExchange": "で便利に両替して",
     "UseImmediately": "使いたい時にすぐに使えます！",
     "MobileExchange": "モバイルで簡単に両替して",
