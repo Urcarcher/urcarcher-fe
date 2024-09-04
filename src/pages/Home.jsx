@@ -178,7 +178,7 @@ function Home(props) {
                             <>
                                 <p className='card_balance-no'>{t('VariousService')}</p>
                                 <p className='member-sigup'>
-                                    <Link to='/signup'>&gt; {t('SignUp')} </Link>
+                                    <Link to='/signup'>{t('SignUp')} </Link>
                                 </p>
                             </>   
                         )
