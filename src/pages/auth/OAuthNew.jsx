@@ -332,42 +332,36 @@ function OAuthNew(props) {
         onHide={() => handleModalClose("information")}
       >
         <Modal.Header closeButton>
-          <Modal.Title>개인정보 수집 및 이용 약관</Modal.Title>
+          <Modal.Title>{t('privacy_policy_title')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <h4>제1조 (목적)</h4>
+          <h4>{t('purpose_title')}</h4>
           <p>
-             이 약관은 '어서와 카드는 처음이지' 서비스(이하 '서비스')에서
-            개인정보를 수집하고 이용하는 목적과 범위를 명시합니다. 이용자는 이
-            약관에 동의함으로써, 서비스 제공에 필수적인 개인정보의 수집 및
-            이용에 동의합니다.
+          {t('privacy_policy_purpose')}
           </p>
-          <br></br>
-          <h4>제2조 (수집하는 개인정보 항목)</h4>
-          <p> 회사는 서비스 제공을 위해 다음과 같은 개인정보를 수집합니다.</p>
+<br></br>
+          <h4>{t('collected_info_title')}</h4>
+          <p> {t('collected_info_description')}</p>
           <ul style={{margin:'0 0 10px', padding:'0'}}>
-            <li> &nbsp; &nbsp; ⦁ 성명, 주민등록번호 또는 외국인등록번호, 성별 및 국적</li>
-            <li>&nbsp; &nbsp; ⦁ 회원 ID 및 비밀번호, 연락처, 이메일 주소</li>
+            <li> &nbsp; &nbsp; ⦁ {t('collected_info_item_1')}</li>
+            <li>&nbsp; &nbsp; ⦁ {t('collected_info_item_2')}</li>
           </ul>
-          <br></br>
-          <h4>제3조 (개인정보의 수집 및 이용 목적)</h4>
-          <p>회사는 수집한 개인정보를 다음과 같은 목적을 위해 이용합니다.</p>
+<br></br>
+          <h4>{t('usage_purpose_title')}</h4>
+          <p>{t('usage_purpose_description')}</p>
           <ul style={{margin:'0 0 10px', padding:'0'}}>
-            <li>&nbsp;&nbsp;  ⦁ 회원 가입 및 관리, 서비스 제공 및 계약 이행, 본인 확인 및 식별</li>
-            <li>&nbsp;&nbsp;  ⦁ 서비스 이용 관련 공지사항 전달, 고객 지원 및 서비스 개선</li>
+            <li>&nbsp;&nbsp;  ⦁ {t('usage_purpose_item_1')}</li>
+            <li>&nbsp;&nbsp;  ⦁ {t('usage_purpose_item_2')}</li>
           </ul>
-          <br></br>
-          <h4>제4조 (개인정보의 보유 및 이용 기간)</h4>
+<br></br>
+          <h4>{t('retention_period_title')}</h4>
           <p>
-          회사는 개인정보 수집 및 이용 목적이 달성된 후에는 해당 정보를 지체
-            없이 파기합니다. 단, 관련 법령에 의해 일정 기간 보관해야 하는 정보는
-            법령에서 정한 기간 동안 보관합니다.
+          {t('retention_period_description')}
           </p>
-          <br></br>
-          <h4>제5조 (동의 거부 권리 및 불이익)</h4>
+<br></br>
+          <h4>{t('consent_refusal_title')}</h4>
           <p>
-          이용자는 본 약관에 따른 개인정보 수집 및 이용에 동의하지 않을 권리가
-            있으며, 동의 거부 시 서비스 이용에 제한이 있을 수 있습니다.
+          {t('consent_refusal_description')}
           </p>
         </Modal.Body>
         <Modal.Footer>
@@ -375,7 +369,7 @@ function OAuthNew(props) {
             variant="secondary"
             onClick={() => handleModalClose("information")}
           >
-            닫기
+            {t('Close')}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -386,43 +380,36 @@ function OAuthNew(props) {
         onHide={() => handleModalClose("location")}
       >
         <Modal.Header closeButton>
-          <Modal.Title>위치정보 이용 동의 약관</Modal.Title>
+          <Modal.Title>{t('location_policy_title')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <h4>제1조 (목적)</h4>
+          <h4>{t('location_purpose_title')}</h4>
           <p>
-            이 약관은 '어서와 카드는 처음이지' 서비스(이하 '서비스')에서
-            위치정보를 수집하고 이용하는 목적과 범위를 명시합니다. 이용자는 이
-            약관에 동의함으로써, 서비스 제공에 필요한 위치정보의 수집 및 이용에
-            동의합니다.
+          {t('location_purpose_description')}
           </p>
 
-          <h4>제2조 (수집하는 위치정보 항목)</h4>
-          <p>회사는 서비스 제공을 위해 다음과 같은 위치정보를 수집합니다:</p>
+          <h4>{t('location_info_title')}</h4>
+          <p>{t('location_info_description')}</p>
           <ul style={{margin:'0 0 10px', padding:'0'}}>
-            <li> ⦁ 실시간 위치 정보 및 위치 기반 서비스 제공에 필요한 정보</li>
+            <li> ⦁ {t('location_info_item_1')}</li>
           </ul>
 
-          <h4>제3조 (위치정보의 수집 및 이용 목적)</h4>
-          <p>회사는 수집한 위치정보를 다음과 같은 목적을 위해 이용합니다:</p>
+          <h4> {t('location_usage_purpose_title')}</h4>
+          <p> {t('location_usage_purpose_description')}</p>
           <ul style={{margin:'0 0 10px', padding:'0'}}>
-            <li>&nbsp; &nbsp; ⦁ 위치 기반 서비스 제공</li>
-            <li>&nbsp; &nbsp; ⦁ 위치 기반 광고 및 마케팅</li>
-            <li>&nbsp; &nbsp; ⦁ 서비스 개선 및 맞춤형 서비스 제공</li>
+            <li>&nbsp; &nbsp; ⦁ {t('location_usage_purpose_item_1')}</li>
+            <li>&nbsp; &nbsp; ⦁ {t('location_usage_purpose_item_2')}</li>
+            <li>&nbsp; &nbsp; ⦁ {t('location_usage_purpose_item_3')}</li>
           </ul>
 
-          <h4>제4조 (위치정보의 보유 및 이용 기간)</h4>
+          <h4>{t('location_retention_period_title')}</h4>
           <p>
-            회사는 위치정보의 수집 및 이용 목적이 달성된 후에는 해당 정보를 지체
-            없이 파기합니다. 단, 관련 법령에 의해 일정 기간 보관해야 하는 정보는
-            법령에서 정한 기간 동안 보관합니다.
+          {t('location_retention_period_description')}
           </p>
 
-          <h4>제5조 (동의 거부 권리 및 불이익)</h4>
+          <h4>{t('location_consent_refusal_title')}</h4>
           <p>
-            이용자는 본 약관에 따른 위치정보 수집 및 이용에 동의하지 않을 권리가
-            있으며, 동의 거부 시 위치 기반 서비스 이용에 제한이 있을 수
-            있습니다.
+          {t('location_consent_refusal_description')}
           </p>
         </Modal.Body>
         <Modal.Footer>
@@ -441,43 +428,37 @@ function OAuthNew(props) {
         onHide={() => handleModalClose("matching")}
       >
         <Modal.Header closeButton>
-          <Modal.Title>매칭 서비스 활용 동의 약관</Modal.Title>
+          <Modal.Title>{t('matching_policy_title')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <h4>제1조 (목적)</h4>
+          <h4>{t('matching_purpose_title')}</h4>
           <p>
-            이 약관은 '어서와 카드는 처음이지' 서비스(이하 '서비스')에서 매칭
-            서비스를 제공하기 위한 목적과 범위를 명시합니다. 이용자는 이 약관에
-            동의함으로써, 매칭 서비스 제공에 필요한 개인정보의 수집 및 이용에
-            동의합니다.
+          {t('matching_purpose_description')}
           </p>
 
-          <h4>제2조 (수집하는 개인정보 항목)</h4>
-          <p>회사는 서비스 제공을 위해 다음과 같은 개인정보를 수집합니다:</p>
+          <h4>{t('matching_info_title')}</h4>
+          <p>{t('matching_info_description')}</p>
           <ul style={{margin:'0 0 10px', padding:'0'}}>
-            <li>&nbsp; &nbsp; ⦁ 회원 프로필 정보</li>
-            <li>&nbsp; &nbsp; ⦁ 매칭 서비스에 필요한 기타 정보</li>
+            <li>&nbsp; &nbsp; ⦁ {t('matching_info_item_1')}</li>
+            <li>&nbsp; &nbsp; ⦁ {t('matching_info_item_2')}</li>
           </ul>
 
-          <h4>제3조 (매칭 서비스 활용 목적)</h4>
-          <p>회사는 수집한 개인정보를 다음과 같은 목적을 위해 이용합니다:</p>
+          <h4>{t('matching_usage_purpose_title')}</h4>
+          <p>{t('matching_usage_purpose_description')}</p>
           <ul style={{margin:'0 0 10px', padding:'0'}}>
-            <li>&nbsp; &nbsp; ⦁ 매칭 서비스 제공</li>
-            <li>&nbsp; &nbsp; ⦁ 서비스 개선 및 맞춤형 매칭 제공</li>
-            <li>&nbsp; &nbsp; ⦁ 고객 지원 및 피드백 수집</li>
+            <li>&nbsp; &nbsp; ⦁ {t('matching_usage_purpose_item_1')}</li>
+            <li>&nbsp; &nbsp; ⦁ {t('matching_usage_purpose_item_2')}</li>
+            <li>&nbsp; &nbsp; ⦁ {t('matching_usage_purpose_item_3')}</li>
           </ul>
 
-          <h4>제4조 (매칭 서비스 활용 정보의 보유 및 이용 기간)</h4>
+          <h4>{t('matching_retention_period_title')}</h4>
           <p>
-            회사는 매칭 서비스 제공 목적이 달성된 후에는 해당 정보를 지체 없이
-            파기합니다. 단, 관련 법령에 의해 일정 기간 보관해야 하는 정보는
-            법령에서 정한 기간 동안 보관합니다.
+          {t('matching_retention_period_description')}
           </p>
 
-          <h4>제5조 (동의 거부 권리 및 불이익)</h4>
+          <h4>{t('matching_consent_refusal_title')}</h4>
           <p>
-            이용자는 본 약관에 따른 매칭 서비스 활용 동의에 동의하지 않을 권리가
-            있으며, 동의 거부 시 매칭 서비스 이용에 제한이 있을 수 있습니다.
+          {t('matching_consent_refusal_description')}
           </p>
         </Modal.Body>
         <Modal.Footer>
