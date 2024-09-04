@@ -54,6 +54,17 @@ function UsageHistory(props) {
                 axios.post('/api/payment/by-member', { memberId: memberData.memberId })
                     .then(paymentResponse => {
                         const payments = paymentResponse.data;
+
+                         // payments가 배열인지 확인
+                        if (!Array.isArray(payments)) {
+                            console.error('Invalid data format for payments:', payments);
+                            setUsage([]);
+                            setTotalPrice(0);
+                            setPaymentHistory([]);
+                            setLoading(false);
+                            return;
+                        }
+
                         setUsage(payments);
                         updateGroupedUsage(payments); // 전체 결제 내역을 그룹화하여 상태에 저장
 
