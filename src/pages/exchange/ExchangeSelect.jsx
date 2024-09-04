@@ -88,12 +88,14 @@ function ExchangeSelect(props) {
         // 카드 선택 후 버튼 종류에 따라 다른 페이지 보여주기 위해
         const selectBtn = event.currentTarget.id;
 
+        // 로그인 확인
         if (!memberId && !name) {
             alert(t('LoginRequired'));
             navi("/");
             return;
         }
 
+        // 내국인 여부 확인
         if (nation === "") {
             alert(t('NationCheck'));
             navi("/cardmanagement");
@@ -105,12 +107,14 @@ function ExchangeSelect(props) {
 
     // 환전 내역
     const historyHandle = () => {
+        // 로그인 확인
         if (!memberId && !name) {
             alert(t('LoginRequired'));
             navi("/");
             return;
         }
 
+        // 내국인 여부 확인
         if (nation === "") {
             alert(t('NationPayCheck'));
             navi("/usage");
