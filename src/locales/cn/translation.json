@@ -521,6 +521,8 @@
     "no_reservations": "没有预订记录。",
     "ticket_unit": "张",
 
+    "reservation_successful": "预订成功",
+    "reservation_failed": "预订失败",
     "reservation_confirmation": "预订已确认",
     "reservation_cancellation": "预订已取消",
     "unknown": "未知",

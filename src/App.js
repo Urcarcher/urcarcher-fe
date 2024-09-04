@@ -101,8 +101,8 @@ function App() {
           <Route path='/performanceList/detail/:id' element={<PerformanceDetail/>}/>
           <Route path='/reserve' element={<Reserve/>}/>
           <Route path='/reservePayment' element={<ReservePayment/>}></Route>
-          <Route path='/myReservationList1' element={<MyReservations1/>}></Route>
-          <Route path='/myReservationList1Detail/:reservationId' element={<MyReservations1Detail/>}></Route>
+          {/* <Route path='/myReservationList1' element={<MyReservations1/>}></Route>
+          <Route path='/myReservationList1Detail/:reservationId' element={<MyReservations1Detail/>}></Route> */}
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
           <Route path='/localProducts' element={<LocalProduct/>}></Route>
@@ -122,9 +122,9 @@ function App() {
             <Route path='/chart1' element={<MonthlyChart/>}/>
             <Route path='/chart2' element={<WeeklyChart/>}/>
             <Route path='/paymentpage' element={<Payment/>}></Route>
-            {/* <Route path='/myReservationList1' element={<MyReservations1/>}></Route>
+            <Route path='/myReservationList1' element={<MyReservations1/>}></Route>
             <Route path='/myReservationList1Detail/:reservationId' element={<MyReservations1Detail/>}></Route>
-            <Route path='/reserve' element={<Reserve/>}/>
+            {/* <Route path='/reserve' element={<Reserve/>}/>
             <Route path='/reservePayment' element={<ReservePayment/>}></Route> */}
           </Route>
         </Routes>

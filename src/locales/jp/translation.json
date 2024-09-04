@@ -522,6 +522,8 @@
     "no_reservations": "予約履歴がありません。",
     "ticket_unit": "枚",
 
+    "reservation_successful": "予約成功",
+    "reservation_failed": "予約失敗",
     "reservation_confirmation": "予約完了",
     "reservation_cancellation": "予約取消",
     "unknown": "不明",
