@@ -9,7 +9,7 @@
     margin: 0;
     padding: 0;
     line-height: 80px;
-    font-size: 20px;
+    font-size: 19px;
 }
 
 .exCur_wrapper {
@@ -126,7 +126,7 @@ input:focus {
 }
 
 .exRate_left_text {
-    width: 100px;
+    /* width: 100px; */
     float: left;
     text-align: left;
     line-height: 25px;
@@ -135,7 +135,7 @@ input:focus {
 }
 
 .exRate_right_text {
-    width: 200px;
+    /* width: 200px; */
     float: right;
     color: #476EFF;
     text-align: right;
@@ -191,16 +191,16 @@ input:focus {
     }
 
     .exCur_title h4 {
-        font-size: 18px;
+        font-size: 17px;
     }
 
     .exRate_wrapper {
         margin-top: 45px;
     }
 
-    .exRate_left_text {
+    /* .exRate_left_text {
         width: 75px;
-    }
+    } */
 
     .exRate_left_text,
     .exRate_right_text{
