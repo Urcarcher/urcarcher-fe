@@ -32,11 +32,7 @@ const MyMapApp = () => {
     };
     
   const location = useLocation();
-  // const { memberId } = location.state || ''; 
-  //console.log(memberId)
-  const mid2 = location.state.mid;
-  console.log("state로 받은 아이디2", mid2);
-  
+  const mid2 = location.state.mid; //회원ID
   const [topCategoryList, setTopCategoryList] = useState([]);
   const [map, setMap] = useState(null); // 카카오 맵에 접근해 지도 상태 조작하는 상태 변수
   const [keyword, setKeyword] = useState('');  // 검색에 사용될 키워드를 관리하는 상태 변수
@@ -47,6 +43,16 @@ const MyMapApp = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // 사이드바의 열림/닫힘 상태를 관리하는 상태 변수
   const [isModalOpen, setIsModalOpen] = useState(false); // 모바일 환경에서 사용될 모달의 열림/닫힘 상태를 관리하는 상태 변수
   //const [loading, setLoading] = useState(true);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisible((prevVisible) => !prevVisible);  // visible 상태를 반전
+    }, 5000);  // 5초마다 실행
+
+    return () => clearInterval(interval);  // 컴포넌트 언마운트 시 인터벌 클리어
+  }, []);
+
 
   //모달창 열기/닫기
   const openModal = () => {
@@ -352,6 +358,14 @@ const MyMapApp = () => {
                 <Link to="/maphome/beststorelist" state={{ memberId: mid2 }} >
                   <img src="/icon/icon-list.png" alt="아이콘" />
                 </Link>
+                <p className='hereclick'
+                    style={{
+                      opacity: visible ? 1 : 0,  // visible 상태에 따라 opacity 설정
+                      transition: 'opacity 1s ease-in-out',  // 서서히 나타나는 효과
+                    }}
+                >
+                  인기 장소를 확인해보세요!👉
+                </p>
             </div>
           
           </div>

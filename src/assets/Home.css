@@ -239,3 +239,8 @@ p.card-charge{
     height: 25px;
     line-height: 25px;
 }
+@media screen and (max-Width: 414px) { /* iPhone XR */
+    .greeting-text{
+        font-size: 14px;
+    }
+}

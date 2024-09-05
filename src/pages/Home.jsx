@@ -123,8 +123,10 @@ function Home(props) {
             <div className='home-container'>
                 <SelectLanguage changeLanguage={changeLanguage} />
                 {memberId ? (
-              
-                    <h5><span style={{color:'#476EFF'}}>{name}</span>{t('Greeting')}🙌</h5>
+                    <h5>
+                        <span style={{color:'#476EFF'}}>{name}</span>
+                        <span className='greeting-text'>{t('Greeting')}🙌</span>
+                    </h5>
                 ) : (
                     <h5>
                         <Link to='/login'>🙌{t('Login')}</Link>
@@ -170,7 +172,7 @@ function Home(props) {
                                 <>
                                     <p className='card_balance-no'>{t('VariousService')}</p>
                                     <p className='member-sigup'>
-                                        <Link to='/card1'>&gt; {t('ApplyCard')}</Link>
+                                        <Link to='/card1'>{t('ApplyCard')}</Link>
                                     </p>
                                 </>  
                             )
@@ -205,12 +207,14 @@ function Home(props) {
                     
                     <div className='card-signup'>
                         <p><Link to="/card1">{t('ApplyCard2')}</Link></p>
-                        <p><img src="icon/icon-credit-card.png" alt="카드신청" style={{width:"40px"}}/></p>
+                        <p>
+                            <Link to="/card1"><img src="icon/icon-credit-card.png" alt="카드신청" style={{width:"40px"}}/></Link>
+                        </p>
                     </div>
                  
                     <div className='my-point'>
                         <p><Link to="/card1">{t('myPoints')}</Link></p>
-                        <p> {mainCardInfo.point === undefined ? '-' :  mainCardInfo.point + ' p'}</p>
+                        <p> {mainCardInfo.point === undefined ? '-' :  mainCardInfo.point + ' P'}</p>
                         
                     </div>
                 </div>
