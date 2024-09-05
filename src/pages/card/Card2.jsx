@@ -167,7 +167,7 @@ function Card2() {
                     <br />
                 </div>
 
-                <div style={{ marginBottom: '30px' }}>
+                <div>
                     <div style={{ justifyContent: 'flex-start', display: 'flex' }}>{t('PhoneNumber')}</div>
                     <Input
                         id="phone"
@@ -182,7 +182,8 @@ function Card2() {
                         onClick={handleVerificationRequest}
                         style={{position:'relative', left:'134px',bottom:'35px'}}
                     >
-                        {t('Confrim')}
+                          {t('Verify')}
+                        {/* {t('Confrim')} */}
                     </Button>
                     <br />
                 </div>
@@ -203,7 +204,8 @@ function Card2() {
                             color="primary"
                             onClick={handleVerificationSubmit}
                         >
-                            {t('Verify')}
+                            {/* {t('Verify')} */}
+                            {t('Confrim')} 
                         </Button>
                     </div>
                 )}
