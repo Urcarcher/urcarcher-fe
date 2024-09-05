@@ -1,8 +1,7 @@
 import exchangeArrow from 'assets/arrow.png';
-import exchangeCard from 'assets/card.png';
+import cardAndCoin from 'assets/exchange/credit-card-and-coins.png';
 import 'assets/exchangeSelect.css';
 import 'assets/Language.css';
-import exchangeMoney from 'assets/money.png';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
@@ -29,6 +28,7 @@ function ExchangeSelect(props) {
     // 로그인 유저 정보
     const [memberId, setMemberId] = useState('');
     const [name, setName] = useState('');
+    const [nation, setNation] = useState(""); // 사용자 국적
 
     const [loading, setLoading] = useState(true);
 
@@ -53,6 +53,18 @@ function ExchangeSelect(props) {
     };
     // isAuthorized();
 
+    // 로그인 유저 국적 조회
+    useEffect(() => {
+        axios.get("/api/exchange/find")
+        .then((response) => {
+            console.log(response.data);
+            setNation(response.data);
+        })
+        .catch((error) => {
+            console.log("국적 조회 실패", error);
+        });
+    }, []);
+
     useEffect(()=>{
         const savedLanguage = Cookies.get('selectedLanguage');
 
@@ -75,21 +87,39 @@ function ExchangeSelect(props) {
         // 카드 선택 후 버튼 종류에 따라 다른 페이지 보여주기 위해
         const selectBtn = event.currentTarget.id;
 
+        // 로그인 확인
         if (!memberId && !name) {
             alert(t('LoginRequired'));
             navi("/");
             return;
         }
+
+        // 내국인 여부 확인
+        if (nation === "") {
+            alert(t('NationCheck'));
+            navi("/cardmanagement");
+            return;
+        }
+
         navi("/exchange/card", { state: { selectBtn } });
     };
 
     // 환전 내역
     const historyHandle = () => {
+        // 로그인 확인
         if (!memberId && !name) {
             alert(t('LoginRequired'));
             navi("/");
             return;
         }
+
+        // 내국인 여부 확인
+        if (nation === "") {
+            alert(t('NationPayCheck'));
+            navi("/usage");
+            return;
+        }
+
         navi("/exchange/history/card");
     }
 
@@ -105,11 +135,12 @@ function ExchangeSelect(props) {
                     <p>{t('UseAnytimeAnywhere')}</p>
                 </div>
                 <div className="exchange_select_card">
-                    <img src={exchangeCard} alt="카드 아이콘"/>
+                    {/* <img src={exchangeCard} alt="카드 아이콘"/> */}
+                    <img src={cardAndCoin} alt="카드 & 코인"/>
                 </div>
-                <div className="exchange_select_money">
+                {/* <div className="exchange_select_money">
                     <img src={exchangeMoney} alt="돈 아이콘"/>
-                </div>
+                </div> */}
                 <div className="select_btn_wrapper">
                     <button className="select_info_btn" onClick={historyHandle}>{t('ViewHistory')}</button>
                     <button id="currency" className="select_cur_btn" onClick={exchangeHandle}>{t('Charge')}</button>

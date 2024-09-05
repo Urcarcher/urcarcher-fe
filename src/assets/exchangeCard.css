@@ -10,7 +10,7 @@
     margin: 0;
     padding: 0;
     line-height: 30px;
-    font-size: 20px;
+    font-size: 19px;
 }
 
 .exCard_wrapper {
@@ -36,7 +36,8 @@
 .exCard_wrapper p {
     margin-top: 22px;
     margin-left: 10px;
-    line-height: 20px;
+    /* line-height: 20px; */
+    line-height: 100%;
 }
 
 .exCard_balance {
@@ -185,11 +186,15 @@
     }
 
     .exCard_title h4 {
-        font-size: 18px;
+        font-size: 17px;
     }
 
     .exCard_back_btn{
-        width: 150px;
+        width: 45%;
+    }
+
+    .exCard_next_btn {
+        width: 45%;
     }
 
     .exCard_user_box {
@@ -198,7 +203,7 @@
 
     .exCard_wrapper p {
         margin-top: 20px;
-        line-height: 15px;
+        line-height: 13px;
     }
 
     .exCard_balance {

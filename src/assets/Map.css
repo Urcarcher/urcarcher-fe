@@ -291,6 +291,7 @@
   }
 }
 .storeRank-link{
+  position: relative;
   /* position: absolute; */
   /* right: 10px;
   bottom: 30px;
@@ -422,4 +423,20 @@ p.phone{
 }
 .look-detail-btn:hover{
   text-decoration: none;
+}
+.hereclick{
+  opacity: 0;
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 200px;
+  height: 20px;
+  line-height: 20px;
+  background-color: #333333bf;
+  padding: 0;
+  color: #ffffff;
+  font-size: 14px;
+  border-radius: 30px;
+  box-sizing: border-box;
 }

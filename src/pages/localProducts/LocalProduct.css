@@ -9,7 +9,12 @@
 }
 .prod-container > h2{
     font-family: 'NanumSquareNeoExtraBold';
-    padding: 0 30px;
+    /* padding: 0 30px; */
+}
+@media screen and (max-Width: 414px) { /* iPhone XR */
+    .prod-container > h2{
+        padding: 0 30px;
+    }
 }
 .prod-map {
     width: 100%;

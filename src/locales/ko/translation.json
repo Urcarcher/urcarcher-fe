@@ -277,6 +277,8 @@
     "ViewList": "목록보기",
 
     "LoginRequired": "로그인 후 이용 가능해요",
+    "NationCheck": "내국인은 금액 충전만 가능해요",
+    "NationPayCheck": "내국인은 사용 내역 조회만 가능해요",
     "ConvenientExchange": "에서 편하게 환전하고",
     "UseImmediately": "원할 때 바로 사용하세요!",
     "MobileExchange": "모바일로 편하게 환전 하고",

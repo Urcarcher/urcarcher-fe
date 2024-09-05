@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
 
-
+import { flagImg } from './FlagImg.js'; // 국가 별 이미지
 
 function ExchangeRateList(props) {
 
@@ -24,7 +24,6 @@ function ExchangeRateList(props) {
         i18n.changeLanguage(languageCode);
        
     };
-
 
     const [exchangeRateInfos, setExchangeRateInfos] = useState({});
     const [socketData, setSocketData] = useState();
@@ -76,12 +75,18 @@ function ExchangeRateList(props) {
                     <ul className='mainlist-list'>
                         {mainlist.map((item, index)=>(
                         <li key={index}>
-                            <span className='mainlist-itemname'>{exchangeRateInfos[item] ? 
-                `${t(exchangeRateInfos[item].country)} ${exchangeRateInfos[item].exchangeType}` : 
-                ''
-            }</span>
-                            <span className='mainlist-itemprice'>{exchangeRateInfos[item] ? exchangeRateInfos[item].rate : ''}</span>
-                            <span className='mainlist-itemtime'>{exchangeRateInfos[item] ? exchangeRateInfos[item].date : ''}</span>
+                            <div className='flag_img_wrapper'>
+                                <img className='flag_img' src={t(flagImg(exchangeRateInfos[item].exchangeType))} alt='국기'/>
+                                <p className='mainlist-itemname'>{exchangeRateInfos[item] ? 
+                                    `${t(exchangeRateInfos[item].country)} ${exchangeRateInfos[item].exchangeType}` : ''}
+                                </p>
+                            </div>
+                            <div className='mainlist_text_wrapper'>
+                                <p className='mainlist-itemprice'>{exchangeRateInfos[item] ? exchangeRateInfos[item].rate : ''}</p>
+                            </div>
+                            <div>
+                                <p className='mainlist-itemtime'>{exchangeRateInfos[item] ? exchangeRateInfos[item].date : ''}</p>
+                            </div>
                         </li>
                         ))}
                     </ul>
@@ -91,24 +96,25 @@ function ExchangeRateList(props) {
                     <img className="reading" src={reading}/>
                     <input placeholder={"국가 검색"} id="search" name="search" autoComplete="off" className='mainlist-text-box' />
                 </div>
-                <hr/>
-                    
+                {/* <hr/> */}
                 <div className='tableArea'>
                     <table>
                         <tbody>
                             {Object.keys(exchangeRateInfos).map((item)=>(
                             <tr key={item}>
                                 <td>
-                                    <span className='tableName'>
-                                    {exchangeRateInfos[item] ? 
-                `${t(exchangeRateInfos[item].country)} ${exchangeRateInfos[item].exchangeType}` : 
-                ''
-            }
-                                    </span>
-    
-                                    <span className='tableTime'>
+                                    <div className='table_flag_img_wrapper'>
+                                        <div className='table_flag_img_box'>
+                                            <img className='table_flag_img' src={t(flagImg(exchangeRateInfos[item].exchangeType))} alt='국기'/>
+                                        </div>
+                                        <p className='tableName'>
+                                            {exchangeRateInfos[item] ? 
+                                            `${t(exchangeRateInfos[item].country)} ${exchangeRateInfos[item].exchangeType}` : ''}
+                                        </p>
+                                    </div>
+                                    <p className='tableTime'>
                                         {exchangeRateInfos[item] ? exchangeRateInfos[item].date : ''}
-                                    </span>
+                                    </p>
                                 </td>
     
                                 <td>
@@ -118,8 +124,11 @@ function ExchangeRateList(props) {
                                 <td>
                                     <div className='standard-round'>
                                         <span className='standard-round-box'>
-                                            {exchangeRateInfos[item] ? `${exchangeRateInfos[item].round}차 ${exchangeRateInfos[item].standard}` : ''}
+                                            {/* {exchangeRateInfos[item] ? `${exchangeRateInfos[item].round}차 ${exchangeRateInfos[item].standard}` : ''} */}
+                                            {/* 회차에서 변동률로 변경 */}
+                                            {exchangeRateInfos[item] ? exchangeRateInfos[item].change : ''} %
                                         </span>
+                                        {/* <span>{exRate(exchangeRateInfos[item].rate, exchangeRateInfos[item].exchangeType)}</span> */}
                                     </div>
                                 </td>
                             </tr>

@@ -79,16 +79,18 @@ function Menu({onClose, isLoggedIn, userName}) {
                   {isLoggedIn ? (
                       <>
                         <span>{userName}</span>
-                        <Link to="/" onClick={handleLogout} className='logout-txt' >{t('LogOut')}</Link>
+                        <Link to="/" onClick={handleLogout} className='logout-txt'>{t('LogOut')}</Link>
                       </>
                     ) : (
                       <Link to="/login" onClick={handleLogin}>{t('Login2')}</Link>
                   )}
                   </h3>
                   <div className="menu-banner">
-                    <p className='menu-banner-text'>
-                  
-                    {t('ReceiveReward')}
+                    {/* 언어가 영어, 일본어 일 때 크기 조절 */}
+                    <p className='menu-banner-text' 
+                      style={i18n.language === 'en' || i18n.language === 'jp'?  {fontSize:'13px'} : {fontSize:'16px'} }
+                    >
+                      {t('ReceiveReward')}
                     </p>
                     <p>
                       <img src="/icon/gift.png" alt="부채" />

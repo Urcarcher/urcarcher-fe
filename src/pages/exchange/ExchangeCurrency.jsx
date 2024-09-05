@@ -1,18 +1,15 @@
-import axios from 'axios';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import 'assets/exchangeCurrency.css';
-import KRW from 'assets/icon-nation/icon-kr.png'
-import USD from 'assets/icon-nation/icon-us.png'
-import JPY from 'assets/icon-nation/icon-jp.png'
-import CNY from 'assets/icon-nation/icon-cn.png'
-import cookie from 'react-cookies';
-import { options_GET } from 'services/CommonService';
-import { useTranslation } from 'react-i18next';
-import Cookies from 'js-cookie';
+import CNY from 'assets/icon-nation/icon-cn.png';
+import JPY from 'assets/icon-nation/icon-jp.png';
+import KRW from 'assets/icon-nation/icon-kr.png';
+import USD from 'assets/icon-nation/icon-us.png';
 import 'assets/Language.css';
-import SelectLanguage from 'components/language/SelectLanguage';
-
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { flagImg } from 'pages/exchangeRate/FlagImg';
 
 function ExchangeCurrency(props) {
     const { t, i18n } = useTranslation();
@@ -111,7 +108,7 @@ function ExchangeCurrency(props) {
     };
 
     // 국적 별 이미지 url
-    const imgUrl = curImg[nation] || KRW; // 기본값 태국기
+    // const imgUrl = curImg[nation] || KRW; // 기본값 태국기
 
     // input 클릭 시 초기화
     const focusHandle = () => {
@@ -248,7 +245,8 @@ function ExchangeCurrency(props) {
             </div>
             <div className="exAmt_wrapper">
                 <div className="ex_cur_img">
-                    <img src={imgUrl} alt="{nation}"/>
+                    {/* <img src={imgUrl} alt="{nation}"/> */}
+                    <img src={t(flagImg(nation))} alt="국기"/> 
                 </div>
                 <div className="ex_cur_nation">
                     <h5>{nation}</h5>
