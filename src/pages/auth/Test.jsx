@@ -12,6 +12,7 @@ function Test(props) {
     return (
         <div className='contents'>
             <RateGraph onClick={showRateHandle} />
+            빠바바바바바밤
         </div>
     );
 }
