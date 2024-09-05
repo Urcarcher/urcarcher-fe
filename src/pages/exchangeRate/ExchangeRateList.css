@@ -279,4 +279,8 @@
     .tableArea td {
         font-size: 13px;
     }
+
+    .flag_img_wrapper {
+        width: 133px;
+    }
 }
