@@ -250,6 +250,7 @@
     "FindingExchangeRateInfo": "正在查找汇率信息。请重试。",
     "FindingExchangeRateInfo2": "正在查找汇率信息",
     "CannotCalculateEstimatedKRW": "无法计算预估韩元金额。请重试。",
+    "ProblemCharge": "充电时出现问题。请重试",
 
     "NoExchangeHistory": "没有兑换记录！请在充值后查看。",
     "All": "全部",
@@ -701,5 +702,6 @@
   "third_party_consent_refusal_description": "您有权拒绝同意提供第三方信息，拒绝同意可能会限制部分服务的提供。"
 
    ,"page":"The page will redirect in",
-  "goMove":"seconds."
+  "goMove":"seconds.",
+  "InsufficientCardBalance" : "余额不足。请充值后再尝试付款。"
 }

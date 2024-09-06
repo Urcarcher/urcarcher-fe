@@ -248,6 +248,10 @@ function ExchangeSetRate(props) {
         })
         .catch(error => {
             console.log("환전 예약 실패", error);
+
+            alert(t('ProblemCharge'));
+            navi("/");
+            return;
         });
     };
 

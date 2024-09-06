@@ -252,6 +252,7 @@
     "FindingExchangeRateInfo": "為替レート情報を探しています。もう一度お試しください。",
     "FindingExchangeRateInfo2": "為替レート情報を探しています",
     "CannotCalculateEstimatedKRW": "予想ウォン金額を計算できません。もう一度お試しください。",
+    "ProblemCharge": "充電中に問題が発生しました。もう一度お試しください",
 
     "NoExchangeHistory": "両替履歴がありません！チャージ後にご確認ください。",
     "All": "全体",
@@ -701,5 +702,7 @@
   "third_party_consent_refusal_description": "お客様は第三者情報提供同意を拒否する権利があり、同意を拒否した場合、いくつかのサービス提供に制限が生じる可能性があります。"
     
   ,"page":"The page will redirect in",
-  "goMove":"seconds."
+  "goMove":"seconds.",
+
+  "InsufficientCardBalance" : "残高が不足しています。チャージしてからもう一度決済してください。"
 }

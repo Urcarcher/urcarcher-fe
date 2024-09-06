@@ -211,6 +211,10 @@ function ExchangeCurrency(props) {
         })
         .catch(error => {
             console.error("바로 충전 실패", error);
+
+            alert(t('ProblemCharge'));
+            navi("/");
+            return;
         });
     };
 

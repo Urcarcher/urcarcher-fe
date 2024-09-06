@@ -25,9 +25,19 @@ function ExchangeRateList(props) {
        
     };
 
+    const searchHandler = (e) => {
+        setSearchWord(e.target.value);
+    };
+
+    const resetSearchList = () => {
+        setSearchList({});
+    };
+
     const [exchangeRateInfos, setExchangeRateInfos] = useState({});
     const [socketData, setSocketData] = useState();
     const [loading, setLoading] = useState(true);
+    const [searchWord, setSearchWord] = useState('');
+    const [searchList, setSearchList] = useState({});
 
     const wss = useRef(null);
     const mainlist = ['USD', 'EUR', 'JPY', 'CNY']
@@ -56,6 +66,14 @@ function ExchangeRateList(props) {
             }
         }
     }, [socketData]);
+
+    useEffect(()=> {
+        Object.keys(exchangeRateInfos).map((item)=>{
+            if(t(exchangeRateInfos[item].country).includes(searchWord)) {
+                setSearchList({...searchList, [item] : exchangeRateInfos[item]});
+            }
+        });
+    }, [searchWord]);
 
     const wsLogin = useCallback(() => {
         wss.current = new WebSocket(process.env.REACT_APP_WEBSOCKET_SERVICE_URL);
@@ -94,13 +112,13 @@ function ExchangeRateList(props) {
     
                 <div className="mainlist-search-box">
                     <img className="reading" src={reading}/>
-                    <input placeholder={"국가 검색"} id="search" name="search" autoComplete="off" className='mainlist-text-box' />
+                    <input placeholder={"국가 검색"} id="search" name="search" autoComplete="off" className='mainlist-text-box' onChange={searchHandler} onKeyDown={resetSearchList}/>
                 </div>
                 {/* <hr/> */}
                 <div className='tableArea'>
                     <table>
                         <tbody>
-                            {Object.keys(exchangeRateInfos).map((item)=>(
+                            {Object.keys(searchWord ? searchList : exchangeRateInfos).map((item)=>(
                             <tr key={item}>
                                 <td>
                                     <div className='table_flag_img_wrapper'>
@@ -123,10 +141,10 @@ function ExchangeRateList(props) {
     
                                 <td>
                                     <div className='standard-round'>
-                                        <span className='standard-round-box'>
+                                        <span className='standard-round-box' style={{color: exchangeRateInfos[item].change.substring(0, 1) == '▲' ? 'red' : exchangeRateInfos[item].change.substring(0, 1) == '▼' ? 'blue' : 'black'}}>
                                             {/* {exchangeRateInfos[item] ? `${exchangeRateInfos[item].round}차 ${exchangeRateInfos[item].standard}` : ''} */}
                                             {/* 회차에서 변동률로 변경 */}
-                                            {exchangeRateInfos[item] ? exchangeRateInfos[item].change : ''} %
+                                            {exchangeRateInfos[item] ? exchangeRateInfos[item].change : ''}
                                         </span>
                                         {/* <span>{exRate(exchangeRateInfos[item].rate, exchangeRateInfos[item].exchangeType)}</span> */}
                                     </div>

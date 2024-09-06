@@ -253,6 +253,7 @@
     "FindingExchangeRateInfo": "Finding exchange rate",
     "FindingExchangeRateInfo2": "Finding exchange rate",
     "CannotCalculateEstimatedKRW": "Unable to calculate the estimated amount in KRW. Please try again.",
+    "ProblemCharge": "There was a problem while charging. Please try again",
     "Service" : "Service",
 
   
@@ -707,6 +708,7 @@
 
 
   ,"page":"The page will redirect in",
-  "goMove":"seconds."
+  "goMove":"seconds.",
+  "InsufficientCardBalance" : "Insufficient balance. Please recharge and try the payment again."
   
   }
