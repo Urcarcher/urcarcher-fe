@@ -5,7 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
-
+import calImg from 'assets/icon-leave.png';
+import doneImg from "assets/icons-done.gif";
 
 function MyReservations1Detail() {
 
@@ -34,6 +35,7 @@ function MyReservations1Detail() {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [countdown, setCountdown] = useState(3); // 카운트다운 초기값 (3초)
 
   // 오늘 날짜 계산
   const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD 포맷
@@ -90,13 +92,25 @@ function MyReservations1Detail() {
       await Axios.put('/api/reserve/delete', { reservationId });
       setShowModal(false); // 모달 닫기
       setShowSuccessModal(true); // 성공 메시지 모달 표시
-      // 일정 시간 후 페이지 이동
-      setTimeout(() => {
-        navigate('/myReservationList1');
-      }, 2000); // 2초(2000ms) 후 이동
+      startCountdown(); // 카운트다운 시작
+      
     } catch (error) {
       alert("예약 삭제에 오류가 발생했습니다.");
     }
+  };
+  // 카운트다운 시작 함수
+  const startCountdown = () => {
+    setCountdown(3); // 3초부터 시작
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev === 1) {
+          clearInterval(timer);
+          // 일정 시간 후 페이지 이동
+          navigate('/myReservationList1'); // 3초 후 페이지 이동
+        }
+        return prev - 1;
+      });
+    }, 1000); // 1초마다 카운트 감소
   };
 
   // 모달 열기
@@ -123,23 +137,24 @@ function MyReservations1Detail() {
         <div style={{ position: 'relative' }}>
           {reservation ? (
             <div className="reservation-item" key={reservation.reservationId}>
+              <h3 style={{textAlign:'center'}}>예약 정보</h3>
               <hr />
+              <h5 style={{textAlign:'center', marginBottom:'25px'}}>{reservation.name}</h5>
               <p>{t('date')}: {reservation.reservationDate}</p>
               <p>{t('time')}: {formattedTime}</p>
               <p>
                 {t('status')}:
                 {reservation.state === 1 ? " " + t('reservation_confirmation') : 
                 reservation.state === 0 ? " "+ t('reservation_cancellation') : 
-                reservation.state === 2 ? " " + "사용 완료" :
-                t('unknown')}
+                reservation.state === 2 ? " " + "사용 완료" :  t('unknown')}
               </p>
               <p>
-                      {reservation.classification === 1 ?  t('performance_name')+": " + reservation.name : 
-                      reservation.classification === 2 ? t('restaurant_name')+": " + reservation.name : 
-                      t('no_name')}
-                    </p>
+                {reservation.classification === 1 ?  t('performance_name')+": " + reservation.name : 
+                reservation.classification === 2 ? t('restaurant_name')+": " + reservation.name : 
+                t('no_name')}
+              </p>
               <p>{t('Location')}: {reservation.location}</p>
-              <p>{t('NumberOfPeople')}: {reservation.peopleNum}</p>
+              <p>{t('NumberOfPeople')}: {reservation.peopleNum}명</p>
               <p>{t('seat')}: {reservation.seat}</p>
               <button
                 className="btn btn-primary"
@@ -148,7 +163,7 @@ function MyReservations1Detail() {
               >
                 {(reservation.state === 1 || reservation.state === 2)  && reservation.reservationDate <= today ? t('expired') : t('reservation_cancellation')}
               </button>
-              <hr />
+              {/* <hr /> */}
             </div>
           ) : (
             <p>{t('no_reservations')}</p>
@@ -159,14 +174,20 @@ function MyReservations1Detail() {
         {showModal && (
           <div className="reservation-modal-overlay">
             <div className="reservation-modal-content">
-            <h5>[{reservation.reservationDate}]</h5>
-              <br/>
-              <h3>{reservation.name}</h3>
-              <hr /> 
+              <img src={calImg} alt="" 
+                style={{width:'60px', padding:'10px 0 20px'}}
+              />
               <h3>{t('cancel_reservation')}</h3>
+              <div className='res-info-text'>
+                <p className='res-info-title'>{reservation.name}</p>
+                <p>예약날짜 : {reservation.reservationDate} ({formattedTime})</p>
+                <p>예약인원 : {reservation.peopleNum}명</p>
+              </div>
+              <br/>
+            
               <div className="res-modal-buttons">
-              <button className="res-can-button" onClick={handleDelete}>{t('yes')}</button>
-              <button className="res-can-button" onClick={closeModal}>{t('no')}</button>
+              <button className="res-can-button" onClick={handleDelete} style={{backgroundColor:'#f77777'}}>{t('yes')}</button>
+              <button className="res-can-button" onClick={closeModal} style={{backgroundColor:'#444'}}>{t('no')}</button>
               </div>
             </div>
           </div>
@@ -176,8 +197,18 @@ function MyReservations1Detail() {
         {showSuccessModal && (
           <div className="reservation-modal-overlay">
             <div className="reservation-modal-content">
-              <h3>{t('reservation_cancelled')}<br />{t('page_redirecting')}</h3>
-              <button className="btn btn-primary" onClick={closeModal}>{t('Confrim')}</button>
+              <img src={doneImg} alt="완료" 
+                style={{margin:'10px 0 20px', opacity:'0.5'}}
+              />
+              <h3 style={{marginBottom:'25px', color:'#476eff'}}>{t('reservation_cancelled')}
+                <br />
+                {/* {t('page_redirecting')} */}
+                </h3>
+              {/* <button className="btn btn-primary" onClick={closeModal} style={{fontWeight:'bold'}}>
+                {t('Confrim')}
+              </button> */}
+              {/* <span> {t('page_redirecting')} </span> */}
+              <span>{t('page')} {countdown} {t('goMove')}</span>
             </div>
           </div>
         )}

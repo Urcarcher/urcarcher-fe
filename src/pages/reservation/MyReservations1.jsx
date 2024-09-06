@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
-
+import calImg from 'assets/icon-leave.png';
 
 function MyReservations1() {
 
@@ -33,6 +33,7 @@ function MyReservations1() {
   // const [selectedReservation, setSelectedReservation] = useState(null);
   const [view, setView] = useState('all'); // 현재 보이는 목록을 구분
   const [selectedButton, setSelectedButton] = useState('all'); // 선택된 버튼 상태 관리
+  const [linkData, setLinkData] = useState({ path: '/performanceList', text: '공연 예약 바로가기' }); // Link 경로와 텍스트 상태 관리
 
   useEffect(() => {
 
@@ -80,18 +81,21 @@ function MyReservations1() {
     setCurrentReservations(reservations); // 모든 예약 목록으로 설정
     setView('all');
     setSelectedButton('all');
+    setLinkData({ path: '/performanceList', text: '공연 예약 바로가기' });
   };
 
   const showPerformanceReservations = () => {
     setCurrentReservations(reservations.filter(reservation => reservation.classification === 1));
     setView('performance');
     setSelectedButton('performance');
+    setLinkData({ path: '/performanceList', text: '공연 예약 바로가기' });
   };
 
   const showRestaurantReservations = () => {
     setCurrentReservations(reservations.filter(reservation => reservation.classification === 2));
     setView('restaurant');
     setSelectedButton('restaurant');
+    setLinkData({ path: '/searchtour', text: '맛집 바로가기' }); // Link 경로와 텍스트 변경
   };
 
   // 컴포넌트가 렌더링될 때 currentReservations를 콘솔에 출력하여 문제를 확인합니다.
@@ -107,14 +111,20 @@ function MyReservations1() {
       <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
         <div style={{ position: 'relative' }}>
           <div className='region-buttons2'>
-            <button className={`reservationList-button2 ${selectedButton === 'all' ? 'active' : ''}`} 
-            onClick={showAllReservations}>{t('fullList')}</button>
-            <button className={`reservationList-button2 ${selectedButton === 'performance' ? 'active' : ''}`} 
-            onClick={showPerformanceReservations}>{t('performanceList')}</button>
-            <button className={`reservationList-button2 ${selectedButton === 'restaurant' ? 'active' : ''}`} 
-            onClick={showRestaurantReservations}>{t('restaurantList')}</button>
+            <button 
+              id="all-reservations" 
+              className={`reservationList-button2 ${selectedButton === 'all' ? 'active' : ''}`} 
+              onClick={showAllReservations}>{t('fullList')}</button>
+            <button 
+              id="performance-reservations" 
+              className={`reservationList-button2 ${selectedButton === 'performance' ? 'active' : ''}`} 
+              onClick={showPerformanceReservations}>{t('performanceList')}</button>
+            <button 
+              id="restaurant-reservations" 
+              className={`reservationList-button2 ${selectedButton === 'restaurant' ? 'active' : ''}`} 
+              onClick={showRestaurantReservations}>{t('restaurantList')}</button>
           </div>
-          <p>{t('reservationClickDetails')}</p>
+          <p style={{margin:'0'}}>{t('reservationClickDetails')}</p>
           {currentReservations.length > 0 ? (
             <ul className='res-ul'>
               {currentReservations.map((reservation) => {
@@ -125,16 +135,21 @@ function MyReservations1() {
                     <Link to={`/myReservationList1Detail/${reservation.reservationId}`}>
                       <div className='list-up'>
                           <div className='up'>
-                            <h6>{reservation.reservationDate}</h6>
+                            <h6 style={{ fontSize: "13px", color: "#b1b1b1" }}>
+                              {reservation.reservationDate}
+                            </h6>
                             <h5 className='right-text'>{reservation.peopleNum} {t('ticket_unit')}</h5>
                           </div>
                         <div className='list-down'>
                           <div className='down'>
                             <h5>{reservation.name}</h5>
                           {/* <h6 className='right-text'>[{reservation.state === 0 ? t('reservation_cancellation') : t('reservation_confirmation')}]</h6> */}
-                          <h6 className='right-text'>
-    [{reservation.state === 0 ? "예약취소" : reservation.state === 1 ? "예약완료" : reservation.state === 2 ? "사용완료" : ""}]
-  </h6>
+                          <h6 
+                            className='right-text'
+                            style={{ color: reservation.state === 0 ? "#F77777" : reservation.state === 1 || reservation.state === 2 ? "#476eff" : "" }}
+                          >
+                            [{reservation.state === 0 ? "예약취소" : reservation.state === 1 ? "예약완료" : reservation.state === 2 ? "사용완료" : ""}]
+                          </h6>
                           </div>
                         </div>
                       </div>
@@ -144,7 +159,13 @@ function MyReservations1() {
               })}
             </ul>
           ) : (
-            <p>예약 내역이 존재하지 않습니다.</p>
+            <div className='noReservList-wrap'>
+              <img src={calImg} alt="느낌표달력" />
+              <p>예약 내역이 존재하지 않습니다.</p>
+              <div className='goReservBtn'>
+                  <Link to={linkData.path}>{linkData.text}</Link>
+              </div>
+            </div>
           )}
         </div>
       </div>
