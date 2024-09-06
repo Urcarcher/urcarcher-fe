@@ -139,7 +139,7 @@ function Verification() {
                                     className="form-control"
                                 />
                             </div>
-                            <br/>
+                            {/* <br/> */}
                         </FormikForm>
                     </Formik>
                 </Tab>
