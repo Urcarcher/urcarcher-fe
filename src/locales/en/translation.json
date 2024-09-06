@@ -259,6 +259,7 @@
     "SelectCardToView": "Please select a card to view",
     "WhichCard2": "Which card",
     "View": "View",
+    "ChoiceExchange": "You can view details by selecting the details",
     "NoExchangeHistory": "No exchange history! Please check after recharging.",
     "All": "All",
     "LastWeek": "Last Week",
@@ -306,13 +307,13 @@
 
     "SameDayReservationNotAllowed": "Same-day reservations are not allowed",
     "OnlyDatesBetweenStartAndEnd": "Only dates between the recommended start and end dates are allowed",
-    "SelectPredictionInfoFirst": "Please select prediction information first",
+    "SelectPredictionInfoFirst": "Please select a currency exchange reservation date",
     "SetReservationAfterSelectingPrediction": "Set reservation information after selecting prediction information",
     "ReservedExchangeRate2": "Reserved Exchange Rate",
     "Designated": "Designated",
     "AutoExchangeOnReservationDate": "We will automatically exchange on the designated reservation date",
     "SelectedExchangeReservationDate": "Selected Exchange Reservation Date",
-    "SelectReservationDate": "select a reservation date",
+    "SelectReservationDate": "Click to view calendar",
     "SameDayReservationsNotPossible": "Same-day reservations not possible",
     "SelectedReservationRate": "Selected Reservation Rate",
     "SelectReservationRate": "Please select a rate to reserve",
@@ -704,4 +705,8 @@
   "third_party_consent_refusal_title": "5. Right to Refuse Consent and Disadvantages",
   "third_party_consent_refusal_description": "You have the right to refuse consent to provide information to third parties, and refusal may limit the provision of certain services."
 
+
+  ,"page":"The page will redirect in",
+  "goMove":"seconds."
+  
   }

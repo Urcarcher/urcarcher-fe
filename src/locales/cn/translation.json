@@ -260,6 +260,7 @@
     "SelectCardToView": "请选择要查询的卡",
     "WhichCard2": "哪张卡",
     "View": "查询",
+    "ChoiceExchange": "您可以通过选择详细信息来查看详细信息",
 
     "AmountRecharged": "已充值金额",
     "AutoRechargeSuccess": "预约汇率自动充值成功",
@@ -304,13 +305,13 @@
 
     "SameDayReservationNotAllowed": "当天预约不可用",
     "OnlyDatesBetweenStartAndEnd": "只能选择推荐开始日期和结束日期之间的日期",
-    "SelectPredictionInfoFirst": "请先选择预测信息",
+    "SelectPredictionInfoFirst": "请选择货币兑换预订日期",
     "SetReservationAfterSelectingPrediction": "选择预测信息后设置预约信息",
     "ReservedExchangeRate2": "预约汇率",
     "Designated": "指定",
     "AutoExchangeOnReservationDate": "在设定的预约日期自动为您兑换",
-    "SelectedExchangeReservationDate": "选择的兑换预约日期",
-    "SelectReservationDate": "请选择预约日期",
+    "SelectedExchangeReservationDate": "选择货币兑换预订日期",
+    "SelectReservationDate": "点击查看日历",
     "SameDayReservationsNotPossible": "无法当天预订",
     "SelectedReservationRate": "选择的预约汇率",
     "SelectReservationRate": "请选择要预约的汇率",
@@ -698,4 +699,7 @@
   "third_party_retention_period_item_1": "直到实现提供目的",
   "third_party_consent_refusal_title": "5. 拒绝同意的权利及不利后果",
   "third_party_consent_refusal_description": "您有权拒绝同意提供第三方信息，拒绝同意可能会限制部分服务的提供。"
+
+   ,"page":"The page will redirect in",
+  "goMove":"seconds."
 }

@@ -72,13 +72,6 @@ function ExchangeCurrency(props) {
             setWscData(rcvData);
         };
     });
-    // 웹소켓 연결 종료 (컴포넌트가 화면에서 사라질 때)
-    //     return () => {
-    //         if (socket.current) {
-    //             socket.current.close();
-    //         }
-    //     };
-    // }, []);
 
     useEffect(() => {
         if (wscData !== undefined) {
@@ -173,16 +166,19 @@ function ExchangeCurrency(props) {
 
     // 환전 내역에 insert
     const insertHandle = () => {
+        // 충전 금액 확인
         if (!currency || parseFloat(currency.replace(/,/g, "")) <= 0) {
             alert(t('EnterAmountAboveZero'));
             return;
         }
 
+        // 환율 확인
         if (!exchangeCurInfo || !exchangeCurInfo[nation] || !exchangeCurInfo[nation].rate) {
             alert(t('FindingExchangeRateInfo'));
             return;
         }
     
+        // 원화 확인
         if (!calculateAmount || parseFloat(calculateAmount) <= 0) {
             alert(t('CannotCalculateEstimatedKRW'));
             return;
@@ -245,7 +241,6 @@ function ExchangeCurrency(props) {
             </div>
             <div className="exAmt_wrapper">
                 <div className="ex_cur_img">
-                    {/* <img src={imgUrl} alt="{nation}"/> */}
                     <img src={t(flagImg(nation))} alt="국기"/> 
                 </div>
                 <div className="ex_cur_nation">
@@ -254,7 +249,7 @@ function ExchangeCurrency(props) {
                 <div className="ex_cur_nation">
                     <p className="exAmt_text">{calculateAmount}</p>
                     {exchangeCurInfo[nation] ? 
-                    (<p style={{ color: "#BFBFBF" }}>1 { curSymbol(nation) } = {exchangeCurInfo[nation].rate}{" "+t('Won')}</p>) : (<p style={{ color: "#BFBFBF" }}>{t('FindingExchangeRateInfo2')}</p>)}
+                    (<p style={{ color: "#BFBFBF" }}>1 { curSymbol(nation) } = {exchangeCurInfo[nation].rate} ￦</p>) : (<p style={{ color: "#BFBFBF" }}>{t('FindingExchangeRateInfo2')}</p>)}
                 </div>
             </div>
             <div className="exRate_wrapper">

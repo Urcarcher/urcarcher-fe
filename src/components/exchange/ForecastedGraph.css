@@ -139,12 +139,12 @@
 /* 반응형 css */
 @media screen and (max-Width: 414px) {
   .graph_wrapper {
-    margin-top: 15px;
+    margin-top: -5px;
   }
 
   .scroll-area {
-    font-size: 11px;
-    line-height: 17px;
+    font-size: 10px;
+    line-height: 20px;
   }
 
   .scroll-container {
@@ -152,6 +152,6 @@
   }
 
   .forecast-price {
-    font-size: 13px;
+    font-size: 12px;
   }
 }

@@ -12,11 +12,11 @@
   }
   
   .reservation-modal-content {
-    width: 400px;
-    max-width: 400px;
-    min-width: 400px;
+    width: 360px;
+    max-width: 360px;
+    /* min-width: 400px; */
     background: white;
-    padding: 20px;
+    padding: 30px 20px;
     border-radius: 8px;
     text-align: center;
   }
@@ -30,11 +30,22 @@
     text-align: left;
     padding: 20px;
     margin: 10px 0;
-    border: 1px solid #ccc; /* 테두리 추가 (선택 사항) */
+    /* 테두리 추가 (선택 사항) */
+    /* border: 1px solid #ccc;  */
     border-radius: 5px;
-    background-color: #f9f9f9; /* 배경색 추가 (선택 사항) */
+    /* 배경색 추가 (선택 사항) */
+    /* background-color: #f9f9f9;  */
   }
 
+  .reservation-item > h3 {
+    text-align: center;
+    /* background-color: #eee;
+    font-size: 15px;
+    width: 100px;
+    padding: 3px;
+    border-radius: 10px;
+    margin: 0 auto; */
+}
 
 .up,
 .down{
@@ -153,4 +164,33 @@
   color: gray; /* 텍스트를 회색으로 */
   background-color: #f0f0f0; /* 배경을 연한 회색으로 */
   border-color: #ccc; /* 테두리 색상도 조정 가능 */
+}
+
+
+
+/* 예약 내역 없을 경우 */
+.noReservList-wrap{
+  margin: 100px 0 0;
+}
+.goReservBtn > a:hover{ text-decoration: none; }
+.goReservBtn > a{
+  color: #fff;
+  background-color: #476eff;
+  padding: 10px 30px;
+  border-radius: 8px;
+}
+
+.res-info-text{
+  /* text-align: left; */
+  padding-top: 20px;
+}
+.res-info-text > p.res-info-title{
+  font-weight: bold;
+  font-size: 15px;
+  word-break: keep-all;
+  padding-bottom: 10px;
+}
+.res-info-text > p{
+  font-weight: 400;
+  margin: 0;
 }

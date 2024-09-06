@@ -2,7 +2,6 @@
     width: 100%;
     height: 80px;
     margin-top: 20px;
-    /* border: 1px solid red; */
 }
 
 .exCur_title h4 {
@@ -18,7 +17,6 @@
     margin: 0 auto;
     margin-top: 25px;
     text-align: left;
-    /* border: 1px solid red; */
 }
 
 .ex_cur_img {
@@ -28,7 +26,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* border: 1px solid red; */
 }
 
 .ex_cur_img img {
@@ -41,7 +38,6 @@
     height: 40px;
     float: left;
     padding-left: 10px;
-    /* border: 1px solid red; */
 }
 
 .ex_cur_text h5 {
@@ -52,8 +48,7 @@
     width: 80%;
     height: 40px;
     float: left;
-    padding-left: 10px;
-    /* border: 1px solid red; */
+    padding-left: 12px;
 }
 
 .ex_cur_nation h5 {
@@ -65,7 +60,6 @@
     height: 40px;
     float: left;
     text-align: left;
-    /* border: 1px solid red; */
 }
 
 .exCur_div input {
@@ -73,7 +67,6 @@
     font-size: 16px;
     padding-left: 10px;
     border: none;
-    /* border: 1px solid red; */
 }
 
 input:focus {
@@ -86,7 +79,6 @@ input:focus {
     margin: 0 auto;
     margin-top: 50px;
     text-align: left;
-    /* border: 1px solid red; */
 }
 
 .exAmt_wrapper p {
@@ -95,7 +87,6 @@ input:focus {
 
 .exAmt_text {
     font-family: 'NanumSquareNeoExtraBold';
-    /* padding-left: 10px; */
 }
 
 .exRate_wrapper {
@@ -104,7 +95,6 @@ input:focus {
     height: 250px;
     margin: 0 auto;
     margin-top: 60px;
-    /* border: 1px solid red; */
 }
 
 .exRate_table {
@@ -122,26 +112,21 @@ input:focus {
     height: 25px;
     margin: 0 auto;
     margin-bottom: 20px;
-    /* border: 1px solid green; */
 }
 
 .exRate_left_text {
-    /* width: 100px; */
     float: left;
     text-align: left;
     line-height: 25px;
     white-space: nowrap;
-    /* border: 1px solid red; */
 }
 
 .exRate_right_text {
-    /* width: 200px; */
     float: right;
     color: #476EFF;
     text-align: right;
     line-height: 25px;
     white-space: nowrap;
-    /* border: 1px solid red; */
 }
 
 .exRate_line {
@@ -198,14 +183,22 @@ input:focus {
         margin-top: 45px;
     }
 
-    /* .exRate_left_text {
-        width: 75px;
-    } */
-
     .exRate_left_text,
     .exRate_right_text{
         margin: 0;
-        font-size: 13px;
+        font-size: 12px;
         white-space: nowrap;
+    }
+
+    .ex_cur_text h5 {
+        font-size: 16px;
+    }
+
+    .exCur_div input {
+        font-size: 15px;
+    }
+
+    .exAmt_wrapper p {
+        font-size: 15px;
     }
 }

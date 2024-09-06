@@ -134,13 +134,9 @@ function ExchangeSelect(props) {
                     <p>{t('MobileExchange')}</p>
                     <p>{t('UseAnytimeAnywhere')}</p>
                 </div>
-                <div className="exchange_select_card">
-                    {/* <img src={exchangeCard} alt="카드 아이콘"/> */}
+                <div className="exchange_select_card fly_card">
                     <img src={cardAndCoin} alt="카드 & 코인"/>
                 </div>
-                {/* <div className="exchange_select_money">
-                    <img src={exchangeMoney} alt="돈 아이콘"/>
-                </div> */}
                 <div className="select_btn_wrapper">
                     <button className="select_info_btn" onClick={historyHandle}>{t('ViewHistory')}</button>
                     <button id="currency" className="select_cur_btn" onClick={exchangeHandle}>{t('Charge')}</button>
