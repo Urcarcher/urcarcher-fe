@@ -140,13 +140,15 @@ function ReservePayment() {
         })
         .then(() => {
             setLoading(false);
-            alert(t('reservation_successful'));
+            //alert(t('reservation_successful'));
+            console.log("예약성공");
             navigate('/');
         })
         .catch(() => {
             setLoading(false);
             console.log(resTimeParam);
-            alert(t('reservation_failed'));
+            //alert(t('reservation_failed'));
+            console.log("예약실패");
         });
     };
 
