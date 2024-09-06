@@ -714,7 +714,8 @@
 
 
   ,"page":"페이지가",
-  "goMove":"초 후 이동합니다."
+  "goMove":"초 후 이동합니다.",
+  "InsufficientCardBalance" : "잔액이 부족합니다. 충전 후 다시 결제 해주세요."
 
 
 }

@@ -701,5 +701,6 @@
   "third_party_consent_refusal_description": "您有权拒绝同意提供第三方信息，拒绝同意可能会限制部分服务的提供。"
 
    ,"page":"The page will redirect in",
-  "goMove":"seconds."
+  "goMove":"seconds.",
+  "InsufficientCardBalance" : "余额不足。请充值后再尝试付款。"
 }
