@@ -3,7 +3,6 @@
     height: 700px;
     margin-top: 50px;
     overflow-y: scroll;
-    /* border: 1px solid red; */
 }
 
 .set_rate_wrapper h5 {
@@ -14,44 +13,23 @@
     width: 200px;
     height: 30px;
     margin: 0 auto;
-    /* margin-top: 30px; */
 }
 
 .set_rate_graph_btn {
     width: 100%;
     height: 100%;
     border: none;
-    /* border-bottom: 1px solid #CCCCCC; */
     background-color: white;
 }
 
 .set_rate_table {
     width: 85%;
-    /* height: 400px; */
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 20px;
-    /* padding: 10px; */
     border-radius: 7px;
     overflow-y: scroll;
-    /* border: 1px solid #CCCCCC; */
 }
-
-/* .set_rate_table::-webkit-scrollbar {
-    display: block;
-    width: 8px;
-}
-
-.set_rate_table::-webkit-scrollbar-thumb {
-    height: 30%;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-}
-
-.set_rate_table::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-} */
 
 .set_rate_list {
     font-family: 'NanumSquareNeoBold';
@@ -62,8 +40,6 @@
     margin-bottom: 20px;
     padding: 20px;
     border-radius: 7px;
-    /* text-align: left; */
-    /* border: 1px solid #476EFF; */
     border: 1px solid #CCCCCC;
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
 }
@@ -77,8 +53,6 @@
     margin-bottom: 20px;
     padding: 20px;
     border-radius: 7px;
-    /* text-align: left; */
-    /* border: 1px solid #476EFF; */
     border: 1px solid #476EFF;
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
 }
@@ -105,14 +79,13 @@
     float: left;
     text-align: left;
     line-height: 40px;
-    /* border: 1px solid red; */
 }
 
 .set_rate_left_text {
-    font-family: 'NanumSquareNeoBold';
+    font-family: 'NanumSquareNeoExtraBold';
     text-align: left;
     padding-left: 35px;
-    line-height: 20px;
+    line-height: 15px;
 }
 
 .set_rate_right {
@@ -121,7 +94,6 @@
     float: right;
     color: #476EFF;
     text-align: right;
-    /* border: 1px solid red; */
 }
 
 .set_rate_option {
@@ -129,7 +101,6 @@
     height: 30px;
     margin: 0 auto;
     float: left;
-    /* border: 1px solid red; */
 }
 
 .set_rate_value {
@@ -139,14 +110,12 @@
     margin-top: 40px;
     margin-bottom: 20px;
     border-radius: 7px;
-    /* border: 1px solid red; */
 }
 
 .set_rate_date_box {
     width: 85%;
     height: 120px;
     margin: 0 auto;
-    /* border: 1px solid blue; */
 }
 
 .set_rate_box_left {
@@ -185,9 +154,7 @@
     width: 85%;
     height: 120px;
     margin: 0 auto;
-    margin-top: 25px;
-    /* border: 1px solid red; */
-    
+    margin-top: 10px;
 }
 
 .set_cur_option {
@@ -195,7 +162,6 @@
     height: 30px;
     margin: 0 auto;
     float: left;
-    /* border: 1px solid red; */
     color: rgba(0, 0, 0, 0.87);
 }
 
@@ -207,7 +173,6 @@
     height: 40px;
     padding: 10px;
     background-color: white;
-    /* border-radius: 5px; */
     border: none;
     border-bottom: 1px solid #CCCCCC;
 }
@@ -215,12 +180,8 @@
 .set_rate_pay {
     width: 85%;
     height: 40px;
-    /* width: 315px; */
-    /* height: 40px; */
     margin: 0 auto;
     margin-top: -20px;
-    /* border-radius: 7px; */
-    /* border: 1px solid #CCCCCC; */
 }
 
 .set_rate_pay p {
@@ -238,10 +199,9 @@
 }
 
 .set_rate_fix_box {
-    width: 85%;
+    width: 80%;
     height: 50px;
     margin: 0 auto;
-    /* margin-top: 50px; */
 }
 
 .set_rate_fix_btn {
@@ -263,16 +223,21 @@
 
 /* 반응형 css */
 @media screen and (max-Width: 414px) { /* iPhone 12Pro */
+    .set_rate_wrapper {
+        margin-top: 35px;
+    }
+
     .set_rate_wrapper h4 {
         font-size: 18px;
     }
 
     .set_rate_wrapper h5 {
+        font-size: 16px;
         line-height: 25px;
     }
 
     .set_rate_box_left {
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .css-19qh8xo-MuiInputBase-input-MuiOutlinedInput-input {
@@ -288,6 +253,11 @@
     }
 
     .set_rate_left_text {
+        font-size: 13px;
+    }
+
+    .set_cur_option input {
+        width: 240px;
         font-size: 14px;
     }
 }

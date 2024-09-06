@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import Card1 from 'assets/Card1_.png';
+import Card2 from 'assets/Card2_.png';
+import Card3 from 'assets/Card3_.png';
+import Card4 from 'assets/Card4_.png';
+import Card5 from 'assets/Card5_.png';
 import 'assets/exchangeCard.css';
-import axios from 'axios';
-import Card1 from 'assets/Card1_.png'
-import Card2 from 'assets/Card2_.png'
-import Card3 from 'assets/Card3_.png'
-import Card4 from 'assets/Card4_.png'
-import Card5 from 'assets/Card5_.png'
-import { useTranslation } from 'react-i18next';
-import Cookies from 'js-cookie';
 import 'assets/Language.css';
-import SelectLanguage from 'components/language/SelectLanguage';
-
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function ExchangeCard(props) {
     const { t, i18n } = useTranslation();
@@ -141,9 +139,7 @@ function ExchangeCard(props) {
                         <div className="exCard_user_box">
                             <p>{card.cardUsage === "선불카드" ? t('PrepaidCard') : ""}</p>
                             <p className="exCard_balance">{t('Balance')} {card.cardBalance.toLocaleString()}{" "+t('Won')}</p>
-                            {/* <p className="exCard_text">연결 계좌에서 바로 충전 가능!</p> */}
                             <p className="exCard_text">{card.cardNumber}</p>
-                            {/* <button className="exCard_btn" onClick={() => cardSelectHandle(card)}>선택</button> */}
                         </div>
                     </div>
                 ))}

@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import calender from 'assets/exchange/calender-won.png';
 import 'assets/exchangeSetList.css';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import Cookies from 'js-cookie';
 import 'assets/Language.css';
-import SelectLanguage from 'components/language/SelectLanguage';
-
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 function ExchangeSetList({ reserveInfo }) {
     const { t, i18n } = useTranslation();
@@ -76,12 +75,11 @@ function ExchangeSetList({ reserveInfo }) {
 
     return (
         <div className="ex_set_list_wrapper">
+            <div className="ex_set_list_img_box">
+                <img src={calender} alt="달력"/>
+            </div>
             <div className="ex_set_list_table">
                 <h5>대한민국 KRW</h5>
-                {/* <div className="ex_set_list_col">
-                    <p className="ex_set_list_p">{t('ReservedExchangeRate')}</p>
-                    <h5>1 { curSymbol(nation) } = {reserveInfo.setRate}</h5>
-                </div> */}
                 <div className="ex_set_list_col">
                     <p className="ex_set_list_p">{t('ReservationDate')}</p>
                     <h5>{reserveInfo.setDate}</h5>
@@ -104,8 +102,8 @@ function ExchangeSetList({ reserveInfo }) {
                 </div>
             </div>
             <div className="ex_set_list_text">
-                <h4>{t('AutoRechargeSet')}</h4>
-                <h4>{t('AutoRechargeOnReservationDate')}</h4>
+                <h5>{t('AutoRechargeSet')}</h5>
+                <h5>{t('AutoRechargeOnReservationDate')}</h5>
             </div>
             <div className="ex_set_list_btn">
                 <button className="set_delete_btn" onClick={deleteHandle}>{t('Delete')}</button>

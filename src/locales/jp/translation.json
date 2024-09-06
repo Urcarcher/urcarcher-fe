@@ -262,6 +262,7 @@
     "SelectCardToView": "照会するカードを選択してください",
     "WhichCard2": "どのカードを",
     "View": "照会",
+    "ChoiceExchange": "履歴を選択すると詳しく見ることができます",
 
     "AmountRecharged": "金額をチャージしました",
     "AutoRechargeSuccess": "予約為替レートで自動チャージに成功しました",
@@ -304,14 +305,14 @@
     "SetAutoRecharge": "自動チャージを設定する",
     "SameDayReservationNotAllowed": "当日予約はできません",
     "OnlyDatesBetweenStartAndEnd": "おすすめの開始日と終了日の間の日付のみ可能です",
-    "SelectPredictionInfoFirst": "予測情報を先に選択してください",
+    "SelectPredictionInfoFirst": "両替予約日を選択してください",
     "SetReservationAfterSelectingPrediction": "予測情報を選択した後、予約情報を設定してください",
     "ReservedExchangeRate2": "予約為替レート",
     "Designated": "指定",
     "AutoExchangeOnReservationDate": "設定した予約日に自動で両替します",
-    "SelectedExchangeReservationDate": "選択した両替予約日",
+    "SelectedExchangeReservationDate": "両替予約日を選択",
     "SameDayReservationsNotPossible": "当日予約不可",
-    "SelectReservationDate": "予約日を選択してください",
+    "SelectReservationDate": "クリックしてカレンダーを表示",
     "SelectedReservationRate": "選択した予約為替レート",
     "SelectReservationRate": "予約する為替レートを選択してください",
     "ExchangeAmount": "両替金額",
@@ -699,5 +700,8 @@
   "third_party_consent_refusal_title": "5. 同意拒否権および不利益",
   "third_party_consent_refusal_description": "お客様は第三者情報提供同意を拒否する権利があり、同意を拒否した場合、いくつかのサービス提供に制限が生じる可能性があります。"
     
+  ,"page":"The page will redirect in",
+  "goMove":"seconds.",
 
+  "InsufficientCardBalance" : "残高が不足しています。チャージしてからもう一度決済してください。"
 }

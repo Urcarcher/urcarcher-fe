@@ -3,7 +3,6 @@
     height: 80px;
     margin-top: 40px;
     margin-bottom: -10px;
-    /* border: 1px solid red; */
 }
 
 .exCard_title h4 {
@@ -17,8 +16,6 @@
     font-family: 'NanumSquareNeoBold';
     width: 100%;
     height: auto;
-    /* margin-top: 15px; */
-    /* border: 1px solid red; */
 }
 
 .exCard_user_box {
@@ -28,15 +25,11 @@
     padding-top: 1px;
     color: white;
     text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-    /* background-color: white; */
-    /* opacity: 0.3; */
-    /* border-radius: 7px; */
 }
 
 .exCard_wrapper p {
     margin-top: 22px;
     margin-left: 10px;
-    /* line-height: 20px; */
     line-height: 100%;
 }
 
@@ -47,7 +40,6 @@
 
 .exCard_text {
     font-size: 13px;
-    /* color: #CCCCCC; */
 }
 
 .unChoice {
@@ -57,13 +49,10 @@
     margin-bottom: 30px;
     border-radius: 7px;
     text-align: left;
-    /* border: 1px solid #CCCCCC; */
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    /* opacity: 0.5; */
 }
 
 .unChoice:hover {
@@ -79,8 +68,6 @@
     border-radius: 7px;
     text-align: left;
     box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 4px 0px;
-    /* border: 1px solid #476EFF; */
-
     position: relative;
     background-size: cover;
     background-position: center;
@@ -88,17 +75,16 @@
 }
 
 .test::after {
-    content: ""; /* 가상의 콘텐츠 */
-    position: absolute; /* 절대 위치 */
+    content: "";
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-image: inherit;  /* 배경 이미지 상속 */
-    filter: blur(1px); /* 블러 효과 */
+    filter: blur(1px);
     z-index: -1;
     pointer-events: none; /* 가상 요소가 클릭 이벤트를 차단하지 않도록 설정 */
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -116,7 +102,6 @@
 .exCard_btn {
     font-size: 17px;
     color: #CCCCCC;
-    /* text-decoration-line: underline; */
     border: none;
     background-color: white;
     float: right;
@@ -141,15 +126,12 @@
     width: 85%;
     height: 60px;
     margin: 0 auto;
-    /* margin-top: 45px; */
-    /* border: 1px solid red; */
 }
 
 .exCard_back_btn {
     width: 165px;
     height: 50px;
     float: left;
-    /* margin-right: 20px; */
     border-radius: 7px;
     border: none;
     color: white;
@@ -165,7 +147,6 @@
     width: 165px;
     height: 50px;
     float: right;
-    /* margin-left: 20px; */
     border-radius: 7px;
     border: none;
     color: white;
@@ -176,7 +157,6 @@
 .exCard_next_btn:hover {
     transform: translateY(-2px);
 }
-
 
 @media screen and (max-Width: 390px) { /* iPhone 12Pro */
     .exCard_title {

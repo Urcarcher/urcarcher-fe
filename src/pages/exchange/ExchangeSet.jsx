@@ -1,14 +1,12 @@
-import { useLocation, useNavigate } from 'react-router-dom';
 import 'assets/exchangeSet.css';
-import ExchangeSetNull from './ExchangeSetNull';
-import ExchangeSetList from './ExchangeSetList';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useTranslation } from 'react-i18next';
-import Cookies from 'js-cookie';
 import 'assets/Language.css';
-import SelectLanguage from 'components/language/SelectLanguage';
-
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
+import ExchangeSetList from './ExchangeSetList';
+import ExchangeSetNull from './ExchangeSetNull';
 
 function ExchangeSet(props) {
     const { t, i18n } = useTranslation();
@@ -66,7 +64,7 @@ function ExchangeSet(props) {
         <div className="contents">
             <div className="exchange_set_wrapper">
                 <h4>
-                    어카처 {t('From')} <span style={{ color: "#476EFF" }}>{t('PredictedExchangeRate')}</span>{t('With')}
+                    어카처{t('From')} <span style={{ color: "#476EFF" }}>{t('PredictedExchangeRate')}</span>{t('With')}
                 </h4>
                 <h4>{t('AutoRecharge2')}</h4>
             </div>
