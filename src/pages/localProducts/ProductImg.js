@@ -24,7 +24,7 @@ import modalImg11 from 'assets/localProduct/lp-product11.png';
 
  
 export const productLinks = [
-    { id: 1, url: "https://m.place.naver.com/place/13345973/home", alt: "망개떡", imgSrc: img1, modalImgSrc: modalImg1 },
+    { id: 1, url: "https://www.mgricecake.co.kr/", alt: "망개떡", imgSrc: img1, modalImgSrc: modalImg1 },
     { id: 2, url: "https://8domall.co.kr/product/공주알밤빵", alt: "알밤빵", imgSrc: img2, modalImgSrc: modalImg2 },
     { id: 3, url: "https://jayeonwoorimall.com/", alt: "잣한과", imgSrc: img3, modalImgSrc: modalImg3 },
     { id: 4, url: "https://smartstore.naver.com/applebbang", alt: "사과빵", imgSrc: img4, modalImgSrc: modalImg4 },
