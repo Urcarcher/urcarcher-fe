@@ -698,4 +698,7 @@
   "third_party_retention_period_item_1": "直到实现提供目的",
   "third_party_consent_refusal_title": "5. 拒绝同意的权利及不利后果",
   "third_party_consent_refusal_description": "您有权拒绝同意提供第三方信息，拒绝同意可能会限制部分服务的提供。"
+
+   ,"page":"The page will redirect in",
+  "goMove":"seconds."
 }

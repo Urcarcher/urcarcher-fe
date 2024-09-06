@@ -699,5 +699,6 @@
   "third_party_consent_refusal_title": "5. 同意拒否権および不利益",
   "third_party_consent_refusal_description": "お客様は第三者情報提供同意を拒否する権利があり、同意を拒否した場合、いくつかのサービス提供に制限が生じる可能性があります。"
     
-
+  ,"page":"The page will redirect in",
+  "goMove":"seconds."
 }
