@@ -123,8 +123,9 @@ function ConsentForm() {
                       
                       &nbsp;{t('Collection')}&nbsp;
                       </p>   
+                      {/*  */}
                       <button
-                        class="custom-link-button"
+                        className="custom-link-button"
                         onClick={() => handleShowModal("information")}
                       >
                         {t('Look')}

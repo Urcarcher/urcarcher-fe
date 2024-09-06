@@ -9,34 +9,34 @@ import "./signup.css"
 
 
 function LocalSignupFlow(props) {
-    const [consentData, setConsentData] = useState({
-        personalInfoConsent: false,
-        locationConsent: false,
-        matchingServiceConsent: false,
-    });
+    // const [consentData, setConsentData] = useState({
+    //     personalInfoConsent: false,
+    //     locationConsent: false,
+    //     matchingServiceConsent: false,
+    // });
 
-    const [userInfo, setUserInfo] = useState({
-        id: '',
-        password: '',
-        name: '',
-        birth: '',
-        gender: '',
-        nationality: '',
-        email: '',
-        phone: '',
-    });
+    // const [userInfo, setUserInfo] = useState({
+    //     id: '',
+    //     password: '',
+    //     name: '',
+    //     birth: '',
+    //     gender: '',
+    //     nationality: '',
+    //     email: '',
+    //     phone: '',
+    // });
 
-    const saveConsentData = (data) =>{
-        setConsentData(data);
-    }
+    // const saveConsentData = (data) =>{
+    //     setConsentData(data);
+    // }
     
-    const saveUserInfo = (info) => {
-        setUserInfo(info);
-    };
+    // const saveUserInfo = (info) => {
+    //     setUserInfo(info);
+    // };
 
-    const handleSubmit = () => {
-        console.log('Submit to DB', {...userInfo, ...consentData});
-    };
+    // const handleSubmit = () => {
+    //     console.log('Submit to DB', {...userInfo, ...consentData});
+    // };
 
     return (
        <Routes>
