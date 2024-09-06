@@ -157,7 +157,7 @@ function UserInfoForm() {
     // 이메일 발송 함수
     const sendEmail = async () => {
         try {
-            alert('입력하신 이메일 주소로 인증 코드를 발송하였습니다. 수신 시 시간이 소요될 수 있습니다.');
+            //alert('입력하신 이메일 주소로 인증 코드를 발송하였습니다. 수신 시 시간이 소요될 수 있습니다.');
             const response = await axios.get('/api/signup/sendMail.do', {
                 params: { email: userInfo.email }
             });

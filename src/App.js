@@ -59,7 +59,6 @@ import LocalProduct from 'pages/localProducts/LocalProduct';
 import PrivateRoute from 'pages/auth/PrivateRoute';
 import MyReservations1Detail from './pages/reservation/MyReservations1Detail';
 import FAQ from 'pages/faq/FAQ';
-import TestEmailCss from 'pages/signup/TestEmailCss';
 
 function App() {
   return (
@@ -106,7 +105,6 @@ function App() {
           <Route path='/testcard' element={<TestCard/>}/>
           <Route path='/localProducts' element={<LocalProduct/>}></Route>
           <Route path='/faq' element={<FAQ/>}></Route>
-          <Route path='/email' element={<TestEmailCss/>}></Route>
 
           <Route element={<PrivateRoute />}>
             <Route path='/reservation1' element={<Reservation />} />
