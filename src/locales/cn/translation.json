@@ -250,6 +250,7 @@
     "FindingExchangeRateInfo": "正在查找汇率信息。请重试。",
     "FindingExchangeRateInfo2": "正在查找汇率信息",
     "CannotCalculateEstimatedKRW": "无法计算预估韩元金额。请重试。",
+    "ProblemCharge": "充电时出现问题。请重试",
 
     "NoExchangeHistory": "没有兑换记录！请在充值后查看。",
     "All": "全部",

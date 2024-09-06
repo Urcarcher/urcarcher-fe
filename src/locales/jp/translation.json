@@ -252,6 +252,7 @@
     "FindingExchangeRateInfo": "為替レート情報を探しています。もう一度お試しください。",
     "FindingExchangeRateInfo2": "為替レート情報を探しています",
     "CannotCalculateEstimatedKRW": "予想ウォン金額を計算できません。もう一度お試しください。",
+    "ProblemCharge": "充電中に問題が発生しました。もう一度お試しください",
 
     "NoExchangeHistory": "両替履歴がありません！チャージ後にご確認ください。",
     "All": "全体",
