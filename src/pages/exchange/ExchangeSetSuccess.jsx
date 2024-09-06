@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import calender from 'assets/exchange/calender-won.png';
 import 'assets/exchangeSetSuccess.css';
-import cookie from 'react-cookies';
-import axios from 'axios';
-import { options_GET } from 'services/CommonService';
-import { useTranslation } from 'react-i18next';
-import Cookies from 'js-cookie';
 import 'assets/Language.css';
-import SelectLanguage from 'components/language/SelectLanguage';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function ExchangeSetSuccess(props) {
     const { t, i18n } = useTranslation();
@@ -75,18 +73,17 @@ function ExchangeSetSuccess(props) {
     return (
         <div className="contents">
             <div className="ex_setting_wrapper">
-                <h3>
+                <h4>
                     <span style={{ color: "#476EFF" }}>{t('ReservationExchange')}</span>
-                </h3>
-                <h3>{t('HasBeenSet')}</h3>
+                </h4>
+                <h4>{t('HasBeenSet')}</h4>
+            </div>
+            <div className="ex_setting_img_box">
+                <img src={calender} alt="달력"/>
             </div>
             <div className="ex_setting_table_box">
                 <div className="ex_setting_table">
                     <h5>대한민국 KRW</h5>
-                    {/* <div className="ex_setting_col">
-                        <p className="ex_setting_p">{t('ReservedExchangeRate')}</p>
-                        <h5>1 { curSymbol(nation) } = {settingData.setRate}</h5>
-                    </div> */}
                     <div className="ex_setting_col">
                         <p className="ex_setting_p">{t('ReservationDate')}</p>
                         <h5>{settingData.setDate}</h5>
@@ -109,15 +106,14 @@ function ExchangeSetSuccess(props) {
                     </div>
                 </div>
                 <div className="ex_setting_box_text">
-                    <h4>{t('AutoRechargeSet')}</h4>
-                    <h4>{t('AutoRechargeOnReservationDate')}</h4>
+                    <h5>{t('AutoRechargeSet')}</h5>
+                    <h5>{t('AutoRechargeOnReservationDate')}</h5>
                 </div>
                 <div className="ex_setting_btn_box">
-                <button className="set_setting_info_btn" onClick={inforListHandle}>{t('ViewHistory')}</button>
-                <button className="set_setting_home_btn" onClick={homeHandle}>{t('Confrim')}</button>
+                    <button className="set_setting_info_btn" onClick={inforListHandle}>{t('ViewHistory')}</button>
+                    <button className="set_setting_home_btn" onClick={homeHandle}>{t('Confrim')}</button>
+                </div>
             </div>
-            </div>
-
         </div>
     );
 }

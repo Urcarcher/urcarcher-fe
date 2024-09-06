@@ -1,13 +1,12 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import exSuccess from 'assets/exchange/exchange-success.png';
+
 import 'assets/exchangeSuccess.css';
-import exchangeCard from 'assets/card.png'
-import exchangeMoney from 'assets/money.png'
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useTranslation } from 'react-i18next';
-import Cookies from 'js-cookie';
 import 'assets/Language.css';
-import SelectLanguage from 'components/language/SelectLanguage';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function ExchangeSuccess(props) {
     const { t, i18n } = useTranslation();
@@ -79,17 +78,14 @@ function ExchangeSuccess(props) {
     return (
         <div className="contents">
             <div className="ex_success_wrapper">
-                <div className="ex_success_card">
-                    <img src={exchangeCard} alt="카드 아이콘"/>
-                </div>
-                <div className="ex_success_money">
-                    <img src={exchangeMoney} alt="돈 아이콘"/>
+                <div className="ex_success_card fade_coin">
+                    <img src={exSuccess} alt="카드"/>
                 </div>
                 <div className="ex_success_title">
-                    <h3>
+                    <h4>
                         <span style={{ color: "#476EFF" }}>{exchangeMsg}</span> {t('ParticleEul')}
-                    </h3>
-                    <h3>{t('Filled')}</h3>
+                    </h4>
+                    <h4>{t('Filled')}</h4>
                 </div>
             </div>
             <div className="ex_success_rate">

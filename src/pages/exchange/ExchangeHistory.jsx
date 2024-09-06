@@ -1,13 +1,12 @@
 import 'assets/exchangeCard.css';
 import 'assets/exchangeHistory.css';
+import 'assets/Language.css';
 import axios from 'axios';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
-import 'assets/Language.css';
-import SelectLanguage from 'components/language/SelectLanguage';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function ExchangeHistory(props) {
     const { t, i18n } = useTranslation();
@@ -120,16 +119,25 @@ function ExchangeHistory(props) {
                 <button className={historyFilter === cardHistory ? "ex_type_un_select" : "ex_type_select"} onClick={() => typeHandle("week")}>{t('LastWeek')}</button>
             </div>
             <div className="ex_history_list">
+                <p style={{ fontFamily: "NanumSquareNeoBold", fontSize: 13 }}>{t('ChoiceExchange')}</p>
                 {historyFilter !== null ? historyFilter.map((history) => (
                     <div key={history.exId} onClick={() => detailHandle(history.exId)}>
                         <p className="ex_history_date">{dayjs(history.exDate).format("YYYY-MM-DD")}</p>
                         <p className="ex_history_title">
                             대한민국 KRW
-                            <span style={{ fontFamily: "NanumSquareNeoBold", color: "#CCCC", marginLeft: 10 }}>
-                                {history.setId === null ? t('Charge') : t('AutoRecharge')}
+                            <span style={{ 
+                                fontFamily: "NanumSquareNeoBold", 
+                                color: "#CCCC", 
+                                marginLeft: 10, 
+                                fontSize: 12
+                                // fontSize: i18n.language === "en" || i18n.language === "jp" ? "12px" : "15px"
+                            }}>
+                            {history.setId === null ? t('Charge') : t('AutoRecharge')}
                             </span>
                         </p>
-                        <p className="ex_history_cur">+ ￦ {history.exCur.toLocaleString()}</p>
+                        <p className="ex_history_cur" style={{ fontSize: 13 /* fontSize: i18n.language === "en" || i18n.language === "jp" ? "13px" : "15px" */ }}>
+                            + ￦ {history.exCur.toLocaleString()}
+                        </p>
                     </div>
                 )) : t('NoRechargeHistory')}
             </div>

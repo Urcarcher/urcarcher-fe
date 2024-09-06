@@ -1,13 +1,12 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import 'assets/exchangeHistory.css';
-import dayjs from 'dayjs';
-import { useTranslation } from 'react-i18next';
-import Cookies from 'js-cookie';
 import 'assets/Language.css';
-import SelectLanguage from 'components/language/SelectLanguage';
-
+import axios from 'axios';
+import dayjs from 'dayjs';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
+import money from 'assets/exchange/coin-and-banknotes.png';
 
 function ExchangeHistoryDetail(props) {
     const { t, i18n } = useTranslation();
@@ -92,35 +91,38 @@ function ExchangeHistoryDetail(props) {
                     <button className="ex_go_change_btn" onClick={exchangeHandle}>{t('Charge')}</button>
                 </div>
             </div>
+            <div className="ex_history_detail_img_box fallMoney">
+                <img src={money} alt="돈"/>
+            </div>
             <div className="ex_history_detail_container">
-                <h4>{detailHistory.setId === null ? "🪙" + t('AmountRecharged') : "🪙" + t('AutoRechargeSuccess')}</h4>
+                <h4>{detailHistory.setId === null ? t('AmountRecharged') : t('AutoRechargeSuccess')}</h4>
             </div>
             <div className="ex_history_detail_content">
-                <div>
+                <div className="ex_history_detail_text_box">
                     <p className="ex_history_detail_left">{t('RechargeDateTime')}</p>
                     <p className="ex_history_detail_right">{dayjs(detailHistory.exDate).format("YYYY-MM-DD")}</p>
                 </div>
-                <div>
+                <div className="ex_history_detail_text_box">
                     <p className="ex_history_detail_left">{t('RechargeAmount')}</p>
                     <p className="ex_history_detail_right">￦ {Number(detailHistory.exCur).toLocaleString()}</p>
                 </div>
-                <div>
+                <div className="ex_history_detail_text_box">
                     <p className="ex_history_detail_left">{t('KRWAmount')}</p>
                     <p className="ex_history_detail_right">{ curSymbol(nation) } {detailHistory.exPay}</p>
                 </div>
-                <div>
+                <div className="ex_history_detail_text_box">
                     <p className="ex_history_detail_left">{t('RechargeExchangeRate')}</p>
                     <p className="ex_history_detail_right">KRW {detailHistory.exRate} = 1 { curSymbol(nation) }</p>
                 </div>
-                <div>
+                <div className="ex_history_detail_text_box">
                     <p className="ex_history_detail_left">{t('TotalPaymentAmount')}</p>
                     <p className="ex_history_detail_right">{ curSymbol(nation) } {detailHistory.exPay}</p>
                 </div>
-                <div>
+                <div className="ex_history_detail_text_box">
                     <p className="ex_history_detail_left">{t('WithdrawalAccount')}</p>
                     <p className="ex_history_detail_right">Citi Bank</p>
                 </div>
-                <div>
+                <div className="ex_history_detail_text_box">
                     <p className="ex_history_detail_left">{t('RechargeDetails')}</p>
                     <p className="ex_history_detail_right">{detailHistory.setId === null ? t('InstantRecharge') :  t('AutoRecharge') }</p>
                 </div>

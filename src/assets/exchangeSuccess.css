@@ -2,20 +2,36 @@
     width: 100%;
     height: 420px;
     padding-top: 80px;
-    background-color: #E5EBFF;
+    background-color: #EFF8FF;
+    /* background-color: #E5EBFF; */
 }
 
 .ex_success_card {
     width: 50%;
-    height: 130px;
+    height: 75%;
     margin: 0 auto;
-    /* margin-top: 40px; */
-    /* border: 1px solid red; */
+    margin-top: -35px;
+    margin-left: 33%;
 }
 
 .ex_success_card img {
     width: 100%;
     height: 100%;
+}
+
+@keyframes fadeCoin {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade_coin {
+    animation: fadeCoin 1.5s ease-in-out forwards;
 }
 
 .ex_success_money {
@@ -24,7 +40,6 @@
     position: relative;
     left: 275px;
     bottom: 70px;
-    /* border: 1px solid red; */
 }
 
 .ex_success_money img {
@@ -33,10 +48,10 @@
 }
 
 .ex_success_title {
-    margin-top: -20px;
+    margin-top: 30px;
 }
 
-.ex_success_wrapper h3 {
+.ex_success_wrapper h4 {
     font-family: 'NanumSquareNeoExtraBold';
     line-height: 30px;
 }
@@ -48,7 +63,6 @@
     margin: 0 auto;
     margin-top: 40px;
     white-space: nowrap;
-    /* border: 1px solid red; */
 }
 
 .ex_success_left_p {
@@ -61,7 +75,6 @@
 .ex_success_right_p {
     width: 200px;
     float: right;
-    /* color: #476EFF; */
     text-align: right;
     line-height: 25px;
 }
@@ -73,7 +86,6 @@
     height: 60px;
     margin: 0 auto;
     margin-top: 25px;
-    /* border: 1px solid red; */
 }
 
 .success_info_btn {
@@ -117,7 +129,7 @@
     }
 
     .ex_success_title {
-        margin-top: -45px;
+        margin-top: 20px;
     }
 
     .ex_success_money {
@@ -134,5 +146,18 @@
 
     .ex_success_btn_wrapper {
         margin-top: 20px;
+    }
+
+    .ex_success_card {
+        margin-top: -20px;
+    }
+
+    .ex_success_rate  {
+        margin-top: 25px;
+    }
+
+    .ex_success_wrapper h4 {
+        line-height: 22px;
+        font-size: 18px;
     }
 }

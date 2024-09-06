@@ -265,6 +265,7 @@
     "NoRechargeHistory": "충전 내역이 없어요",
     "SelectCardToView": "조회하실 카드를 선택해 주세요",
     "View": "조회",
+    "ChoiceExchange": "내역을 선택하면 자세히 볼 수 있어요",
 
     "AmountRecharged": "금액을 충전했어요",
     "AutoRechargeSuccess": "예약환율 자동충전에 성공했어요",
@@ -308,13 +309,13 @@
 
     "SameDayReservationNotAllowed": "당일 예약은 불가능해요",
     "OnlyDatesBetweenStartAndEnd": "추천 시작일과 종료일 사이의 날짜만 가능해요",
-    "SelectPredictionInfoFirst": "예측 정보를 먼저 선택해 주세요",
+    "SelectPredictionInfoFirst": "환전 예약일을 선택해 주세요",
     "SetReservationAfterSelectingPrediction": "예측 정보 선택 후 예약 정보를 설정해 주세요",
     "ReservedExchangeRate2": "예약 환율",
     "Designated": "지정",
     "AutoExchangeOnReservationDate": "설정한 예약일에 자동으로 환전해 드려요",
-    "SelectedExchangeReservationDate": "선택한 환전 예약일",
-    "SelectReservationDate": "예약 날짜를 선택해 주세요",
+    "SelectedExchangeReservationDate": "환전 예약일 선택",
+    "SelectReservationDate": "클릭해서 달력보기",
     "SameDayReservationsNotPossible": "당일 예약 불가",
     "SelectedReservationRate": "선택한 예약 환율",
     "SelectReservationRate": "예약할 환율을 선택해 주세요",
@@ -712,8 +713,8 @@
   "third_party_consent_refusal_description": "귀하는 제3자 정보 제공 동의를 거부할 권리가 있으며, 거부 시 일부 서비스 제공에 제한이 있을 수 있습니다."
 
 
-
-
+  ,"page":"페이지가",
+  "goMove":"초 후 이동합니다."
 
 
 }
