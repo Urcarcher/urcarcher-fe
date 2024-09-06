@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
 
-
+// ${process.env.REACT_}
 function UserInfoForm() {
 
     const { t, i18n } = useTranslation();
@@ -42,6 +42,7 @@ function UserInfoForm() {
         memberId: '',
         password: '',
         name: '',
+        dateOfBirth: '',
         registrationNumber: '',
         gender: '',
         nationality: '',
@@ -55,11 +56,51 @@ function UserInfoForm() {
     const [idCheckResult, setIdCheckResult] = useState(null); // ID 체크 결과 상태
     const [isIdAvailable, setIsIdAvailable] = useState(false); // ID 사용 가능 여부 상태
     const [isIdChecked, setIsIdChecked] = useState(false); // ID 체크 완료 여부 상태
+    const [registrationNumber7, setRegistrationNumber7] = useState('');
 
     const handleChange = (e) => {
-        console.log(e);
-        setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+        // console.log(e);
+        // setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+
+        if (name === 'phoneNumber' || name === 'dateOfBirth') {
+            // 숫자만 입력받도록 처리
+            const onlyNumbers = value.replace(/[^0-9]/g, '');
+            setUserInfo({ ...userInfo, [name]: onlyNumbers });
+            }
+            else if(name === 'registrationNumber7'){
+                // 숫자만 입력받도록 처리
+            const onlyNumbers = value.replace(/[^0-9]/g, '');
+            setRegistrationNumber7(onlyNumbers);
+                // 주민등록번호의 첫 번째 숫자 확인
+                const firstDigit = onlyNumbers.charAt(0);
+                // 첫 번째 숫자가 홀수인지 짝수인지 확인하여 gender 설정
+                if (firstDigit) {
+                    setUserInfo(prevState => ({
+                        ...prevState,
+                        gender: parseInt(firstDigit, 10) % 2 === 1 ? 'male' : 'female'
+                    }));
+                }
+            }
+            else if(name === 'emailCode'){
+                setEmailCode(value);
+            }
+    else {
+        setUserInfo({ ...userInfo, [name]: value });
+    }
     };
+
+    
+
+    useEffect(() => {
+        if (userInfo.dateOfBirth && registrationNumber7) {
+            const fullRegistrationNumber = `${userInfo.dateOfBirth}-${registrationNumber7}`;
+            setUserInfo(prevState => ({
+                ...prevState,
+                registrationNumber: fullRegistrationNumber
+            }));
+        }
+    }, [userInfo.dateOfBirth, registrationNumber7]);
 
     // ID 중복 체크 함수
     const checkIdAvailability = async () => {
@@ -108,6 +149,44 @@ function UserInfoForm() {
         );
     };
 
+//이메일 인증
+    const [emailCheckResult, setEmailCheckResult] = useState('');
+    const [emailSendResult, setEmailSendResult] = useState('');
+    const [emailCode, setEmailCode] = useState('');
+
+    // 이메일 발송 함수
+    const sendEmail = async () => {
+        try {
+            alert('입력하신 이메일 주소로 인증 코드를 발송하였습니다. 수신 시 시간이 소요될 수 있습니다.');
+            const response = await axios.get('/api/signup/sendMail.do', {
+                params: { email: userInfo.email }
+            });
+            setEmailSendResult('이메일 발송이 완료되었습니다.');
+        } catch (error) {
+            console.error('이메일 발송 중 오류 발생:', error);
+            setEmailSendResult('이메일 발송에 실패했습니다.');
+        }
+    };
+
+    // 이메일 코드 확인 함수
+    const checkEmail = async () => {
+        try {
+            const response = await axios.get('/api/signup/checkMail.do', {
+                params: { emailCode: emailCode }
+            });
+            console.log(response.data);
+            if (response.data === 1) {
+                setEmailCheckResult('이메일 인증이 완료되었습니다.');
+            } else {
+                setEmailCheckResult('인증 코드가 잘못되었습니다.');
+            }
+        } catch (error) {
+            console.error('이메일 인증 중 오류 발생:', error);
+            setEmailCheckResult('이메일 인증에 실패했습니다.');
+        }
+    };
+    
+
     useEffect(() => {
         console.log(userInfo);
 
@@ -126,7 +205,7 @@ function UserInfoForm() {
 
         // 필수 입력 필드 확인
         const requiredFields = [
-            'memberId', 'password', 'name', 'registrationNumber', 
+            'memberId', 'password', 'name', 'dateOfBirth', 'registrationNumber', 
             'gender', 'nationality', 'email', 'phoneNumber'
         ];
 
@@ -141,6 +220,17 @@ function UserInfoForm() {
         if (!validatePassword(userInfo.password)) {
             alert(t('MustPw'));
             return; // 유효하지 않으면 제출 중단
+        }
+
+            // 생년월일과 주민등록번호 길이 검사
+        if (userInfo.dateOfBirth.length !== 6) {
+            alert("잘못된 생년월일 형식입니다");
+            return;
+        }
+
+        if (registrationNumber7.length !== 7) {
+            alert("잘못된 주민등록번호 형식입니다");
+            return;
         }
 
         if (isEmptyField) {
@@ -170,20 +260,22 @@ function UserInfoForm() {
     };
 
     return (        
-        <div className="contents scroll">
+        <div className='contents'>
+        <div className="scrollable-content" style={{ maxHeight: '800px', overflowY: 'auto', padding: '10px', boxSizing: 'border-box' }}>
+          <div style={{ position: 'relative' }}>
       <div className="d-flex align-items-stretch">
-        <div className="page-holder page-holder align-items-center py-4 bg-gray-100 vh-50">
+        <div className="page-holder align-items-center py-4 bg-gray-40 vh-50 page-holder-userForm">
           <div className="container">
             <div className="align-items-center row">
               <div className="px-lg-4 col-lg-6">
                 <div className="card">
-                  <div className="p-lg-5 card-body">
+                  <div className="p-lg-1 card-body">
                   <h3 className="mb-4">{t('EnterInfo')}</h3>
                   <hr></hr>
             <form id="signup" onSubmit={handleSubmit} className="container">
                 <div className="form-floating mb-3">
                     <input
-                    placeholder="memberId"
+                    //placeholder="memberId"
                         type="text" 
                         name="memberId"
                         className="form-control"
@@ -198,7 +290,7 @@ function UserInfoForm() {
                 </div>
                 <div className="form-floating mb-3">
                     <input style={{marginBottom:'5px'}}
-                    placeholder="password"
+                    //placeholder="password"
                         type="password" 
                         name="password" 
                         className="form-control"
@@ -212,7 +304,7 @@ function UserInfoForm() {
                 </div>
                 <div className="form-floating mb-3">
                     <input 
-                    placeholder="name"
+                   // placeholder="name"
                         type="text" 
                         name="name" 
                         className="form-control"
@@ -223,20 +315,41 @@ function UserInfoForm() {
                     {t('Name')}
                         </label>
                 </div>
+                <div className='my-flex'>
                 <div className="form-floating mb-3">
                     <input 
-                    placeholder="registrationNumber"
+                   // placeholder="dateOfBirth"
                         type="text" 
-                        name="registrationNumber" 
+                        name="dateOfBirth" 
                         className="form-control"
-                        value={userInfo.registrationNumber} 
+                        value={userInfo.dateOfBirth} 
                         onChange={handleChange} 
+                        maxLength="6" // '-' 포함하여 최대 길이 설정
                     />
                     <label className="form-label" htmlFor="memberId">
-                    {t('SocialNumber')}
+                    {"주민등록번호 앞자리"}
                         </label>
                 </div>
-                <div className="col-md-12 mb-3 ">
+                <div className="-center">
+                <p>-</p>
+                </div>
+                <div className="form-floating mb-3">
+                    <input 
+                  //  placeholder="registrationNumber"
+                        type="password" 
+                        name="registrationNumber7" 
+                        className="form-control"
+                        value={registrationNumber7} 
+                        onChange={handleChange} 
+                        maxLength="7"
+                    />
+                    <label className="form-label" htmlFor="memberId">
+                    {/* {t('SocialNumber')} */}
+                    {"주민등록번호 뒷자리"}
+                        </label>
+                </div>
+                </div>
+                {/* <div className="col-md-12 mb-3 ">
                     <input 
                         type="radio" 
                         name="gender" 
@@ -253,7 +366,7 @@ function UserInfoForm() {
                         checked={userInfo.gender === 'female'} 
                         onChange={handleChange} 
                     /> {t('Female')}
-                </div>
+                </div> */}
                 <div className="col-md-12 mb-3">
                     <select 
                         name="nationality" 
@@ -325,7 +438,7 @@ function UserInfoForm() {
                 </div>
                 <div className="form-floating mb-3">
                     <input 
-                    placeholder="email"
+                   // placeholder="email"
                         type="email" 
                         name="email" 
                         className="form-control"
@@ -335,10 +448,27 @@ function UserInfoForm() {
                     <label className="form-label" htmlFor="memberId">
                     {t('Email')}
                         </label>
+                        <Button type="button" onClick={sendEmail} style={{ marginTop: '10px' }}>{"이메일 인증"}</Button>
+                        {emailSendResult && <div style={{marginTop:'5px', textAlign:'right', marginRight:'5px', color:'#4650dd', fontSize:'12px'}}>*{emailSendResult}</div>}
                 </div>
-                <div className="form-floating mb-3"> 
+                <div className="form-floating mb-3">
                     <input 
-                    placeholder="phoneNumber"
+                   // placeholder="email"
+                        type="text" 
+                        name="emailCode" 
+                        className="form-control"
+                        value={emailCode} 
+                        onChange={handleChange} 
+                    />
+                    <label className="form-label" htmlFor="memberId">
+                    {"인증 코드"}
+                        </label>
+                        <Button type="button" onClick={checkEmail} style={{ marginTop: '10px' }}>{"확인"}</Button>
+                        {emailCheckResult && <div style={{marginTop:'5px', textAlign:'right', marginRight:'5px', color:'#4650dd', fontSize:'12px'}}>*{emailCheckResult}</div>}
+                </div>
+                <div className="form-floating mb-3" > 
+                    <input style={{marginBottom:'5px'}}
+                   // placeholder="phoneNumber" 
                         type="text" 
                         name="phoneNumber" 
                         className="form-control"
@@ -348,6 +478,7 @@ function UserInfoForm() {
                     <label className="form-label" htmlFor="memberId">
                     {t('PhoneNumber')}
                         </label>
+                    <small style={{fontSize:'10px'}}>  '-' 기호 없이 숫자만 기입</small>
                 </div>
 
                 <input 
@@ -356,7 +487,6 @@ function UserInfoForm() {
                     value={t('Complete')}
                 />
             </form>
-
                   </div>
                 </div>
               </div>
@@ -364,6 +494,8 @@ function UserInfoForm() {
           </div>
         </div>
       </div>
+    </div>
+    </div>
     </div>
     );
 }

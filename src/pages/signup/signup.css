@@ -71,3 +71,45 @@
     justify-content: space-between;
     align-items: baseline;
   }
+
+.my-flex{
+  display: flex;
+}
+
+/* .page-holder-userForm{
+  margin-top: -60px !important;
+} */
+
+.-center{
+  display: flex;
+  justify-content: center;  /* 수평 중앙 정렬 */
+  align-items: center;      /* 수직 중앙 정렬 */
+}
+
+
+/*  */
+.email-box {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.email-input {
+  flex: 2;
+  margin-right: 10px; /* 이메일 입력칸과 버튼 사이 여백 */
+}
+
+.email-btn {
+  flex: 1;
+  height: 48px; /* input 폼과 버튼의 높이를 일치시키기 위해 설정 */
+  padding: 0;
+}
+
+.email-result {
+  margin-top: 5px;
+  text-align: right;
+  margin-right: 5px;
+  color: #4650dd;
+  font-size: 12px;
+}
