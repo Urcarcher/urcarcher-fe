@@ -707,6 +707,7 @@
 
 
   ,"page":"The page will redirect in",
-  "goMove":"seconds."
+  "goMove":"seconds.",
+  "InsufficientCardBalance" : "Insufficient balance. Please recharge and try the payment again."
   
   }
