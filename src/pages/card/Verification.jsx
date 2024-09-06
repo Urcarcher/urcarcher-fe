@@ -42,15 +42,13 @@ function Verification() {
     let navigate = useNavigate();
 
     return (
-        <>
-        <br/>
-        <br/>
-        <br/>
-        <Container>
-            <ProgressBar
+        <div style={{ marginTop: '140px'}}>
+              <ProgressBar
                 stages={['카드 선택', '정보 입력', '동의 사항', '카드 수령', '결제 정보']}
                 currentStage={'정보 입력'}
             />
+        <Container>
+          
             <div >
             <Tabs
                 defaultActiveKey="driver's license"
@@ -60,13 +58,12 @@ function Verification() {
                 >
                 <Tab eventKey="driver's license" title={t('DriverLicense')}>
                     <br/>
-                    <br/>
                     <CardOverlay
                         className="my-custom-class"
                         img={'/img/cert_drive.png'}
                         style={{fontSize:'0px'}}
                     />
-                    <br/>
+                    {/* <br/> */}
                     <br/>
                     <Formik
                         initialValues={{ cert_drive: '', cert_idCard: '', cert_foriCard1: '', cert_foriCard2: '' }}
@@ -115,13 +112,12 @@ function Verification() {
                 </Tab>
                 <Tab eventKey="ID Card" title={t('ResidentRegistrationCard')}>
                     <br/>
-                    <br/>
                     <CardOverlay
                         className="my-custom-class"
                         img={'/img/cert_jumin.png'}
                         style={{fontSize:'0px'}}
                     />
-                    <br/>
+                    {/* <br/> */}
                     <br/>
                     <Formik
                         initialValues={{ cert_drive: '', cert_idCard: '', cert_foriCard1: '', cert_foriCard2: '' }}
@@ -149,13 +145,12 @@ function Verification() {
                 </Tab>
                 <Tab eventKey="alien registration card" title={t('ForeignerRegistrationCard')}>
                     <br/>
-                    <br/>
                     <CardOverlay
                         className="my-custom-class"
                         img={'/img/cert_foriCard.png'}
                         style={{fontSize:'0px'}}
                     />
-                    <br/>
+                    {/* <br/> */}
                     <br/>
                     <Formik
                         initialValues={{ cert_drive: '', cert_idCard: '', cert_foriCard1: '', cert_foriCard2: '' }}
@@ -194,6 +189,7 @@ function Verification() {
                     </Formik>
                 </Tab>
             </Tabs>
+            <br/>
             <Button
                 style={{
                     width: '100%',
@@ -214,7 +210,7 @@ function Verification() {
             </div>
         </Container>
         
-        </>
+        </div>
     );
 }
 const Container = styled.div`

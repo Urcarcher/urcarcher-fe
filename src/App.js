@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Login from './pages/auth/Login';
-import Test from './pages/auth/Test';
+// import Test from './pages/auth/Test';
 import Card1 from './pages/card/Card1';
 import Card2 from './pages/card/Card2';
 import Card3 from './pages/card/Card3';
@@ -74,7 +74,7 @@ function App() {
           <Route path='/login/loading' element={<OAuthLoading/>}/>
           <Route path='/login/new' element={<OAuthNew/>}/>
           <Route path='/exchange/realtime/rate' element={<ExchangeRateList/>}/>
-          <Route path='/test' element={<Test/>}/>
+          {/* <Route path='/test' element={<Test/>}/> */}
           <Route path='/card1' element={<Card1/>}/>
           <Route path='/courseList' element={<CourseList/>}/>
           <Route path="/course/:courseId" element={<CourseDetail />} />
