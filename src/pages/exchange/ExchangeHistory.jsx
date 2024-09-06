@@ -119,7 +119,14 @@ function ExchangeHistory(props) {
                 <button className={historyFilter === cardHistory ? "ex_type_un_select" : "ex_type_select"} onClick={() => typeHandle("week")}>{t('LastWeek')}</button>
             </div>
             <div className="ex_history_list">
-                <p style={{ fontFamily: "NanumSquareNeoBold", fontSize: 13 }}>{t('ChoiceExchange')}</p>
+                <p style={{ 
+                    fontFamily: "NanumSquareNeoBold", 
+                    fontSize: 13, 
+                    paddingLeft: 20,
+                    whiteSpace: "nowrap"
+                }}>
+                    {t('ChoiceExchange')}
+                </p>
                 {historyFilter !== null ? historyFilter.map((history) => (
                     <div key={history.exId} onClick={() => detailHandle(history.exId)}>
                         <p className="ex_history_date">{dayjs(history.exDate).format("YYYY-MM-DD")}</p>
