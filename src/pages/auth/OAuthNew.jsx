@@ -276,7 +276,7 @@ function OAuthNew(props) {
                       <>
                         <div className="col-md-12 mb-3 gender">
                           <div>
-                            <p>{t("have_registration_number")}</p>
+                            <p>{t("have_registration_number?")}</p>
                             <input
                               type="radio"
                               name="got"
