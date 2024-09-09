@@ -13,85 +13,105 @@ function OAuthNew(props) {
   var loc = useLocation();
   const nav = useNavigate();
   const { t, i18n } = useTranslation();
-    const changeLanguage = (selectedLanguage) => {
-        
-        const languageMap = {
-            Korea: 'ko',
-            English: 'en',
-            Japan: 'jp',
-            China: 'cn'
-        };
+  const changeLanguage = (selectedLanguage) => {
 
-        const languageCode = languageMap[selectedLanguage] 
-        i18n.changeLanguage(languageCode);
-       
+    const languageMap = {
+      Korea: 'ko',
+      English: 'en',
+      Japan: 'jp',
+      China: 'cn'
     };
-    
+
+    const languageCode = languageMap[selectedLanguage]
+    i18n.changeLanguage(languageCode);
+
+  };
+
 
   const [email, setEmail] = useState("");
   const [showModal, setShowModal] = useState(null); // 현재 열린 모달을 추적
   const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(()=>{
-
-    const savedLanguage = Cookies.get('selectedLanguage');
-        if (savedLanguage) {
-            changeLanguage(savedLanguage); // 언어 변경
-        } else {
-            changeLanguage('Korea'); // 기본 언어 설정
-        }
-
-
-    try {
-      if(loc.state.role == "GUEST") {
-        setEmail(loc.state.email);
-        setUserInfo({...userInfo, ['provider']: loc.state.provider, ['email']: loc.state.email});
-      }
-    } catch (error) {
-      nav("/login");
-    }
-  }, []);
-
-  // 각 약관을 본 상태를 추적
-  const [viewedTerms, setViewedTerms] = useState({
-    information: false,
-  });
+  const [gotForeignReg, setGotForeignReg] = useState(false);
 
   const [userInfo, setUserInfo] = useState({
     registrationNumber: '',
+    registrationNumber6: '',
+    registrationNumber7: '',
     gender: '',
     nationality: '',
     phoneNumber: '',
     informationConsent: false,
     locationConsent: false,
     matchingConsent: false,
+    dateOfBirth: '',
   });
+  
+  useEffect(() => {
+
+    const savedLanguage = Cookies.get('selectedLanguage');
+    if (savedLanguage) {
+      changeLanguage(savedLanguage); // 언어 변경
+    } else {
+      changeLanguage('Korea'); // 기본 언어 설정
+    }
+    
+    
+    try {
+      if (loc.state.role == "GUEST") {
+        setEmail(loc.state.email);
+        setUserInfo({ ...userInfo, provider: loc.state.provider, email: loc.state.email });
+      }
+    } catch (error) {
+      nav("/login");
+    }
+  }, []);
+
+  // useEffect(()=>{
+  //   setUserInfo({ ...userInfo, registrationNumber:null, registrationNumber6:null, registrationNumber7:null });
+  // }, [gotForeignReg]);
+  
+  // 각 약관을 본 상태를 추적
+  const [viewedTerms, setViewedTerms] = useState({
+    information: false,
+  });
+  
+  
+  useEffect(()=>{
+    setUserInfo({...userInfo, registrationNumber:userInfo.registrationNumber6!==null && userInfo.registrationNumber7!==null ? `${userInfo.registrationNumber6}-${userInfo.registrationNumber7}` : null});
+  }, [userInfo.registrationNumber6, userInfo.registrationNumber7]);
+
+  useEffect(()=>{
+    if(gotForeignReg || userInfo.nationality === "KR") {
+      setUserInfo({ ...userInfo, dateOfBirth:userInfo.registrationNumber6});
+    }
+  }, [userInfo.registrationNumber]);
 
   const handleInfoChange = (e) => {
-      if(e.target.name.includes("Consent")) {
-        const { name, checked } = e.target;
-        setUserInfo({ ...userInfo, [e.target.name]: checked });
-        return;
-      } else if(e.target.name === "registrationNumber") {
-        let val = e.target.value;
-        if(!val.endsWith('-')) {
-          val = val.length > 6 && val.length < 8 ? val.substring(0, 6) + "-" + val.substring(6) : val;
-        }
-        setUserInfo({ ...userInfo, [e.target.name]: val });
-        e.target.value = val;
-        return;
-      }
+    if (e.target.name.includes("Consent")) {
+      const { name, checked } = e.target;
+      setUserInfo({ ...userInfo, [e.target.name]: checked });
+      return;
+    } else if (e.target.name === "nationality") {
+      setGotForeignReg(false);
+      setUserInfo({ ...userInfo, [e.target.name]: e.target.value, registrationNumber:null, registrationNumber6:null, registrationNumber7:null });
+      return;
+    } else if (e.target.name === "dateOfBirth") {
+      setUserInfo({...userInfo, [e.target.name]: e.target.value, registrationNumber: null});
+      return;
+    }
 
-      setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const requiredFields = [
-      'registrationNumber', 'gender', 'nationality', 'phoneNumber'
+      'gender', 'nationality', 'phoneNumber', userInfo.nationality === "KR" || gotForeignReg ? "registrationNumber" : "dateOfBirth"
     ];
-
+    
+    console.log(userInfo);
     const isEmptyField = requiredFields.some(field => !userInfo[field]);
 
     if (isEmptyField) {
@@ -109,10 +129,9 @@ function OAuthNew(props) {
       setErrorMessage(t('MustComplete'));
       return;
     }
-    
-    oauthNew(userInfo);
 
-    // console.log(userInfo);
+    oauthNew({...userInfo, provider: loc.state.provider, email: loc.state.email});
+
   };
 
   const handleShowModal = (modalType) => setShowModal(modalType);
@@ -120,9 +139,18 @@ function OAuthNew(props) {
 
   const handleModalClose = (modalType) => {
     setViewedTerms({ ...viewedTerms, [modalType]: true });
-    setUserInfo({...userInfo, [modalType+"Consent"]:true});
+    setUserInfo({ ...userInfo, [modalType + "Consent"]: true });
     handleCloseModal();
   };
+
+  const handleForeignReg = (e) => {
+    if (e.target.value === "yes") {
+      setGotForeignReg(true);
+    } else {
+      setGotForeignReg(false);
+    }
+  }
+
   return (
     <div className="contents">
       <div className="d-flex align-items-stretch">
@@ -139,11 +167,6 @@ function OAuthNew(props) {
                     <div className="form-floating mb-3">
                       <input id="email" name="email" className="form-control" value={email} disabled />
                       <label className="form-label" for="email">{t('Email')}</label>
-                    </div>
-
-                    <div className="form-floating mb-3">
-                      <input placeholder={t('SocialNumber')} id="registrationNumber" name="registrationNumber" className="form-control" onChange={handleInfoChange} />
-                      <label className="form-label" for="password">{t('SocialNumber')}</label>
                     </div>
 
                     <div className="col-md-12 mb-3">
@@ -216,6 +239,72 @@ function OAuthNew(props) {
                       </select>
                     </div>
 
+                    {userInfo.nationality === 'KR' || gotForeignReg ? (
+                      <div className='my-flex'>
+                        <div className="form-floating mb-3">
+                          <input
+                            type="text"
+                            name="registrationNumber6"
+                            className="form-control"
+                            value={userInfo.registrationNumber6}
+                            onChange={handleInfoChange}
+                            maxLength="6" // '-' 포함하여 최대 길이 설정
+                          />
+                          <label className="form-label" htmlFor="memberId">
+                            {t("First_Registration_Number")}
+                          </label>
+                        </div>
+                        <div className="-center">
+                          <p>-</p>
+                        </div>
+                        <div className="form-floating mb-3">
+                          <input
+                            type="password"
+                            name="registrationNumber7"
+                            className="form-control"
+                            value={userInfo.registrationNumber7}
+                            onChange={handleInfoChange}
+                            maxLength="7"
+                          />
+                          <label className="form-label" htmlFor="memberId">
+                            {/* {t('SocialNumber')} */}
+                            {t("Second_Registration_Number")}
+                          </label>
+                        </div>
+                      </div>
+                    ) : userInfo.nationality === '' ? (<></>) : (
+                      <>
+                        <div className="col-md-12 mb-3 gender">
+                          <div>
+                            <p>{t("have_registration_number")}</p>
+                            <input
+                              type="radio"
+                              name="got"
+                              className="form-check-input"
+                              value="yes"
+                              checked={gotForeignReg}
+                              onChange={handleForeignReg}
+                            />
+                            <label>{t("yes")}</label>
+                            <input
+                              type="radio"
+                              name="got"
+                              className="form-check-input"
+                              value="no"
+                              checked={!gotForeignReg}
+                              onChange={handleForeignReg}
+                            />
+                            <label>{t("no")}</label>
+                          </div>
+
+                        </div>
+                        <div className="form-floating mb-3">
+                          <input type="date" placeholder={t("Date_of_Birth")} id="dateOfBirth" name="dateOfBirth" className="form-control" onChange={handleInfoChange} value={userInfo.dateOfBirth} />
+                          <label className="form-label" for="dateOfBirth">{t("Date_of_Birth")}</label>
+                        </div>
+                      </>
+                    )}
+
                     <div className="form-floating mb-3">
                       <input placeholder={t('PhoneNumber')} id="phoneNumber" name="phoneNumber" className="form-control" onChange={handleInfoChange} />
                       <label className="form-label" for="phoneNumber">{t('PhoneNumber')}</label>
@@ -278,7 +367,7 @@ function OAuthNew(props) {
                       <label htmlFor="agree" className="form-check-label">
                         {t('ConsentLocation')}
                       </label>
-                      
+
                       <Button
                         variant="link"
                         onClick={() => handleShowModal("location")}
@@ -298,9 +387,9 @@ function OAuthNew(props) {
                       />
 
                       <label htmlFor="agree" className="form-check-label">
-                       {t('ConsentMatching')}
+                        {t('ConsentMatching')}
                       </label>
-                      
+
                       <Button
                         variant="link"
                         onClick={() => handleShowModal("matching")}
@@ -311,7 +400,7 @@ function OAuthNew(props) {
                     </div>
 
                     <Button className="my-btn" type='submit'>
-                    {t('Complete')}
+                      {t('Complete')}
                     </Button>
                   </form>
 
@@ -337,31 +426,31 @@ function OAuthNew(props) {
         <Modal.Body>
           <h4>{t('purpose_title')}</h4>
           <p>
-          {t('privacy_policy_purpose')}
+            {t('privacy_policy_purpose')}
           </p>
-<br></br>
+          <br></br>
           <h4>{t('collected_info_title')}</h4>
           <p> {t('collected_info_description')}</p>
-          <ul style={{margin:'0 0 10px', padding:'0'}}>
+          <ul style={{ margin: '0 0 10px', padding: '0' }}>
             <li> &nbsp; &nbsp; ⦁ {t('collected_info_item_1')}</li>
             <li>&nbsp; &nbsp; ⦁ {t('collected_info_item_2')}</li>
           </ul>
-<br></br>
+          <br></br>
           <h4>{t('usage_purpose_title')}</h4>
           <p>{t('usage_purpose_description')}</p>
-          <ul style={{margin:'0 0 10px', padding:'0'}}>
+          <ul style={{ margin: '0 0 10px', padding: '0' }}>
             <li>&nbsp;&nbsp;  ⦁ {t('usage_purpose_item_1')}</li>
             <li>&nbsp;&nbsp;  ⦁ {t('usage_purpose_item_2')}</li>
           </ul>
-<br></br>
+          <br></br>
           <h4>{t('retention_period_title')}</h4>
           <p>
-          {t('retention_period_description')}
+            {t('retention_period_description')}
           </p>
-<br></br>
+          <br></br>
           <h4>{t('consent_refusal_title')}</h4>
           <p>
-          {t('consent_refusal_description')}
+            {t('consent_refusal_description')}
           </p>
         </Modal.Body>
         <Modal.Footer>
@@ -385,18 +474,18 @@ function OAuthNew(props) {
         <Modal.Body>
           <h4>{t('location_purpose_title')}</h4>
           <p>
-          {t('location_purpose_description')}
+            {t('location_purpose_description')}
           </p>
 
           <h4>{t('location_info_title')}</h4>
           <p>{t('location_info_description')}</p>
-          <ul style={{margin:'0 0 10px', padding:'0'}}>
+          <ul style={{ margin: '0 0 10px', padding: '0' }}>
             <li> ⦁ {t('location_info_item_1')}</li>
           </ul>
 
           <h4> {t('location_usage_purpose_title')}</h4>
           <p> {t('location_usage_purpose_description')}</p>
-          <ul style={{margin:'0 0 10px', padding:'0'}}>
+          <ul style={{ margin: '0 0 10px', padding: '0' }}>
             <li>&nbsp; &nbsp; ⦁ {t('location_usage_purpose_item_1')}</li>
             <li>&nbsp; &nbsp; ⦁ {t('location_usage_purpose_item_2')}</li>
             <li>&nbsp; &nbsp; ⦁ {t('location_usage_purpose_item_3')}</li>
@@ -404,12 +493,12 @@ function OAuthNew(props) {
 
           <h4>{t('location_retention_period_title')}</h4>
           <p>
-          {t('location_retention_period_description')}
+            {t('location_retention_period_description')}
           </p>
 
           <h4>{t('location_consent_refusal_title')}</h4>
           <p>
-          {t('location_consent_refusal_description')}
+            {t('location_consent_refusal_description')}
           </p>
         </Modal.Body>
         <Modal.Footer>
@@ -433,19 +522,19 @@ function OAuthNew(props) {
         <Modal.Body>
           <h4>{t('matching_purpose_title')}</h4>
           <p>
-          {t('matching_purpose_description')}
+            {t('matching_purpose_description')}
           </p>
 
           <h4>{t('matching_info_title')}</h4>
           <p>{t('matching_info_description')}</p>
-          <ul style={{margin:'0 0 10px', padding:'0'}}>
+          <ul style={{ margin: '0 0 10px', padding: '0' }}>
             <li>&nbsp; &nbsp; ⦁ {t('matching_info_item_1')}</li>
             <li>&nbsp; &nbsp; ⦁ {t('matching_info_item_2')}</li>
           </ul>
 
           <h4>{t('matching_usage_purpose_title')}</h4>
           <p>{t('matching_usage_purpose_description')}</p>
-          <ul style={{margin:'0 0 10px', padding:'0'}}>
+          <ul style={{ margin: '0 0 10px', padding: '0' }}>
             <li>&nbsp; &nbsp; ⦁ {t('matching_usage_purpose_item_1')}</li>
             <li>&nbsp; &nbsp; ⦁ {t('matching_usage_purpose_item_2')}</li>
             <li>&nbsp; &nbsp; ⦁ {t('matching_usage_purpose_item_3')}</li>
@@ -453,12 +542,12 @@ function OAuthNew(props) {
 
           <h4>{t('matching_retention_period_title')}</h4>
           <p>
-          {t('matching_retention_period_description')}
+            {t('matching_retention_period_description')}
           </p>
 
           <h4>{t('matching_consent_refusal_title')}</h4>
           <p>
-          {t('matching_consent_refusal_description')}
+            {t('matching_consent_refusal_description')}
           </p>
         </Modal.Body>
         <Modal.Footer>
