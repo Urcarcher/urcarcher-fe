@@ -704,5 +704,20 @@
   ,"page":"The page will redirect in",
   "goMove":"seconds.",
 
-  "InsufficientCardBalance" : "残高が不足しています。チャージしてからもう一度決済してください。"
+  "InsufficientCardBalance" : "残高が不足しています。チャージしてからもう一度決済してください。",
+
+  "The_email_has_been_sent_successfully":"メールの送信が完了しました",
+  "Failed_to_send_the_email":"メールの送信に失敗しました",
+  "Email_verification_has_been_completed":"メール認証が完了しました",
+  "The_verification_code_is_incorrect":"認証コードが間違っています",
+  "Email_verification_failed":"メール認証に失敗しました",
+
+  "birth_format_incorrect":"生年月日の形式が間違っています",
+  "number_format_incorrect":"住民登録番号の形式が間違っています",
+  "numbers_only":"「-」記号なしで数字のみを入力してください",
+
+  "Email_Verification":"メール認証",
+  "Verification_Code":"認証コード",
+  "First_Registration_Number":"住民登録番号の前半",
+  "Second_Registration_Number":"住民登録番号の後半"
 }
