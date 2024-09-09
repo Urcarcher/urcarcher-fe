@@ -321,6 +321,7 @@
 
     "ReservationExchange": "预约兑换",
     "HasBeenSet": "已设置",
+    "AutoRechargeSetSuccess": "自动充电已设置",
     "ParticleEul": "",
     "Filled": "填满了",
 
@@ -521,6 +522,7 @@
     "yes": "是",
     "no": "否",
     "reservation_cancelled": "预订已取消。",
+    "DeleteExchange": "我删除了自动充电设置",
     "page_redirecting": "页面将自动跳转。",
     "no_reservations": "没有预订记录。",
     "ticket_unit": "张",
@@ -703,5 +705,7 @@
 
    ,"page":"The page will redirect in",
   "goMove":"seconds.",
+  "goPage": "几秒钟内移动",
+
   "InsufficientCardBalance" : "余额不足。请充值后再尝试付款。"
 }

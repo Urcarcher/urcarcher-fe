@@ -321,6 +321,7 @@
 
     "ReservationExchange": "予約両替が",
     "HasBeenSet": "設定されました",
+    "AutoRechargeSetSuccess": "自動充電が設定されました",
     "ParticleEul": "を",
     "Filled": "埋めました",
 
@@ -522,6 +523,7 @@
     "yes": "はい",
     "no": "いいえ",
     "reservation_cancelled": "予約がキャンセルされました。",
+    "DeleteExchange": "自動充電設定履歴を削除しました",
     "page_redirecting": "ページが自動的に移動します。",
     "no_reservations": "予約履歴がありません。",
     "ticket_unit": "枚",
@@ -703,6 +705,7 @@
     
   ,"page":"The page will redirect in",
   "goMove":"seconds.",
+  "goPage": "秒後に移動します",
 
   "InsufficientCardBalance" : "残高が不足しています。チャージしてからもう一度決済してください。"
 }
