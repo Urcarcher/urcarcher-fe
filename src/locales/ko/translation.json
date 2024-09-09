@@ -325,6 +325,7 @@
     
     "ReservationExchange": "예약 환전이",
     "HasBeenSet": "설정되었어요",
+    "AutoRechargeSetSuccess": "자동 충전이 설정되었어요",
 
     "ParticleEul": "을",
     "Filled": "채웠어요",
@@ -532,6 +533,7 @@
     "yes": "네",
     "no": "아니오",
     "reservation_cancelled": "예약 취소가 완료되었습니다.",
+    "DeleteExchange": "자동 충전 설정 내역을 삭제했어요",
     "page_redirecting": "페이지가 자동으로 이동합니다.",
     "no_reservations": "예약 내역이 없습니다.",
     "ticket_unit": "매",
@@ -717,6 +719,7 @@
   ,"page":"페이지가",
   "goMove":"초 후 이동합니다.",
   "InsufficientCardBalance" : "잔액이 부족합니다. 충전 후 다시 결제 해주세요.",
+
 
   "The_email_has_been_sent_successfully":"이메일 발송이 완료되었습니다",
   "Failed_to_send_the_email":"이메일 발송에 실패했습니다",

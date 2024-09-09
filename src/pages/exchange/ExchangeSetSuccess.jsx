@@ -106,7 +106,7 @@ function ExchangeSetSuccess(props) {
                     </div>
                 </div>
                 <div className="ex_setting_box_text">
-                    <h5>{t('AutoRechargeSet')}</h5>
+                    <h5>{t('AutoRechargeSetSuccess')}</h5>
                     <h5>{t('AutoRechargeOnReservationDate')}</h5>
                 </div>
                 <div className="ex_setting_btn_box">

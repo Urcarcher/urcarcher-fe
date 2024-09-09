@@ -27,6 +27,7 @@ function Card2() {
     const [showModal, setShowModal] = useState(false); // 모달 상태 추가
     const [modalMessage, setModalMessage] = useState(''); // 모달에 표시될 메시지
     const { t, i18n } = useTranslation();
+
     const changeLanguage = (selectedLanguage) => {
         const languageMap = {
             Korea: 'ko',
@@ -124,7 +125,10 @@ function Card2() {
             transportation: postPaidTransport
         }));
 
-        if (produceCardOffer.card_type_id === 1 || produceCardOffer.card_type_id === 2) {
+       if (!registrationNumber) {
+        // registrationNumber가 null 또는 빈 문자열이면 /card3으로 이동
+        setTimeout(() => navigate('/card3'), 300);
+        } else if (produceCardOffer.card_type_id === 1 || produceCardOffer.card_type_id === 2) {
             setTimeout(() => navigate('/verification'), 300);
         } else {
             setTimeout(() => navigate('/card3'), 300);
@@ -184,16 +188,18 @@ function Card2() {
                     </div>
                 )}
 
-<div style={{ marginBottom: '30px' }}>
-                    <div style={{ justifyContent: 'flex-start', display: 'flex' }}>{t('RegistrationNumber')}</div>
-                    <Input
-                        placeholder={t('EnterNumber')}
-                        maxLength={14}
-                        value={maskingNum || registrationNumber}
-                        onChange={handleIdNumChange}
-                        style={{ width: '100%' }}
-                    />
-                </div>
+                {registrationNumber && (
+                    <div style={{ marginBottom: '30px' }}>
+                        <div style={{ justifyContent: 'flex-start', display: 'flex' }}>{t('RegistrationNumber')}</div>
+                        <Input
+                            placeholder={t('EnterNumber')}
+                            maxLength={14}
+                            value={maskingNum || registrationNumber}
+                            onChange={handleIdNumChange}
+                            style={{ width: '100%' }}
+                        />
+                    </div>
+                )}
 
                 <div style={{ justifyContent: 'flex-start', display: 'flex',  marginBottom: '30px'}}>
                     <FormControlLabel

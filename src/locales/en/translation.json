@@ -323,6 +323,7 @@
 
     "ReservationExchange": "Reservation exchange",
     "HasBeenSet": "has been set",
+    "AutoRechargeSetSuccess": "Automatic charging is set",
     "ParticleEul": "",
     "Filled": "filled",
 
@@ -525,6 +526,7 @@
     "yes": "Yes",
     "no": "No",
     "reservation_cancelled": "Reservation has been cancelled.",
+    "DeleteExchange": "I deleted the automatic charging settings",
     "page_redirecting": "The page will redirect automatically.",
     "no_reservations": "No reservations found.",
     "ticket_unit": "tickets",
@@ -728,5 +730,4 @@
 
   "Date_of_Birth":"Date of Birth",
   "have_registration_number?":"Do you have a foreign registration number?"
-
   }
