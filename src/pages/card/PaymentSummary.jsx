@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import Preloader from 'bootstrap-template/components/Preloader';
 import React, { useEffect, useState } from 'react';
-import { Container, Button } from 'react-bootstrap';
+import { Container, Button, Modal } from 'react-bootstrap'; // Modal 추가
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -9,37 +9,26 @@ import Cookies from 'js-cookie';
 import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
 
-
-
 function PaymentSummary(props) {
-
+  
   function formatDate(dateString) {
-
     const date = new Date(dateString);
-  
-    // 개별적으로 월과 일을 추출
-    const month = date.getMonth() + 1; // 월은 0부터 시작하므로 +1 필요
+    const month = date.getMonth() + 1; 
     const day = date.getDate();
-  
-    // 번역된 텍스트로 조합
     return `${month}${t('Month')} ${day}${t('Day')}`;
   }
 
   const { t, i18n } = useTranslation();
-    const changeLanguage = (selectedLanguage) => {
-        
-        const languageMap = {
-            Korea: 'ko',
-            English: 'en',
-            Japan: 'jp',
-            China: 'cn'
-        };
-
-        const languageCode = languageMap[selectedLanguage] 
-        i18n.changeLanguage(languageCode);
-       
+  const changeLanguage = (selectedLanguage) => {
+    const languageMap = {
+      Korea: 'ko',
+      English: 'en',
+      Japan: 'jp',
+      China: 'cn'
     };
-
+    const languageCode = languageMap[selectedLanguage] 
+    i18n.changeLanguage(languageCode);
+  };
 
   const [loading, setLoading] = useState(false);
   const [expectedAmount, setExpectedAmount ] = useState();
@@ -49,103 +38,113 @@ function PaymentSummary(props) {
   const [recentPayDate, setRecentPayDate] = useState();
   const [recentPayLocation, setRecentPayLocation] = useState();
 
-  function paymentHandler(){
-    // be
+  const [showModal, setShowModal] = useState(false); // 모달 상태 추가
+  const [modalMessage, setModalMessage] = useState(''); // 모달 메시지 상태 추가
+
+  function paymentHandler() {
     setLoading(true);
 
-    Axios.post("/api/payment/immediatepayment",{
-      cardId:String(props.card.cardId),
-      paymentDate:String(props.card.paymentDate)
+    Axios.post("/api/payment/immediatepayment", {
+      cardId: String(props.card.cardId),
+      paymentDate: String(props.card.paymentDate)
     })
-    .then(()=>{
+    .then(() => {
       setTimeout(() => {
-        // 성공 처리
         setLoading(false);
-        alert(t('ImmediatePaymentSuccess'))
-        props.setShowModal(false);
+        setModalMessage(t('ImmediatePaymentSuccess')); // 성공 메시지 설정
+        setShowModal(true); // 모달 열기
+        setTimeout(() => {
+          setShowModal(false); // 2초 후에 모달 닫기
+          props.setShowModal(false);
+        }, 2000); // 2초 동안 모달 유지
       }, 3000);
     })
-    .catch(()=>{
+    .catch(() => {
       setTimeout(() => {
-        // 실패 처리
         setLoading(false);
-        alert(t('ImmediatePaymentFailure'))
-        props.setShowModal(false);
+        setModalMessage(t('ImmediatePaymentFailure')); // 실패 메시지 설정
+        setShowModal(true); // 모달 열기
+        setTimeout(() => {
+          setShowModal(false); // 2초 후에 모달 닫기
+          props.setShowModal(false);
+        }, 2000); // 2초 동안 모달 유지
       }, 3000);
-    })
+    });
   }
 
-
-  useEffect(()=>{
-
+  useEffect(() => {
     const savedLanguage = Cookies.get('selectedLanguage');
-        if (savedLanguage) {
-            changeLanguage(savedLanguage); // 언어 변경
-        } else {
-            changeLanguage('Korea'); // 기본 언어 설정
-        }
+    if (savedLanguage) {
+      changeLanguage(savedLanguage); 
+    } else {
+      changeLanguage('Korea'); 
+    }
 
-
-    console.log(props.card.paymentDate);
-    Axios.post('/api/payment/detailpayment',{
-      cardId:String(props.card.cardId),
-      paymentDate:String(props.card.paymentDate)
-      })
-    .then((response)=>{
+    Axios.post('/api/payment/detailpayment', {
+      cardId: String(props.card.cardId),
+      paymentDate: String(props.card.paymentDate)
+    })
+    .then((response) => {
       setExpectedAmount(response.data);
       setExpectedPayDate(props.card.paymentDate);
     })
-    .catch((error)=>{alert(t('ErrorFetchingEstimatedAmount'))
-      console.log(error);
-    })
+    .catch((error) => {
+      setModalMessage(t('ErrorFetchingEstimatedAmount')); // 오류 메시지 설정
+      setShowModal(true); // 모달 열기
+    });
 
-    // 최근 결제 내역 확인하기 
-    Axios.post("/api/payment/recentpayment",{cardId:String(props.card.cardId)})
-    .then((response)=>{
+    Axios.post("/api/payment/recentpayment", { cardId: String(props.card.cardId) })
+    .then((response) => {
       setRecentPay(response.data.paymentPrice);
       setRecentPayDate(response.data.paymentDate.replace(/T/g, ' '));
       setRecentPayLocation(response.data.storeName);
-
-      console.log(response.data.paymentPrice);
-      console.log(response.data.paymentDate);
-      console.log(response.data.storeName);
     })
-    .catch(()=>{
-    })
-  },[props.card]);
+    .catch(() => {});
+  }, [props.card]);
 
   return (
-    <Container style={{width:'400px'}}>
+    <Container style={{ width: '400px' }}>
       {loading && <Preloader type={'pulse'} variant={'primary'} center={true} />}
       <Card>
-        <Title>{formatDate(expectedPayDate)}  {t('EstimatedPaymentAmount')}</Title>
-        <Amount>{Number(expectedAmount).toLocaleString()}{" "+t('Won')}</Amount>
-        <br/>
-        <PaymentButton onClick={()=>{
-          paymentHandler();
-        }}>{t('ImmediatePayment')}</PaymentButton>
+        <Title>{formatDate(expectedPayDate)} {t('EstimatedPaymentAmount')}</Title>
+        <Amount>{Number(expectedAmount).toLocaleString()}{" " + t('Won')}</Amount>
+        <br />
+        <PaymentButton onClick={paymentHandler}>{t('ImmediatePayment')}</PaymentButton>
       </Card>
 
       <RecentActivity>
-        <p style={{marginBottom:'0px'}}>
-        {recentPayLocation ? (
-          <>
-            {t('Recent')} <span style={{ fontWeight: 'bold' }}>{recentPayLocation}</span>{t('From')}
-            <span style={{ fontWeight: 'bold' }}> {Number(recentPay).toLocaleString()} </span>{" "+t('Won')}{t('PaymentCompleted')}
-          </>
-        ) : (
-          ''
-        )}</p>
-        <p style={{marginTop:'0px'}}>{recentPayDate}</p>
+        <p style={{ marginBottom: '0px' }}>
+          {recentPayLocation ? (
+            <>
+              {t('Recent')} <span style={{ fontWeight: 'bold' }}>{recentPayLocation}</span>{t('From')}
+              <span style={{ fontWeight: 'bold' }}> {Number(recentPay).toLocaleString()} </span>{" " + t('Won')}{t('PaymentCompleted')}
+            </>
+          ) : (
+            ''
+          )}
+        </p>
+        <p style={{ marginTop: '0px' }}>{recentPayDate}</p>
 
         <ActivityDetail>
-          <Link to="/chart1" style={{textDecoration: 'underline', color: '#476EFF' }}>{t('ViewRecentTransactions')}</Link>
+          <Link to="/chart1" style={{ textDecoration: 'underline', color: '#476EFF' }}>{t('ViewRecentTransactions')}</Link>
         </ActivityDetail>
       </RecentActivity>
+
+      {/* 모달 컴포넌트, centered 속성 추가 */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>알림</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalMessage}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={() => setShowModal(false)}>
+            확인
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 }
-
 
 const Card = styled.div`
   background-color: #f0f4f7;
@@ -166,7 +165,6 @@ const Amount = styled.h2`
   font-weight: bold;
   margin: 0;
 `;
-
 
 const PaymentButton = styled(Button)`
   background-color: #0023fc;

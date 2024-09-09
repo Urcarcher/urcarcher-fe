@@ -1,74 +1,69 @@
-import React, {  useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Form as FormikForm, Field } from "formik";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Modal } from "react-bootstrap"; // Modal 추가
 import Axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
 import SelectLanguage from 'components/language/SelectLanguage';
 
-
 function SettingPassword(props) {
 
     const { t, i18n } = useTranslation();
     const changeLanguage = (selectedLanguage) => {
-        
         const languageMap = {
             Korea: 'ko',
             English: 'en',
             Japan: 'jp',
             China: 'cn'
         };
-
-        const languageCode = languageMap[selectedLanguage] 
+        const languageCode = languageMap[selectedLanguage];
         i18n.changeLanguage(languageCode);
-       
     };
 
-
     const [isVerified, setIsVerified] = useState(false);  // 비밀번호 검증 상태를 저장
+    const [showModal, setShowModal] = useState(false);  // 모달 상태
+    const [modalMessage, setModalMessage] = useState('');  // 모달 메시지 상태
 
-    // 현재 비밀번호 확인 함수 (여기서 실제 DB 확인 로직이 필요)
+    // 현재 비밀번호 확인 함수
     const verifyCurrentPassword = async (password) => {
-        // 여기에 실제로 DB에 비밀번호를 확인하는 로직을 작성
-        // 예: const response = await axios.post('/api/verify-password', { password });
-
-        // 비밀번호가 일치한다고 가정하고 true를 반환
-        // 실제 구현에서는 response.data.result 또는 유사한 값을 사용해야 함
         return true;  // 실제 검증에서는 DB 값과 비교해야 함 -- 일단은 true로 설정해놓음
     };
 
     const handleVerifyPassword = async (values) => {
-        if(!values.currentPassword) {
-            alert(t('EnterPIN2'));
-        }else if(values.currentPassword.length !== 4){
-            alert(t('PINMustBe4Digits'))
-        }else{
-            Axios.post('/api/card/checkpinnumber',{
-                cardId : String(props.card.cardId),
-                pinNumber : String(values.currentPassword)
+        if (!values.currentPassword) {
+            setModalMessage(t('EnterPIN2'));
+            setShowModal(true);
+            setTimeout(() => setShowModal(false), 2000); // 2초 후 모달 자동 닫기
+        } else if (values.currentPassword.length !== 4) {
+            setModalMessage(t('PINMustBe4Digits'));
+            setShowModal(true);
+            setTimeout(() => setShowModal(false), 2000); // 2초 후 모달 자동 닫기
+        } else {
+            Axios.post('/api/card/checkpinnumber', {
+                cardId: String(props.card.cardId),
+                pinNumber: String(values.currentPassword)
             })
-            .then((response)=>{
-                setIsVerified(response);
+            .then((response) => {
+                setIsVerified(true);
             })
-            .catch((error)=>{
+            .catch(() => {
                 setIsVerified(false);
-                alert(t('CurrentPINNotMatching'));
-            })
+                setModalMessage(t('CurrentPINNotMatching'));
+                setShowModal(true);
+                setTimeout(() => setShowModal(false), 2000); // 2초 후 모달 자동 닫기
+            });
         }
     };
 
-    
-    useEffect(()=>{
-    
+    useEffect(() => {
         const savedLanguage = Cookies.get('selectedLanguage');
         if (savedLanguage) {
             changeLanguage(savedLanguage); // 언어 변경
         } else {
             changeLanguage('Korea'); // 기본 언어 설정
         }
-    },[]);
-
+    }, []);
 
     return (
         <div>
@@ -106,34 +101,38 @@ function SettingPassword(props) {
                         password2: "",
                     }}
                     onSubmit={async (values) => {
-                        await new Promise((r) => setTimeout(r, 500))
+                        await new Promise((r) => setTimeout(r, 500));
 
-                        if (values.currentPassword && values.currentPassword.length === 4){
-
-                        }
-
-                        if(!values.password1 || !values.password2){
-                            alert(t('EnterAllPIN'))
-                        }
-                        else if(values.password1 !== values.password2){
-                            alert(t('EnterAllPIN'))
-                        }
-                        else if(values.password1.length !== 4 || values.password2.length !== 4){
-                            alert(t('PINMustBe4Digits'))
-                        }
-                        else{
-                            //console.log(props.card.cardId);
-                            Axios.post('/api/card/changepinnumber',{
-                                cardId : String(props.card.cardId),
-                                pinNumber : String(values.password1)
+                        if (!values.password1 || !values.password2) {
+                            setModalMessage(t('EnterAllPIN'));
+                            setShowModal(true);
+                            setTimeout(() => setShowModal(false), 2000); // 2초 후 모달 자동 닫기
+                        } else if (values.password1 !== values.password2) {
+                            setModalMessage(t('EnterAllPIN'));
+                            setShowModal(true);
+                            setTimeout(() => setShowModal(false), 2000); // 2초 후 모달 자동 닫기
+                        } else if (values.password1.length !== 4 || values.password2.length !== 4) {
+                            setModalMessage(t('PINMustBe4Digits'));
+                            setShowModal(true);
+                            setTimeout(() => setShowModal(false), 2000); // 2초 후 모달 자동 닫기
+                        } else {
+                            Axios.post('/api/card/changepinnumber', {
+                                cardId: String(props.card.cardId),
+                                pinNumber: String(values.password1)
                             })
-                            .then(()=>{
-                                alert(t('PINChangeSuccess'));
-                                props.setShowModal(false)
+                            .then(() => {
+                                setModalMessage(t('PINChangeSuccess'));
+                                setShowModal(true);
+                                setTimeout(() => {
+                                    setShowModal(false);
+                                    props.setShowModal(false);
+                                }, 2000); // 2초 후 모달 자동 닫기
                             })
-                            .catch(()=>{
-                                alert(t('PINChangeFailure'));
-                            })
+                            .catch(() => {
+                                setModalMessage(t('PINChangeFailure'));
+                                setShowModal(true);
+                                setTimeout(() => setShowModal(false), 2000); // 2초 후 모달 자동 닫기
+                            });
                         }
                     }}
                 >
@@ -173,6 +172,19 @@ function SettingPassword(props) {
                     </FormikForm>
                 </Formik>
             )}
+
+            {/* 모달 컴포넌트, centered 속성 추가 */}
+            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>알림</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{modalMessage}</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" onClick={() => setShowModal(false)}>
+                        확인
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 }
