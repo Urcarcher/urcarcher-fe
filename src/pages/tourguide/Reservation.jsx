@@ -30,7 +30,7 @@ function Reservation() {
   const [selectedPeople, setSelectedPeople] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [reservePerson, setReservePerson] = useState(null);
-
+  const [availableTimes, setAvailableTimes] = useState([]);
 
   // 이거 잠깐 보류
   // const location = useLocation();
@@ -44,6 +44,7 @@ function Reservation() {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    updateAvailableTimes(date);
   };
 
   const handleTimeChange = (time) => {
@@ -86,9 +87,36 @@ function Reservation() {
 
     Axios.get("/api/t/test").then((response) => {
       setReservePerson(response.data);
-      console.log(reservePerson);
+      //console.log(reservePerson);
     });
   }, []);
+
+  useEffect(() => {
+    // selectedDate와 관련된 로직을 처리하는 useEffect
+    updateAvailableTimes(selectedDate);
+  }, [selectedDate]); // selectedDate가 변경될 때만 호출
+
+
+   // 시간 목록을 업데이트하는 함수
+   const updateAvailableTimes = (date) => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    const availableTimesArray = [
+      '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'
+    ];
+
+    // 현재 시각을 기준으로 유효한 시간만 필터링
+    const updatedAvailableTimes = availableTimesArray.filter((time) => {
+      const [hour] = time.split(':').map(Number);
+      if (selectedDate.toDateString() === today.toDateString()) {
+        return hour > currentHour || (hour === currentHour && currentMinute < 0);
+      }
+      return true;
+    });
+
+    setAvailableTimes(updatedAvailableTimes);
+  };
 
   return (
     
@@ -133,7 +161,7 @@ function Reservation() {
           <StyledCol>
             <Header style={{ textAlign: 'left' }}>{t('SelectTime')}</Header>
             <TimeSelect>
-              {['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'].map((time, index) => (
+              {availableTimes.map((time, index) => (
                 <CustomButton
                   key={index}
                   active={selectedTime === time}
