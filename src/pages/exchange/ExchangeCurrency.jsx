@@ -218,6 +218,28 @@ function ExchangeCurrency(props) {
         });
     };
 
+    // 카운트 롤링 애니메이션
+    // const countNum = () => {
+    //     let countBox = document.querySelector("#count");
+    //     let count = 0;
+    //     let num = parseFloat(exchangeCurInfo[nation].rate.replace(/,/g, ""));
+    //     let increment = num / 100; // 100번에 걸쳐 증가
+
+    //     let counting = setInterval(function () {
+    //         if (count >= num) {
+    //             count = num;
+    //             clearInterval(counting);
+    //         } else {
+    //             count += increment; // 조금씩 증가
+    //         }
+    //         countBox.innerHTML = new Intl.NumberFormat().format(count);
+    //     }, 10);
+
+    //     if (exchangeCurInfo[nation]) {
+    //         countNum();
+    //     }
+    // };
+
     return (
         <div className="contents">
             <div className="exCur_title">
@@ -253,7 +275,7 @@ function ExchangeCurrency(props) {
                 <div className="ex_cur_nation">
                     <p className="exAmt_text">{calculateAmount}</p>
                     {exchangeCurInfo[nation] ? 
-                    (<p style={{ color: "#BFBFBF" }}>1 { curSymbol(nation) } = {exchangeCurInfo[nation].rate} ￦</p>) : (<p style={{ color: "#BFBFBF" }}>{t('FindingExchangeRateInfo2')}</p>)}
+                    (<p id="count" style={{ color: "#BFBFBF" }}>1 { curSymbol(nation) } = {exchangeCurInfo[nation].rate} ￦</p>) : (<p style={{ color: "#BFBFBF" }}>{t('FindingExchangeRateInfo2')}</p>)}
                 </div>
             </div>
             <div className="exRate_wrapper">
