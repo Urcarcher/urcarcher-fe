@@ -98,11 +98,8 @@ function App() {
           <Route path='/TourGuide/:areaCode/:contentTypeId' element={<TourGuide/>}/>
           <Route path='/detail/:type/:id' element={<DetailPage/>}/>
           <Route path='/performanceList' element={<PerformanceList/>}/>
-          <Route path='/performanceList/detail/:id' element={<PerformanceDetail/>}/>
           <Route path='/reserve' element={<Reserve/>}/>
           <Route path='/reservePayment' element={<ReservePayment/>}></Route>
-          {/* <Route path='/myReservationList1' element={<MyReservations1/>}></Route>
-          <Route path='/myReservationList1Detail/:reservationId' element={<MyReservations1Detail/>}></Route> */}
           <Route path='/searchtour' element={<SearchTour/>}></Route>
           <Route path='/testcard' element={<TestCard/>}/>
           <Route path='/localProducts' element={<LocalProduct/>}></Route>
@@ -126,6 +123,7 @@ function App() {
             <Route path='/myReservationList1Detail/:reservationId' element={<MyReservations1Detail/>}></Route>
             {/* <Route path='/reserve' element={<Reserve/>}/>
             <Route path='/reservePayment' element={<ReservePayment/>}></Route> */}
+            <Route path='/performanceList/detail/:id' element={<PerformanceDetail/>}/>
           </Route>
         </Routes>
       <Footer />

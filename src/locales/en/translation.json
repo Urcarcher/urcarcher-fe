@@ -711,7 +711,23 @@
 
   ,"page":"The page will redirect in",
   "goMove":"seconds.",
-  "goPage": "Move in seconds",
-  "InsufficientCardBalance" : "Insufficient balance. Please recharge and try the payment again."
-  
+  "InsufficientCardBalance" : "Insufficient balance. Please recharge and try the payment again.",
+
+  "The_email_has_been_sent_successfully":"The email has been sent successfully",
+  "Failed_to_send_the_email":"Failed to send the email",
+  "Email_verification_has_been_completed":"Email verification has been completed",
+  "The_verification_code_is_incorrect":"The verification code is incorrect",
+  "Email_verification_failed":"Email verification failed",
+
+  "birth_format_incorrect":"The date of birth format is incorrect",
+  "number_format_incorrect":"The resident registration number format is incorrect",
+  "numbers_only":"Enter numbers only, without the '-' symbol",
+
+  "Email_Verification":"Email Verification",
+  "Verification_Code":"Verification Code",
+  "First_Registration_Number":"First part of Resident Registration Number",
+  "Second_Registration_Number":"Second part of Resident Registration Number",
+
+  "Date_of_Birth":"Date of Birth",
+  "have_registration_number?":"Do you have a foreign registration number?"
   }

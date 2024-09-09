@@ -705,7 +705,23 @@
 
    ,"page":"The page will redirect in",
   "goMove":"seconds.",
-  "goPage": "几秒钟内移动",
+  "InsufficientCardBalance" : "余额不足。请充值后再尝试付款。",
 
-  "InsufficientCardBalance" : "余额不足。请充值后再尝试付款。"
+  "The_email_has_been_sent_successfully":"邮件已成功发送",
+  "Failed_to_send_the_email":"发送邮件失败",
+  "Email_verification_has_been_completed":"邮箱验证已完成",
+  "The_verification_code_is_incorrect":"验证码错误",
+  "Email_verification_failed":"邮箱验证失败",
+
+  "birth_format_incorrect":"出生日期格式错误",
+  "number_format_incorrect":"身份证号码格式错误",
+  "numbers_only":"只输入数字，不要输入‘-’符号",
+
+  "Email_Verification":"邮箱验证",
+  "Verification_Code":"验证码",
+  "First_Registration_Number":"身份证号码前六位",
+  "Second_Registration_Number":"身份证号码后七位",
+
+  "Date_of_Birth":"出生日期",
+  "have_registration_number?":"您有外国人登记号码吗？"
 }

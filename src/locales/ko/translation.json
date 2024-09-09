@@ -718,9 +718,24 @@
 
   ,"page":"페이지가",
   "goMove":"초 후 이동합니다.",
-  "goPage": "초 후 이동해요",
-
-  "InsufficientCardBalance" : "잔액이 부족합니다. 충전 후 다시 결제 해주세요."
+  "InsufficientCardBalance" : "잔액이 부족합니다. 충전 후 다시 결제 해주세요.",
 
 
+  "The_email_has_been_sent_successfully":"이메일 발송이 완료되었습니다",
+  "Failed_to_send_the_email":"이메일 발송에 실패했습니다",
+  "Email_verification_has_been_completed":"이메일 인증이 완료되었습니다",
+  "The_verification_code_is_incorrect":"인증 코드가 잘못되었습니다",
+  "Email_verification_failed":"이메일 인증에 실패했습니다",
+
+  "birth_format_incorrect":"잘못된 생년월일 형식입니다",
+  "number_format_incorrect":"잘못된 주민등록번호 형식입니다",
+  "numbers_only":"'-' 기호 없이 숫자만 기입",
+
+  "Email_Verification":"이메일 인증",
+  "Verification_Code":"인증 코드",
+  "First_Registration_Number":"주민등록번호 앞자리",
+  "Second_Registration_Number":"주민등록번호 뒷자리",
+
+  "Date_of_Birth":"생년월일",
+  "have_registration_number?":"외국인 등록번호를 가지고 계신가요?"
 }
