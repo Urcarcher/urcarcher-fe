@@ -724,6 +724,9 @@
   "Email_Verification":"Email Verification",
   "Verification_Code":"Verification Code",
   "First_Registration_Number":"First part of Resident Registration Number",
-  "Second_Registration_Number":"Second part of Resident Registration Number"
-  
+  "Second_Registration_Number":"Second part of Resident Registration Number",
+
+  "Date_of_Birth":"Date of Birth",
+  "have_registration_number?":"Do you have a foreign registration number?"
+
   }

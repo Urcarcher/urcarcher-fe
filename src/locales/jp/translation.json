@@ -719,5 +719,8 @@
   "Email_Verification":"メール認証",
   "Verification_Code":"認証コード",
   "First_Registration_Number":"住民登録番号の前半",
-  "Second_Registration_Number":"住民登録番号の後半"
+  "Second_Registration_Number":"住民登録番号の後半",
+
+  "Date_of_Birth":"生年月日",
+  "have_registration_number?":"外国人登録番号を持っていますか？"
 }

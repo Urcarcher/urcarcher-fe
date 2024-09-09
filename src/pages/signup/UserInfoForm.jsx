@@ -492,7 +492,7 @@ function UserInfoForm() {
                             <>
                               <div className="col-md-12 mb-3 gender">
                                 <div>
-                                  <p>외국인 등록번호를 가지고 계신가요?</p>
+                                  <p>{t('have_registration_number?')}</p>
                                   <input
                                     type="radio"
                                     name="got"
@@ -501,7 +501,7 @@ function UserInfoForm() {
                                     checked={gotForeignReg}
                                     onChange={handleForeignReg}
                                   />
-                                  <label>Yes</label>
+                                  <label>{t('yes')}</label>
                                   <input
                                     type="radio"
                                     name="got"
@@ -510,7 +510,7 @@ function UserInfoForm() {
                                     checked={!gotForeignReg}
                                     onChange={handleForeignReg}
                                   />
-                                  <label>No</label>
+                                  <label>{t('no')}</label>
                                 </div>
                               </div>
                               <div className="form-floating mb-3">
@@ -526,7 +526,7 @@ function UserInfoForm() {
                                   className="form-label"
                                   htmlFor="dateOfBirth"
                                 >
-                                  {t("DateOfBirth")}
+                                  {t("Date_of_Birth")}
                                 </label>
                               </div>
                               <div className="col-md-12 mb-3 ">

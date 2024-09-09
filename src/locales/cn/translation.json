@@ -718,5 +718,8 @@
   "Email_Verification":"邮箱验证",
   "Verification_Code":"验证码",
   "First_Registration_Number":"身份证号码前六位",
-  "Second_Registration_Number":"身份证号码后七位"
+  "Second_Registration_Number":"身份证号码后七位",
+
+  "Date_of_Birth":"出生日期",
+  "have_registration_number?":"您有外国人登记号码吗？"
 }

@@ -731,5 +731,8 @@
   "Email_Verification":"이메일 인증",
   "Verification_Code":"인증 코드",
   "First_Registration_Number":"주민등록번호 앞자리",
-  "Second_Registration_Number":"주민등록번호 뒷자리"
+  "Second_Registration_Number":"주민등록번호 뒷자리",
+
+  "Date_of_Birth":"생년월일",
+  "have_registration_number?":"외국인 등록번호를 가지고 계신가요?"
 }
