@@ -6,8 +6,6 @@ import { oauthNew } from 'services/AuthService';
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import 'assets/Language.css';
-import SelectLanguage from 'components/language/SelectLanguage';
-
 
 function OAuthNew(props) {
   var loc = useLocation();
@@ -99,6 +97,9 @@ function OAuthNew(props) {
     } else if (e.target.name === "dateOfBirth") {
       setUserInfo({...userInfo, [e.target.name]: e.target.value, registrationNumber: null});
       return;
+    } else if (e.target.name === "registrationNumber6" || e.target.name === "registrationNumber7" || e.target.name === "phoneNumber") {
+      setUserInfo({...userInfo, [e.target.name]: e.target.value.replace(/[^0-9]/g, "")});
+      return;
     }
 
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
@@ -111,7 +112,6 @@ function OAuthNew(props) {
       'gender', 'nationality', 'phoneNumber', userInfo.nationality === "KR" || gotForeignReg ? "registrationNumber" : "dateOfBirth"
     ];
     
-    console.log(userInfo);
     const isEmptyField = requiredFields.some(field => !userInfo[field]);
 
     if (isEmptyField) {
@@ -306,7 +306,7 @@ function OAuthNew(props) {
                     )}
 
                     <div className="form-floating mb-3">
-                      <input placeholder={t('PhoneNumber')} id="phoneNumber" name="phoneNumber" className="form-control" onChange={handleInfoChange} />
+                      <input placeholder={t('PhoneNumber')} id="phoneNumber" name="phoneNumber" className="form-control" onChange={handleInfoChange} value={userInfo.phoneNumber} />
                       <label className="form-label" for="phoneNumber">{t('PhoneNumber')}</label>
                     </div>
 
