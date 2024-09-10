@@ -251,7 +251,7 @@ function UserInfoForm() {
       return;
     }
 
-    if (registrationNumber7.length !== 7) {
+    if (registrationNumber7.length !== 7 && (userInfo.nationality === 'KR' || gotForeignReg)) {
       alert(t("number_format_incorrect"));
       return;
     }
