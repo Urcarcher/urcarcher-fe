@@ -130,7 +130,7 @@ function OAuthNew(props) {
       return;
     }
 
-    oauthNew({...userInfo, provider: loc.state.provider, email: loc.state.email});
+    oauthNew({...userInfo, provider: loc.state.provider, email: loc.state.email, dateOfBirth: userInfo.dateOfBirth.length === 10 ? userInfo.dateOfBirth.replaceAll("-", "").substring(2) : userInfo.dateOfBirth });
 
   };
 
