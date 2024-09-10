@@ -68,11 +68,14 @@ function ExchangeRateList(props) {
     }, [socketData]);
 
     useEffect(()=> {
+        let temp = {};
         Object.keys(exchangeRateInfos).map((item)=>{
             if(t(exchangeRateInfos[item].country).includes(searchWord)) {
-                setSearchList({...searchList, [item] : exchangeRateInfos[item]});
+                temp[item] = exchangeRateInfos[item];
             }
         });
+
+        setSearchList({...searchList, ...temp});
     }, [searchWord]);
 
     const wsLogin = useCallback(() => {
