@@ -67,10 +67,11 @@ function UserInfoForm() {
 
     if (name === "phoneNumber" || name === "dateOfBirth") {
       // 숫자만 입력받도록 처리
-      const onlyNumbers =
+      var onlyNumbers =
         userInfo.nationality === "KR" || gotForeignReg
           ? value.replace(/[^0-9]/g, "")
           : value;
+        
       setUserInfo({ ...userInfo, [name]: onlyNumbers });
     } else if (name === "registrationNumber7") {
       // 숫자만 입력받도록 처리
@@ -271,7 +272,7 @@ function UserInfoForm() {
     axios({
       method: "post",
       url: `/api/signup/local`,
-      data: userInfo,
+      data: {...userInfo, dateOfBirth:userInfo.dateOfBirth.length === 10 ? userInfo.dateOfBirth.replaceAll("-", "").substring(2) : userInfo.dateOfBirth},
     })
       .then((res) => {
         alert(t("EnterSuccess"));
