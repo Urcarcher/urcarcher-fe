@@ -2,7 +2,9 @@
 
 신한DS SW 아카데미 2차 최종 팀 프로젝트
 
-![image](https://github.com/user-attachments/assets/570d5439-a1ed-4f66-860a-a4dfe878b176)
+![image](https://github.com/user-attachments/assets/ef5e0368-ac04-41e1-a01b-614573d53e21)
+
+
 
 #### 🎥 시연 영상 보러가기([Click](https://www.youtube.com/watch?v=pySJk-vDz9s))
 #### 📙 발표자료 보러가기([Click](https://url.kr/45yifz))
@@ -22,10 +24,12 @@
 
 ### ✔️ 서비스 구조도
 - 카드
-<img src="https://github.com/user-attachments/assets/81def467-aacb-4f8c-b8fc-cfa6e48edb11" width = "70%">
+<img src="https://github.com/user-attachments/assets/1603cbdf-7e88-4857-8a9f-7ce3ae306cc1" width = "70%">
+
 
 - 금융 / 관광
-<img src="https://github.com/user-attachments/assets/05e29775-5e5b-48e1-a139-15035b080365" width = "80%">
+<img src="https://github.com/user-attachments/assets/b8c9ba4e-3545-4e74-b958-13ed69b0d597" width = "80%">
+
 
 
 <br/>
@@ -82,33 +86,33 @@
 ### ✔️ 카드 서비스 
 
 #### - 카드 발급 / 카드 관리
-![카드발급](https://github.com/user-attachments/assets/37b9e907-e0de-4d95-b146-de9ee9c6562d) ![카드관리](https://github.com/user-attachments/assets/814c96ce-9994-490b-8227-ea08d8b7bf42)
+![카드발급](https://github.com/user-attachments/assets/709a3c7e-b4f3-4c6c-827b-4766c79200a3) ![카드관리](https://github.com/user-attachments/assets/3fd3f2b4-a033-448f-afce-ca37318e0b0b)
 
 #### - 소비 리포트 / 결제 기반 장소 추천 
-![소비리포트](https://github.com/user-attachments/assets/7fa266e0-ee15-486c-b91c-a3b33eac76be) ![결제기반장소추천](https://github.com/user-attachments/assets/9d51d2c1-aeee-46a0-bb9d-24ed3c962340)
+![소비리포트](https://github.com/user-attachments/assets/569cf3b6-8ad6-470a-a660-9e32c41814a3) ![결제기반장소추천](https://github.com/user-attachments/assets/0fee2ba3-b46c-40ba-93ca-3721b6478600)
  
 
 ### ✔️ 금융 서비스 
 
 #### - 실시간 환율 조회 / 환율 예측 및 환전 / 자동 환전 
-![환율조회](https://github.com/user-attachments/assets/1ea68219-8037-4560-98ae-c7103ea3b129) ![충전](https://github.com/user-attachments/assets/3f894f03-272b-4745-bf73-2f6a80afd587)
+![환율조회](https://github.com/user-attachments/assets/3c31e8a5-deb6-4f76-8d55-629d4256af32) ![충전](https://github.com/user-attachments/assets/aa92ffe8-6c05-4f07-8f1e-1f490adb96dd)
 
 
 ### ✔️ 관광 서비스 
 
 #### - 관광지 추천 및 길찾기 / 문화활동 조회 및 예약
-![관광지추천및길찾기](https://github.com/user-attachments/assets/53803852-8a01-4959-b246-c648e98d8824) ![문화활동조회및예약](https://github.com/user-attachments/assets/7450b9fa-188a-4a20-bac0-fe874dac5fab)
+![관광지추천및길찾기](https://github.com/user-attachments/assets/43978fb1-5a11-4ae4-b220-4c27ea320a56) ![문화활동조회및예약](https://github.com/user-attachments/assets/dbba1e40-6b2c-41d4-956a-d91cd7e9ebc4)
 
 
 #### - 여행지 코스 추천 및 리워드 지급 / 지역 특산품 추천
-![여행코스추천및리워드](https://github.com/user-attachments/assets/b486afe7-6be4-4fd7-81f2-12428b48e02c) ![지역특산품추천](https://github.com/user-attachments/assets/19bec6eb-59fd-414d-9057-97ee49b7a948)
+![여행코스추천및리워드](https://github.com/user-attachments/assets/2a9ce204-49f7-4cef-8838-6abfb1862827) ![지역특산품추천](https://github.com/user-attachments/assets/4f1ea03b-1ae8-40d4-816b-1fe020234505)
 
 
 <br/>
 
 
 ## 🦾 최종 선정 AI 모델(환율 예측)
-<img src="https://github.com/user-attachments/assets/bc7f2b4a-ce88-49c7-8e5c-3da52bed9d1a" width = "70%">
+<img src="https://github.com/user-attachments/assets/4d8adae3-4656-4c6a-9944-44230a3551f6" width = "70%">
 
 
 ## 🗃️ 시스템 아키텍처
