@@ -1,4 +1,4 @@
-# ✈️ 어카쳐: Urcarcher
+# ✈️ 어카처: Urcarcher
 
 신한DS SW 아카데미 2차 최종 팀 프로젝트
 
